@@ -1,0 +1,39 @@
+{
+    "name": "@ncd-io/node-red-enterprise-sensors",
+    "version": "0.1.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ncd-io/ncd-red-enterprise-sensors"
+    },
+    "keywords": [
+        "Wireless",
+        "NCD",
+        "Sensors",
+        "Digi",
+        "node-red",
+        "enterprise"
+    ],
+    "author": "Jacob Youngblood",
+    "contributors": [
+        {
+            "name": "Trey Felton",
+            "name": "Anil Bhaskar",
+            "name": "Travis Elliott"
+        }
+    ],
+    "license": "MIT",
+    "node-red": {
+        "version": ">=2.0.0",
+        "nodes": {
+            "ncd-wireless": "wireless.js"
+        }
+    },
+    "dependencies": {
+        "ncd-red-comm": "2.0.0"
+    }
+}
