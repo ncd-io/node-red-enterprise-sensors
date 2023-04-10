@@ -1,4 +1,4 @@
-# NCD-RED-Enterprise
+# @ncd-io/node-red-enterprise-sensors
 
 To install navigate inside .node-red directory on a computer with Node-Red already installed. Then run command npm install ncd-red-enerprise-sensors.  To update run command npm update ncd-red-enerprise-sensors.
 
