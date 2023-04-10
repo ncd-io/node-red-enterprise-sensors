@@ -21,8 +21,12 @@
     "author": "Jacob Youngblood",
     "contributors": [
         {
-            "name": "Trey Felton",
-            "name": "Anil Bhaskar",
+            "name": "Trey Felton"
+        },
+        {
+            "name": "Anil Bhaskar"
+        },
+        {
             "name": "Travis Elliott"
         }
     ],
