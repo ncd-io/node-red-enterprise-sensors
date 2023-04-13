@@ -1164,7 +1164,8 @@ module.exports = function(RED) {
 	RED.httpAdmin.get("/ncd/wireless/needs_input/:id", RED.auth.needsPermission('tcp.read'), function(req,res) {
 		var node = RED.nodes.getNode(req.params.id);
 		if (node != null) {
-			return {needs_input: node.raw_input};
+			res.json({needs_input: node.raw_input});
+			// return {needs_input: node.raw_input};
 		} else {
 			res.json({needs_input: false});
 		}
