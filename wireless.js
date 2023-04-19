@@ -430,6 +430,11 @@ module.exports = function(RED) {
 	                                promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
 	                            }
 	                            break;
+							case 46:
+								if(config.motion_threshold_46_active){
+									promises.motion_threshold_46 = node.config_gateway.config_set_motion_threshold_46(mac, parseInt(config.motion_threshold_46));
+								}
+								break;
 	                        case 47:
 	                            if(config.roll_angle_threshold_47_active){
 	                                promises.roll_angle_threshold_47 = node.config_gateway.config_set_roll_threshold_47(mac, parseInt(config.roll_angle_threshold_47));
