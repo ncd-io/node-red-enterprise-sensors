@@ -62,22 +62,24 @@ module.exports = function(RED) {
 						console.log(err);
 						node.gateway.digi.serial.reconnect();
 					});
+					if(node.gateway.modem_mac !== undefined){
+						node.check_mode((mode) => {
+							var pan_id = parseInt(config.pan_id, 16);
+							// if(!mode && node.gateway.pan_id != pan_id){
+							if(node.gateway.pan_id != pan_id){
+								node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then((res) => {
+									node.gateway.pan_id = pan_id;
+								}).catch((err) => {
+									console.log(err);
+									node.gateway.digi.serial.reconnect();
+								});
+							}
+						});
+					}					
 				});
 				node.gateway.digi.serial.on('closed_comms', () => {
 					node.is_config = 3;
 					node._emitter.emit('mode_change', node.is_config);
-				});
-				node.check_mode((mode) => {
-					var pan_id = parseInt(config.pan_id, 16);
-					// if(!mode && node.gateway.pan_id != pan_id){
-					if(node.gateway.pan_id != pan_id){
-						node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then((res) => {
-							node.gateway.pan_id = pan_id;
-						}).catch((err) => {
-							console.log(err);
-							node.gateway.digi.serial.reconnect();
-						});
-					}
 				});
 			}
 		};
