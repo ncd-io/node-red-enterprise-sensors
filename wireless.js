@@ -62,7 +62,6 @@ module.exports = function(RED) {
 						console.log(err);
 						node.gateway.digi.serial.reconnect();
 					}).then(node.check_mode((mode) => {
-						node.warn('FOR SURE WORKED');
 						var pan_id = parseInt(config.pan_id, 16);
 						// if(!mode && node.gateway.pan_id != pan_id){
 						if(node.gateway.pan_id != pan_id){
