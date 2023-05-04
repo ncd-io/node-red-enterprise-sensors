@@ -51,9 +51,9 @@ module.exports = function(RED) {
 				this.gateway.digi.report_rssi = config.rssi;
 
 				if(config.comm_type == 'serial'){
-					node.gateway.digi.serial.setupSerial();
+					setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
 				}else{
-					node.gateway.digi.serial.setupClient();
+					setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
 				}
 				node.gateway.digi.serial.on('ready', () => {
 					node.gateway.digi.send.at_command('SL').then((res) => {
