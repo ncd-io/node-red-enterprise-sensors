@@ -664,7 +664,7 @@ module.exports = function(RED) {
 	                                promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 	                            }
 	                            break;
-							case 52:
+							case 89:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
 								}
