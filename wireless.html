@@ -65,63 +65,63 @@
 </script>
 
 <style>
-    .ncd-active-check strong{
-        width: 100%;
-    }
-    .form-row.ncd-active-check{
-        margin: 12px 0px;
-        border: 1px solid #eee;
-        padding: 12px;
-        border-radius: 8px;
-    }
-    .form-row.ncd-active-check > div{
-        padding: 4px;
-    }
-    .form-row.ncd-active-check > div > input[type='checkbox']{
-        width: inherit;
-    }
-    .form-row .caption{
-        font-size: .95em;
+	.ncd-active-check strong{
+		width: 100%;
+	}
+	.form-row.ncd-active-check{
+		margin: 12px 0px;
+		border: 1px solid #eee;
+		padding: 12px;
+		border-radius: 8px;
+	}
+	.form-row.ncd-active-check > div{
+		padding: 4px;
+	}
+	.form-row.ncd-active-check > div > input[type='checkbox']{
+		width: inherit;
+	}
+	.form-row .caption{
+		font-size: .95em;
 		padding-left: 1em;
 		margin-top: .25em;
-    }
+	}
 </style>
 
 <script type="text/x-red" data-help-name="ncd-gateway-node">
-    <h3>Gateway Node</h3>
+	<h3>Gateway Node</h3>
 	<p>This node is primarily useful for debugging and configuring sensors. This node is equipped with a button on the flow that switches the modem between configuration and listening mode.</p>
 	<h3>Output</h3>
 	<p>Any time sensor data is received from any sensor on the network, this node will output a message containing all pertinant information as in the example below.</p>
-  <h3>Input</h3>
-  <p>The Input connection to this Gateway node allows for sending data to devices.  The input connection expects the payload to be an object containging an address and data variable.  Address is a string representation of the destination device.  Data is a byte array of data to be transmitted as payload to that device.  Example "payload":{"address":"00:13:A2:00:01:02:03:04",data:[254,108,1]}</p>
-  <pre>
-  msg = {
-    topic: "sensor_data",
-    payload: {
-      nodeId: 0,
-      firmware: 3,
-      battery: 3.2940600000000004,
-      counter: 37,
-      sensor_type: 1,
-      sensor_data: {
-        humidity: 45.51,
-        temperature: 23.91,
-      },
-      type: "sensor_data",
-      addr: "00:13:a2:00:41:07:18:81",
-      original: {
-        mac: "00:13:a2:00:41:07:18:81",
-        receive_options: {
-          ack: 0,
-          broadcast: 0,
-          type: ""
-        }
-      },
-      data: [127,0,3,3,255,37,0,1,0,17,199,9,87],
-      type: "receive_packet"
-    },
-    _msgid: "391caba.5a19454"
-  }
+	<h3>Input</h3>
+	<p>The Input connection to this Gateway node allows for sending data to devices.  The input connection expects the payload to be an object containging an address and data variable.  Address is a string representation of the destination device.  Data is a byte array of data to be transmitted as payload to that device.  Example "payload":{"address":"00:13:A2:00:01:02:03:04",data:[254,108,1]}</p>
+	<pre>
+		msg = {
+			topic: "sensor_data",
+			payload: {
+				nodeId: 0,
+				firmware: 3,
+				battery: 3.2940600000000004,
+				counter: 37,
+				sensor_type: 1,
+				sensor_data: {
+					humidity: 45.51,
+					temperature: 23.91,
+				},
+				type: "sensor_data",
+				addr: "00:13:a2:00:41:07:18:81",
+				original: {
+					mac: "00:13:a2:00:41:07:18:81",
+					receive_options: {
+						ack: 0,
+						broadcast: 0,
+						type: ""
+					}
+				},
+				data: [127,0,3,3,255,37,0,1,0,17,199,9,87],
+				type: "receive_packet"
+			},
+			_msgid: "391caba.5a19454"
+		}
 	</pre>
 </script>
 
@@ -323,6 +323,13 @@
 
 			motion_threshold_46_active:{value:""},
 			motion_threshold_46:{value: 100, validate: NCD_validators.number_range(0, 4294967295)},
+
+			low_calibration_420ma_active:{value:""},
+			low_calibration_420ma:{value: 68805, validate: NCD_validators.number_range(0, 4294967295)},
+			mid_calibration_420ma_active:{value:""},
+			mid_calibration_420ma:{value: 68724, validate: NCD_validators.number_range(0, 4294967295)},
+			high_calibration_420ma_active:{value:""},
+			high_calibration_420ma:{value: 68714, validate: NCD_validators.number_range(0, 4294967295)},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -519,10 +526,10 @@
 			$('.ncd-config-toggle').each(function(){
 				var handleClick = function(){
 					// if($(this).prop('checked') && $(this).data('target-id')) {
-					//     $('#'+$(this).data('target-id')).prop('disabled', false);
+					//	 $('#'+$(this).data('target-id')).prop('disabled', false);
 					// }
 					// else{
-					//     $('#'+$(this).data('target-id')).prop('disabled', true);
+					//	 $('#'+$(this).data('target-id')).prop('disabled', true);
 					// }
 
 					if($(this).prop('checked')){
@@ -913,7 +920,7 @@
 					</select>
 				</div>
 			</div>
-            <div class="ncd-dependent" data-sensor-40>
+			<div class="ncd-dependent" data-sensor-40>
 				<div class="form-row">
 					<label for="node-input-filtering"><i class="icon-tag"></i> Data Filtering</label>
 					<select id="node-input-filtering">
@@ -1462,6 +1469,42 @@
 				</div>
 			</div>
 
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-89 data-sensor-200>
+				<div class="form-row ncd-active-check">
+					<strong>Low Calibration Point</strong>
+					<div>
+						<label for="node-input-low_calibration_420ma_active">Active:</label>
+						<input type="checkbox" id="node-input-low_calibration_420ma_active" class="ncd-config-toggle" data-target-id="node-input-low_calibration_420ma" value="1">
+					</div>
+					<div>
+						<label for="node-input-low_calibration_420ma"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-low_calibration_420ma" placeholder="68805" value="68805">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Mid Calibration Point</strong>
+					<div>
+						<label for="node-input-mid_calibration_420ma_active">Active:</label>
+						<input type="checkbox" id="node-input-mid_calibration_420ma_active" class="ncd-config-toggle" data-target-id="node-input-mid_calibration_420ma" value="1">
+					</div>
+					<div>
+						<label for="node-input-mid_calibration_420ma"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-mid_calibration_420ma" placeholder="68724" value="68724">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>High Calibration Point</strong>
+					<div>
+						<label for="node-input-high_calibration_420ma_active">Active:</label>
+						<input type="checkbox" id="node-input-high_calibration_420ma_active" class="ncd-config-toggle" data-target-id="node-input-high_calibration_420ma" value="1">
+					</div>
+					<div>
+						<label for="node-input-high_calibration_420ma"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-high_calibration_420ma" placeholder="68714" value="68714">
+					</div>
+				</div>
+			</div>
+
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-505 data-sensor-506>
 				<div class="form-row ncd-active-check">
 					<strong>Channel 1 Current Calibration Value</strong>
@@ -1606,7 +1649,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="ncd-wireless-node">
-    <h3>Wireless Node</h3>
+	<h3>Wireless Node</h3>
 	<p>This node is used to filter sensor data coming from a modem. It can filter by mac address, or sensor type, and can be used to configure wireless devices automatically when they enter configuration mode.</p>
 	<h4>Serial Devices</h4>
 	<p>The Serial Device field refers to the modem that will be recieving the packets from the device. The Serial Device for Config field refers to a modem that is always set to the config network ID (0x7BCD), this is the recommended setup as it allows you to configure nodes without missing potentially important sensor data, however, the config button on the Wireless Gateway node may be used if a single modem will be acting as both the listener, and config endpoints, making the second selection optional.</p>
@@ -1619,37 +1662,37 @@
 	<h4>Output</h4>
 	<p>This node will output detailed information about incoming sensor data, and the device identity and status including. The payload will contain an object containing sensor data, an example can be seen below:</p>
 	<pre>
-  msg = {
-    topic: "sensor_data",
-	payload: {
-      humidity: 45.51,
-      temperature: 23.91,
-	}
-    data: {
-      nodeId: 0,
-      firmware: 3,
-      battery: 3.2940600000000004,
-      counter: 37,
-      sensor_type: 1,
-      sensor_data: {
-        humidity: 45.51,
-        temperature: 23.91,
-      },
-      type: "sensor_data",
-      addr: "00:13:a2:00:41:07:18:81",
-      original: {
-        mac: "00:13:a2:00:41:07:18:81",
-        receive_options: {
-          ack: 0,
-          broadcast: 0,
-          type: ""
-        }
-      },
-      data: [127,0,3,3,255,37,0,1,0,17,199,9,87],
-      type: "receive_packet"
-    },
-    _msgid: "391caba.5a19454"
-  }
+		msg = {
+			topic: "sensor_data",
+			payload: {
+				humidity: 45.51,
+				temperature: 23.91,
+			}
+			data: {
+				nodeId: 0,
+				firmware: 3,
+				battery: 3.2940600000000004,
+				counter: 37,
+				sensor_type: 1,
+				sensor_data: {
+					humidity: 45.51,
+					temperature: 23.91,
+				},
+				type: "sensor_data",
+				addr: "00:13:a2:00:41:07:18:81",
+				original: {
+					mac: "00:13:a2:00:41:07:18:81",
+					receive_options: {
+						ack: 0,
+						broadcast: 0,
+						type: ""
+					}
+				},
+				data: [127,0,3,3,255,37,0,1,0,17,199,9,87],
+				type: "receive_packet"
+			},
+			_msgid: "391caba.5a19454"
+		}
 	</pre>
 </script>
 
