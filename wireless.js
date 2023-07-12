@@ -499,6 +499,14 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 78:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+							case 79:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
 							case 80:
 								if(config.current_calibration_c1_80_active){
 									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
