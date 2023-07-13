@@ -446,7 +446,7 @@ module.exports = function(RED) {
 									promises.impact_duration = node.config_gateway.config_set_duration_24(mac, parseInt(config.impact_duration));
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
-								promises.activity_interrupt = node.config_gateway.config_set_activ_interr(mac, interr);
+								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
