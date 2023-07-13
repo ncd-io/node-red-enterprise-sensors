@@ -239,6 +239,10 @@
 			sensor_boot_time_420ma_active: {value: ""},
 			sensor_boot_time_420ma: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
+			sensor_boot_time_78_active: {value: ""},
+			sensor_boot_time_78: {value: 0, validate: NCD_validators.number_range(0, 255)},
+
+
 			deadband_80_active: {value: ""},
 			deadband_80: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
@@ -894,7 +898,6 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-24>
-			//activ_interr_x
 				<div class="form-row">
 					<label for="node-input-activ_interr_x"><i class="icon-tag"></i> Interrupt X-Axis</label>
 					<select id="node-input-activ_interr_x">
@@ -1455,7 +1458,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-78 data-sensor-79 data-sensor-88 data-sensor-89>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-88 data-sensor-89>
 				<div class="form-row ncd-active-check">
 					<strong>Sensor Boot Time</strong>
 					<p class="caption">
@@ -1469,6 +1472,23 @@
 					<div>
 						<label for="node-input-sensor_boot_time_420ma"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-sensor_boot_time_420ma" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+
+			<div class="ncd-dependent" data-sensor-78 data-sensor-79>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Boot Time</strong>
+					<p class="caption">
+						This value represents the number of milliseconds to wait after applying power to the sensor before taking a reading.
+					</p>
+					<div>
+						<label for="node-input-sensor_boot_time_78_active">Active:</label>
+						<input type="checkbox" id="node-input-sensor_boot_time_78_active" class="ncd-config-toggle" data-target-id="node-input-sensor_boot_time_78" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_boot_time_78"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_boot_time_78" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>

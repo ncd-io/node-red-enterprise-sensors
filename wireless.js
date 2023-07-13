@@ -500,8 +500,8 @@ module.exports = function(RED) {
 								}
 								break;
 							case 78:
-								if(config.sensor_boot_time_420ma_active){
-									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								if(config.sensor_boot_time_78_active){
+									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 							case 79:
 								if(config.sensor_boot_time_420ma_active){
