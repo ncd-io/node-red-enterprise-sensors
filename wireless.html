@@ -209,9 +209,13 @@
 			amgt_mag: {value: "0"},
 			amgt_gyro: {value: "0"},
 
+			impact_accel_active: {value: ""},
 			impact_accel: {value: "0"},
+			impact_data_rate_active: {value: ""},
 			impact_data_rate: {value: "4"},
+			impact_threshold_active: {value: ""},
 			impact_threshold: {value: 25, validate: NCD_validators.number_range(1, 127)},
+			impact_duration_active: {value: ""},
 			impact_duration: {value: 1, validate: NCD_validators.number_range(1, 127)},
 
 			activ_interr_x: {value: 1, validate: RED.validators.number()},
@@ -864,37 +868,76 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-7 data-sensor-24>
-				<div class="form-row">
-					<label for="node-input-impact_accel"><i class="icon-tag"></i> Acceleration Range</label>
-					<select id="node-input-impact_accel">
-						<option selected="selected" value="0">±2g</option>
-						<option value="1">±4g</option>
-						<option value="3">±8g</option>
-						<option value="4">±16g</option>
-					</select>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Acceleration Range</strong>
+					</div>
+					<div>
+						<label for="node-input-impact_accel_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_accel_active" class="ncd-config-toggle" data-target-id="node-input-impact_accel" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_accel"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-impact_accel">
+							<option selected="selected" value="0">±2g</option>
+							<option value="1">±4g</option>
+							<option value="3">±8g</option>
+							<option value="4">±16g</option>
+						</select>
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-impact_data_rate"><i class="icon-tag"></i> Data Rate</label>
-					<select id="node-input-impact_data_rate">
-						<option selected="selected" value="0">Power Down</option>
-						<option value="1">1</option>
-						<option value="2">10</option>
-						<option value="3">25</option>
-						<option value="4">50</option>
-						<option value="5">100</option>
-						<option value="6">200</option>
-						<option value="7">400</option>
-						<option value="8">1600</option>
-						<option value="9">5376</option>
-					</select>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Data Rate</strong>
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_data_rate_active" class="ncd-config-toggle" data-target-id="node-input-impact_data_rate" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate"><i class="icon-tag"></i> Data Rate</label>
+						<select id="node-input-impact_data_rate">
+							<option selected="selected" value="0">Value:</option>
+							<option value="1">1</option>
+							<option value="2">10</option>
+							<option value="3">25</option>
+							<option value="4">50</option>
+							<option value="5">100</option>
+							<option value="6">200</option>
+							<option value="7">400</option>
+							<option value="8">1600</option>
+							<option value="9">5376</option>
+						</select>
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-impact_threshold"><i class="icon-tag"></i> Threshold (1 - 127)</label>
-					<input id="node-input-impact_threshold">
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Threshold</strong>
+						<p>Accepted values from 1-127.</p>
+					</div>
+					<div>
+						<label for="node-input-impact_threshold_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_threshold_active" class="ncd-config-toggle" data-target-id="node-input-impact_threshold" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_threshold"><i class="icon-tag"></i>Value:</label>
+						<input id="node-input-impact_threshold">
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-impact_duration"><i class="icon-tag"></i> Duration (1 - 127)</label>
-					<input id="node-input-impact_duration">
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Duration</strong>
+						<p>Accepted values from 1-127.</p>
+					</div>
+					<div>
+						<label for="node-input-impact_duration_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_duration_active" class="ncd-config-toggle" data-target-id="node-input-impact_duration" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_duration"><i class="icon-tag"></i>Value:</label>
+						<input id="node-input-impact_duration">
+					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-24>
