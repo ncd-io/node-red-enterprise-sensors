@@ -504,8 +504,8 @@ module.exports = function(RED) {
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 							case 79:
-								if(config.sensor_boot_time_420ma_active){
-									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								if(config.sensor_boot_time_78_active){
+									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 							case 80:
 								if(config.current_calibration_c1_80_active){
