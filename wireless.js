@@ -775,6 +775,7 @@ module.exports = function(RED) {
 								if(config.sensor_boot_time_78_active){
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
+								break;
 							case 101:
 								if(config.output_data_rate_101_m2_active){
 									promises.output_data_rate_101_m2 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101_m2));
