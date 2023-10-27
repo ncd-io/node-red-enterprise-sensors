@@ -337,6 +337,9 @@
 			mid_calibration_420ma:{value: 68724, validate: NCD_validators.number_range(0, 4294967295)},
 			high_calibration_420ma_active:{value:""},
 			high_calibration_420ma:{value: 68714, validate: NCD_validators.number_range(0, 4294967295)},
+
+			thermocouple_type_23_active:{value:""},
+			thermocouple_type_23:{value: 0},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -702,7 +705,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-26 data-sensor-45 data-sensor-48 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-519 data-sensor-520 data-sensor-521>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-45 data-sensor-48 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-519 data-sensor-520 data-sensor-521>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1698,6 +1701,29 @@
 							<option value="1">100 Bytes</option>
 							<option value="2">150 Bytes</option>
 							<option selected="selected" value="3">180 Bytes</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-46>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Thermocouple Type</strong>
+					<div>
+						<label for="node-input-thermocouple_type_23_active">Active:</label>
+						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
+					</div>
+					<div>
+						<label for="node-input-thermocouple_type_23"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-thermocouple_type_23">
+							<option selected="selected" value="0">K </option>
+							<option value="16">J Type</option>
+							<option value="32">T Type</option>
+							<option value="48">N Type</option>
+							<option value="64">S Type</option>
+							<option value="80">E Type</option>
+							<option value="96">B Type</option>
+							<option value="112">R Type</option>
 						</select>
 					</div>
 				</div>
