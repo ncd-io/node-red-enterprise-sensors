@@ -315,7 +315,7 @@ module.exports = function(RED) {
 				setTimeout(() => {
 					var tout = setTimeout(() => {
 						node.status(modes.PGM_ERR);
-						node.send({topic: 'Config Results', payload: success, time: Date.now()});
+						node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
 					}, 60000);
 					node.status(modes.PGM_NOW);
 					if(parseInt(config.sensor_type) >= 10000){
@@ -985,7 +985,7 @@ module.exports = function(RED) {
 								if(name != 'finish') success[name] = true;
 								else{
 									// #OTF
-									node.send({topic: 'Config Results', payload: success, time: Date.now()});
+									node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
 									top_fulfill(success);
 								}
 							}).catch((err) => {
