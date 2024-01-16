@@ -151,7 +151,23 @@ module.exports = function(RED) {
 		};
 
 		node.on('input', function(msg){
-			node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			// console.log("input triggered, topic:"+msg.topic);
+			if(msg.topic == "transmit"){
+				const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+				node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			}
+			if(msg.topic == "route_trace"){
+				var opts = {trace:1};
+				node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+			}
+			if(msg.topic == "link_test"){
+				node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+			}
+			if(msg.topic == "fft_request"){
+
+			}
+			if(msg.topic == "fidelity_test"){
+			}
 		});
 
 		node.gateway.on('sensor_data', (d) => {
@@ -166,6 +182,14 @@ module.exports = function(RED) {
 			node.set_status();
 			msg1 = {topic:'somethingTopic',payload:"something"};
 			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		});
+		node.gateway.on("route_info",(d)=>{
+			msg1 = {topic:"route_info",payload:d};
+			node.send(msg1);
+		});
+		node.gateway.on("link_info",(d)=>{
+			msg1 = {topic:"link_info",payload:d};
+			node.send(msg1);
 		});
 
 		node.set_status();
