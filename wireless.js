@@ -151,7 +151,41 @@ module.exports = function(RED) {
 		};
 
 		node.on('input', function(msg){
-			node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			switch(msg.topic){
+				case "route_trace":
+					var opts = {trace:1};
+					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+					break;
+				case "link_test":
+					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+					break;
+				case "fft_request":
+					break;
+				case "fidelity_test":
+					break;
+				default:
+					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			}
+
+
+			// console.log("input triggered, topic:"+msg.topic);
+			// if(msg.topic == "transmit"){
+			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+			// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			// }
+			// if(msg.topic == "route_trace"){
+			// 	var opts = {trace:1};
+			// 	node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+			// }
+			// if(msg.topic == "link_test"){
+			// 	node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+			// }
+			// if(msg.topic == "fft_request"){
+
+			// }
+			// if(msg.topic == "fidelity_test"){
+			// }
 		});
 
 		node.gateway.on('sensor_data', (d) => {
@@ -166,6 +200,14 @@ module.exports = function(RED) {
 			node.set_status();
 			msg1 = {topic:'somethingTopic',payload:"something"};
 			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		});
+		node.gateway.on("route_info",(d)=>{
+			msg1 = {topic:"route_info",payload:d};
+			node.send(msg1);
+		});
+		node.gateway.on("link_info",(d)=>{
+			msg1 = {topic:"link_info",payload:d};
+			node.send(msg1);
 		});
 
 		node.set_status();
@@ -814,6 +856,20 @@ module.exports = function(RED) {
 								// 	promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								// }
 								// promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								break;
+							case 107:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+								if(config.low_calibration_420ma_active){
+									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								}
+								if(config.mid_calibration_420ma_active){
+									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								}
+								if(config.high_calibration_420ma_active){
+									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
 								break;
 							case 200:
 								if(config.low_calibration_420ma_active){
