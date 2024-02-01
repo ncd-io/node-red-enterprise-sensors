@@ -153,8 +153,9 @@ module.exports = function(RED) {
 		node.on('input', function(msg){
 			switch(msg.topic){
 				case "route_trace":
+					console.log("performing route_trace");
 					var opts = {trace:1};
-					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+					node.gateway.route_discover(msg.payload.address,msg.payload.data,opts).then().catch(console.log);
 					break;
 				case "link_test":
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
@@ -493,6 +494,21 @@ module.exports = function(RED) {
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
 								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
+							case 25:
+								if(config.impact_accel_active){
+									promises.impact_accel = node.config_gateway.config_set_acceleration_range_24(mac, parseInt(config.impact_accel));
+								}
+								if(config.impact_data_rate_active){
+									promises.impact_data_rate = node.config_gateway.config_set_data_rate_24(mac, parseInt(config.impact_data_rate));
+								}
+								if(config.impact_threshold_active){
+									promises.impact_threshold = node.config_gateway.config_set_threshold_24(mac, parseInt(config.impact_threshold));
+								}
+								if(config.impact_duration_active){
+									promises.impact_duration = node.config_gateway.config_set_duration_24(mac, parseInt(config.impact_duration));
+								}
+								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
+								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);	
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
