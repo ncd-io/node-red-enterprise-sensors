@@ -188,7 +188,14 @@ module.exports = function(RED) {
 			// if(msg.topic == "fidelity_test"){
 			// }
 		});
-
+		node.gateway.on('ncd_error', (data) => {
+			node.send({
+				topic: 'ncd_error',
+				data: data,
+				payload: data.error,
+				time: Date.now()
+			});
+		});
 		node.gateway.on('sensor_data', (d) => {
 			node.set_status();
 			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
@@ -248,6 +255,7 @@ module.exports = function(RED) {
 			RUN: {fill:"green",shape:"dot",text:"Running"},
 			PUM: {fill:"yellow",shape:"ring",text:"Module was factory reset"},
 			ACK: {fill:"green",shape:"ring",text:"Configuration Acknowledged"},
+			STREAM_ERR: {fill:"red",shape:"ring",text:"Multi-Packet Stream Error"},
 			// FLY: {fill:"yellow",shape:"ring",text:"FLY notification received"},
 			// OTN: {fill:"yellow",shape:"ring",text:"OTN Received, OTF Configuration Initiated"},
 			// OFF: {fill:"green",shape:"dot",text:"OFF Recieved, OTF Configuration Completed"}
@@ -508,7 +516,7 @@ module.exports = function(RED) {
 									promises.impact_duration = node.config_gateway.config_set_duration_24(mac, parseInt(config.impact_duration));
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
-								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);	
+								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
@@ -1069,6 +1077,7 @@ module.exports = function(RED) {
 			});
 		}
 		node._sensor_config = _config;
+
 		if(config.addr){
 			config.addr = config.addr.toLowerCase();
 
@@ -1080,6 +1089,15 @@ module.exports = function(RED) {
 					topic: 'sensor_data',
 					data: data,
 					payload: data.sensor_data,
+					time: Date.now()
+				});
+			});
+			this.gtw_on('ncd_error-'+config.addr, (data) => {
+				node.status(modes.STREAM_ERR);
+				node.send({
+					topic: 'ncd_error',
+					data: data,
+					payload: data.error,
 					time: Date.now()
 				});
 			});
@@ -1185,6 +1203,15 @@ module.exports = function(RED) {
 					topic: 'sensor_data',
 					data: data,
 					payload: data.sensor_data,
+					time: Date.now()
+				});
+			});
+			this.gtw_on('ncd_error-'+config.sensor_type, (data) => {
+				node.status(modes.STREAM_ERR);
+				node.send({
+					topic: 'ncd_error',
+					data: data,
+					payload: data.error,
 					time: Date.now()
 				});
 			});
