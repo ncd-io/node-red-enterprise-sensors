@@ -160,7 +160,15 @@ module.exports = function(RED) {
 				case "link_test":
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
 					break;
-				case "fft_request":
+				case "request_time_series":
+					// Sample fft_request msg:
+					// msg.payload = {
+					// 	address: "00:13:a2:00:42:2c:d2:aa",
+					// 	type: 80, //OPTIONAL only required for t81 sensor
+					// 	probe: 1//OPTIONAL only required for type 81 sensor
+					// }
+					console.log('MARK A');
+					node.gateway.request_time_series(msg.payload);
 					break;
 				case "fidelity_test":
 					break;
