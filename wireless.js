@@ -292,7 +292,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102 , 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 518, 519, 520];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
