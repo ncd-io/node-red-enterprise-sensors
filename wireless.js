@@ -545,6 +545,9 @@ module.exports = function(RED) {
 								if(config.force_calibration_co2_auto_config){
 									promises.sensor_forced_calibration = node.config_gateway.config_set_sensor_forced_calibration(mac, parseInt(config.force_calibration_co2));
 								}
+								if(config.temperature_offset_44_active){
+									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
+								}
 								break;
 							case 45:
 								if(config.sensor_boot_time_420ma_active){
