@@ -139,7 +139,11 @@ module.exports = function(RED) {
 													// 	node.set_status();
 													// 	res.send(msgs[m]);
 													// });
+													// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'update_in_progress')){
+													// 	node.recover_update(manifest_data, firmware_data);
+													// }else{
 													node.start_firmware_update(manifest_data, firmware_data);
+													// }
 												});
 											}
 										}).catch((err) => {
@@ -149,12 +153,6 @@ module.exports = function(RED) {
 									})(i);
 								}
 							});
-
-
-
-
-
-
 						});
 					}));
 				});
@@ -186,6 +184,51 @@ module.exports = function(RED) {
 			});
 		};
 
+		node.recover_update = function(manifest_data, firmware_data){
+			node.gateway.firmware_request_last_segment(manifest_data.addr);
+		}
+		node.get_last_segment = function(manifest_data, firmware_data){
+			setTimeout(() => {
+				var tout = setTimeout(() => {
+					console.log('India 11');
+					console.log('In timeout for get last segment');
+					// node.status(modes.PGM_ERR);
+					// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+				}, 10000);
+
+				var promises = {};
+				promises.firmware_request_last_segment = node.gateway.firmware_request_last_segment(manifest_data.addr);
+				promises.finish = new Promise((fulfill, reject) => {
+					node.gateway.queue.add(() => {
+						return new Promise((f, r) => {
+							clearTimeout(tout);
+							// node.status(modes.FLY);
+							fulfill();
+							f();
+						});
+					});
+				});
+				for(var i in promises){
+					(function(name){
+						promises[name].then((f) => {
+							console.log('ZULU 11');
+							if(name != 'finish'){
+								// msg[name] = true;
+								console.log(name);
+							}
+							else{
+								node.start_firmware_update(manifest_data, firmware_data);
+							}
+						}).catch((err) => {
+							console.log(err);
+							// msg[name] = err;
+						});
+					})(i);
+				}
+			});
+
+			// node.start_firmware_update(manifest_data, firmware_data);
+		}
 		node.start_firmware_update = function(manifest_data, firmware_data){
 			console.log('Golf 1');
 			console.log(manifest_data);
@@ -195,80 +238,139 @@ module.exports = function(RED) {
 				var success = {};
 
 				setTimeout(() => {
-					// var tout = setTimeout(() => {
-					// 	console.log('Golf 2');
-					// 	console.log('Timeout Triggered');
-					// 	node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-					// 	// node.status(modes.PGM_ERR);
-					// 	// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-					// }, 60000);
-					let chunk_size = 128;
-					let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-					// let manifest_command = [254, 58, 0, 0, 0];
-					// manifest_command = manifest_command.push(...firmware_data.firmware.slice(5, image_start)));
-					var promises = {};
-					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+					console.log('Bravo 102');
+					// if(!Object.hasOwn(node.sensor_list[manifest_data.addr], 'promises')){
+						// var tout = setTimeout(() => {
+						// 	console.log('Golf 2');
+						// 	console.log('Timeout Triggered');
+						// 	node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+						// 	// node.status(modes.PGM_ERR);
+						// 	// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+						// }, 60000);
+						let chunk_size = 128;
+						let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+						// let manifest_command = [254, 58, 0, 0, 0];
+						// manifest_command = manifest_command.push(...firmware_data.firmware.slice(5, image_start)));
+						var promises = {};
+						promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
 
-					console.log('Hotel 1');
-					// console.log('!!!!!!!!!!!!');
-					// console.log(image_start);
+						console.log('Hotel 1');
+						// console.log('!!!!!!!!!!!!');
+						// console.log(image_start);
 
-					// why +4? seems there's 4 bytes after the image start that indicate something.
-					firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
-					// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
+						// why +4? seems there's 4 bytes after the image start that indicate something.
+						firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+						// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
 
-					console.log('foxtrot 1');
-					console.log(image_start);
-					let index = 0
-					while(index*chunk_size < firmware_data.manifest.image_size){
-						let offset = index*chunk_size;
-						// console.log(index);
-						// let packet = [254, 59, 0, 0, 0];
-						let offset_bytes = int2Bytes(offset, 4);
-						let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size)
-						// packet = packet.concat(offset_bytes, firmware_chunk);
-						promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
-						index++;
-					}
-
-					// while(index*chunk_size < firmware_data.manifest.image_size){
-					// 	firmware_chunks.push(firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size));
-					// 	index++;
-					// }
-					// console.log(firmware_chunks);
-					promises.finish = new Promise((fulfill, reject) => {
-						node.gateway.queue.add(() => {
-							return new Promise((f, r) => {
-								clearTimeout(tout);
-								// node.status(modes.READY);
-								fulfill();
-								f();
+						console.log('foxtrot 1');
+						console.log(image_start);
+						let index = 0
+						while(index*chunk_size < firmware_data.manifest.image_size){
+							let offset = index*chunk_size;
+							// console.log(index);
+							// let packet = [254, 59, 0, 0, 0];
+							let offset_bytes = int2Bytes(offset, 4);
+							let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size)
+							// packet = packet.concat(offset_bytes, firmware_chunk);
+							promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
+							index++;
+						}
+						promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+						// while(index*chunk_size < firmware_data.manifest.image_size){
+						// 	firmware_chunks.push(firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size));
+						// 	index++;
+						// }
+						// console.log(firmware_chunks);
+						node.sensor_list[manifest_data.addr].promises = promises;
+						promises.finish = new Promise((fulfill, reject) => {
+							node.gateway.queue.add(() => {
+								return new Promise((f, r) => {
+									// clearTimeout(tout);
+									// node.status(modes.READY);
+									fulfill();
+									f();
+								});
 							});
 						});
-					});
-					for(var i in promises){
-						(function(name){
-							promises[name].then((f) => {
-								if(name != 'finish'){
-									success[name] = true;
-									console.log('--------');
-									console.log(name);
-								}
-								else{
+						for(var i in promises){
+							(function(name){
+								promises[name].then((f) => {
+									if(name == 'manifest'){
+										delete node.sensor_list[manifest_data.addr].promises[name];
+										node.sensor_list[manifest_data.addr].update_in_progress = true;
+									}else if(name != 'finish'){
+										success[name] = true;
+										delete node.sensor_list[manifest_data.addr].promises[name];
+										console.log('--------');
+										console.log(name);
+									}
+									else{
+										delete node.sensor_list[manifest_data.addr].promises;
+										node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+										// #OTF
+										node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+										top_fulfill(success);
+									}
+								}).catch((err) => {
+									console.log('!!!!!!!!!');
+									console.log(err);
+									node.gateway.clear_queue();
+									success[name] = err;
 									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									// #OTF
-									node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-									top_fulfill(success);
-								}
-							}).catch((err) => {
-								console.log('!!!!!!!!!');
-								console.log(err);
-								success[name] = err;
-							});
-						})(i);
-					}
+									node.resume_normal_operation();
+								});
+							})(i);
+						}
+					// }else{
+					// 	console.log('Bravo 100');
+					// 	// var promises = node.sensor_list[manifest_data.addr].promises;
+					// 	let promises = node.sensor_list[manifest_data.addr].promises;
+					// 	node.gateway.queue.queue = promises
+					// 	console.log('Bravo 101');
+					// 	promises.finish = new Promise((fulfill, reject) => {
+					// 		node.gateway.queue.add(() => {
+					// 			return new Promise((f, r) => {
+					// 				// clearTimeout(tout);
+					// 				// node.status(modes.READY);
+					// 				fulfill();
+					// 				f();
+					// 			});
+					// 		});
+					// 	});
+					//
+					// 	for(var i in promises){
+					// 		(function(name){
+					// 			promises[name].then((f) => {
+					// 				if(name == 'manifest'){
+					// 					delete node.sensor_list[manifest_data.addr].promises[name];
+					// 					node.sensor_list[manifest_data.addr].update_in_progress = true;
+					// 				}else if(name != 'finish'){
+					// 					success[name] = true;
+					// 					delete node.sensor_list[manifest_data.addr].promises[name];
+					// 					console.log('--------');
+					// 					console.log(name);
+					// 				}
+					// 				else{
+					// 					delete node.sensor_list[manifest_data.addr].promises;
+					// 					node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+					// 					// #OTF
+					// 					node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+					// 					top_fulfill(success);
+					// 				}
+					// 			}).catch((err) => {
+					// 				console.log('!!!!!!!!!');
+					// 				console.log(err);
+					// 				node.gateway.clear_queue();
+					// 				success[name] = err;
+					// 				node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+					// 				node.resume_normal_operation();
+					// 			});
+					// 		})(i);
+					// 	}
+					// }
 				}, 1000);
 			});
+
 
 			// var tout = setTimeout(() => {
 			// 	node.status(modes.PGM_ERR);
@@ -285,24 +387,32 @@ module.exports = function(RED) {
 			// 		});
 			// 	});
 			// });
-			for(var i in promises){
-				(function(name){
-					promises[name].then((f) => {
-						if(name != 'finish') success[name] = true;
-						else{
-							// #OTF
-							node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
-							top_fulfill(success);
-						}
-					}).catch((err) => {
-						success[name] = err;
-					});
-				})(i);
-			}
-
-
-
-
+			// for(var i in promises){
+			// 	(function(name){
+			// 		promises[name].then((f) => {
+			// 			if(name != 'finish') success[name] = true;
+			// 			else{
+			// 				// #OTF
+			// 				node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
+			// 				top_fulfill(success);
+			// 			}
+			// 		}).catch((err) => {
+			// 			success[name] = err;
+			// 		});
+			// 	})(i);
+			// }
+		}
+		node.resume_normal_operation = function(){
+			let pan_id = parseInt(config.pan_id, 16);
+			node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then().catch().then(() => {
+				console.log('Bravo 10');
+				// console.log(m);
+				// node.check_mode((m) => {
+				// 	node.set_status();
+				// 	res.send(msgs[m]);
+				// });
+				// node.start_firmware_update(manifest_data, firmware_data);
+			});
 		}
 
 		node.request_manifest = function(sensor_addr){
