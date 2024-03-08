@@ -3,7 +3,8 @@ const comms = require('ncd-red-comm');
 const sp = require('serialport');
 const Queue = require("promise-queue");
 const events = require("events");
-
+const fs = require('fs');
+const home_dir = require('os').homedir
 module.exports = function(RED) {
 	var gateway_pool = {};
 	function NcdGatewayConfig(config){
@@ -14,6 +15,8 @@ module.exports = function(RED) {
 
 		this.listeners = [];
 		this.sensor_pool = [];
+		// TODO sensor_list is a temporary property, should be combined with sensor_pool
+		this.sensor_list = {};
 		this._emitter = new events.EventEmitter();
 		this.on = (e,c) => this._emitter.on(e, c);
 
@@ -72,6 +75,87 @@ module.exports = function(RED) {
 								node.gateway.digi.serial.reconnect();
 							});
 						}
+						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
+						node.gateway.on('sensor_mode', (d) => {
+							if(d.mode == "FLY"){
+								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request')){
+									node.request_manifest(d.mac);
+								};
+							};
+						});
+						node.gateway.on('manifest_received', (manifest_data) => {
+							// read manifest length is 37. Could use the same event for both
+							// node._parse_manifest(manifest_data.data);
+							console.log('Echo 1');
+							if(Object.hasOwn(node.sensor_list, manifest_data.addr) && Object.hasOwn(node.sensor_list[manifest_data.addr], 'update_request')){
+								// TODO check manifest data and start update process
+							}
+							manifest_data.data = node._parse_manifest_read(manifest_data.data);
+							node._emitter.emit('send_manifest', manifest_data);
+							let firmware_data = node._compare_manifest(manifest_data);
+							console.log('Echo 4');
+							console.log(typeof firmware_data);
+							console.log(firmware_data);
+
+							// TODO Right now assume everything is good
+							// node.gateway.firmware_set_to_ota_mode(manifest_data.addr);
+
+
+
+							setTimeout(() => {
+								var tout = setTimeout(() => {
+									console.log('India 1');
+									console.log('In timeout for start ota');
+									// node.status(modes.PGM_ERR);
+									// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+								}, 10000);
+
+								var promises = {};
+								promises.firmware_set_to_ota_mode = node.gateway.firmware_set_to_ota_mode(manifest_data.addr);
+								promises.finish = new Promise((fulfill, reject) => {
+									node.gateway.queue.add(() => {
+										return new Promise((f, r) => {
+											clearTimeout(tout);
+											// node.status(modes.FLY);
+											fulfill();
+											f();
+										});
+									});
+								});
+								for(var i in promises){
+									(function(name){
+										promises[name].then((f) => {
+											console.log('ZULU 1');
+											if(name != 'finish'){
+												// msg[name] = true;
+												console.log(name);
+											}
+											else{
+												// enter ota mode
+												node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
+													console.log('Bravo 1');
+													// console.log(m);
+													// node.check_mode((m) => {
+													// 	node.set_status();
+													// 	res.send(msgs[m]);
+													// });
+													node.start_firmware_update(manifest_data, firmware_data);
+												});
+											}
+										}).catch((err) => {
+											console.log(err);
+											// msg[name] = err;
+										});
+									})(i);
+								}
+							});
+
+
+
+
+
+
+						});
 					}));
 				});
 				node.gateway.digi.serial.on('closed_comms', () => {
@@ -102,6 +186,142 @@ module.exports = function(RED) {
 			});
 		};
 
+		node.start_firmware_update = function(manifest_data, firmware_data){
+			console.log('Golf 1');
+			console.log(manifest_data);
+			console.log(firmware_data);
+
+			return new Promise((top_fulfill, top_reject) => {
+				var success = {};
+
+				setTimeout(() => {
+					// var tout = setTimeout(() => {
+					// 	console.log('Golf 2');
+					// 	console.log('Timeout Triggered');
+					// 	node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+					// 	// node.status(modes.PGM_ERR);
+					// 	// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+					// }, 60000);
+					let chunk_size = 128;
+					let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+					// let manifest_command = [254, 58, 0, 0, 0];
+					// manifest_command = manifest_command.push(...firmware_data.firmware.slice(5, image_start)));
+					var promises = {};
+					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+
+					console.log('Hotel 1');
+					// console.log('!!!!!!!!!!!!');
+					// console.log(image_start);
+
+					// why +4? seems there's 4 bytes after the image start that indicate something.
+					firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+					// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
+
+					console.log('foxtrot 1');
+					console.log(image_start);
+					let index = 0
+					while(index*chunk_size < firmware_data.manifest.image_size){
+						let offset = index*chunk_size;
+						// console.log(index);
+						// let packet = [254, 59, 0, 0, 0];
+						let offset_bytes = int2Bytes(offset, 4);
+						let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size)
+						// packet = packet.concat(offset_bytes, firmware_chunk);
+						promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
+						index++;
+					}
+
+					// while(index*chunk_size < firmware_data.manifest.image_size){
+					// 	firmware_chunks.push(firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size));
+					// 	index++;
+					// }
+					// console.log(firmware_chunks);
+					promises.finish = new Promise((fulfill, reject) => {
+						node.gateway.queue.add(() => {
+							return new Promise((f, r) => {
+								clearTimeout(tout);
+								// node.status(modes.READY);
+								fulfill();
+								f();
+							});
+						});
+					});
+					for(var i in promises){
+						(function(name){
+							promises[name].then((f) => {
+								if(name != 'finish'){
+									success[name] = true;
+									console.log('--------');
+									console.log(name);
+								}
+								else{
+									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+									// #OTF
+									node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+									top_fulfill(success);
+								}
+							}).catch((err) => {
+								console.log('!!!!!!!!!');
+								console.log(err);
+								success[name] = err;
+							});
+						})(i);
+					}
+				}, 1000);
+			});
+
+			// var tout = setTimeout(() => {
+			// 	node.status(modes.PGM_ERR);
+			// 	node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
+			// }, 60000);
+
+			// promises.finish = new Promise((fulfill, reject) => {
+			// 	node.config_gateway.queue.add(() => {
+			// 		return new Promise((f, r) => {
+			// 			clearTimeout(tout);
+			// 			node.status(modes.READY);
+			// 			fulfill();
+			// 			f();
+			// 		});
+			// 	});
+			// });
+			for(var i in promises){
+				(function(name){
+					promises[name].then((f) => {
+						if(name != 'finish') success[name] = true;
+						else{
+							// #OTF
+							node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
+							top_fulfill(success);
+						}
+					}).catch((err) => {
+						success[name] = err;
+					});
+				})(i);
+			}
+
+
+
+
+		}
+
+		node.request_manifest = function(sensor_addr){
+			// Request Manifest
+			node.gateway.firmware_request_manifest(sensor_addr);
+
+			// send ota request
+			// node.gateway.firmware_set_to_ota_mode(sensor_addr);
+
+			// Change Gateway to OTA mode
+			// node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
+			// 	console.log('Bravo 1');
+			// 	console.log(m);
+			// 	node.check_mode((m) => {
+			// 		node.set_status();
+			// 		res.send(msgs[m]);
+			// 	});
+			// });
+		};
 
 		node.close_comms = function(){
 			// node.gateway._emitter.removeAllListeners('sensor_data');
@@ -118,7 +338,89 @@ module.exports = function(RED) {
 					// });
 				}
 			}
+		}
+		node._compare_manifest = function(sensor_manifest){
+			let firmware_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
+			let filename = '/' + sensor_manifest.data.device_type + '-' + sensor_manifest.data.hardware_id[0] + '_' + sensor_manifest.data.hardware_id[1] + '_' + sensor_manifest.data.hardware_id[2] + '.ncd';
+			console.log('Echo 3');
+			console.log(sensor_manifest);
 
+			try {
+				let firmware_file = fs.readFileSync(firmware_dir+filename,)
+				let stored_manifest = node._parse_manifest(firmware_file);
+				console.log(stored_manifest);
+				if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
+					console.log('firmware versions SAME');
+					return "Firmware versions match, skip update";
+				}
+				// Already checked according to file name.
+				// if(!sensor_manifest.data.hardware_id[0] == stored_manifest.hardware_id[0] || !sensor_manifest.data.hardware_id[1] == stored_manifest.hardware_id[1] || !sensor_manifest.data.hardware_id[2] == stored_manifest.hardware_id[2]){
+				// 	console.log('hardware does not match');
+				// 	return "hardware does not match";
+				// }
+				if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
+					console.log('firmware image too large');
+					return "firmware image too large";
+				}
+				console.log('pre-return');
+				return {manifest: stored_manifest, firmware: firmware_file};
+			} catch(err){
+				console.log(err);
+				return err;
+			}
+
+			// ASYNC introduce in the future, take too long to get it to work.
+			// fs.readFileSync(firmware_dir+filename, function(err, firmware_file){
+			// 	// if(err) return err;
+			// 	if(err) console.log(err);
+			// 	let stored_manifest = node._parse_manifest(firmware_file);
+			// 	console.log(stored_manifest);
+			// 	if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
+			// 		console.log('firmware versions SAME');
+			// 		return "Firmware versions match, skip update";
+			// 	}
+			// 	// Already checked according to file name.
+			// 	// if(!sensor_manifest.data.hardware_id[0] == stored_manifest.hardware_id[0] || !sensor_manifest.data.hardware_id[1] == stored_manifest.hardware_id[1] || !sensor_manifest.data.hardware_id[2] == stored_manifest.hardware_id[2]){
+			// 	// 	console.log('hardware does not match');
+			// 	// 	return "hardware does not match";
+			// 	// }
+			// 	if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
+			// 		console.log('firmware image too large');
+			// 		return "firmware image too large";
+			// 	}
+			// 	console.log('pre-return');
+			// 	return {manifest: stored_manifest, firmware: firmware_file};
+			// });
+		}
+		node._parse_manifest = function(bin_data){
+			return {
+				manifest_check: bin_data[0] == 0x01,
+				manifest_size: bin_data.slice(1, 5).reduce(msbLsb),
+				firmware_version: bin_data[5],
+				image_start_address: bin_data.slice(6, 10).reduce(msbLsb),
+				image_size: bin_data.slice(10, 14).reduce(msbLsb),
+				max_image_size: bin_data.slice(14, 18).reduce(msbLsb),
+				image_digest: bin_data.slice(18, 34),
+				device_type: bin_data.slice(34, 36).reduce(msbLsb),
+				hardware_id: bin_data.slice(36, 39),
+				reserve_bytes: bin_data.slice(39, 42)
+			}
+		};
+		node._parse_manifest_read = function(bin_data){
+			console.log(bin_data.length);
+			console.log('Echo 2');
+			console.log(toHex(bin_data));
+			return {
+				// manifest_size: bin_data.slice(0,4).reduce(msbLsb),
+				firmware_version: bin_data[0],
+				image_start_address: bin_data.slice(1, 5).reduce(msbLsb),
+				image_size: bin_data.slice(5, 9).reduce(msbLsb),
+				max_image_size: bin_data.slice(9, 13).reduce(msbLsb),
+				image_digest: bin_data.slice(13, 29),
+				device_type: bin_data.slice(29, 31).reduce(msbLsb),
+				hardware_id: bin_data.slice(31, 34),
+				reserve_bytes: bin_data.slice(34, 37)
+			}
 		}
 	}
 
@@ -131,6 +433,8 @@ module.exports = function(RED) {
 
 		this._gateway_node.open_comms();
 		this.gateway = this._gateway_node.gateway;
+
+		// this.sensor_list = {};
 
 		var node = this;
 
@@ -149,7 +453,56 @@ module.exports = function(RED) {
 		node.set_status = function(){
 			node.status(statuses[node._gateway_node.is_config]);
 		};
-
+		// TODO consider to move this to config
+		// node._parse_manifest = function(bin_data){
+		// 	return {
+		// 		manifest_check: bin_data[0] == 0x01,
+		// 		manifest_size: bin_data.slice(1, 5).reduce(msbLsb),
+		// 		firmware_version: bin_data[5],
+		// 		image_start_address: bin_data.slice(6, 10).reduce(msbLsb),
+		// 		image_size: bin_data.slice(10, 14).reduce(msbLsb),
+		// 		max_image_size: bin_data.slice(14, 18).reduce(msbLsb),
+		// 		image_digest: bin_data.slice(18, 34),
+		// 		device_type: bin_data.slice(34, 36).reduce(msbLsb),
+		// 		hardware_id: bin_data.slice(36, 39),
+		// 		reserve_bytes: bin_data.slice(39, 42)
+		// 	}
+		// }
+		// read manifests have the first 5 bytes missing
+		// node._parse_manifest_read = function(bin_data){
+		// 	console.log(bin_data.length);
+		// 	console.log('Echo 2');
+		// 	return {
+		// 		// manifest_size: bin_data.slice(0,4).reduce(msbLsb),
+		// 		firmware_version: bin_data[0],
+		// 		image_start_address: bin_data.slice(1, 5).reduce(msbLsb),
+		// 		image_size: bin_data.slice(5, 9).reduce(msbLsb),
+		// 		max_image_size: bin_data.slice(9, 13).reduce(msbLsb),
+		// 		image_digest: bin_data.slice(13, 29),
+		// 		device_type: bin_data.slice(29, 31).reduce(msbLsb),
+		// 		hardware_id: bin_data.slice(31, 34),
+		// 		reserve_bytes: bin_data.slice(34, 37)
+		// 	}
+		// }
+		node._gateway_node.on('send_manifest', (manifest_data) => {
+			node.send({
+				topic: 'sensor_manifest',
+				payload: {
+					addr: manifest_data.addr,
+					sensor_type: manifest_data.sensor_type,
+					manifest: manifest_data.data
+				},
+				time: Date.now()
+			});
+		});
+		node._gateway_node.on('send_firmware_stats', (data) => {
+			node.send({
+				topic: 'update_stats',
+				payload: data.state,
+				addr: data.addr,
+				time: Date.now()
+			});
+		});
 		node.on('input', function(msg){
 			switch(msg.topic){
 				case "route_trace":
@@ -167,10 +520,86 @@ module.exports = function(RED) {
 					// 	type: 80, //OPTIONAL only required for t81 sensor
 					// 	probe: 1//OPTIONAL only required for type 81 sensor
 					// }
-					console.log('MARK A');
 					node.gateway.request_time_series(msg.payload);
 					break;
 				case "fidelity_test":
+					break;
+				case "add_firmware_file":
+					// Parse Manifest to grab information and store it for later use
+					// msg.payload = [0x01, 0x00, ...]
+					let new_msg = {
+						topic: 'add_firmware_file_response',
+						payload: node._gateway_node._parse_manifest(msg.payload)
+					}
+					console.log('FIRE 1');
+					let firmware_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
+					if (!fs.existsSync(firmware_dir)) {
+						fs.mkdirSync(firmware_dir);
+					};
+					let filename = '/' + new_msg.payload.device_type + '-' + new_msg.payload.hardware_id[0] + '_' + new_msg.payload.hardware_id[1] + '_' + new_msg.payload.hardware_id[2] + '.ncd';
+					fs.writeFile(firmware_dir+filename, msg.payload, function(err){
+						if(err){
+							console.log(err);
+						};
+						console.log('Success');
+					});
+					node.send(new_msg);
+					break;
+				// case "get_firmware_file":
+				// Commented out as I'd rather use a flow to request the file. More robust. Maybe more complicated, wait for feedback.
+				// 	// This input makes a request to the specified url and downloads a firmware file at that location
+				// 	// msg.payload = "https://github.com/ncd-io/WiFi_MQTT_Temperature_Firmware/raw/main/v1.0.3/firmware.bin"
+
+				case "check_firmware_file":
+					// Read file that should be at location and spit out the binary
+					// Example msg.payload
+					// msg.payload = {
+					// 	device_type: 80,
+					// 	hardware_id: [88, 88, 88]
+					// }
+					break;
+				case "ota_firmware_update_single":
+					// msg.payload = {
+					// 	'address': "00:13:a2:00:42:2c:d2:aa"
+					// }
+					if(!Object.hasOwn(node._gateway_node.sensor_list, msg.payload)){
+						node._gateway_node.sensor_list[msg.payload] = {};
+					};
+					if(!Object.hasOwn(node._gateway_node.sensor_list[msg.payload], 'update_request')){
+						node._gateway_node.sensor_list[msg.payload].update_request = true;
+					};
+					break;
+				case "ota_firmware_update_multiple":
+					// set the devices user wants to upload new firmware to
+					// msg.payload = {
+					// 	'addresses': [
+					// 		"00:13:a2:00:42:2c:d2:aa",
+					// 		"00:13:a2:00:42:2c:d2:ab"
+					// 	];
+					// }
+					// TODO unfinished
+					msg.payload.addresses.forEach((address) => {
+						if(!Object.hasOwn(node._gateway_node.sensor_list, msg.payload.address)){
+							node._gateway_node.sensor_list[address] = {};
+						};
+						if(!Object.hasOwn(node._gateway_node.sensor_list[msg.payload.address], 'update_request')){
+							node._gateway_node.sensor_list[address].update_request = true;
+						};
+					});
+					break;
+				case "get_manifest":
+					// Allows user to request manifest from one or more devices
+					// Primarily envisioned used for troubleshooting or engineer determination
+					// msg.payload = {
+					// 	'addresses': [
+					// 		"00:13:a2:00:42:2c:d2:aa",
+					// 		"00:13:a2:00:42:2c:d2:ab"
+					// 	];
+					// }
+					// OR
+					// msg.payload = {
+					// 	'address': "00:13:a2:00:42:2c:d2:aa"
+					// }
 					break;
 				default:
 					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
@@ -205,6 +634,13 @@ module.exports = function(RED) {
 			});
 		});
 		node.gateway.on('sensor_data', (d) => {
+			// if(!Object.hasOwn(node.sensor_list, d.addr)){
+			// 	node.sensor_list[d.addr] = {
+			// 		sensor_type: d.sensor_type,
+			// 		firmware: d.firmware,
+			// 		nodeId: d.nodeId
+			// 	};
+			// };
 			node.set_status();
 			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
 		});
@@ -292,7 +728,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102 , 518, 519, 520];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -1360,6 +1796,7 @@ module.exports = function(RED) {
 					'In config mode',
 					'Failed to connect'
 				];
+				// node.send({topic: "target_pan", payload: pan});
 				node.gateway.digi.send.at_command("ID", pan).then().catch().then(() => {
 					node._gateway_node.check_mode((m) => {
 						node.set_status();
@@ -1479,3 +1916,4 @@ function toHex(n){return ('00' + n.toString(16)).substr(-2);}
 function toMac(arr){
 	return arr.reduce((h,c,i) => {return ((i==1?toHex(h):h)+':'+toHex(c)).toUpperCase();});
 }
+function msbLsb(m,l){return (m<<8)+l;};
