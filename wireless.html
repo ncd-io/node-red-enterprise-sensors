@@ -226,6 +226,9 @@
 			force_calibration_co2_auto_config: {value: ""},
 			force_calibration_co2: {value: 400, validate: NCD_validators.number_range(400, 2000)},
 
+			temperature_offset_44_active: {value: ""},
+			temperature_offset_44: {value: 4, validate: NCD_validators.number_range(0, 25)},
+
 			filtering: {value: 0, validate: RED.validators.number()},
 			data_rate: {value: 5, validate: RED.validators.number()},
 			time_series: {value: 0, validate: RED.validators.number()},
@@ -1038,7 +1041,19 @@
 					<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
 				</div>
 			</div>
-
+			<div class="form-row ncd-active-check">
+				<div>
+					<strong>Temperature Offset</strong>
+				</div>
+				<div>
+					<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>  Auto Config</label>
+					<input type="checkbox" id="node-input-temperature_offset_44_active" class="ncd-config-toggle" data-target-id="node-input-temperature_offset_44" value="1">
+				</div>
+				<div>
+					<label for="node-input-temperature_offset_44"><i class="icon-tag"></i>  Value</label>
+					<input type="text" id="node-input-temperature_offset_44" placeholder="4" value="4">
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-84 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
