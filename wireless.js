@@ -93,6 +93,10 @@ module.exports = function(RED) {
 							manifest_data.data = node._parse_manifest_read(manifest_data.data);
 							node._emitter.emit('send_manifest', manifest_data);
 							let firmware_data = node._compare_manifest(manifest_data);
+							if(!firmware_data){
+								delete node.sensor_list[manifest_data.addr].update_request;
+								return;
+							}
 							console.log('Echo 4');
 							console.log(typeof firmware_data);
 							console.log(firmware_data);
@@ -184,51 +188,51 @@ module.exports = function(RED) {
 			});
 		};
 
-		node.recover_update = function(manifest_data, firmware_data){
-			node.gateway.firmware_request_last_segment(manifest_data.addr);
-		}
-		node.get_last_segment = function(manifest_data, firmware_data){
-			setTimeout(() => {
-				var tout = setTimeout(() => {
-					console.log('India 11');
-					console.log('In timeout for get last segment');
-					// node.status(modes.PGM_ERR);
-					// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
-				}, 10000);
-
-				var promises = {};
-				promises.firmware_request_last_segment = node.gateway.firmware_request_last_segment(manifest_data.addr);
-				promises.finish = new Promise((fulfill, reject) => {
-					node.gateway.queue.add(() => {
-						return new Promise((f, r) => {
-							clearTimeout(tout);
-							// node.status(modes.FLY);
-							fulfill();
-							f();
-						});
-					});
-				});
-				for(var i in promises){
-					(function(name){
-						promises[name].then((f) => {
-							console.log('ZULU 11');
-							if(name != 'finish'){
-								// msg[name] = true;
-								console.log(name);
-							}
-							else{
-								node.start_firmware_update(manifest_data, firmware_data);
-							}
-						}).catch((err) => {
-							console.log(err);
-							// msg[name] = err;
-						});
-					})(i);
-				}
-			});
-
-			// node.start_firmware_update(manifest_data, firmware_data);
-		}
+		// node.recover_update = function(manifest_data, firmware_data){
+		// 	node.gateway.firmware_request_last_segment(manifest_data.addr);
+		// }
+		// node.get_last_segment = function(manifest_data, firmware_data){
+		// 	setTimeout(() => {
+		// 		var tout = setTimeout(() => {
+		// 			console.log('India 11');
+		// 			console.log('In timeout for get last segment');
+		// 			// node.status(modes.PGM_ERR);
+		// 			// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+		// 		}, 10000);
+		//
+		// 		var promises = {};
+		// 		promises.firmware_request_last_segment = node.gateway.firmware_request_last_segment(manifest_data.addr);
+		// 		promises.finish = new Promise((fulfill, reject) => {
+		// 			node.gateway.queue.add(() => {
+		// 				return new Promise((f, r) => {
+		// 					clearTimeout(tout);
+		// 					// node.status(modes.FLY);
+		// 					fulfill();
+		// 					f();
+		// 				});
+		// 			});
+		// 		});
+		// 		for(var i in promises){
+		// 			(function(name){
+		// 				promises[name].then((f) => {
+		// 					console.log('ZULU 11');
+		// 					if(name != 'finish'){
+		// 						// msg[name] = true;
+		// 						console.log(name);
+		// 					}
+		// 					else{
+		// 						node.start_firmware_update(manifest_data, firmware_data);
+		// 					}
+		// 				}).catch((err) => {
+		// 					console.log(err);
+		// 					// msg[name] = err;
+		// 				});
+		// 			})(i);
+		// 		}
+		// 	});
+		//
+		// 	// node.start_firmware_update(manifest_data, firmware_data);
+		// }
 		node.start_firmware_update = function(manifest_data, firmware_data){
 			console.log('Golf 1');
 			console.log(manifest_data);
@@ -252,7 +256,6 @@ module.exports = function(RED) {
 						// let manifest_command = [254, 58, 0, 0, 0];
 						// manifest_command = manifest_command.push(...firmware_data.firmware.slice(5, image_start)));
 						var promises = {};
-						promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
 
 						console.log('Hotel 1');
 						// console.log('!!!!!!!!!!!!');
@@ -261,61 +264,93 @@ module.exports = function(RED) {
 						// why +4? seems there's 4 bytes after the image start that indicate something.
 						firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
 						// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
+						var index = 0;
+						if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+							index = node.sensor_list[manifest_data.addr].last_chunk_success;
+							console.log('Uniform 1');
+							console.log('11111111111');
+							console.log(index);
+							console.log(node.sensor_list[manifest_data.addr]);
+						}
+						// else{
+							promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+						// }
 
 						console.log('foxtrot 1');
 						console.log(image_start);
-						let index = 0
 						while(index*chunk_size < firmware_data.manifest.image_size){
 							let offset = index*chunk_size;
 							// console.log(index);
 							// let packet = [254, 59, 0, 0, 0];
 							let offset_bytes = int2Bytes(offset, 4);
-							let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size)
+							let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+							console.log('Uniform 2');
+							console.log(index);
+							console.log(index*chunk_size);
+							console.log(index*chunk_size+chunk_size);
+							console.log(offset_bytes);
+							console.log(chunk_size);
+							console.log(firmware_chunk);
+							console.log('22222222222');
 							// packet = packet.concat(offset_bytes, firmware_chunk);
 							promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
 							index++;
 						}
+
 						promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
 						// while(index*chunk_size < firmware_data.manifest.image_size){
 						// 	firmware_chunks.push(firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size));
 						// 	index++;
 						// }
 						// console.log(firmware_chunks);
-						node.sensor_list[manifest_data.addr].promises = promises;
-						promises.finish = new Promise((fulfill, reject) => {
-							node.gateway.queue.add(() => {
-								return new Promise((f, r) => {
-									// clearTimeout(tout);
-									// node.status(modes.READY);
-									fulfill();
-									f();
-								});
-							});
-						});
+						// node.sensor_list[manifest_data.addr].promises = promises;
+						// promises.finish = new Promise((fulfill, reject) => {
+						// 	node.gateway.queue.add(() => {
+						// 		return new Promise((f, r) => {
+						// 			// clearTimeout(tout);
+						// 			// node.status(modes.READY);
+						// 			fulfill();
+						// 			f();
+						// 		});
+						// 	});
+						// });
+
 						for(var i in promises){
 							(function(name){
 								promises[name].then((f) => {
+									console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+									console.log(name);
+									console.log(typeof name);
 									if(name == 'manifest'){
-										delete node.sensor_list[manifest_data.addr].promises[name];
+										// delete node.sensor_list[manifest_data.addr].promises[name];
+										node.sensor_list[manifest_data.addr].test_check = {name: true};
 										node.sensor_list[manifest_data.addr].update_in_progress = true;
-									}else if(name != 'finish'){
+									}else {
 										success[name] = true;
-										delete node.sensor_list[manifest_data.addr].promises[name];
+										node.sensor_list[manifest_data.addr].test_check[name] = true;
+										node.sensor_list[manifest_data.addr].last_chunk_success = name;
+										// delete node.sensor_list[manifest_data.addr].promises[name];
 										console.log('--------');
 										console.log(name);
 									}
-									else{
-										delete node.sensor_list[manifest_data.addr].promises;
+								}).catch((err) => {
+									console.log('--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+									console.log(name);
+									if(name != 'reboot'){
+										console.log('!!!!!!!!!');
+										console.log(err);
+										node.gateway.clear_queue();
+										success[name] = err;
+									}else{
+										delete node.sensor_list[manifest_data.addr].last_chunk_success;
+										delete node.sensor_list[manifest_data.addr].update_request;
+										console.log('ALPHA BRAVO 1');
+										console.log(node.sensor_list[manifest_data.addr]);
 										node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
 										// #OTF
-										node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+										// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
 										top_fulfill(success);
 									}
-								}).catch((err) => {
-									console.log('!!!!!!!!!');
-									console.log(err);
-									node.gateway.clear_queue();
-									success[name] = err;
 									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
 									node.resume_normal_operation();
 								});
@@ -461,7 +496,7 @@ module.exports = function(RED) {
 				console.log(stored_manifest);
 				if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
 					console.log('firmware versions SAME');
-					return "Firmware versions match, skip update";
+					return false;
 				}
 				// Already checked according to file name.
 				// if(!sensor_manifest.data.hardware_id[0] == stored_manifest.hardware_id[0] || !sensor_manifest.data.hardware_id[1] == stored_manifest.hardware_id[1] || !sensor_manifest.data.hardware_id[2] == stored_manifest.hardware_id[2]){
@@ -470,7 +505,7 @@ module.exports = function(RED) {
 				// }
 				if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
 					console.log('firmware image too large');
-					return "firmware image too large";
+					return false;
 				}
 				console.log('pre-return');
 				return {manifest: stored_manifest, firmware: firmware_file};
@@ -799,7 +834,7 @@ module.exports = function(RED) {
 			this.config_gateway = this.config_gateway_node.gateway;
 			dedicated_config = true;
 		}
-		this.queue = new Queue(1);
+		// this.queue = new Queue(1);
 		var node = this;
 		var modes = {
 			PGM: {fill:"red",shape:"dot",text:"Config Mode"},
