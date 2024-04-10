@@ -237,6 +237,12 @@
 			mode_80_active: {value: ""},
 			mode_80: {value: 0},
 
+			periodic_check_rate_76_active: {value: ""},
+			periodic_check_rate_76: {value: 60},
+
+			sensor_boot_time_76_active: {value: ""},
+			sensor_boot_time_76: {value: 30, validate: NCD_validators.number_range(0, 255)},
+
 			measurement_mode_80_active: {value: ""},
 			measurement_mode_80: {value: 0},
 
@@ -1327,6 +1333,30 @@
 							<option value="9">7.813 SPS</option>
 							<option value="10">3.906 SPS</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-76>
+				<div class="form-row ncd-active-check">
+					<strong>Periodic Check Rate</strong>
+					<div>
+						<label for="node-input-periodic_check_rate_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-periodic_check_rate_76_active" class="ncd-config-toggle" data-target-id="node-input-periodic_check_rate_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-periodic_check_rate_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-periodic_check_rate_76" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Boot Time</strong>
+					<div>
+						<label for="node-input-sensor_boot_time_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_boot_time_76_active" class="ncd-config-toggle" data-target-id="node-input-sensor_boot_time_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_boot_time_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_boot_time_76" value="30">
 					</div>
 				</div>
 			</div>
