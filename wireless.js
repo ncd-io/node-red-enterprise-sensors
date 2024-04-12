@@ -579,6 +579,12 @@ module.exports = function(RED) {
 								if(config.sensor_boot_time_76_active){
 									promises.sensor_boot_time_76 = node.config_gateway.config_set_sensor_boot_time_76(mac, parseInt(config.sensor_boot_time_76));
 								}
+								if(config.ppm_threshold_76_active){
+									promises.ppm_threshold_76 = node.config_gateway.config_set_ppm_threshold_76(mac, parseInt(config.ppm_threshold_76));
+								}
+								if(config.alert_duration_76_active){
+									promises.alert_duration_76 = node.config_gateway.config_set_alert_duration_76(mac, parseInt(config.alert_duration_76));
+								}
 							case 78:
 								if(config.sensor_boot_time_78_active){
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
