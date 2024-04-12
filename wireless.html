@@ -237,6 +237,21 @@
 			mode_80_active: {value: ""},
 			mode_80: {value: 0},
 
+			periodic_check_rate_76_active: {value: ""},
+			periodic_check_rate_76: {value: 60, validate: NCD_validators.number_range(60, 255)},
+
+			ppm_threshold_76_active: {value: ""},
+			ppm_threshold_76: {value: 100, validate: NCD_validators.number_range(0, 1000)},
+
+			alert_duration_76_active: {value: ""},
+			alert_duration_76: {value: 0, validate: NCD_validators.number_range(0, 255)},
+
+			ppm_threshold_76_active: {value: ""},
+			ppm_threshold_76: {value: 100, validate: NCD_validators.number_range(0, 1000)},
+
+			sensor_boot_time_76_active: {value: ""},
+			sensor_boot_time_76: {value: 30, validate: NCD_validators.number_range(0, 255)},
+
 			measurement_mode_80_active: {value: ""},
 			measurement_mode_80: {value: 0},
 
@@ -427,6 +442,7 @@
 					"84": "84 - Standalone Smart Vibration Sensor",
 					"88": "88 - 1 Channel Ultrasound Vibration Sensor",
 					"89": "89 - 2 Channel Ultrasound Vibration Sensor",
+					"90": "90 - DC Current Sensor",
 					"91": "91 - Wireless Air Velocity Sensor HVAC",
 					"92": "92 - Sound Sensor",
 					"95": "95 - 16-Bit 1-Channel 0-24VDC Receiver",
@@ -678,6 +694,7 @@
 			<option value="84">84 - Standalone Smart Vibration Sensor</option>
 			<option value="88">88 - 1 Channel Ultrasound Vibration Sensor</option>
 			<option value="89">89 - 2 Channel Ultrasound Vibration Sensor</option>
+			<option value="90">90 - DC Current Sensor</option>
 			<option value="91">91 - Wireless Air Velocity Sensor HVAC</option>
 			<option value="92">92 - Sound Sensor</option>
 			<option value="95">95 - 16-Bit 1-Channel 0-24VDC Receiver</option>
@@ -712,7 +729,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1325,6 +1342,52 @@
 							<option value="9">7.813 SPS</option>
 							<option value="10">3.906 SPS</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-76>
+				<div class="form-row ncd-active-check">
+					<strong>Periodic Check Rate</strong>
+					<div>
+						<label for="node-input-periodic_check_rate_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-periodic_check_rate_76_active" class="ncd-config-toggle" data-target-id="node-input-periodic_check_rate_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-periodic_check_rate_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-periodic_check_rate_76" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>PPM Threshold</strong>
+					<div>
+						<label for="node-input-ppm_threshold_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-ppm_threshold_76_active" class="ncd-config-toggle" data-target-id="node-input-ppm_threshold_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-ppm_threshold_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ppm_threshold_76" placeholder="100">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Alert Duration</strong>
+					<div>
+						<label for="node-input-alert_duration_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-alert_duration_76_active" class="ncd-config-toggle" data-target-id="node-input-alert_duration_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-alert_duration_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-alert_duration_76" placeholder="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Boot Time</strong>
+					<div>
+						<label for="node-input-sensor_boot_time_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_boot_time_76_active" class="ncd-config-toggle" data-target-id="node-input-sensor_boot_time_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_boot_time_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_boot_time_76" value="30">
 					</div>
 				</div>
 			</div>
