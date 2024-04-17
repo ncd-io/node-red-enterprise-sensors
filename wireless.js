@@ -887,6 +887,17 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 108:
+								if(config.clear_all_counters_108){
+									promises.clear_all_counters_108 = node.config_gateway.config_clear_timers_108(mac);
+								}
+								if(config.accelerometer_threshold_108_active){
+									promises.accelerometer_threshold_108 = node.config_gateway.config_set_accelerometer_threshold_108(mac, parseInt(config.accelerometer_threshold_108));
+								}
+								if(config.debounce_time_108_active){
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								break;
 							case 200:
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));

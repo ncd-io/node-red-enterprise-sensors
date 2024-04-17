@@ -340,6 +340,12 @@
 			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
 			pitch_angle_threshold_47_active:{value:""},
 
+			clear_all_counters_108:{value:0},
+			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			accelerometer_threshold_108_active:{value:""},
+			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			debounce_time_108_active:{value:""},
+
 			counter_threshold_35:{value:50, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_35_active:{value:""},
 
@@ -1757,6 +1763,42 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row ncd-active-check">
+					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
+					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Accelerometer Threshold</strong>
+					<p class="caption">
+						Sets the threshold in multiples of 32mg in which an uptime will be detected. A value of 1 = 32mg, a value of 2 = 64mg etc.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_threshold_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_threshold_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_threshold_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_threshold_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-accelerometer_threshold_108" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_108_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_108_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
 				<hr>
 				<div class="form-row ncd-active-check">
