@@ -340,6 +340,12 @@
 			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
 			pitch_angle_threshold_47_active:{value:""},
 
+			clear_all_counters_108:{value:0},
+			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			accelerometer_threshold_108_active:{value:""},
+			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			debounce_time_108_active:{value:""},
+
 			counter_threshold_35:{value:50, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_35_active:{value:""},
 
@@ -450,6 +456,7 @@
 					"101": "101 - Pro Vibration",
 					"102": "102 - Strain Gauge",
 					"107": "107 - 4 Channel 4-20mA Receiver",
+					"108": "108 - Machine Uptime Monitoring Sensor",
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
 					"502": "502 - C_50-27",
@@ -702,6 +709,7 @@
 			<option value="101">101 - Pro Vibration</option>
 			<option value="102">102 - Strain Gauge</option>
 			<option value="107">107 - 4 Channel 4-20mA Receiver</option>
+			<option value="108">108 - Machine Uptime Monitoring Sensor</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
 			<option value="502">502 - C_50-27</option>
@@ -729,7 +737,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-108 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1057,18 +1065,18 @@
 					<label for="node-input-force_calibration_co2"><i class="icon-tag"></i>  Value</label>
 					<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
 				</div>
-			</div>
-			<div class="form-row ncd-active-check">
-				<div>
-					<strong>Temperature Offset</strong>
-				</div>
-				<div>
-					<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>  Auto Config</label>
-					<input type="checkbox" id="node-input-temperature_offset_44_active" class="ncd-config-toggle" data-target-id="node-input-temperature_offset_44" value="1">
-				</div>
-				<div>
-					<label for="node-input-temperature_offset_44"><i class="icon-tag"></i>  Value</label>
-					<input type="text" id="node-input-temperature_offset_44" placeholder="4" value="4">
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Temperature Offset</strong>
+					</div>
+					<div>
+						<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-temperature_offset_44_active" class="ncd-config-toggle" data-target-id="node-input-temperature_offset_44" value="1">
+					</div>
+					<div>
+						<label for="node-input-temperature_offset_44"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-temperature_offset_44" placeholder="4" value="4">
+					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-84 data-sensor-519 data-sensor-537>
@@ -1755,6 +1763,42 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row">
+					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
+					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Accelerometer Threshold</strong>
+					<p class="caption">
+						Sets the threshold in multiples of 32mg in which an uptime will be detected. A value of 1 = 32mg, a value of 2 = 64mg etc.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_threshold_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_threshold_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_threshold_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_threshold_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-accelerometer_threshold_108" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_108_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_108_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
 				<hr>
 				<div class="form-row ncd-active-check">
