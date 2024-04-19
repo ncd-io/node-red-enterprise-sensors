@@ -888,6 +888,9 @@ module.exports = function(RED) {
 								}
 								break;
 							case 108:
+								if(config.accelerometer_state_108_active){
+									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								}
 								if(config.clear_all_counters_108){
 									promises.clear_all_counters_108 = node.config_gateway.config_clear_timers_108(mac);
 								}

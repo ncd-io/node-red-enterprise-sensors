@@ -340,6 +340,8 @@
 			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
 			pitch_angle_threshold_47_active:{value:""},
 
+			accelerometer_state_108:{value:0},
+			accelerometer_state_108_active:{value:""},
 			clear_all_counters_108:{value:0},
 			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
 			accelerometer_threshold_108_active:{value:""},
@@ -1765,6 +1767,23 @@
 			</div>
 
 			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Accelerometer Error Reporting</strong>
+					<p class="caption">
+						Enables error reporting for the accelerometer probe. If this option is enabled errors will be reported when the accelerometer probe is non-functional.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_state_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_state_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_state_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_state_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-accelerometer_state_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
 				<div class="form-row">
 					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
 					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
