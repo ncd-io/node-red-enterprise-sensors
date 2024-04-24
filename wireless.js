@@ -14,7 +14,6 @@ module.exports = function(RED) {
 
 		this.listeners = [];
 		this.sensor_pool = [];
-		this.sensor_list = {};
 		this._emitter = new events.EventEmitter();
 		this.on = (e,c) => this._emitter.on(e, c);
 
@@ -164,46 +163,6 @@ module.exports = function(RED) {
 					break;
 				case "fidelity_test":
 					break;
-				case "converter_send_single":
-					// Example message:
-					// msg.topic = 'rs485_single';
-					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
-					// msg.payload.data = [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE];
-					// msg.payload.meta = {
-					// 	'command_id': 'query_water_levels',
-					// 	'description': 'Query water levels in mm/cm',
-					// 	'target_parser': 'parse_water_levels'
-					// }
-					if(msg.payload.hasOwnProperty('meta')){
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
-					}else{
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
-					}
-					break;
-				case "converter_send_multiple":
-					// Example message:
-					// msg.topic = 'converter_send_multiple';
-					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
-					// msg.payload.commands = [
-					// 	{
-					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
-					// 		'meta': {
-					// 			'command_id': 'command_1',
-					// 			'description': 'Example Command 1',
-					// 			'target_parser': 'parse_water_levels'
-					// 		}
-					// 	},
-					// 	{
-					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
-					// 		'meta': {
-					// 			'command_id': 'command_2',
-					// 			'description': 'Example Command 2',
-					// 			'target_parser': 'parse_temperature'
-					// 		}
-					// 	}
-					// ];
-					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
-					break;
 				default:
 					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
 					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
@@ -250,13 +209,6 @@ module.exports = function(RED) {
 			msg1 = {topic:"link_info",payload:d};
 			node.send(msg1);
 		});
-		node.gateway.on('converter_response', (d) => {
-			node.set_status();
-			d.topic = 'converter_response';
-			d.time = Date.now();
-			node.send(d);
-		});
-
 
 		node.set_status();
 		node._gateway_node.on('mode_change', (mode) => {
@@ -620,6 +572,19 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 76:
+								if(config.periodic_check_rate_76_active){
+									promises.periodic_check_rate_76 = node.config_gateway.config_set_periodic_check_rate_76(mac, parseInt(config.periodic_check_rate_76));
+								}
+								if(config.sensor_boot_time_76_active){
+									promises.sensor_boot_time_76 = node.config_gateway.config_set_sensor_boot_time_76(mac, parseInt(config.sensor_boot_time_76));
+								}
+								if(config.ppm_threshold_76_active){
+									promises.ppm_threshold_76 = node.config_gateway.config_set_ppm_threshold_76(mac, parseInt(config.ppm_threshold_76));
+								}
+								if(config.alert_duration_76_active){
+									promises.alert_duration_76 = node.config_gateway.config_set_alert_duration_76(mac, parseInt(config.alert_duration_76));
+								}
 							case 78:
 								if(config.sensor_boot_time_78_active){
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
@@ -922,6 +887,20 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 108:
+								if(config.accelerometer_state_108_active){
+									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								}
+								if(config.clear_all_counters_108){
+									promises.clear_all_counters_108 = node.config_gateway.config_clear_timers_108(mac);
+								}
+								if(config.accelerometer_threshold_108_active){
+									promises.accelerometer_threshold_108 = node.config_gateway.config_set_accelerometer_threshold_108(mac, parseInt(config.accelerometer_threshold_108));
+								}
+								if(config.debounce_time_108_active){
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								break;
 							case 200:
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
@@ -1061,6 +1040,11 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 1011:
+								if(config.baudrate_1011_active){
+									promises.baudrate_1011 = node.config_gateway.config_set_baudrate_1011(mac, parseInt(config.baudrate_1011), 1);
+								}
+								break;
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
@@ -1117,13 +1101,6 @@ module.exports = function(RED) {
 					payload: data.sensor_data,
 					time: Date.now()
 				});
-			});
-			this.gtw_on('converter_response-'+config.addr, (data) => {
-				node.status(modes.RUN);
-				data.modem_mac = this.gateway.modem_mac;
-				data.topic = 'converter_response';
-				data.time = Date.now();
-				node.send(data);
 			});
 			this.gtw_on('set_destination_address'+config.addr, (d) => {
 				if(config.auto_config){

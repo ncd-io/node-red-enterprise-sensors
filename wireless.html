@@ -343,6 +343,10 @@
 
 			thermocouple_type_23_active:{value:""},
 			thermocouple_type_23:{value: 0},
+
+			baudrate_1011_active:{value:""},
+			baudrate_1011:{value: 9600},
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1747,6 +1751,24 @@
 							<option value="80">E Type</option>
 							<option value="96">B Type</option>
 							<option value="112">R Type</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-1010  data-sensor-1011>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Set Baudrate</strong>
+					<div>
+						<label for="node-input-baudrate_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-baudrate_1011_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-baudrate_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baudrate_1011">
+							<option selected="selected" value="9600">9600</option>
+							<option value="57600">57600</option>
+							<option value="115200">115200</option>
 						</select>
 					</div>
 				</div>
