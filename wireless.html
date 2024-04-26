@@ -1142,6 +1142,7 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
+					<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address to the address of your Receiver/Gateway.</p>
 					<div>
 						<label for="node-input-mode_80_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-mode_80_active" class="ncd-config-toggle" data-target-id="node-input-mode_80" value="1">
@@ -1819,6 +1820,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Mode</strong>
+					<p class="caption">
+						Auto Encoder: Incoming RS data will be automatically wrapped in the DigiMesh API for transmission<br>
+						Transparent: Incoming RS data will transfer as is with no alteration. The data must be DigiMesh encoded or the wireless module must be set to Transparent mode through XCTU.<br>
+						NCD Sensor Emulator: Incoming RS data will be automatically wrapped in DigiMesh and NCD APIs for Transmission. This will add data like sensor type and counters to the data in Node-Red
+					</p>
 					<div>
 						<label for="node-input-mode_1011_active">Active:</label>
 						<input type="checkbox" id="node-input-mode_1011_active" class="ncd-config-toggle" data-target-id="node-input-mode_1011" value="1">
@@ -1833,7 +1839,11 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Address Time (msec)</strong>
+					<strong>Set Address Timer</strong>
+					<p class="caption">
+						*Advanced
+						Set the number of milliseconds the unit will remember and respond to the address of the last requestor after a response.
+					</p>
 					<div>
 						<label for="node-input-address_timer_1011_active">Active:</label>
 						<input type="checkbox" id="node-input-address_timer_1011_active" class="ncd-config-toggle" data-target-id="node-input-address_timer_1011" value="1">
@@ -1846,7 +1856,7 @@
 				<!-- <div class="form-row ncd-active-check">
 					<div class="form-row">
 						<p><strong>Advanced: Set Sensor Forced Reboot</strong></p>
-						<p>This command will make the sensor rebooted.</p>
+						<p>This command will make the sensor reboot.</p>
 					</div>
 					<div class="form-row">
 						<label for="node-input-reboot_1011_active"><i class="icon-tag"></i>Enable</label>
