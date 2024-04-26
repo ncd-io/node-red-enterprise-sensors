@@ -1044,6 +1044,21 @@ module.exports = function(RED) {
 								if(config.baudrate_1011_active){
 									promises.baudrate_1011 = node.config_gateway.config_set_baudrate_1011(mac, parseInt(config.baudrate_1011), 1);
 								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.stop_bit_1011(mac, parseInt(config.stop_bit_1011), 1);
+								}
+								if(config.parity_1011_active){
+									promises.parity_1011 = node.config_gateway.parity_1011(mac, parseInt(config.parity_1011), 1);
+								}
+								if(config.mode_1011_active){
+									promises.mode_1011 = node.config_gateway.mode_1011(mac, parseInt(config.mode_1011), 1);
+								}
+								if(config.address_timer_1011_active){
+									promises.address_timer_1011 = node.config_gateway.address_timer_1011(mac, parseInt(config.address_timer_1011), 1);
+								}
+								// if(config.reboot_1011_active){
+								// 	promises.reboot_1011 = node.config_gateway.reboot_1011(mac);
+								// }
 								break;
 						}
 					}

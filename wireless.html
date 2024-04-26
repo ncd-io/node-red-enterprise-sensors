@@ -347,6 +347,20 @@
 			baudrate_1011_active:{value:""},
 			baudrate_1011:{value: 9600},
 
+			stop_bit_1011_active:{value:""},
+			stop_bit_1011:{value: 0},
+
+			parity_1011_active:{value:""},
+			parity_1011:{value: 0},
+
+			mode_1011_active:{value:""},
+			mode_1011:{value: 0},
+
+			address_timer_1011_active:{value:""},
+			address_timer_1011:{value:100, validate: NCD_validators.number_range(100, 10000)},
+
+			// reboot_1011_active:{value:""},
+			// reboot_1011:{value: 0},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1767,11 +1781,78 @@
 						<label for="node-input-baudrate_1011"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-baudrate_1011">
 							<option selected="selected" value="9600">9600</option>
+							<option value="19200">19200</option>
+							<option value="38400">38400</option>
 							<option value="57600">57600</option>
 							<option value="115200">115200</option>
 						</select>
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Stop Bit</strong>
+					<div>
+						<label for="node-input-stop_bit_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-stop_bit_1011_active" class="ncd-config-toggle" data-target-id="node-input-stop_bit_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-stop_bit_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stop_bit_1011">
+							<option selected="selected" value="0">1</option>
+							<option value="1">2</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Parity</strong>
+					<div>
+						<label for="node-input-parity_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-parity_1011_active" class="ncd-config-toggle" data-target-id="node-input-parity_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-parity_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-parity_1011">
+							<option selected="selected" value="0">None</option>
+							<option value="1">Even</option>
+							<option value="2">Odd</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Mode</strong>
+					<div>
+						<label for="node-input-mode_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-mode_1011_active" class="ncd-config-toggle" data-target-id="node-input-mode_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-mode_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_1011">
+							<option selected="selected" value="0">Auto Encoder</option>
+							<option value="1">Transparent</option>
+							<option value="2">NCD Sensor Emulator</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Address Time (msec)</strong>
+					<div>
+						<label for="node-input-address_timer_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-address_timer_1011_active" class="ncd-config-toggle" data-target-id="node-input-address_timer_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-address_timer_1011"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-address_timer_1011" placeholder="100" value="100">
+					</div>
+				</div>
+				<!-- <div class="form-row ncd-active-check">
+					<div class="form-row">
+						<p><strong>Advanced: Set Sensor Forced Reboot</strong></p>
+						<p>This command will make the sensor rebooted.</p>
+					</div>
+					<div class="form-row">
+						<label for="node-input-reboot_1011_active"><i class="icon-tag"></i>Enable</label>
+						<input type="checkbox" id="node-input-reboot_1011_active" class="ncd-config-toggle" value="1">
+					</div>
+				</div> -->
 			</div>
 			<div class="ncd-dependent" data-sensor-46>
 				<hr>
