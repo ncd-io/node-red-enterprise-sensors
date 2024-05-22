@@ -415,6 +415,11 @@ module.exports = function(RED) {
 							promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 						}
 						switch(sensor.type){
+							case 2: 
+								if(config.debounce_time_2_active){
+									promises.debounce_time_2 = node.config_gateway.config_set_debounce_time_2(mac, parseInt(config.debounce_time_2));
+								}
+								break;
 							case 3:
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));

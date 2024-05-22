@@ -368,6 +368,9 @@
 
 			thermocouple_type_23_active:{value:""},
 			thermocouple_type_23:{value: 0},
+
+			debounce_time_2_active:{value:""},
+			debounce_time_2:{value: 10},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1913,6 +1916,22 @@
 				<div class="form-row">
 					<button id="config_sensor">Configure Now</button>
 					<div id="config_response"></div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-2>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_2_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_2_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_2" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_2"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_2" placeholder="10" value="10">
+					</div>
 				</div>
 			</div>
 		</div>
