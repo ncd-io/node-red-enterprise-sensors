@@ -888,6 +888,9 @@ module.exports = function(RED) {
 								}
 								break;
 							case 108:
+								if(config.accelerometer_state_108_active){
+									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								}
 								if(config.clear_all_counters_108){
 									promises.clear_all_counters_108 = node.config_gateway.config_clear_timers_108(mac);
 								}
@@ -979,6 +982,14 @@ module.exports = function(RED) {
 								}
 								if(config.set_rtc_101){
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
+							case 535:
+								if(config.force_calibration_co2_535_active){
+									promises.force_calibration_co2_535 = node.config_gateway.config_set_sensor_forced_calibration_535(mac);
+								}
+								if(config.temperature_offset_44_active){
+									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
 								}
 								break;
 							case 537:

@@ -226,6 +226,8 @@
 			force_calibration_co2_auto_config: {value: ""},
 			force_calibration_co2: {value: 400, validate: NCD_validators.number_range(400, 2000)},
 
+			force_calibration_co2_535_active: {value: ""},
+
 			temperature_offset_44_active: {value: ""},
 			temperature_offset_44: {value: 4, validate: NCD_validators.number_range(0, 25)},
 
@@ -339,6 +341,9 @@
 			roll_angle_threshold_47_active:{value:""},
 			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
 			pitch_angle_threshold_47_active:{value:""},
+
+			accelerometer_state_108:{value:0},
+			accelerometer_state_108_active:{value:""},
 
 			clear_all_counters_108:{value:0},
 			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
@@ -470,6 +475,7 @@
 					"521": "521 - Custom 3 Channel Light Sensor",
 					"524": "524 - SDI Multi Soil Probe",
 					"531": "531 - Custom Noise Sensor",
+					"535": "535 - Custom CO2 Sensor",
 					"537": "537 - Custom Standalone Smart Vibration Sensor",
 					"10000": "10000 - 4-Channel Relay",
 					"10006": "10006 - 4-Channel 4-20 mA Input",
@@ -723,6 +729,7 @@
 			<option value="521">521 - Custom 3 Channel Light Sensor</option>
 			<option value="524">524 - SDI Multi Soil Probe</option>
 			<option value="531">531 - Custom Noise Sensor</option>
+			<option value="535">535 - Custom CO2 Sensor</option>
 			<option value="537">537 - Custom Standalone Smart Vibration Sensor</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
 			<option value="10006">10006 - 4-Channel 4-20 mA Input</option>
@@ -737,7 +744,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-108 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-108 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1053,18 +1060,35 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-44>
 				<hr>
-				<div class="form-row">
-					<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
-					<p>This command will take 3 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+				<div class="form-row ncd-active-check">
+					<div class="form-row">
+						<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
+						<p>This command will take 3 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-force_calibration_co2_auto_config" class="ncd-config-toggle" data-target-id="node-input-force_calibration_co2" value="1">
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>  Auto Config</label>
-					<input type="checkbox" id="node-input-force_calibration_co2_auto_config" class="ncd-config-toggle" data-target-id="node-input-force_calibration_co2" value="1">
+			</div>
+			<div class="ncd-dependent" data-sensor-535>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<div class="form-row">
+						<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
+						<p>This command will take 10 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2_535_active"><i class="icon-tag"></i>Enable</label>
+						<input type="checkbox" id="node-input-force_calibration_co2_535_active" class="ncd-config-toggle" value="1">
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-force_calibration_co2"><i class="icon-tag"></i>  Value</label>
-					<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
-				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-44 data-sensor-535>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Temperature Offset</strong>
@@ -1765,6 +1789,23 @@
 			</div>
 
 			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Accelerometer Error Reporting</strong>
+					<p class="caption">
+						Enables error reporting for the accelerometer probe. If this option is enabled errors will be reported when the accelerometer probe is non-functional.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_state_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_state_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_state_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_state_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-accelerometer_state_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
 				<div class="form-row">
 					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
 					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
