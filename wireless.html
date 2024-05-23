@@ -371,7 +371,7 @@
 			thermocouple_type_23:{value: 0},
 
 			debounce_time_2_active:{value:""},
-			debounce_time_2:{value: 10},
+			debounce_time_2:{value: 10, validate: NCD_validators.number_range(0, 255)},
 		},
 		inputs: 0,
 		outputs: 1,
