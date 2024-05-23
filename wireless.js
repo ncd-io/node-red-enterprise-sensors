@@ -633,7 +633,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -742,7 +742,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -786,7 +786,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -941,7 +941,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1074,7 +1074,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1138,7 +1138,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
