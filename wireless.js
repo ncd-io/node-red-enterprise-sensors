@@ -1162,6 +1162,29 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 537:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.baudrate_539_active){
+									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								}
+								if(config.rx_timeout_539_active){
+									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								}
+								if(config.bootup_time_539_active){
+									promises.bootup_time_539 = node.config_gateway.config_set_bootup_time_539(mac, parseInt(config.bootup_time_539));
+								}
+								if(config.sensor_add_539_active){
+									promises.sensor_add_539 = node.config_gateway.config_set_sensor_add_539(mac, parseInt(config.sensor_add_539));
+								}
+								if(config.rs_node_id_539_active){
+									promises.rs_node_id_539 = node.config_gateway.config_set_rs_node_id_539(mac, parseInt(config.rs_node_id_539));
+								}
+								if(config.number_of_regs_to_rd_539_active){
+									promises.number_of_regs_to_rd_539 = node.config_gateway.config_set_number_of_regs_to_rd_539(mac, parseInt(config.number_of_regs_to_rd_539));
+								}
+								break;
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.

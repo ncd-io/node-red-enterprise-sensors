@@ -372,6 +372,30 @@
 
 			debounce_time_2_active:{value:""},
 			debounce_time_2:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			stay_on_mode_539_active: {value:""},
+			stay_on_mode_539: {value:0},
+
+			baudrate_539_active:{value:""},
+			baudrate_539:{value: 9600},
+
+			rx_timeout_539_active:{value:""},
+			rx_timeout_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			bootup_time_539_active:{value:""},
+			bootup_time_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			sensor_add_539_active:{value:""},
+			sensor_add_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			rs_node_id_539_active:{value:""},
+			rs_node_id_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			number_of_regs_to_rd_539_active:{value:""},
+			number_of_regs_to_rd_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			config_set_reg_active_539:{value:""},
+			config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -482,6 +506,7 @@
 					"531": "531 - Custom Noise Sensor",
 					"535": "535 - Custom CO2 Sensor",
 					"537": "537 - Custom Standalone Smart Vibration Sensor",
+					"539": "539 - RS-485 Modbus Wireless Converter",
 					"10000": "10000 - 4-Channel Relay",
 					"10006": "10006 - 4-Channel 4-20 mA Input",
 					"10007": "10007 - 4-Channel Current Monitor",
@@ -738,6 +763,7 @@
 			<option value="531">531 - Custom Noise Sensor</option>
 			<option value="535">535 - Custom CO2 Sensor</option>
 			<option value="537">537 - Custom Standalone Smart Vibration Sensor</option>
+			<option value="539">539 - RS-485 Modbus Wireless Converter</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
 			<option value="10006">10006 - 4-Channel 4-20 mA Input</option>
 			<option value="10007">10007 - 4-Channel Current Monitor</option>
@@ -1936,6 +1962,94 @@
 					<div>
 						<label for="node-input-debounce_time_2"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-debounce_time_2" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
+				<div class="form-row ncd-active-check">
+					<strong>Set Stay On Mode</strong>
+					<div>
+						<label for="node-input-stay_on_mode_539_active">Active:</label>
+						<input type="checkbox" id="node-input-stay_on_mode_539_active" class="ncd-config-toggle" data-target-id="node-input-stay_on_mode_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-stay_on_mode_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stay_on_mode_539">
+							<option value="0">Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Baudrate</strong>
+					<div>
+						<label for="node-input-baudrate_539_active">Active:</label>
+						<input type="checkbox" id="node-input-baudrate_539_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-baudrate_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baudrate_539">
+							<option selected="selected" value="9600">9600</option>
+							<option value="19200">19200</option>
+							<option value="38400">38400</option>
+							<option value="57600">57600</option>
+							<option value="115200">115200</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Rx Timeout</strong>
+					<div>
+						<label for="node-input-rx_timeout_539_active">Active:</label>
+						<input type="checkbox" id="node-input-rx_timeout_539_active" class="ncd-config-toggle" data-target-id="node-input-rx_timeout_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-rx_timeout_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Bootup Time</strong>
+					<div>
+						<label for="node-input-bootup_time_539_active">Active:</label>
+						<input type="checkbox" id="node-input-bootup_time_539_active" class="ncd-config-toggle" data-target-id="node-input-bootup_time_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-bootup_time_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-bootup_time_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Add</strong>
+					<div>
+						<label for="node-input-sensor_add_539_active">Active:</label>
+						<input type="checkbox" id="node-input-sensor_add_539_active" class="ncd-config-toggle" data-target-id="node-input-sensor_add_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_add_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_add_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RS Node ID</strong>
+					<div>
+						<label for="node-input-rs_node_id_539_active">Active:</label>
+						<input type="checkbox" id="node-input-rs_node_id_539_active" class="ncd-config-toggle" data-target-id="node-input-rs_node_id_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-rs_node_id_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rs_node_id_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Number of Registers to RD</strong>
+					<div>
+						<label for="node-input-number_of_regs_to_rd_539_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_regs_to_rd_539_active" class="ncd-config-toggle" data-target-id="node-input-number_of_regs_to_rd_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_regs_to_rd_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-number_of_regs_to_rd_539" placeholder="10" value="10">
 					</div>
 				</div>
 			</div>
