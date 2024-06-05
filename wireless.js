@@ -262,6 +262,19 @@ module.exports = function(RED) {
 						// console.log(image_start);
 
 						// why +4? seems there's 4 bytes after the image start that indicate something.
+
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log('!!!!!!!!!');
+						console.log(image_start);
+						console.log(firmware_data.firmware.slice(5, image_start-1));
+						// else{
+							promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+						// }
 						firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
 						// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
 						var index = 0;
@@ -272,12 +285,9 @@ module.exports = function(RED) {
 							console.log(index);
 							console.log(node.sensor_list[manifest_data.addr]);
 						}
-						// else{
-							promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-						// }
-
 						console.log('foxtrot 1');
 						console.log(image_start);
+						var temp_count = 0;
 						while(index*chunk_size < firmware_data.manifest.image_size){
 							let offset = index*chunk_size;
 							// console.log(index);
@@ -290,7 +300,29 @@ module.exports = function(RED) {
 							console.log(index*chunk_size+chunk_size);
 							console.log(offset_bytes);
 							console.log(chunk_size);
-							console.log(firmware_chunk);
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							console.log('-----------------');
+							temp_count += 1;
+							console.log(temp_count);
+							console.log(firmware_chunk.toString('hex').match(/../g).join(' '));
 							console.log('22222222222');
 							// packet = packet.concat(offset_bytes, firmware_chunk);
 							promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
