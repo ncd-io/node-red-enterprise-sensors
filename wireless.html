@@ -226,6 +226,8 @@
 			force_calibration_co2_auto_config: {value: ""},
 			force_calibration_co2: {value: 400, validate: NCD_validators.number_range(400, 2000)},
 
+			force_calibration_co2_535_active: {value: ""},
+
 			temperature_offset_44_active: {value: ""},
 			temperature_offset_44: {value: 4, validate: NCD_validators.number_range(0, 25)},
 
@@ -236,6 +238,21 @@
 
 			mode_80_active: {value: ""},
 			mode_80: {value: 0},
+
+			periodic_check_rate_76_active: {value: ""},
+			periodic_check_rate_76: {value: 60, validate: NCD_validators.number_range(60, 255)},
+
+			ppm_threshold_76_active: {value: ""},
+			ppm_threshold_76: {value: 100, validate: NCD_validators.number_range(0, 1000)},
+
+			alert_duration_76_active: {value: ""},
+			alert_duration_76: {value: 0, validate: NCD_validators.number_range(0, 255)},
+
+			ppm_threshold_76_active: {value: ""},
+			ppm_threshold_76: {value: 100, validate: NCD_validators.number_range(0, 1000)},
+
+			sensor_boot_time_76_active: {value: ""},
+			sensor_boot_time_76: {value: 30, validate: NCD_validators.number_range(0, 255)},
 
 			measurement_mode_80_active: {value: ""},
 			measurement_mode_80: {value: 0},
@@ -325,6 +342,15 @@
 			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
 			pitch_angle_threshold_47_active:{value:""},
 
+			accelerometer_state_108:{value:0},
+			accelerometer_state_108_active:{value:""},
+
+			clear_all_counters_108:{value:0},
+			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			accelerometer_threshold_108_active:{value:""},
+			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			debounce_time_108_active:{value:""},
+
 			counter_threshold_35:{value:50, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_35_active:{value:""},
 
@@ -343,6 +369,33 @@
 
 			thermocouple_type_23_active:{value:""},
 			thermocouple_type_23:{value: 0},
+
+			debounce_time_2_active:{value:""},
+			debounce_time_2:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			stay_on_mode_539_active: {value:""},
+			stay_on_mode_539: {value:0},
+
+			baudrate_539_active:{value:""},
+			baudrate_539:{value: 9600},
+
+			rx_timeout_539_active:{value:""},
+			rx_timeout_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			bootup_time_539_active:{value:""},
+			bootup_time_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			sensor_add_539_active:{value:""},
+			sensor_add_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			rs_node_id_539_active:{value:""},
+			rs_node_id_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			number_of_regs_to_rd_539_active:{value:""},
+			number_of_regs_to_rd_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+
+			config_set_reg_active_539:{value:""},
+			config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -427,6 +480,7 @@
 					"84": "84 - Standalone Smart Vibration Sensor",
 					"88": "88 - 1 Channel Ultrasound Vibration Sensor",
 					"89": "89 - 2 Channel Ultrasound Vibration Sensor",
+					"90": "90 - DC Current Sensor",
 					"91": "91 - Wireless Air Velocity Sensor HVAC",
 					"92": "92 - Sound Sensor",
 					"95": "95 - 16-Bit 1-Channel 0-24VDC Receiver",
@@ -434,7 +488,9 @@
 					"101": "101 - Pro Vibration",
 					"102": "102 - Strain Gauge",
 					"107": "107 - 4 Channel 4-20mA Receiver",
-					"108": "108 - Machine Uptime Monitor",
+					"108": "108 - Machine Uptime Monitoring Sensor",
+					"180": "180 - C1D2 One Channel Vibration Plus",
+					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
 					"502": "502 - C_50-27",
@@ -448,7 +504,9 @@
 					"521": "521 - Custom 3 Channel Light Sensor",
 					"524": "524 - SDI Multi Soil Probe",
 					"531": "531 - Custom Noise Sensor",
+					"535": "535 - Custom CO2 Sensor",
 					"537": "537 - Custom Standalone Smart Vibration Sensor",
+					"539": "539 - RS-485 Modbus Wireless Converter",
 					"10000": "10000 - 4-Channel Relay",
 					"10006": "10006 - 4-Channel 4-20 mA Input",
 					"10007": "10007 - 4-Channel Current Monitor",
@@ -679,6 +737,7 @@
 			<option value="84">84 - Standalone Smart Vibration Sensor</option>
 			<option value="88">88 - 1 Channel Ultrasound Vibration Sensor</option>
 			<option value="89">89 - 2 Channel Ultrasound Vibration Sensor</option>
+			<option value="90">90 - DC Current Sensor</option>
 			<option value="91">91 - Wireless Air Velocity Sensor HVAC</option>
 			<option value="92">92 - Sound Sensor</option>
 			<option value="95">95 - 16-Bit 1-Channel 0-24VDC Receiver</option>
@@ -686,7 +745,9 @@
 			<option value="101">101 - Pro Vibration</option>
 			<option value="102">102 - Strain Gauge</option>
 			<option value="107">107 - 4 Channel 4-20mA Receiver</option>
-			<option value="108">108 - Machine Uptime Monitor</option>
+			<option value="108">108 - Machine Uptime Monitoring Sensor</option>
+			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
+			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
 			<option value="502">502 - C_50-27</option>
@@ -700,7 +761,9 @@
 			<option value="521">521 - Custom 3 Channel Light Sensor</option>
 			<option value="524">524 - SDI Multi Soil Probe</option>
 			<option value="531">531 - Custom Noise Sensor</option>
+			<option value="535">535 - Custom CO2 Sensor</option>
 			<option value="537">537 - Custom Standalone Smart Vibration Sensor</option>
+			<option value="539">539 - RS-485 Modbus Wireless Converter</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
 			<option value="10006">10006 - 4-Channel 4-20 mA Input</option>
 			<option value="10007">10007 - 4-Channel Current Monitor</option>
@@ -714,7 +777,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-108 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-537>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-107 data-sensor-108 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1030,19 +1093,35 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-44>
 				<hr>
-				<div class="form-row">
-					<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
-					<p>This command will take 3 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+				<div class="form-row ncd-active-check">
+					<div class="form-row">
+						<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
+						<p>This command will take 3 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-force_calibration_co2_auto_config" class="ncd-config-toggle" data-target-id="node-input-force_calibration_co2" value="1">
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>  Auto Config</label>
-					<input type="checkbox" id="node-input-force_calibration_co2_auto_config" class="ncd-config-toggle" data-target-id="node-input-force_calibration_co2" value="1">
+			</div>
+			<div class="ncd-dependent" data-sensor-535>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<div class="form-row">
+						<p><strong>Advanced: Set Sensor Forced Calibration</strong></p>
+						<p>This command will take 10 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
+					</div>
+					<div class="form-row">
+						<label for="node-input-force_calibration_co2_535_active"><i class="icon-tag"></i>Enable</label>
+						<input type="checkbox" id="node-input-force_calibration_co2_535_active" class="ncd-config-toggle" value="1">
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="node-input-force_calibration_co2"><i class="icon-tag"></i>  Value</label>
-					<input type="text" id="node-input-force_calibration_co2" placeholder="455" value="455">
-				</div>
-
+			</div>
+			<div class="ncd-dependent" data-sensor-44 data-sensor-535>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Temperature Offset</strong>
@@ -1057,7 +1136,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="ncd-dependent" data-sensor-84 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
@@ -1120,10 +1198,11 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
+					<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
 					<div>
 						<label for="node-input-mode_80_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-mode_80_active" class="ncd-config-toggle" data-target-id="node-input-mode_80" value="1">
@@ -1164,7 +1243,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-180 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sampling Duration 1= 50msec, 2= 100msec</strong>
@@ -1179,7 +1258,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
@@ -1211,7 +1290,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-81>
+			<div class="ncd-dependent" data-sensor-81 data-sensor-181>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Output Data Rate</strong>
@@ -1280,7 +1359,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-82 data-sensor-84 data-sensor-102 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-82 data-sensor-84 data-sensor-102 data-sensor-180 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Output Data Rate</strong>
@@ -1331,7 +1410,53 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-76>
+				<div class="form-row ncd-active-check">
+					<strong>Periodic Check Rate</strong>
+					<div>
+						<label for="node-input-periodic_check_rate_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-periodic_check_rate_76_active" class="ncd-config-toggle" data-target-id="node-input-periodic_check_rate_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-periodic_check_rate_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-periodic_check_rate_76" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>PPM Threshold</strong>
+					<div>
+						<label for="node-input-ppm_threshold_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-ppm_threshold_76_active" class="ncd-config-toggle" data-target-id="node-input-ppm_threshold_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-ppm_threshold_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ppm_threshold_76" placeholder="100">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Alert Duration</strong>
+					<div>
+						<label for="node-input-alert_duration_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-alert_duration_76_active" class="ncd-config-toggle" data-target-id="node-input-alert_duration_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-alert_duration_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-alert_duration_76" placeholder="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Boot Time</strong>
+					<div>
+						<label for="node-input-sensor_boot_time_76_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_boot_time_76_active" class="ncd-config-toggle" data-target-id="node-input-sensor_boot_time_76" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_boot_time_76"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_boot_time_76" value="30">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filtering</strong>
 					<div>
@@ -1401,7 +1526,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-81>
+			<div class="ncd-dependent" data-sensor-81 data-sensor-181>
 				<div class="form-row ncd-active-check">
 					<strong>Set Low Pass Filter Probe 2</strong>
 					<p>
@@ -1458,7 +1583,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<strong>Full Scale Range</strong>
 					<div>
@@ -1495,7 +1620,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<strong>Set Dead Band in mg</strong>
 					<div>
@@ -1609,7 +1734,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-505 data-sensor-506>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-180 data-sensor-181 data-sensor-505 data-sensor-506>
 				<div class="form-row ncd-active-check">
 					<strong>Channel 1 Current Calibration Value</strong>
 					<p class="caption">
@@ -1627,7 +1752,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-81 data-sensor-506>
+			<div class="ncd-dependent" data-sensor-81 data-sensor-181 data-sensor-506>
 				<div class="form-row ncd-active-check">
 				<strong>Channel 2 Current Calibration Value</strong>
 				<p class="caption">
@@ -1695,6 +1820,57 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Accelerometer Error Reporting</strong>
+					<p class="caption">
+						Enables error reporting for the accelerometer probe. If this option is enabled errors will be reported when the accelerometer probe is non-functional.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_state_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_state_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_state_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_state_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-accelerometer_state_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
+					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Accelerometer Threshold</strong>
+					<p class="caption">
+						Sets the threshold in multiples of 32mg in which an uptime will be detected. A value of 1 = 32mg, a value of 2 = 64mg etc.
+					</p>
+					<div>
+						<label for="node-input-accelerometer_threshold_108_active">Active:</label>
+						<input type="checkbox" id="node-input-accelerometer_threshold_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_threshold_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-accelerometer_threshold_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-accelerometer_threshold_108" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_108_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_108_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
 				<hr>
 				<div class="form-row ncd-active-check">
@@ -1709,7 +1885,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Payload Length</strong>
@@ -1769,6 +1945,110 @@
 				<div class="form-row">
 					<button id="config_sensor">Configure Now</button>
 					<div id="config_response"></div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-2>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_2_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_2_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_2" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_2"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_2" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
+				<div class="form-row ncd-active-check">
+					<strong>Set Stay On Mode</strong>
+					<div>
+						<label for="node-input-stay_on_mode_539_active">Active:</label>
+						<input type="checkbox" id="node-input-stay_on_mode_539_active" class="ncd-config-toggle" data-target-id="node-input-stay_on_mode_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-stay_on_mode_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stay_on_mode_539">
+							<option value="0">Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Baudrate</strong>
+					<div>
+						<label for="node-input-baudrate_539_active">Active:</label>
+						<input type="checkbox" id="node-input-baudrate_539_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-baudrate_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baudrate_539">
+							<option selected="selected" value="9600">9600</option>
+							<option value="19200">19200</option>
+							<option value="38400">38400</option>
+							<option value="57600">57600</option>
+							<option value="115200">115200</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Rx Timeout</strong>
+					<div>
+						<label for="node-input-rx_timeout_539_active">Active:</label>
+						<input type="checkbox" id="node-input-rx_timeout_539_active" class="ncd-config-toggle" data-target-id="node-input-rx_timeout_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-rx_timeout_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Bootup Time</strong>
+					<div>
+						<label for="node-input-bootup_time_539_active">Active:</label>
+						<input type="checkbox" id="node-input-bootup_time_539_active" class="ncd-config-toggle" data-target-id="node-input-bootup_time_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-bootup_time_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-bootup_time_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Slave ID</strong>
+					<div>
+						<label for="node-input-sensor_add_539_active">Active:</label>
+						<input type="checkbox" id="node-input-sensor_add_539_active" class="ncd-config-toggle" data-target-id="node-input-sensor_add_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_add_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_add_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sub Device Type</strong>
+					<div>
+						<label for="node-input-rs_node_id_539_active">Active:</label>
+						<input type="checkbox" id="node-input-rs_node_id_539_active" class="ncd-config-toggle" data-target-id="node-input-rs_node_id_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-rs_node_id_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rs_node_id_539" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Number of Registers to RD</strong>
+					<div>
+						<label for="node-input-number_of_regs_to_rd_539_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_regs_to_rd_539_active" class="ncd-config-toggle" data-target-id="node-input-number_of_regs_to_rd_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_regs_to_rd_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-number_of_regs_to_rd_539" placeholder="10" value="10">
+					</div>
 				</div>
 			</div>
 		</div>

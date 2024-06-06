@@ -85,8 +85,6 @@ module.exports = function(RED) {
 						});
 						node.gateway.on('manifest_received', (manifest_data) => {
 							// read manifest length is 37. Could use the same event for both
-							// node._parse_manifest(manifest_data.data);
-							console.log('Echo 1');
 							if(Object.hasOwn(node.sensor_list, manifest_data.addr) && Object.hasOwn(node.sensor_list[manifest_data.addr], 'update_request')){
 								// TODO check manifest data and start update process
 							}
@@ -97,21 +95,13 @@ module.exports = function(RED) {
 								delete node.sensor_list[manifest_data.addr].update_request;
 								return;
 							}
-							console.log('Echo 4');
-							console.log(typeof firmware_data);
-							console.log(firmware_data);
 
 							// TODO Right now assume everything is good
 							// node.gateway.firmware_set_to_ota_mode(manifest_data.addr);
 
-
-
 							setTimeout(() => {
 								var tout = setTimeout(() => {
-									console.log('India 1');
-									console.log('In timeout for start ota');
-									// node.status(modes.PGM_ERR);
-									// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+									console.log('Start OTA Timed Out');
 								}, 10000);
 
 								var promises = {};
@@ -129,25 +119,13 @@ module.exports = function(RED) {
 								for(var i in promises){
 									(function(name){
 										promises[name].then((f) => {
-											console.log('ZULU 1');
 											if(name != 'finish'){
-												// msg[name] = true;
 												console.log(name);
 											}
 											else{
 												// enter ota mode
 												node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
-													console.log('Bravo 1');
-													// console.log(m);
-													// node.check_mode((m) => {
-													// 	node.set_status();
-													// 	res.send(msgs[m]);
-													// });
-													// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'update_in_progress')){
-													// 	node.recover_update(manifest_data, firmware_data);
-													// }else{
 													node.start_firmware_update(manifest_data, firmware_data);
-													// }
 												});
 											}
 										}).catch((err) => {
@@ -188,316 +166,80 @@ module.exports = function(RED) {
 			});
 		};
 
-		// node.recover_update = function(manifest_data, firmware_data){
-		// 	node.gateway.firmware_request_last_segment(manifest_data.addr);
-		// }
-		// node.get_last_segment = function(manifest_data, firmware_data){
-		// 	setTimeout(() => {
-		// 		var tout = setTimeout(() => {
-		// 			console.log('India 11');
-		// 			console.log('In timeout for get last segment');
-		// 			// node.status(modes.PGM_ERR);
-		// 			// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
-		// 		}, 10000);
-		//
-		// 		var promises = {};
-		// 		promises.firmware_request_last_segment = node.gateway.firmware_request_last_segment(manifest_data.addr);
-		// 		promises.finish = new Promise((fulfill, reject) => {
-		// 			node.gateway.queue.add(() => {
-		// 				return new Promise((f, r) => {
-		// 					clearTimeout(tout);
-		// 					// node.status(modes.FLY);
-		// 					fulfill();
-		// 					f();
-		// 				});
-		// 			});
-		// 		});
-		// 		for(var i in promises){
-		// 			(function(name){
-		// 				promises[name].then((f) => {
-		// 					console.log('ZULU 11');
-		// 					if(name != 'finish'){
-		// 						// msg[name] = true;
-		// 						console.log(name);
-		// 					}
-		// 					else{
-		// 						node.start_firmware_update(manifest_data, firmware_data);
-		// 					}
-		// 				}).catch((err) => {
-		// 					console.log(err);
-		// 					// msg[name] = err;
-		// 				});
-		// 			})(i);
-		// 		}
-		// 	});
-		//
-		// 	// node.start_firmware_update(manifest_data, firmware_data);
-		// }
 		node.start_firmware_update = function(manifest_data, firmware_data){
-			console.log('Golf 1');
-			console.log(manifest_data);
-			console.log(firmware_data);
-
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
 
 				setTimeout(() => {
-					console.log('Bravo 102');
-					// if(!Object.hasOwn(node.sensor_list[manifest_data.addr], 'promises')){
-						// var tout = setTimeout(() => {
-						// 	console.log('Golf 2');
-						// 	console.log('Timeout Triggered');
-						// 	node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-						// 	// node.status(modes.PGM_ERR);
-						// 	// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-						// }, 60000);
-						let chunk_size = 128;
-						let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-						// let manifest_command = [254, 58, 0, 0, 0];
-						// manifest_command = manifest_command.push(...firmware_data.firmware.slice(5, image_start)));
-						var promises = {};
+					let chunk_size = 128;
+					let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
 
-						console.log('Hotel 1');
-						// console.log('!!!!!!!!!!!!');
-						// console.log(image_start);
+					var promises = {};
+					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+					firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
 
-						// why +4? seems there's 4 bytes after the image start that indicate something.
+					var index = 0;
+					if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+						index = node.sensor_list[manifest_data.addr].last_chunk_success;
+					}
+					var temp_count = 0;
+					while(index*chunk_size < firmware_data.manifest.image_size){
+						let offset = index*chunk_size;
+						// console.log(index);
+						// let packet = [254, 59, 0, 0, 0];
+						let offset_bytes = int2Bytes(offset, 4);
+						let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+						temp_count += 1;
+						// packet = packet.concat(offset_bytes, firmware_chunk);
+						promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
+						index++;
+					}
 
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log('!!!!!!!!!');
-						console.log(image_start);
-						console.log(firmware_data.firmware.slice(5, image_start-1));
-						// else{
-							promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-						// }
-						firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
-						// promises.manifest = node.gateway.config_send(manifest_data.addr, manifest_command);
-						var index = 0;
-						if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-							index = node.sensor_list[manifest_data.addr].last_chunk_success;
-							console.log('Uniform 1');
-							console.log('11111111111');
-							console.log(index);
-							console.log(node.sensor_list[manifest_data.addr]);
-						}
-						console.log('foxtrot 1');
-						console.log(image_start);
-						var temp_count = 0;
-						while(index*chunk_size < firmware_data.manifest.image_size){
-							let offset = index*chunk_size;
-							// console.log(index);
-							// let packet = [254, 59, 0, 0, 0];
-							let offset_bytes = int2Bytes(offset, 4);
-							let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
-							console.log('Uniform 2');
-							console.log(index);
-							console.log(index*chunk_size);
-							console.log(index*chunk_size+chunk_size);
-							console.log(offset_bytes);
-							console.log(chunk_size);
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							console.log('-----------------');
-							temp_count += 1;
-							console.log(temp_count);
-							console.log(firmware_chunk.toString('hex').match(/../g).join(' '));
-							console.log('22222222222');
-							// packet = packet.concat(offset_bytes, firmware_chunk);
-							promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
-							index++;
-						}
+					promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
 
-						promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
-						// while(index*chunk_size < firmware_data.manifest.image_size){
-						// 	firmware_chunks.push(firmware_data.firmware.slice(index*chunk_size, (index+1)*chunk_size));
-						// 	index++;
-						// }
-						// console.log(firmware_chunks);
-						// node.sensor_list[manifest_data.addr].promises = promises;
-						// promises.finish = new Promise((fulfill, reject) => {
-						// 	node.gateway.queue.add(() => {
-						// 		return new Promise((f, r) => {
-						// 			// clearTimeout(tout);
-						// 			// node.status(modes.READY);
-						// 			fulfill();
-						// 			f();
-						// 		});
-						// 	});
-						// });
-
-						for(var i in promises){
-							(function(name){
-								promises[name].then((f) => {
-									console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-									console.log(name);
-									console.log(typeof name);
-									if(name == 'manifest'){
-										// delete node.sensor_list[manifest_data.addr].promises[name];
-										node.sensor_list[manifest_data.addr].test_check = {name: true};
-										node.sensor_list[manifest_data.addr].update_in_progress = true;
-									}else {
-										success[name] = true;
-										node.sensor_list[manifest_data.addr].test_check[name] = true;
-										node.sensor_list[manifest_data.addr].last_chunk_success = name;
-										// delete node.sensor_list[manifest_data.addr].promises[name];
-										console.log('--------');
-										console.log(name);
-									}
-								}).catch((err) => {
-									console.log('--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
-									console.log(name);
-									if(name != 'reboot'){
-										console.log('!!!!!!!!!');
-										console.log(err);
-										node.gateway.clear_queue();
-										success[name] = err;
-									}else{
-										delete node.sensor_list[manifest_data.addr].last_chunk_success;
-										delete node.sensor_list[manifest_data.addr].update_request;
-										console.log('ALPHA BRAVO 1');
-										console.log(node.sensor_list[manifest_data.addr]);
-										node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-										// #OTF
-										// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-										top_fulfill(success);
-									}
+					for(var i in promises){
+						(function(name){
+							promises[name].then((f) => {
+								if(name == 'manifest'){
+									// delete node.sensor_list[manifest_data.addr].promises[name];
+									node.sensor_list[manifest_data.addr].test_check = {name: true};
+									node.sensor_list[manifest_data.addr].update_in_progress = true;
+								}else {
+									success[name] = true;
+									node.sensor_list[manifest_data.addr].test_check[name] = true;
+									node.sensor_list[manifest_data.addr].last_chunk_success = name;
+									// delete node.sensor_list[manifest_data.addr].promises[name];
+								}
+							}).catch((err) => {
+								if(name != 'reboot'){
+									node.gateway.clear_queue();
+									success[name] = err;
+								}else{
+									delete node.sensor_list[manifest_data.addr].last_chunk_success;
+									delete node.sensor_list[manifest_data.addr].update_request;
 									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									node.resume_normal_operation();
-								});
-							})(i);
-						}
-					// }else{
-					// 	console.log('Bravo 100');
-					// 	// var promises = node.sensor_list[manifest_data.addr].promises;
-					// 	let promises = node.sensor_list[manifest_data.addr].promises;
-					// 	node.gateway.queue.queue = promises
-					// 	console.log('Bravo 101');
-					// 	promises.finish = new Promise((fulfill, reject) => {
-					// 		node.gateway.queue.add(() => {
-					// 			return new Promise((f, r) => {
-					// 				// clearTimeout(tout);
-					// 				// node.status(modes.READY);
-					// 				fulfill();
-					// 				f();
-					// 			});
-					// 		});
-					// 	});
-					//
-					// 	for(var i in promises){
-					// 		(function(name){
-					// 			promises[name].then((f) => {
-					// 				if(name == 'manifest'){
-					// 					delete node.sensor_list[manifest_data.addr].promises[name];
-					// 					node.sensor_list[manifest_data.addr].update_in_progress = true;
-					// 				}else if(name != 'finish'){
-					// 					success[name] = true;
-					// 					delete node.sensor_list[manifest_data.addr].promises[name];
-					// 					console.log('--------');
-					// 					console.log(name);
-					// 				}
-					// 				else{
-					// 					delete node.sensor_list[manifest_data.addr].promises;
-					// 					node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-					// 					// #OTF
-					// 					node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-					// 					top_fulfill(success);
-					// 				}
-					// 			}).catch((err) => {
-					// 				console.log('!!!!!!!!!');
-					// 				console.log(err);
-					// 				node.gateway.clear_queue();
-					// 				success[name] = err;
-					// 				node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-					// 				node.resume_normal_operation();
-					// 			});
-					// 		})(i);
-					// 	}
-					// }
+									// #OTF
+									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
+									top_fulfill(success);
+								}
+								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+								node.resume_normal_operation();
+							});
+						})(i);
+					}
 				}, 1000);
 			});
-
-
-			// var tout = setTimeout(() => {
-			// 	node.status(modes.PGM_ERR);
-			// 	node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
-			// }, 60000);
-
-			// promises.finish = new Promise((fulfill, reject) => {
-			// 	node.config_gateway.queue.add(() => {
-			// 		return new Promise((f, r) => {
-			// 			clearTimeout(tout);
-			// 			node.status(modes.READY);
-			// 			fulfill();
-			// 			f();
-			// 		});
-			// 	});
-			// });
-			// for(var i in promises){
-			// 	(function(name){
-			// 		promises[name].then((f) => {
-			// 			if(name != 'finish') success[name] = true;
-			// 			else{
-			// 				// #OTF
-			// 				node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
-			// 				top_fulfill(success);
-			// 			}
-			// 		}).catch((err) => {
-			// 			success[name] = err;
-			// 		});
-			// 	})(i);
-			// }
 		}
 		node.resume_normal_operation = function(){
 			let pan_id = parseInt(config.pan_id, 16);
 			node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then().catch().then(() => {
-				console.log('Bravo 10');
-				// console.log(m);
-				// node.check_mode((m) => {
-				// 	node.set_status();
-				// 	res.send(msgs[m]);
-				// });
-				// node.start_firmware_update(manifest_data, firmware_data);
+				console.log('Set Pan ID to: '+pan_id);
 			});
 		}
 
 		node.request_manifest = function(sensor_addr){
 			// Request Manifest
 			node.gateway.firmware_request_manifest(sensor_addr);
-
-			// send ota request
-			// node.gateway.firmware_set_to_ota_mode(sensor_addr);
-
-			// Change Gateway to OTA mode
-			// node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
-			// 	console.log('Bravo 1');
-			// 	console.log(m);
-			// 	node.check_mode((m) => {
-			// 		node.set_status();
-			// 		res.send(msgs[m]);
-			// 	});
-			// });
 		};
 
 		node.close_comms = function(){
@@ -519,55 +261,24 @@ module.exports = function(RED) {
 		node._compare_manifest = function(sensor_manifest){
 			let firmware_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
 			let filename = '/' + sensor_manifest.data.device_type + '-' + sensor_manifest.data.hardware_id[0] + '_' + sensor_manifest.data.hardware_id[1] + '_' + sensor_manifest.data.hardware_id[2] + '.ncd';
-			console.log('Echo 3');
-			console.log(sensor_manifest);
 
 			try {
 				let firmware_file = fs.readFileSync(firmware_dir+filename,)
 				let stored_manifest = node._parse_manifest(firmware_file);
-				console.log(stored_manifest);
 				if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
 					console.log('firmware versions SAME');
 					return false;
 				}
-				// Already checked according to file name.
-				// if(!sensor_manifest.data.hardware_id[0] == stored_manifest.hardware_id[0] || !sensor_manifest.data.hardware_id[1] == stored_manifest.hardware_id[1] || !sensor_manifest.data.hardware_id[2] == stored_manifest.hardware_id[2]){
-				// 	console.log('hardware does not match');
-				// 	return "hardware does not match";
-				// }
+
 				if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
 					console.log('firmware image too large');
 					return false;
 				}
-				console.log('pre-return');
 				return {manifest: stored_manifest, firmware: firmware_file};
 			} catch(err){
 				console.log(err);
 				return err;
 			}
-
-			// ASYNC introduce in the future, take too long to get it to work.
-			// fs.readFileSync(firmware_dir+filename, function(err, firmware_file){
-			// 	// if(err) return err;
-			// 	if(err) console.log(err);
-			// 	let stored_manifest = node._parse_manifest(firmware_file);
-			// 	console.log(stored_manifest);
-			// 	if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
-			// 		console.log('firmware versions SAME');
-			// 		return "Firmware versions match, skip update";
-			// 	}
-			// 	// Already checked according to file name.
-			// 	// if(!sensor_manifest.data.hardware_id[0] == stored_manifest.hardware_id[0] || !sensor_manifest.data.hardware_id[1] == stored_manifest.hardware_id[1] || !sensor_manifest.data.hardware_id[2] == stored_manifest.hardware_id[2]){
-			// 	// 	console.log('hardware does not match');
-			// 	// 	return "hardware does not match";
-			// 	// }
-			// 	if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
-			// 		console.log('firmware image too large');
-			// 		return "firmware image too large";
-			// 	}
-			// 	console.log('pre-return');
-			// 	return {manifest: stored_manifest, firmware: firmware_file};
-			// });
 		}
 		node._parse_manifest = function(bin_data){
 			return {
@@ -584,9 +295,6 @@ module.exports = function(RED) {
 			}
 		};
 		node._parse_manifest_read = function(bin_data){
-			console.log(bin_data.length);
-			console.log('Echo 2');
-			console.log(toHex(bin_data));
 			return {
 				// manifest_size: bin_data.slice(0,4).reduce(msbLsb),
 				firmware_version: bin_data[0],
@@ -611,8 +319,6 @@ module.exports = function(RED) {
 		this._gateway_node.open_comms();
 		this.gateway = this._gateway_node.gateway;
 
-		// this.sensor_list = {};
-
 		var node = this;
 
 		node.on('close', function(){
@@ -630,37 +336,6 @@ module.exports = function(RED) {
 		node.set_status = function(){
 			node.status(statuses[node._gateway_node.is_config]);
 		};
-		// TODO consider to move this to config
-		// node._parse_manifest = function(bin_data){
-		// 	return {
-		// 		manifest_check: bin_data[0] == 0x01,
-		// 		manifest_size: bin_data.slice(1, 5).reduce(msbLsb),
-		// 		firmware_version: bin_data[5],
-		// 		image_start_address: bin_data.slice(6, 10).reduce(msbLsb),
-		// 		image_size: bin_data.slice(10, 14).reduce(msbLsb),
-		// 		max_image_size: bin_data.slice(14, 18).reduce(msbLsb),
-		// 		image_digest: bin_data.slice(18, 34),
-		// 		device_type: bin_data.slice(34, 36).reduce(msbLsb),
-		// 		hardware_id: bin_data.slice(36, 39),
-		// 		reserve_bytes: bin_data.slice(39, 42)
-		// 	}
-		// }
-		// read manifests have the first 5 bytes missing
-		// node._parse_manifest_read = function(bin_data){
-		// 	console.log(bin_data.length);
-		// 	console.log('Echo 2');
-		// 	return {
-		// 		// manifest_size: bin_data.slice(0,4).reduce(msbLsb),
-		// 		firmware_version: bin_data[0],
-		// 		image_start_address: bin_data.slice(1, 5).reduce(msbLsb),
-		// 		image_size: bin_data.slice(5, 9).reduce(msbLsb),
-		// 		max_image_size: bin_data.slice(9, 13).reduce(msbLsb),
-		// 		image_digest: bin_data.slice(13, 29),
-		// 		device_type: bin_data.slice(29, 31).reduce(msbLsb),
-		// 		hardware_id: bin_data.slice(31, 34),
-		// 		reserve_bytes: bin_data.slice(34, 37)
-		// 	}
-		// }
 		node._gateway_node.on('send_manifest', (manifest_data) => {
 			node.send({
 				topic: 'sensor_manifest',
@@ -683,21 +358,11 @@ module.exports = function(RED) {
 		node.on('input', function(msg){
 			switch(msg.topic){
 				case "route_trace":
-					console.log("performing route_trace");
 					var opts = {trace:1};
-					node.gateway.route_discover(msg.payload.address,msg.payload.data,opts).then().catch(console.log);
+					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
 					break;
 				case "link_test":
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
-					break;
-				case "request_time_series":
-					// Sample fft_request msg:
-					// msg.payload = {
-					// 	address: "00:13:a2:00:42:2c:d2:aa",
-					// 	type: 80, //OPTIONAL only required for t81 sensor
-					// 	probe: 1//OPTIONAL only required for type 81 sensor
-					// }
-					node.gateway.request_time_series(msg.payload);
 					break;
 				case "fidelity_test":
 					break;
@@ -708,7 +373,6 @@ module.exports = function(RED) {
 						topic: 'add_firmware_file_response',
 						payload: node._gateway_node._parse_manifest(msg.payload)
 					}
-					console.log('FIRE 1');
 					let firmware_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
 					if (!fs.existsSync(firmware_dir)) {
 						fs.mkdirSync(firmware_dir);
@@ -811,13 +475,6 @@ module.exports = function(RED) {
 			});
 		});
 		node.gateway.on('sensor_data', (d) => {
-			// if(!Object.hasOwn(node.sensor_list, d.addr)){
-			// 	node.sensor_list[d.addr] = {
-			// 		sensor_type: d.sensor_type,
-			// 		firmware: d.firmware,
-			// 		nodeId: d.nodeId
-			// 	};
-			// };
 			node.set_status();
 			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
 		});
@@ -905,7 +562,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102 , 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80,81,82,83,84, 101, 102 , 518,519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -1045,6 +702,11 @@ module.exports = function(RED) {
 							promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 						}
 						switch(sensor.type){
+							case 2:
+								if(config.debounce_time_2_active){
+									promises.debounce_time_2 = node.config_gateway.config_set_debounce_time_2(mac, parseInt(config.debounce_time_2));
+								}
+								break;
 							case 3:
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
@@ -1217,6 +879,19 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 76:
+								if(config.periodic_check_rate_76_active){
+									promises.periodic_check_rate_76 = node.config_gateway.config_set_periodic_check_rate_76(mac, parseInt(config.periodic_check_rate_76));
+								}
+								if(config.sensor_boot_time_76_active){
+									promises.sensor_boot_time_76 = node.config_gateway.config_set_sensor_boot_time_76(mac, parseInt(config.sensor_boot_time_76));
+								}
+								if(config.ppm_threshold_76_active){
+									promises.ppm_threshold_76 = node.config_gateway.config_set_ppm_threshold_76(mac, parseInt(config.ppm_threshold_76));
+								}
+								if(config.alert_duration_76_active){
+									promises.alert_duration_76 = node.config_gateway.config_set_alert_duration_76(mac, parseInt(config.alert_duration_76));
+								}
 							case 78:
 								if(config.sensor_boot_time_78_active){
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
@@ -1260,7 +935,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1369,7 +1044,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1413,7 +1088,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1519,6 +1194,129 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 108:
+								if(config.accelerometer_state_108_active){
+									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								}
+								if(config.clear_all_counters_108){
+									promises.clear_all_counters_108 = node.config_gateway.config_clear_timers_108(mac);
+								}
+								if(config.accelerometer_threshold_108_active){
+									promises.accelerometer_threshold_108 = node.config_gateway.config_set_accelerometer_threshold_108(mac, parseInt(config.accelerometer_threshold_108));
+								}
+								if(config.debounce_time_108_active){
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								break;
+							case 180:
+								if(config.current_calibration_c1_80_active){
+									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
+								}
+								if(config.output_data_rate_101_active){
+									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
+								}
+								if(config.sampling_duration_101_active){
+									promises.sampling_duration_101 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_101));
+								}
+								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
+									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.full_scale_range_101_active){
+									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
+								}
+								if(config.mode_80_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								}
+								if(config.filter_80_active){
+									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
+								}
+								if(config.low_pass_filter_80_active){
+									promises.low_pass_filter = node.config_gateway.config_set_low_pass_filter_80(mac, parseInt(config.low_pass_filter_80));
+								}
+								if(config.high_pass_filter_80_active){
+									promises.high_pass_filter = node.config_gateway.config_set_high_pass_filter_80(mac, parseInt(config.high_pass_filter_80));
+								}
+								if(config.measurement_mode_80_active){
+									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
+								}
+								if(config.on_request_timeout_80_active){
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
+								}
+								if(config.deadband_80_active){
+									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
+								}
+								if(config.payload_length_80_active){
+									promises.payload_length_80 = node.config_gateway.config_set_payload_length_80(mac, parseInt(config.payload_length_80));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
+							case 181:
+								if(config.current_calibration_c1_80_active){
+									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
+								}
+								if(config.current_calibration_c2_80_active){
+									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
+								}
+								if(config.output_data_rate_p1_81_active){
+									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
+								}
+								if(config.output_data_rate_p2_81_active){
+									promises.output_data_rate_p2_81 = node.config_gateway.config_set_output_data_rate_p2_81(mac, parseInt(config.output_data_rate_p2_81));
+								}
+								if(config.sampling_duration_p1_81_active){
+									promises.sampling_duration_p1_81 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_p1_81));
+								}
+								if(config.sampling_duration_p2_81_active){
+									promises.sampling_duration_p2_81 = node.config_gateway.config_set_sampling_duration_p2_81(mac, parseInt(config.sampling_duration_p2_81));
+								}
+								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
+									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.full_scale_range_101_active){
+									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
+								}
+								if(config.mode_80_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								}
+								if(config.filter_80_active){
+									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
+								}
+								if(config.low_pass_filter_80_active){
+									promises.low_pass_filter = node.config_gateway.config_set_low_pass_filter_80(mac, parseInt(config.low_pass_filter_80));
+								}
+								if(config.high_pass_filter_80_active){
+									promises.high_pass_filter = node.config_gateway.config_set_high_pass_filter_80(mac, parseInt(config.high_pass_filter_80));
+								}
+								if(config.low_pass_filter_81_p2_active){
+									promises.low_pass_filter_p2 = node.config_gateway.config_set_low_pass_filter_81_p2(mac, parseInt(config.low_pass_filter_81_p2));
+								}
+								if(config.high_pass_filter_81_p2_active){
+									promises.high_pass_filter_p2 = node.config_gateway.config_set_high_pass_filter_81_p2(mac, parseInt(config.high_pass_filter_81_p2));
+								}
+								if(config.measurement_mode_80_active){
+									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
+								}
+								if(config.on_request_timeout_80_active){
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
+								}
+								if(config.deadband_80_active){
+									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
+								}
+								if(config.payload_length_80_active){
+									promises.payload_length_80 = node.config_gateway.config_set_payload_length_80(mac, parseInt(config.payload_length_80));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
 							case 200:
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
@@ -1578,7 +1376,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1600,6 +1398,14 @@ module.exports = function(RED) {
 								}
 								if(config.set_rtc_101){
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
+							case 535:
+								if(config.force_calibration_co2_535_active){
+									promises.force_calibration_co2_535 = node.config_gateway.config_set_sensor_forced_calibration_535(mac);
+								}
+								if(config.temperature_offset_44_active){
+									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
 								}
 								break;
 							case 537:
@@ -1634,7 +1440,7 @@ module.exports = function(RED) {
 									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
-									promises.on_request_timeout = node.config_gateway.config_set_filters_80(mac, parseInt(config.on_request_timeout_80));
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
 								}
 								if(config.deadband_80_active){
 									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
@@ -1658,10 +1464,33 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 537:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.baudrate_539_active){
+									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								}
+								if(config.rx_timeout_539_active){
+									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								}
+								if(config.bootup_time_539_active){
+									promises.bootup_time_539 = node.config_gateway.config_set_bootup_time_539(mac, parseInt(config.bootup_time_539));
+								}
+								if(config.sensor_add_539_active){
+									promises.sensor_add_539 = node.config_gateway.config_set_sensor_add_539(mac, parseInt(config.sensor_add_539));
+								}
+								if(config.rs_node_id_539_active){
+									promises.rs_node_id_539 = node.config_gateway.config_set_rs_node_id_539(mac, parseInt(config.rs_node_id_539));
+								}
+								if(config.number_of_regs_to_rd_539_active){
+									promises.number_of_regs_to_rd_539 = node.config_gateway.config_set_number_of_regs_to_rd_539(mac, parseInt(config.number_of_regs_to_rd_539));
+								}
+								break;
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102 , 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
@@ -1701,7 +1530,6 @@ module.exports = function(RED) {
 			});
 		}
 		node._sensor_config = _config;
-
 		if(config.addr){
 			config.addr = config.addr.toLowerCase();
 
@@ -1713,15 +1541,6 @@ module.exports = function(RED) {
 					topic: 'sensor_data',
 					data: data,
 					payload: data.sensor_data,
-					time: Date.now()
-				});
-			});
-			this.gtw_on('ncd_error-'+config.addr, (data) => {
-				node.status(modes.STREAM_ERR);
-				node.send({
-					topic: 'ncd_error',
-					data: data,
-					payload: data.error,
 					time: Date.now()
 				});
 			});
@@ -1827,15 +1646,6 @@ module.exports = function(RED) {
 					topic: 'sensor_data',
 					data: data,
 					payload: data.sensor_data,
-					time: Date.now()
-				});
-			});
-			this.gtw_on('ncd_error-'+config.sensor_type, (data) => {
-				node.status(modes.STREAM_ERR);
-				node.send({
-					topic: 'ncd_error',
-					data: data,
-					payload: data.error,
 					time: Date.now()
 				});
 			});
@@ -1973,7 +1783,6 @@ module.exports = function(RED) {
 					'In config mode',
 					'Failed to connect'
 				];
-				// node.send({topic: "target_pan", payload: pan});
 				node.gateway.digi.send.at_command("ID", pan).then().catch().then(() => {
 					node._gateway_node.check_mode((m) => {
 						node.set_status();
