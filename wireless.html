@@ -397,6 +397,9 @@
 			config_set_reg_active_539:{value:""},
 			config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 
+			mode_110_active: {value: ""},
+			mode_110: {value: 0},
+
 			auto_raw_interval_110_active:{value:""},
 			auto_raw_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
@@ -1239,31 +1242,6 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Measurement Mode</strong>
-					<div>
-						<label for="node-input-measurement_mode_80_active">Active:</label>
-						<input type="checkbox" id="node-input-measurement_mode_80_active" class="ncd-config-toggle" data-target-id="node-input-measurement_mode_80" value="1">
-					</div>
-					<div>
-						<label for="node-input-measurement_mode_80"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-measurement_mode_80">
-							<option value="0">Processed data, acc in mg, velocity in mm/sec and displacement in mm</option>
-							<option value="1">Processed data, acc in ms^2, velocity in inch/sec and displacement in milli</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set On Request Timeout in seconds</strong>
-					<div>
-						<label for="node-input-on_request_timeout_80_active">Active:</label>
-						<input type="checkbox" id="node-input-on_request_timeout_80_active" class="ncd-config-toggle" data-target-id="node-input-on_request_timeout_80" value="1">
-					</div>
-					<div>
-						<label for="node-input-on_request_timeout_80"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-on_request_timeout_80" value="1">
-					</div>
-				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<hr>
@@ -1271,12 +1249,12 @@
 					<strong>Mode</strong>
 					<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
 					<div>
-						<label for="node-input-mode_80_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-mode_80_active" class="ncd-config-toggle" data-target-id="node-input-mode_80" value="1">
+						<label for="node-input-mode_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-mode_110_active" class="ncd-config-toggle" data-target-id="node-input-mode_110" value="1">
 					</div>
 					<div>
-						<label for="node-input-mode_80"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-mode_80">
+						<label for="node-input-mode_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_110">
 							<option value="0">Processed</option>
 							<option value="1">Raw</option>
 							<option value="2">Processed + Raw on demand</option>
@@ -1284,17 +1262,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Smart Mode Interval</strong>
-					<div>
-						<label for="node-input-smart_interval_110_active">Active:</label>
-						<input type="checkbox" id="node-input-smart_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_interval_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-smart_interval_110"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-smart_interval_110" value="1">
-					</div>
-				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<strong>Measurement Mode</strong>
 					<div>
