@@ -275,7 +275,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 180, 181, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -925,8 +925,8 @@ module.exports = function(RED) {
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								}
-								if(config.mode_80_active){
-									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								if(config.mode_110_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_110));
 								}
 								if(config.filter_80_active){
 									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
@@ -996,8 +996,8 @@ module.exports = function(RED) {
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								}
-								if(config.mode_80_active){
-									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								if(config.mode_110_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_110));
 								}
 								if(config.filter_80_active){
 									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
@@ -1064,8 +1064,8 @@ module.exports = function(RED) {
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								}
-								if(config.mode_80_active){
-									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								if(config.mode_110_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_110));
 								}
 								if(config.filter_80_active){
 									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
@@ -1123,8 +1123,8 @@ module.exports = function(RED) {
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								}
-								if(config.mode_80_active){
-									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								if(config.mode_110_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_110));
 								}
 								if(config.filter_80_active){
 									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
