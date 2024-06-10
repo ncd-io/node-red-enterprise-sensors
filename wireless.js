@@ -346,6 +346,43 @@ module.exports = function(RED) {
 				},
 				time: Date.now()
 			});
+
+		node.on('input', function(msg){
+			switch(msg.topic){
+				case "route_trace":
+					var opts = {trace:1};
+					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+					break;
+				case "link_test":
+					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+					break;
+				case "fft_request":
+					break;
+				case "fidelity_test":
+					break;
+				default:
+					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			}
+
+
+			// console.log("input triggered, topic:"+msg.topic);
+			// if(msg.topic == "transmit"){
+			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+			// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			// }
+			// if(msg.topic == "route_trace"){
+			// 	var opts = {trace:1};
+			// 	node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+			// }
+			// if(msg.topic == "link_test"){
+			// 	node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+			// }
+			// if(msg.topic == "fft_request"){
+
+			// }
+			// if(msg.topic == "fidelity_test"){
+			// }
 		});
 		node._gateway_node.on('send_firmware_stats', (data) => {
 			node.send({
