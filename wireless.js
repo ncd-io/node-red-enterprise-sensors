@@ -346,7 +346,7 @@ module.exports = function(RED) {
 				},
 				time: Date.now()
 			});
-
+		});
 		node.on('input', function(msg){
 			switch(msg.topic){
 				case "route_trace":
