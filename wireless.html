@@ -396,7 +396,7 @@
 
 			config_set_reg_active_539:{value:""},
 			config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
-      
+
 			mode_110_active: {value: ""},
 			mode_110: {value: 0},
 
@@ -1227,7 +1227,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
@@ -1507,7 +1507,7 @@
 					</div>
 				</div>
 			</div>
-      
+
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filtering</strong>
@@ -1578,7 +1578,7 @@
 					</div>
 				</div>
 			</div>
-      
+
 			<div class="ncd-dependent" data-sensor-81 data-sensor-111 data-sensor-181>
 				<div class="form-row ncd-active-check">
 					<strong>Set Low Pass Filter Probe 2</strong>
@@ -2135,6 +2135,19 @@
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
+					<strong>Set Smart Mode Threshold</strong>
+					<div>
+						<label for="node-input-smart_threshold_110_active">Active:</label>
+						<input type="checkbox" id="node-input-smart_threshold_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-smart_threshold_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-smart_threshold_110" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-114>
+				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
 						<label for="node-input-clear_probe_uptimers_110_active">Active:</label>
@@ -2146,17 +2159,6 @@
 							<option value="0">Disabled</option>
 							<option value="1">Enabled</option>
 						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Smart Mode Threshold</strong>
-					<div>
-						<label for="node-input-smart_threshold_110_active">Active:</label>
-						<input type="checkbox" id="node-input-smart_threshold_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-smart_threshold_110"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-smart_threshold_110" value="1">
 					</div>
 				</div>
 			</div>

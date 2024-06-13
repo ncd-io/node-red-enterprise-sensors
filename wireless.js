@@ -1318,7 +1318,7 @@ module.exports = function(RED) {
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
-									promises.smart_threshold_110 = nocd.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
 								break;
 							case 111:
@@ -1395,7 +1395,7 @@ module.exports = function(RED) {
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
-									promises.smart_threshold_110 = nocd.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
 								break;
 							case 112:
@@ -1457,7 +1457,7 @@ module.exports = function(RED) {
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
-									promises.smart_threshold_110 = nocd.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
 								break;
 							case 114:
@@ -1528,7 +1528,7 @@ module.exports = function(RED) {
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
-									promises.smart_threshold_110 = nocd.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
 								break;
 							case 180:
