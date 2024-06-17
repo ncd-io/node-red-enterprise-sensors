@@ -1787,7 +1787,7 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
-							case 537:
+							case 539:
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
@@ -1803,8 +1803,8 @@ module.exports = function(RED) {
 								if(config.sensor_add_539_active){
 									promises.sensor_add_539 = node.config_gateway.config_set_sensor_add_539(mac, parseInt(config.sensor_add_539));
 								}
-								if(config.rs_node_id_539_active){
-									promises.rs_node_id_539 = node.config_gateway.config_set_rs_node_id_539(mac, parseInt(config.rs_node_id_539));
+								if(config.sub_device_type_539_active){
+									promises.sub_device_type_539 = node.config_gateway.config_set_sub_device_type_539(mac, parseInt(config.sub_device_type_539));
 								}
 								if(config.number_of_regs_to_rd_539_active){
 									promises.number_of_regs_to_rd_539 = node.config_gateway.config_set_number_of_regs_to_rd_539(mac, parseInt(config.number_of_regs_to_rd_539));
