@@ -1821,12 +1821,9 @@ module.exports = function(RED) {
 									promises.sub_device_type_539 = node.config_gateway.config_set_sub_device_type_539(mac, parseInt(config.sub_device_type_539));
 								}
 								if(config.number_of_regs_to_rd_539_active){
-									promises.number_of_regs_to_rd_539 = node.config_gateway.config_set_number_of_regs_to_rd_539(mac, parseInt(config.number_of_regs_to_rd_539));
-								}
-								if(config.number_of_regs_to_rd_539_active){
 									let register_array = [];
 									for(let ind = 0; ind < config.number_of_regs_to_rd_539; ind++){
-										register_array.push(config['register_value_'+ind+'_539']);
+										register_array.push(parseInt(config['register_value_'+ind+'_539']));
 									}
 									promises.config_set_all_register_data_539 = node.config_gateway.config_set_all_register_data_539(mac, parseInt(config.number_of_regs_to_rd_539), register_array);
 								}
