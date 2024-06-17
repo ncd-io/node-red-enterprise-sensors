@@ -85,6 +85,9 @@
 		padding-left: 1em;
 		margin-top: .25em;
 	}
+	#register_list_539 > div{
+		display: none;
+	}
 </style>
 
 <script type="text/x-red" data-help-name="ncd-gateway-node">
@@ -392,10 +395,20 @@
 			sub_device_type_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
 
 			number_of_regs_to_rd_539_active:{value:""},
-			number_of_regs_to_rd_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 10)},
 
-			config_set_reg_active_539:{value:""},
-			config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
+			register_value_0_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_1_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_2_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_3_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_4_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_5_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_6_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_7_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_8_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_9_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			//config_set_reg_active_539:{value:""},
+			//config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 
 			mode_110_active: {value: ""},
 			mode_110: {value: 0},
@@ -556,6 +569,11 @@
 					}
 				}
 			}
+			$('#node-input-number_of_regs_to_rd_539').change(function(){
+				let registers = $(this).val();
+				$('#register_list_539 > div:nth-child(-n+'+registers+')').show();
+				$('#register_list_539 > div:nth-last-child(-n+'+(10-registers)+')').hide();
+			});
 			$('#node-input-connection').change(function(){
 				$.getJSON('ncd/wireless/needs_input/'+$(this).val(),function(data) {
 					if(data.is_raw){
@@ -2097,14 +2115,80 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Number of Registers to RD</strong>
+					<strong>Set Read Registers</strong>
+					<p class="caption">
+						Set the total number of registers to read on interval in the Register Reads field. Set the individual Registers to read below in the correspond Register field.
+					</p>
 					<div>
 						<label for="node-input-number_of_regs_to_rd_539_active">Active:</label>
 						<input type="checkbox" id="node-input-number_of_regs_to_rd_539_active" class="ncd-config-toggle" data-target-id="node-input-number_of_regs_to_rd_539" value="1">
 					</div>
 					<div>
-						<label for="node-input-number_of_regs_to_rd_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-number_of_regs_to_rd_539" placeholder="10" value="10">
+						<label for="node-input-number_of_regs_to_rd_539"><i class="icon-tag"></i>Register Reads:</label>
+						<input type="text" id="node-input-number_of_regs_to_rd_539" placeholder="1" value="1">
+					</div>
+					<hr>
+					<div id="register_list_539">
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_0_539"><i class="icon-tag"></i>Register 1:</label>
+								<input type="text" id="node-input-register_value_0_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_1_539"><i class="icon-tag"></i>Register 2:</label>
+								<input type="text" id="node-input-register_value_1_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_2_539"><i class="icon-tag"></i>Register 3:</label>
+								<input type="text" id="node-input-register_value_2_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_3_539"><i class="icon-tag"></i>Register 4:</label>
+								<input type="text" id="node-input-register_value_3_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_4_539"><i class="icon-tag"></i>Register 5:</label>
+								<input type="text" id="node-input-register_value_4_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_5_539"><i class="icon-tag"></i>Register 6:</label>
+								<input type="text" id="node-input-register_value_5_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_6_539"><i class="icon-tag"></i>Register 7:</label>
+								<input type="text" id="node-input-register_value_6_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_7_539"><i class="icon-tag"></i>Register 8:</label>
+								<input type="text" id="node-input-register_value_7_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_8_539"><i class="icon-tag"></i>Register 9:</label>
+								<input type="text" id="node-input-register_value_8_539" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row">
+							<div>
+								<label for="node-input-register_value_9_539"><i class="icon-tag"></i>Register 10:</label>
+								<input type="text" id="node-input-register_value_9_539" placeholder="10" value="10">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
