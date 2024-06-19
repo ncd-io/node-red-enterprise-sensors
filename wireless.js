@@ -599,7 +599,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -1801,6 +1801,53 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 538:
+								if(config.current_calibration_c1_80_active){
+									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
+								}
+								if(config.output_data_rate_101_active){
+									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
+								}
+								if(config.sampling_duration_101_active){
+									promises.sampling_duration_101 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_101));
+								}
+								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
+									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.full_scale_range_101_active){
+									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
+								}
+								if(config.mode_80_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								}
+								if(config.filter_80_active){
+									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
+								}
+								if(config.low_pass_filter_80_active){
+									promises.low_pass_filter = node.config_gateway.config_set_low_pass_filter_80(mac, parseInt(config.low_pass_filter_80));
+								}
+								if(config.high_pass_filter_80_active){
+									promises.high_pass_filter = node.config_gateway.config_set_high_pass_filter_80(mac, parseInt(config.high_pass_filter_80));
+								}
+								if(config.measurement_mode_80_active){
+									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
+								}
+								if(config.on_request_timeout_80_active){
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
+								}
+								if(config.deadband_80_active){
+									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
+								}
+								if(config.payload_length_80_active){
+									promises.payload_length_80 = node.config_gateway.config_set_payload_length_80(mac, parseInt(config.payload_length_80));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
 							case 539:
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
@@ -1859,7 +1906,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
