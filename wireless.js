@@ -347,25 +347,23 @@ module.exports = function(RED) {
 				time: Date.now()
 			});
 		});
-		node.on('input', function(msg){
-			switch(msg.topic){
-				case "route_trace":
-					var opts = {trace:1};
-					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
-					break;
-				case "link_test":
-					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
-					break;
-				case "fft_request":
-					break;
-				case "fidelity_test":
-					break;
-				default:
-					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
-					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
-			}
-
-
+		// node.on('input', function(msg){
+		// 	switch(msg.topic){
+		// 		case "route_trace":
+		// 			var opts = {trace:1};
+		// 			node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+		// 			break;
+		// 		case "link_test":
+		// 			node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+		// 			break;
+		// 		case "fft_request":
+		// 			break;
+		// 		case "fidelity_test":
+		// 			break;
+		// 		default:
+		// 			const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+		// 			node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+		// 	}
 			// console.log("input triggered, topic:"+msg.topic);
 			// if(msg.topic == "transmit"){
 			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
@@ -383,7 +381,7 @@ module.exports = function(RED) {
 			// }
 			// if(msg.topic == "fidelity_test"){
 			// }
-		});
+		// });
 		node._gateway_node.on('send_firmware_stats', (data) => {
 			node.send({
 				topic: 'update_stats',
@@ -402,6 +400,38 @@ module.exports = function(RED) {
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
 					break;
 				case "fidelity_test":
+					break;
+				case "start_luber":
+					// msg = {
+					// 'topic': start_luber,
+					// 'payload': {
+					// 	'address': '00:13:a2:00:42:37:87:0a', //REQUIRED
+					// 	duration: 3, //REQUIRED valid values 1-255
+					// 	channel: 2 //OPTIONAL default value of 1
+					// }
+					// }
+					if(!Object.hasOwn(msg.payload, 'duration')){
+						console.log('ERROR: No duration specified, please specify duration in msg.payload.duration');
+						break;
+					}
+					if(msg.payload.duration < 1 || msg.payload.duration > 255){
+						console.log('ERROR: Duration out of bounds. Duration');
+						break;
+					}
+					var cmd_promise;
+					if(Object.hasOwn(msg.payload, 'channel')){
+						node.gateway.control_start_luber(msg.payload.address, msg.payload.channel, msg.payload.duration).then((f) => {
+							node.send({topic: 'Command Results', payload: 'Automatic Luber '+msg.payload.channel+' Activation Complete', time: Date.now(), addr: msg.payload.address});
+						}).catch((err) => {
+							node.send({topic: 'Command Error', payload: err});
+						});
+					}else{
+						node.gateway.control_start_luber(msg.payload.address, 1, msg.payload.duration).then((f) => {
+							node.send({topic: 'Command Results', payload: 'Automatic Luber Activation Complete', time: Date.now(), addr: msg.payload.address});
+						}).catch((err) => {
+							node.send({topic: 'Command Error', payload: err});
+						});
+					}
 					break;
 				case "add_firmware_file":
 					// Parse Manifest to grab information and store it for later use
