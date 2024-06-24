@@ -421,14 +421,56 @@ module.exports = function(RED) {
 					var cmd_promise;
 					if(Object.hasOwn(msg.payload, 'channel')){
 						node.gateway.control_start_luber(msg.payload.address, msg.payload.channel, msg.payload.duration).then((f) => {
-							node.send({topic: 'Command Results', payload: 'Automatic Luber '+msg.payload.channel+' Activation Complete', time: Date.now(), addr: msg.payload.address});
+							node.send({
+								topic: 'command_results',
+								payload: {
+									res: 'Automatic Luber '+msg.payload.channel+' Activation Complete',
+									address: msg.payload.address,
+									channel: msg.payload.channel,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
 						}).catch((err) => {
-							node.send({topic: 'Command Error', payload: err});
+							node.send({
+								topic: 'command_error',
+								payload: {
+									res: err,
+									address: msg.payload.address,
+									channel: msg.payload.channel,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
+							// node.send({topic: 'Command Error', payload: err});
 						});
 					}else{
 						node.gateway.control_start_luber(msg.payload.address, 1, msg.payload.duration).then((f) => {
-							node.send({topic: 'Command Results', payload: 'Automatic Luber Activation Complete', time: Date.now(), addr: msg.payload.address});
+							node.send({
+								topic: 'Command Results',
+								payload: {
+									res: 'Automatic Luber 1 Activation Complete',
+									address: msg.payload.address,
+									channel: 1,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
 						}).catch((err) => {
+							node.send({
+								topic: 'Command Results',
+								payload: {
+									res: 'Automatic Luber 1 Activation Complete',
+									address: msg.payload.address,
+									channel: 1,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
 							node.send({topic: 'Command Error', payload: err});
 						});
 					}
