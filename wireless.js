@@ -1349,6 +1349,18 @@ module.exports = function(RED) {
 								if(config.debounce_time_108_active){
 									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
 								}
+								if(config.input_one_108_active){
+									promises.input_one_108 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
+								}
+								if(config.input_two_108_active){
+									promises.input_two_108 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
+								}
+								if(config.input_three_108_active){
+									promises.input_three_108 = node.config_gateway.config_set_input_three_108(mac, parseInt(config.input_three_108));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
 								break;
 							case 110:
 								if(config.current_calibration_c1_80_active){

@@ -354,6 +354,15 @@
 			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
 			debounce_time_108_active:{value:""},
 
+			input_one_108:{value:1},
+			input_one_108_active:{value:""},
+			input_two_108:{value:1},
+			input_two_108_active:{value:""},
+			input_three_108:{value:0},
+			input_three_108_active:{value:""},
+			counter_threshold_108:{value:1000, validate: NCD_validators.number_range(0, 65534)},
+			counter_threshold_108_active:{value:""},
+
 			counter_threshold_35:{value:50, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_35_active:{value:""},
 
@@ -1962,6 +1971,64 @@
 					<div>
 						<label for="node-input-debounce_time_108"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input One</strong>
+					<div>
+						<label for="node-input-input_one_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_one_108_active" class="ncd-config-toggle" data-target-id="node-input-input_one_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_one_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_one_108">
+							<option value="0">Falling Edge trigger</option>
+							<option value="1">Rising Edge trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Two</strong>
+					<div>
+						<label for="node-input-input_two_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_two_108">
+							<option value="0">Falling Edge trigger</option>
+							<option value="1">Rising Edge trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Three</strong>
+					<div>
+						<label for="node-input-input_three_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_three_108_active" class="ncd-config-toggle" data-target-id="node-input-input_three_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_three_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_three_108">
+							<option value="0">Falling Edge trigger</option>
+							<option value="1">Rising Edge trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Counter Threshold</strong>
+					<p class="caption">
+						Device will send data when any counters reaches multiple of the Threshold.
+						<br>
+						Note: The range for this value is from 0 to 65534 and must be multiple of 100. 
+					</p>
+					<div>
+						<label for="node-input-counter_threshold_108_active">Active:</label>
+						<input type="checkbox" id="node-input-counter_threshold_108_active" class="ncd-config-toggle" data-target-id="node-input-counter_threshold_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-counter_threshold_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-counter_threshold_108" placeholder="1000" value="1000">
 					</div>
 				</div>
 			</div>
