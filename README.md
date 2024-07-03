@@ -7,7 +7,8 @@ To install through the command line navigate inside .node-red directory on a com
 Standard install commands:
 ``` console
 cd ~/.node-red
-npm install @ncd-io/node-red-enterprise-sensors ```
+npm install @ncd-io/node-red-enterprise-sensors
+```
 
 Standard update commands:
 ``` console
