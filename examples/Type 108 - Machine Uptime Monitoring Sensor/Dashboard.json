@@ -716,13 +716,13 @@
         "id": "e0cf82f8c29e46d8",
         "type": "change",
         "z": "0f850dc8977c3d53",
-        "name": "acc counter",
+        "name": "mag counter",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.accelerometer_counter",
+                "to": "payload.magnetometer_counter",
                 "tot": "msg"
             }
         ],
@@ -744,13 +744,13 @@
         "id": "cbb879b56b244f77",
         "type": "change",
         "z": "0f850dc8977c3d53",
-        "name": "acc counter",
+        "name": "mag uptime",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.accelerometer_counter",
+                "to": "payload.magnetometer_uptime",
                 "tot": "msg"
             }
         ],
