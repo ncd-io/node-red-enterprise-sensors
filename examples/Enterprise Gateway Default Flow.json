@@ -1,0 +1,54 @@
+[
+    {
+        "id": "659f98d7808980b1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3a158777559a1790",
+        "type": "ncd-gateway-config",
+        "name": "",
+        "comm_type": "serial",
+        "ip_address": "",
+        "tcp_port": "2101",
+        "port": "/dev/ttymxc2",
+        "baudRate": "115200",
+        "pan_id": "7FFF",
+        "rssi": false
+    },
+    {
+        "id": "22f1bf4f8036848c",
+        "type": "ncd-gateway-node",
+        "z": "659f98d7808980b1",
+        "name": "",
+        "connection": "3a158777559a1790",
+        "unknown_devices": 0,
+        "outputs": 1,
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "f1045e7e40a84964"
+            ]
+        ]
+    },
+    {
+        "id": "f1045e7e40a84964",
+        "type": "debug",
+        "z": "659f98d7808980b1",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 160,
+        "wires": []
+    }
+]
