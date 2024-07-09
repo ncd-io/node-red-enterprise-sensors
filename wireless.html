@@ -201,13 +201,13 @@
 			change_interval: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
 
 			current_calibration_13_active: {value: ""},
-			current_calibration_13: {value: "60.6", validate: NCD_validators.number_range(0, 655.35, 'decimal')},
+			current_calibration_13: {value: "606", validate: NCD_validators.number_range(0, 65535)},
 
 			current_calibration_ch2_19_active: {value: ""},
-			current_calibration_ch2_19: {value: "60.6", validate: NCD_validators.number_range(0, 655.35, 'decimal')},
+			current_calibration_ch2_19: {value: "606", validate: NCD_validators.number_range(0, 65535)},
 
 			current_calibration_ch3_28_active: {value: ""},
-			current_calibration_ch3_28: {value: "60.6", validate: NCD_validators.number_range(0, 655.35, 'decimal')},
+			current_calibration_ch3_28: {value: "606", validate: NCD_validators.number_range(0, 65535)},
 
 			bp_altitude: {value: "0", validate: NCD_validators.number_range(0, 65535)},
 			bp_pressure: {value: "0", validate: NCD_validators.number_range(0, 14000)},
@@ -981,7 +981,7 @@
 						<input type="checkbox" id="node-input-current_calibration_13_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_13_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_13"><i class="icon-tag"></i> Calibration Option (0 - 655.35)</label>
+						<label for="node-input-current_calibration_13"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
 						<input type="text" id="node-input-current_calibration_13">
 					</div>
 				</div>
@@ -994,7 +994,7 @@
 						<input type="checkbox" id="node-input-current_calibration_ch2_19_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_ch2_19_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_ch2_19"><i class="icon-tag"></i> Calibration Option (0 - 655.35)</label>
+						<label for="node-input-current_calibration_ch2_19"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
 						<input type="text" id="node-input-current_calibration_ch2_19">
 					</div>
 				</div>
@@ -1007,7 +1007,7 @@
 						<input type="checkbox" id="node-input-current_calibration_ch3_28_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_ch3_28_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_ch3_28"><i class="icon-tag"></i> Calibration Option (0 - 655.35)</label>
+						<label for="node-input-current_calibration_ch3_28"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
 						<input type="text" id="node-input-current_calibration_ch3_28">
 					</div>
 				</div>
