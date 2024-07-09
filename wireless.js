@@ -857,9 +857,11 @@ module.exports = function(RED) {
 								// promises.impact_duration = node.config_gateway.config_set_impact_duration(mac, parseInt(config.impact_duration));
 								break;
 							case 13:
-								var cali = parseFloat(config.cm_calibration);
-								if(cali == 0) break;
-								promises.calibration = node.config_gateway.config_set_cm_calibration(mac, cali);
+								if(config.current_calibration_13_active){
+									var cali = parseFloat(config.current_calibration_13);
+									if(cali == 0) break;
+									promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+								}
 								break;
 							case 14:
 								if(config.sensor_boot_time_420ma_active){
@@ -873,6 +875,13 @@ module.exports = function(RED) {
 								}
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								break;
+							case 19:
+								if(config.current_calibration_ch2_19_active){
+									var cali = parseFloat(config.current_calibration_ch2_19);
+									if(cali == 0) break;
+									promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
 								}
 								break;
 							case 23:
@@ -909,6 +918,18 @@ module.exports = function(RED) {
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
 								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
+							case 28:
+								if(config.current_calibration_ch2_19_active){
+									var cali = parseFloat(config.current_calibration_ch2_19);
+									if(cali == 0) break;
+									promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+								}
+								if(config.current_calibration_ch3_28_active){
+									var cali = parseFloat(config.current_calibration_ch3_28);
+									if(cali == 0) break;
+									promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
+								}
+								break;
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
