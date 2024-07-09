@@ -347,25 +347,23 @@ module.exports = function(RED) {
 				time: Date.now()
 			});
 		});
-		node.on('input', function(msg){
-			switch(msg.topic){
-				case "route_trace":
-					var opts = {trace:1};
-					node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
-					break;
-				case "link_test":
-					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
-					break;
-				case "fft_request":
-					break;
-				case "fidelity_test":
-					break;
-				default:
-					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
-					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
-			}
-
-
+		// node.on('input', function(msg){
+		// 	switch(msg.topic){
+		// 		case "route_trace":
+		// 			var opts = {trace:1};
+		// 			node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+		// 			break;
+		// 		case "link_test":
+		// 			node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+		// 			break;
+		// 		case "fft_request":
+		// 			break;
+		// 		case "fidelity_test":
+		// 			break;
+		// 		default:
+		// 			const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+		// 			node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+		// 	}
 			// console.log("input triggered, topic:"+msg.topic);
 			// if(msg.topic == "transmit"){
 			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
@@ -383,7 +381,7 @@ module.exports = function(RED) {
 			// }
 			// if(msg.topic == "fidelity_test"){
 			// }
-		});
+		// });
 		node._gateway_node.on('send_firmware_stats', (data) => {
 			node.send({
 				topic: 'update_stats',
@@ -402,6 +400,80 @@ module.exports = function(RED) {
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
 					break;
 				case "fidelity_test":
+					break;
+				case "start_luber":
+					// msg = {
+					// 'topic': start_luber,
+					// 'payload': {
+					// 	'address': '00:13:a2:00:42:37:87:0a', //REQUIRED
+					// 	duration: 3, //REQUIRED valid values 1-255
+					// 	channel: 2 //OPTIONAL default value of 1
+					// }
+					// }
+					if(!Object.hasOwn(msg.payload, 'duration')){
+						console.log('ERROR: No duration specified, please specify duration in msg.payload.duration');
+						break;
+					}
+					if(msg.payload.duration < 1 || msg.payload.duration > 255){
+						console.log('ERROR: Duration out of bounds. Duration');
+						break;
+					}
+					var cmd_promise;
+					if(Object.hasOwn(msg.payload, 'channel')){
+						node.gateway.control_start_luber(msg.payload.address, msg.payload.channel, msg.payload.duration).then((f) => {
+							node.send({
+								topic: 'command_results',
+								payload: {
+									res: 'Automatic Luber '+msg.payload.channel+' Activation Complete',
+									address: msg.payload.address,
+									channel: msg.payload.channel,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
+						}).catch((err) => {
+							node.send({
+								topic: 'command_error',
+								payload: {
+									res: err,
+									address: msg.payload.address,
+									channel: msg.payload.channel,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
+							// node.send({topic: 'Command Error', payload: err});
+						});
+					}else{
+						node.gateway.control_start_luber(msg.payload.address, 1, msg.payload.duration).then((f) => {
+							node.send({
+								topic: 'Command Results',
+								payload: {
+									res: 'Automatic Luber 1 Activation Complete',
+									address: msg.payload.address,
+									channel: 1,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
+						}).catch((err) => {
+							node.send({
+								topic: 'Command Results',
+								payload: {
+									res: 'Automatic Luber 1 Activation Complete',
+									address: msg.payload.address,
+									channel: 1,
+									duration: msg.payload.duration
+								},
+								time: Date.now(),
+								addr: msg.payload.address
+							});
+							node.send({topic: 'Command Error', payload: err});
+						});
+					}
 					break;
 				case "add_firmware_file":
 					// Parse Manifest to grab information and store it for later use
@@ -599,7 +671,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -785,9 +857,12 @@ module.exports = function(RED) {
 								// promises.impact_duration = node.config_gateway.config_set_impact_duration(mac, parseInt(config.impact_duration));
 								break;
 							case 13:
-								var cali = parseFloat(config.cm_calibration);
-								if(cali == 0) break;
-								promises.calibration = node.config_gateway.config_set_cm_calibration(mac, cali);
+								if(config.current_calibration_13_active){
+									var cali = parseInt(config.current_calibration_13);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
+								}
 								break;
 							case 14:
 								if(config.sensor_boot_time_420ma_active){
@@ -801,6 +876,20 @@ module.exports = function(RED) {
 								}
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								break;
+							case 19:
+								if(config.current_calibration_13_active){
+									var cali = parseInt(config.current_calibration_13);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch2_19_active){
+									var cali = parseInt(config.current_calibration_ch2_19);
+									if(cali != 0){
+										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									}
 								}
 								break;
 							case 23:
@@ -837,14 +926,40 @@ module.exports = function(RED) {
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
 								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
+							case 28:
+								if(config.current_calibration_13_active){
+									var cali = parseInt(config.current_calibration_13);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch2_19_active){
+									var cali = parseInt(config.current_calibration_ch2_19);
+									if(cali != 0){
+										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch3_28_active){
+									var cali = parseInt(config.current_calibration_ch3_28);
+									if(cali != 0){
+										promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
+									}
+								}
+								break;
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
+								}
+								if(config.debounce_time_2_active){
+									promises.config_set_debounce_time_35 = node.config_gateway.config_set_debounce_time_35(mac, parseInt(config.debounce_time_2));
 								}
 								break;
 							case 36:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
+								}
+								if(config.debounce_time_2_active){
+									promises.config_set_debounce_time_35 = node.config_gateway.config_set_debounce_time_35(mac, parseInt(config.debounce_time_2));
 								}
 								break;
 							case 40:
@@ -916,6 +1031,11 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 56:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+							break;
 							case 76:
 								if(config.periodic_check_rate_76_active){
 									promises.periodic_check_rate_76 = node.config_gateway.config_set_periodic_check_rate_76(mac, parseInt(config.periodic_check_rate_76));
@@ -1271,6 +1391,18 @@ module.exports = function(RED) {
 								}
 								if(config.debounce_time_108_active){
 									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								if(config.input_one_108_active){
+									promises.input_one_108 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
+								}
+								if(config.input_two_108_active){
+									promises.input_two_108 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
+								}
+								if(config.input_three_108_active){
+									promises.input_three_108 = node.config_gateway.config_set_input_three_108(mac, parseInt(config.input_three_108));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
 								}
 								break;
 							case 110:
@@ -1801,6 +1933,53 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 538:
+								if(config.current_calibration_c1_80_active){
+									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
+								}
+								if(config.output_data_rate_101_active){
+									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
+								}
+								if(config.sampling_duration_101_active){
+									promises.sampling_duration_101 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_101));
+								}
+								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
+									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.full_scale_range_101_active){
+									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
+								}
+								if(config.mode_80_active){
+									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_80));
+								}
+								if(config.filter_80_active){
+									promises.filter = node.config_gateway.config_set_filters_80(mac, parseInt(config.filter_80));
+								}
+								if(config.low_pass_filter_80_active){
+									promises.low_pass_filter = node.config_gateway.config_set_low_pass_filter_80(mac, parseInt(config.low_pass_filter_80));
+								}
+								if(config.high_pass_filter_80_active){
+									promises.high_pass_filter = node.config_gateway.config_set_high_pass_filter_80(mac, parseInt(config.high_pass_filter_80));
+								}
+								if(config.measurement_mode_80_active){
+									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
+								}
+								if(config.on_request_timeout_80_active){
+									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
+								}
+								if(config.deadband_80_active){
+									promises.deadband = node.config_gateway.config_set_deadband_80(mac, parseInt(config.deadband_80));
+								}
+								if(config.payload_length_80_active){
+									promises.payload_length_80 = node.config_gateway.config_set_payload_length_80(mac, parseInt(config.payload_length_80));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
 							case 539:
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
@@ -1859,7 +2038,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
