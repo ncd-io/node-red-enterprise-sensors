@@ -859,8 +859,9 @@ module.exports = function(RED) {
 							case 13:
 								if(config.current_calibration_13_active){
 									var cali = parseInt(config.current_calibration_13);
-									if(cali == 0) break;
-									promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
 								}
 								break;
 							case 14:
@@ -880,13 +881,15 @@ module.exports = function(RED) {
 							case 19:
 								if(config.current_calibration_13_active){
 									var cali = parseInt(config.current_calibration_13);
-									if(cali == 0) break;
-									promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
 								}
 								if(config.current_calibration_ch2_19_active){
 									var cali = parseInt(config.current_calibration_ch2_19);
-									if(cali == 0) break;
-									promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									}
 								}
 								break;
 							case 23:
@@ -926,18 +929,21 @@ module.exports = function(RED) {
 							case 28:
 								if(config.current_calibration_13_active){
 									var cali = parseInt(config.current_calibration_13);
-									if(cali == 0) break;
-									promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
+									}
 								}
 								if(config.current_calibration_ch2_19_active){
 									var cali = parseInt(config.current_calibration_ch2_19);
-									if(cali == 0) break;
-									promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
+									}
 								}
 								if(config.current_calibration_ch3_28_active){
 									var cali = parseInt(config.current_calibration_ch3_28);
-									if(cali == 0) break;
-									promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
+									if(cali != 0){
+										promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
+									}
 								}
 								break;
 							case 35:
