@@ -7,8 +7,8 @@
         "category": "NCD",
         "in": [
             {
-                "x": 140,
-                "y": 820,
+                "x": 80,
+                "y": 540,
                 "wires": [
                     {
                         "id": "cce08819dc096604"
@@ -1467,8 +1467,8 @@
             "c8a3c7ecd90c290c",
             "52c5f2bfb69f6948"
         ],
-        "x": 345,
-        "y": 820,
+        "x": 285,
+        "y": 540,
         "wires": []
     },
     {
@@ -1522,12 +1522,60 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 250,
-        "y": 820,
+        "x": 190,
+        "y": 540,
         "wires": [
             [
                 "308f73c16a0cf14c"
             ]
+        ]
+    },
+    {
+        "id": "bfd5ce5168fdde38",
+        "type": "ui-template",
+        "z": "91019fdea52bec6d",
+        "group": "63aaba46f48ce46e",
+        "page": "",
+        "ui": "",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1410,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "995c205a9a5ed55d",
+        "type": "ui-template",
+        "z": "91019fdea52bec6d",
+        "group": "5e2ee85a751667c0",
+        "page": "",
+        "ui": "",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1560,
+        "y": 320,
+        "wires": [
+            []
         ]
     },
     {
@@ -1719,6 +1767,32 @@
         "theme": "b5f491106ed516b4",
         "order": 1,
         "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "63aaba46f48ce46e",
+        "type": "ui-group",
+        "name": "dummyGroup",
+        "page": "a86bc042451923a9",
+        "width": "2",
+        "height": "1",
+        "order": 6,
+        "showTitle": false,
+        "className": "dummy",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "5e2ee85a751667c0",
+        "type": "ui-group",
+        "name": "dummyGroup2",
+        "page": "a86bc042451923a9",
+        "width": "2",
+        "height": "1",
+        "order": 12,
+        "showTitle": false,
+        "className": "dummy",
         "visible": "true",
         "disabled": "false"
     },
