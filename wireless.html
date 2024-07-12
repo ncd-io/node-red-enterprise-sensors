@@ -196,6 +196,7 @@
 			pan_id_active: {value: ""},
 			pan_id: {value: '7FFF', validate: NCD_validators.number_range(0, 0x7FFF, 16)},//(0 - 0x7FFF)
 
+			change_detection_t3_active: {value: ""},
 			change_enabled: {value: ""},
 			change_pr: {value: "0", validate: NCD_validators.number_range(0, 255)},
 			change_interval: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
@@ -957,18 +958,25 @@
 					<input type="text" id="node-input-retries">
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-13 data-sensor-10 data-sensor-3>
-				<div class="form-row">
-					<label for="node-input-change_enabled"><i class="icon-tag"></i> Enable Percentage Change Detection</label>
-					<input type="checkbox" id="node-input-change_enabled" value="1">
-				</div>
-				<div class="form-row">
-					<label for="node-input-change_pr"><i class="icon-tag"></i> Percentage Change Threshold (0-255)</label>
-					<input type="text" id="node-input-change_pr">
-				</div>
-				<div class="form-row">
-					<label for="node-input-change_interval"><i class="icon-tag"></i> Percentage Change Interval (seconds)</label>
-					<input type="text" id="node-input-change_interval">
+			<div class="ncd-dependent" data-sensor-3 data-sensor-10 data-sensor-13>
+				<div class="form-row ncd-active-check">
+					<strong>Percentage Change Detection</strong>
+					<div>
+						<label for="node-input-change_detection_t3_active">Active:</label>
+						<input type="checkbox" id="node-input-change_detection_t3_active" class="ncd-config-toggle" data-target-class="change_detection_t3" value="1">
+					</div>
+					<div class="form-row">
+						<label for="node-input-change_enabled"><i class="icon-tag"></i>Enable:</label>
+						<input type="checkbox" id="node-input-change_enabled" class="change_detection_t3" value="1">
+					</div>
+					<div class="form-row">
+						<label for="node-input-change_pr"><i class="icon-tag"></i>Percentage Change Threshold (0-255)</label>
+						<input type="text" id="node-input-change_pr" class="change_detection_t3">
+					</div>
+					<div class="form-row">
+						<label for="node-input-change_interval"><i class="icon-tag"></i>Percentage Change Interval (seconds)</label>
+						<input type="text" id="node-input-change_interval" class="change_detection_t3">
+					</div>
 				</div>
 			</div>
 			<!-- Current Monitor Options -->

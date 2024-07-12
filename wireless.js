@@ -806,10 +806,7 @@ module.exports = function(RED) {
 						if(config.retries_active){
 							promises.retries = node.config_gateway.config_set_retries(mac, parseInt(config.retries));
 						}
-						var change_detection = [13, 10, 3];
-						if(change_detection.indexOf(sensor.type) > -1){
-							promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
-						}
+
 						switch(sensor.type){
 							case 2:
 								if(config.debounce_time_2_active){
@@ -825,6 +822,9 @@ module.exports = function(RED) {
 								}
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
 								break;
 							case 5:
@@ -856,12 +856,20 @@ module.exports = function(RED) {
 								// promises.impact_threshold = node.config_gateway.config_set_impact_threshold(mac, parseInt(config.impact_threshold));
 								// promises.impact_duration = node.config_gateway.config_set_impact_duration(mac, parseInt(config.impact_duration));
 								break;
+							case 10:
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								break;
 							case 13:
 								if(config.current_calibration_13_active){
 									var cali = parseInt(config.current_calibration_13);
 									if(cali != 0){
 										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
 									}
+								}
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
 								break;
 							case 14:
