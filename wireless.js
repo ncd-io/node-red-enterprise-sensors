@@ -2043,6 +2043,28 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 1010:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.baudrate_539_active){
+									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								}
+								if(config.rx_timeout_539_active){
+									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								}
+								break;
+							case 1011:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.baudrate_539_active){
+									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								}
+								if(config.rx_timeout_539_active){
+									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								}
+								break;
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.

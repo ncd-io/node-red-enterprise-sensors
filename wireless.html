@@ -563,6 +563,8 @@
 					"538": "538 - Custom One Channel Vibration Plus",
 					"539": "539 - RS-485 Modbus Wireless Converter",
 					"540": "540 - Wireless Ultrasonic Flow Meter FD-Q32C",
+					"1010": "1010 - RS-232 Wireless Converter 1010",
+					"1011": "1011 - RS-485 Wireless Converter 1011",
 					"10000": "10000 - 4-Channel Relay",
 					"10006": "10006 - 4-Channel 4-20 mA Input",
 					"10007": "10007 - 4-Channel Current Monitor",
@@ -851,6 +853,8 @@
 			<option value="538">538 - Custom One Channel Vibration Plus</option>
 			<option value="539">539 - RS-485 Modbus Wireless Converter</option>
 			<option value="540">540 - Wireless Ultrasonic Flow Meter FD-Q32C</option>
+			<option value="1010">1010 - RS-232 Wireless Converter 1010</option>
+			<option value="1011">1011 - RS-485 Wireless Converter 1011</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
 			<option value="10006">10006 - 4-Channel 4-20 mA Input</option>
 			<option value="10007">10007 - 4-Channel Current Monitor</option>
@@ -2175,7 +2179,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-539>
+			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Stay On Mode</strong>
 					<div>
@@ -2218,6 +2222,8 @@
 						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
 					</div>
 				</div>
+			</div>	
+			<div class="ncd-dependent" data-sensor-539>	
 				<div class="form-row ncd-active-check">
 					<strong>Set Bootup Time</strong>
 					<div>
