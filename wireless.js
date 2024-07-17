@@ -2061,8 +2061,14 @@ module.exports = function(RED) {
 								if(config.baudrate_539_active){
 									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
-								if(config.rx_timeout_539_active){
-									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								if(config.rx485_timeout_1011_active){
+									promises.rx485_timeout_1011 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
+								}
+								if(config.mode_1011_active){
+									promises.mode_1011 = node.config_gateway.config_set_mode_1011(mac, parseInt(config.mode_1011));
+								}
+								if(config.auto_address_timeout_1011_active){
+									promises.auto_address_timeout_1011 = node.config_gateway.config_set_auto_address_timeout_1011(mac, parseInt(config.auto_address_timeout_1011));
 								}
 								break;
 						}
