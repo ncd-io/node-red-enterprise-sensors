@@ -1,6 +1,6 @@
 [
     {
-        "id": "91019fdea52bec6d",
+        "id": "6af5d35f8af16f9f",
         "type": "subflow",
         "name": "Uptime-dashboard",
         "info": "",
@@ -11,7 +11,7 @@
                 "y": 540,
                 "wires": [
                     {
-                        "id": "cce08819dc096604"
+                        "id": "0d96e2fb91524ab7"
                     }
                 ]
             }
@@ -23,24 +23,20 @@
         "icon": "@flowfuse/node-red-dashboard/ui-gauge.svg",
         "status": {
             "x": 760,
-            "y": 380,
+            "y": 400,
             "wires": [
                 {
-                    "id": "7ce508476da5aad0",
-                    "port": 0
-                },
-                {
-                    "id": "7779232d2a371ba0",
+                    "id": "5442a27ce3b22075",
                     "port": 0
                 }
             ]
         }
     },
     {
-        "id": "988fed6a17130659",
+        "id": "0dbd8cdac68f3b94",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "8609a1e48c75ce36",
+        "z": "6af5d35f8af16f9f",
+        "group": "a1614549c408f643",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -58,10 +54,10 @@
         "wires": []
     },
     {
-        "id": "fb3edac1a58b7d77",
+        "id": "4bf29016c44d1fc8",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "8609a1e48c75ce36",
+        "z": "6af5d35f8af16f9f",
+        "group": "a1614549c408f643",
         "page": "",
         "ui": "",
         "name": "Digital Input Counter",
@@ -82,10 +78,10 @@
         ]
     },
     {
-        "id": "c18585dc01292d64",
+        "id": "5620868c18230265",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "32b2ad82168f24cd",
+        "z": "6af5d35f8af16f9f",
+        "group": "bb34489cec40b987",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -103,10 +99,10 @@
         "wires": []
     },
     {
-        "id": "57845d5029a92342",
+        "id": "3126bad7f3b39d9c",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "32b2ad82168f24cd",
+        "z": "6af5d35f8af16f9f",
+        "group": "bb34489cec40b987",
         "page": "",
         "ui": "",
         "name": "Digital Input Uptime",
@@ -127,10 +123,10 @@
         ]
     },
     {
-        "id": "daa0cf30a55507ac",
+        "id": "453bd967e89403a4",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "67b2d76f3ef24026",
+        "z": "6af5d35f8af16f9f",
+        "group": "061122425c5dc0ba",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -148,10 +144,10 @@
         "wires": []
     },
     {
-        "id": "8c8522b24bfc0d9c",
+        "id": "7752e7d623f58741",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "67b2d76f3ef24026",
+        "z": "6af5d35f8af16f9f",
+        "group": "061122425c5dc0ba",
         "page": "",
         "ui": "",
         "name": "Current Input Counter",
@@ -172,10 +168,10 @@
         ]
     },
     {
-        "id": "be4aef208d423213",
+        "id": "a0bc12baef062058",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "f005f662fb969c83",
+        "z": "6af5d35f8af16f9f",
+        "group": "061c5d801d70f8e9",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -193,10 +189,10 @@
         "wires": []
     },
     {
-        "id": "70e7eca1b74cb66c",
+        "id": "2c2a81bd09fd0513",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "f005f662fb969c83",
+        "z": "6af5d35f8af16f9f",
+        "group": "061c5d801d70f8e9",
         "page": "",
         "ui": "",
         "name": "Current Input Uptime",
@@ -217,10 +213,10 @@
         ]
     },
     {
-        "id": "138aa2d80b2d110c",
+        "id": "0e90a1b56864e939",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "60dac27e40118e32",
+        "z": "6af5d35f8af16f9f",
+        "group": "e97e0ee50456d11d",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -238,10 +234,10 @@
         "wires": []
     },
     {
-        "id": "a1405b441adc9866",
+        "id": "be2555b50df4c07e",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "60dac27e40118e32",
+        "z": "6af5d35f8af16f9f",
+        "group": "e97e0ee50456d11d",
         "page": "",
         "ui": "",
         "name": "Opto Input Counter",
@@ -262,10 +258,10 @@
         ]
     },
     {
-        "id": "72d320051d10cb80",
+        "id": "6f6dde7348854ef6",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "95f77d3e0aa56c6b",
+        "z": "6af5d35f8af16f9f",
+        "group": "fbe59b88eea649ee",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -283,10 +279,10 @@
         "wires": []
     },
     {
-        "id": "4e0b8f39e5a5639a",
+        "id": "9ff2072cd0fb2313",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "95f77d3e0aa56c6b",
+        "z": "6af5d35f8af16f9f",
+        "group": "fbe59b88eea649ee",
         "page": "",
         "ui": "",
         "name": "Opto Input Uptime",
@@ -307,10 +303,10 @@
         ]
     },
     {
-        "id": "3ca130bb7f783218",
+        "id": "b181f50335ad845e",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "4681a4bb8bbe4489",
+        "z": "6af5d35f8af16f9f",
+        "group": "03fa99e0c2b17b14",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -328,10 +324,10 @@
         "wires": []
     },
     {
-        "id": "faf9f09fec8d45c8",
+        "id": "2cc77291b162787a",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "4681a4bb8bbe4489",
+        "z": "6af5d35f8af16f9f",
+        "group": "03fa99e0c2b17b14",
         "page": "",
         "ui": "",
         "name": "Accelerometer Counter",
@@ -352,10 +348,10 @@
         ]
     },
     {
-        "id": "a80bcc07d3c69b58",
+        "id": "90d910e0f9e22bcd",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "91edaa31ad859b10",
+        "z": "6af5d35f8af16f9f",
+        "group": "9da508f4b638785d",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -373,10 +369,10 @@
         "wires": []
     },
     {
-        "id": "b8344cde21c96925",
+        "id": "af4eaf3eeb57c204",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "91edaa31ad859b10",
+        "z": "6af5d35f8af16f9f",
+        "group": "9da508f4b638785d",
         "page": "",
         "ui": "",
         "name": "Accelerometer Uptime",
@@ -397,10 +393,10 @@
         ]
     },
     {
-        "id": "5c60755a587a3952",
+        "id": "96131db36375a9b7",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "47706f8387053152",
+        "z": "6af5d35f8af16f9f",
+        "group": "c5b43765ca326def",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -418,10 +414,10 @@
         "wires": []
     },
     {
-        "id": "8ee46b0e01c97388",
+        "id": "6eea40e8b22a3ac6",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "47706f8387053152",
+        "z": "6af5d35f8af16f9f",
+        "group": "c5b43765ca326def",
         "page": "",
         "ui": "",
         "name": "Magnetometer Counter",
@@ -442,10 +438,10 @@
         ]
     },
     {
-        "id": "5dda8c5929277f23",
+        "id": "d16a496eaf075b8a",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "d8b2f44011c1256d",
+        "z": "6af5d35f8af16f9f",
+        "group": "4434273855505cac",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -463,10 +459,10 @@
         "wires": []
     },
     {
-        "id": "214e7d186ebc2610",
+        "id": "801794203810d583",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "d8b2f44011c1256d",
+        "z": "6af5d35f8af16f9f",
+        "group": "4434273855505cac",
         "page": "",
         "ui": "",
         "name": "Magnetometer Uptimer",
@@ -487,10 +483,10 @@
         ]
     },
     {
-        "id": "328d57b5f63a8f5b",
+        "id": "7e64924383193d38",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "3ac226c433c7a219",
+        "z": "6af5d35f8af16f9f",
+        "group": "0bd2c4243f30c5d4",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -508,10 +504,10 @@
         "wires": []
     },
     {
-        "id": "89a4b9f891500d97",
+        "id": "7723228a97bee36c",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "group": "3ac226c433c7a219",
+        "z": "6af5d35f8af16f9f",
+        "group": "0bd2c4243f30c5d4",
         "page": "",
         "ui": "",
         "name": "batteryGauge",
@@ -532,10 +528,10 @@
         ]
     },
     {
-        "id": "260d113d14b38bae",
+        "id": "d10e6d07c4588a15",
         "type": "ui-chart",
-        "z": "91019fdea52bec6d",
-        "group": "b4d7507c9ab02da8",
+        "z": "6af5d35f8af16f9f",
+        "group": "b3e0efe3e78c4e09",
         "name": "Battery Percent History",
         "label": "",
         "order": 2,
@@ -550,8 +546,8 @@
         "xAxisFormatType": "auto",
         "yAxisLabel": "",
         "yAxisProperty": "",
-        "ymin": "",
-        "ymax": "",
+        "ymin": "30",
+        "ymax": "100",
         "action": "append",
         "pointShape": "circle",
         "pointRadius": "2",
@@ -588,16 +584,16 @@
         ]
     },
     {
-        "id": "a856dd4f4b77df25",
+        "id": "c12461b654b1dc6a",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.accelerometer_counter",
+                "to": "payload.sensor_data.accelerometer_counter",
                 "tot": "msg"
             },
             {
@@ -617,31 +613,31 @@
         "y": 680,
         "wires": [
             [
-                "d0200ef75f26033f"
+                "faa0c1e9296ab0e4"
             ]
         ],
         "l": false
     },
     {
-        "id": "989c92875faac4d8",
+        "id": "9a7b607f171abea9",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 1",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 505,
         "y": 680,
         "wires": [
             [
-                "a856dd4f4b77df25"
+                "c12461b654b1dc6a"
             ]
         ]
     },
     {
-        "id": "d0200ef75f26033f",
+        "id": "faa0c1e9296ab0e4",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -654,16 +650,16 @@
         "y": 680,
         "wires": [
             [
-                "faf9f09fec8d45c8"
+                "2cc77291b162787a"
             ]
         ],
         "l": false
     },
     {
-        "id": "61f6cbacc16f8ce3",
+        "id": "7ade61767da6c631",
         "type": "ui-text",
-        "z": "91019fdea52bec6d",
-        "group": "b4d7507c9ab02da8",
+        "z": "6af5d35f8af16f9f",
+        "group": "b3e0efe3e78c4e09",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -681,16 +677,16 @@
         "wires": []
     },
     {
-        "id": "695b37c78034e706",
+        "id": "49e57135fa0f12c3",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.accelerometer_uptime",
+                "to": "payload.sensor_data.accelerometer_uptime",
                 "tot": "msg"
             },
             {
@@ -710,31 +706,31 @@
         "y": 760,
         "wires": [
             [
-                "59d7c96c35a1d71a"
+                "4f58392591eba5a4"
             ]
         ],
         "l": false
     },
     {
-        "id": "1a052fce7f5c5cb8",
+        "id": "b0d1d3c625c1b326",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 6",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 505,
         "y": 760,
         "wires": [
             [
-                "695b37c78034e706"
+                "49e57135fa0f12c3"
             ]
         ]
     },
     {
-        "id": "59d7c96c35a1d71a",
+        "id": "4f58392591eba5a4",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -747,22 +743,22 @@
         "y": 760,
         "wires": [
             [
-                "b8344cde21c96925"
+                "af4eaf3eeb57c204"
             ]
         ],
         "l": false
     },
     {
-        "id": "2f35f32f512ef87c",
+        "id": "b1cfde20e26f252e",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.digital_input_counter",
+                "to": "payload.sensor_data.digital_input_counter",
                 "tot": "msg"
             },
             {
@@ -782,31 +778,31 @@
         "y": 500,
         "wires": [
             [
-                "bc47bdc0fd826b69"
+                "d1dde2c558966312"
             ]
         ],
         "l": false
     },
     {
-        "id": "007c87ab2cd22d3f",
+        "id": "4e076702f7aea5b4",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 7",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 515,
         "y": 500,
         "wires": [
             [
-                "2f35f32f512ef87c"
+                "b1cfde20e26f252e"
             ]
         ]
     },
     {
-        "id": "bc47bdc0fd826b69",
+        "id": "d1dde2c558966312",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -819,22 +815,22 @@
         "y": 500,
         "wires": [
             [
-                "fb3edac1a58b7d77"
+                "4bf29016c44d1fc8"
             ]
         ],
         "l": false
     },
     {
-        "id": "9a1315d3b2e2a918",
+        "id": "3a29ded820401139",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.digital_input_uptime",
+                "to": "payload.sensor_data.digital_input_uptime",
                 "tot": "msg"
             },
             {
@@ -854,31 +850,31 @@
         "y": 580,
         "wires": [
             [
-                "0bd47f67d44a0c88"
+                "9a918c17c342279d"
             ]
         ],
         "l": false
     },
     {
-        "id": "77118f5f108dff10",
+        "id": "adeeb8467bc3ca8c",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 8",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 515,
         "y": 580,
         "wires": [
             [
-                "9a1315d3b2e2a918"
+                "3a29ded820401139"
             ]
         ]
     },
     {
-        "id": "0bd47f67d44a0c88",
+        "id": "9a918c17c342279d",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -891,22 +887,22 @@
         "y": 580,
         "wires": [
             [
-                "57845d5029a92342"
+                "3126bad7f3b39d9c"
             ]
         ],
         "l": false
     },
     {
-        "id": "6df55ace9eaa6360",
+        "id": "f3945bc1b91ed67c",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.magnetometer_counter",
+                "to": "payload.sensor_data.magnetometer_counter",
                 "tot": "msg"
             },
             {
@@ -926,31 +922,31 @@
         "y": 680,
         "wires": [
             [
-                "e509ca3426612ca6"
+                "83dff13f781c8d76"
             ]
         ],
         "l": false
     },
     {
-        "id": "fc49d75c859b3437",
+        "id": "759a7c531c0a0697",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 9",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 905,
         "y": 680,
         "wires": [
             [
-                "6df55ace9eaa6360"
+                "f3945bc1b91ed67c"
             ]
         ]
     },
     {
-        "id": "e509ca3426612ca6",
+        "id": "83dff13f781c8d76",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -963,22 +959,22 @@
         "y": 680,
         "wires": [
             [
-                "8ee46b0e01c97388"
+                "6eea40e8b22a3ac6"
             ]
         ],
         "l": false
     },
     {
-        "id": "c4dab9f32a78a045",
+        "id": "7a065adbec7e7123",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.magnetometer_uptime",
+                "to": "payload.sensor_data.magnetometer_uptime",
                 "tot": "msg"
             },
             {
@@ -998,31 +994,31 @@
         "y": 760,
         "wires": [
             [
-                "a67b11a9cb66e3ef"
+                "b5a6f97e44a8f737"
             ]
         ],
         "l": false
     },
     {
-        "id": "10ebd2c6f0d80674",
+        "id": "0cedab15bf537316",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 10",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 905,
         "y": 760,
         "wires": [
             [
-                "c4dab9f32a78a045"
+                "7a065adbec7e7123"
             ]
         ]
     },
     {
-        "id": "a67b11a9cb66e3ef",
+        "id": "b5a6f97e44a8f737",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1035,22 +1031,22 @@
         "y": 760,
         "wires": [
             [
-                "214e7d186ebc2610"
+                "801794203810d583"
             ]
         ],
         "l": false
     },
     {
-        "id": "4b74eed5480b8abe",
+        "id": "e4f9ec6d20adfc32",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "data.battery_percent",
+                "to": "payload.battery_percent",
                 "tot": "msg"
             },
             {
@@ -1070,39 +1066,39 @@
         "y": 680,
         "wires": [
             [
-                "89a4b9f891500d97",
-                "260d113d14b38bae"
+                "7723228a97bee36c",
+                "d10e6d07c4588a15"
             ]
         ],
         "l": false
     },
     {
-        "id": "b5a20e37b9ae4548",
+        "id": "12bbfca88d3c4a99",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 12",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 1365,
         "y": 680,
         "wires": [
             [
-                "4b74eed5480b8abe"
+                "e4f9ec6d20adfc32"
             ]
         ]
     },
     {
-        "id": "9adcf07ac2150c20",
+        "id": "1479b2f738fa4f08",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.ct_input_counter",
+                "to": "payload.sensor_data.ct_input_counter",
                 "tot": "msg"
             },
             {
@@ -1122,31 +1118,31 @@
         "y": 500,
         "wires": [
             [
-                "29ee8b91df98beeb"
+                "7521e7bc7d60dc7f"
             ]
         ],
         "l": false
     },
     {
-        "id": "1f5b131dbb72f1ee",
+        "id": "18bf5de41cf91148",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 13",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 905,
         "y": 500,
         "wires": [
             [
-                "9adcf07ac2150c20"
+                "1479b2f738fa4f08"
             ]
         ]
     },
     {
-        "id": "29ee8b91df98beeb",
+        "id": "7521e7bc7d60dc7f",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1159,22 +1155,22 @@
         "y": 500,
         "wires": [
             [
-                "8c8522b24bfc0d9c"
+                "7752e7d623f58741"
             ]
         ],
         "l": false
     },
     {
-        "id": "d1d071c7a7c017e2",
+        "id": "fd5a25c48281654f",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.ct_input_uptime",
+                "to": "payload.sensor_data.ct_input_uptime",
                 "tot": "msg"
             },
             {
@@ -1194,31 +1190,31 @@
         "y": 580,
         "wires": [
             [
-                "25b9a44279b5c460"
+                "fdb13f75496b2355"
             ]
         ],
         "l": false
     },
     {
-        "id": "52b1a116a4859b7c",
+        "id": "3b83fe1fc8f978b7",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 14",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 905,
         "y": 580,
         "wires": [
             [
-                "d1d071c7a7c017e2"
+                "fd5a25c48281654f"
             ]
         ]
     },
     {
-        "id": "25b9a44279b5c460",
+        "id": "fdb13f75496b2355",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1231,22 +1227,22 @@
         "y": 580,
         "wires": [
             [
-                "70e7eca1b74cb66c"
+                "2c2a81bd09fd0513"
             ]
         ],
         "l": false
     },
     {
-        "id": "b222865d878d8a1d",
+        "id": "1e1c9c8139945fe8",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.opto_input_counter",
+                "to": "payload.sensor_data.opto_input_counter",
                 "tot": "msg"
             },
             {
@@ -1266,31 +1262,31 @@
         "y": 500,
         "wires": [
             [
-                "49495da135227c72"
+                "cd84d3ed578c8c32"
             ]
         ],
         "l": false
     },
     {
-        "id": "b071544e037b586f",
+        "id": "2635b66c0c38bcb5",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 15",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 1295,
         "y": 500,
         "wires": [
             [
-                "b222865d878d8a1d"
+                "1e1c9c8139945fe8"
             ]
         ]
     },
     {
-        "id": "49495da135227c72",
+        "id": "cd84d3ed578c8c32",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1303,22 +1299,22 @@
         "y": 500,
         "wires": [
             [
-                "a1405b441adc9866"
+                "be2555b50df4c07e"
             ]
         ],
         "l": false
     },
     {
-        "id": "8c4f1d139bec77f3",
+        "id": "1c9f89eefedc03a0",
         "type": "change",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.accelerometer_uptime",
+                "to": "payload.sensor_data.opto_input_uptime",
                 "tot": "msg"
             },
             {
@@ -1338,31 +1334,31 @@
         "y": 580,
         "wires": [
             [
-                "03ab071b8dad9d4a"
+                "e5481809417bf07e"
             ]
         ],
         "l": false
     },
     {
-        "id": "1c0b6b36200ec1b3",
+        "id": "d94679c4df212c3e",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 16",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 1295,
         "y": 580,
         "wires": [
             [
-                "8c4f1d139bec77f3"
+                "1c9f89eefedc03a0"
             ]
         ]
     },
     {
-        "id": "03ab071b8dad9d4a",
+        "id": "e5481809417bf07e",
         "type": "range",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1375,18 +1371,18 @@
         "y": 580,
         "wires": [
             [
-                "4e0b8f39e5a5639a"
+                "9ff2072cd0fb2313"
             ]
         ],
         "l": false
     },
     {
-        "id": "96a13b5bdd2dba6e",
+        "id": "882350dd13aaef44",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "g": "6c77e80257b608a8",
+        "z": "6af5d35f8af16f9f",
+        "g": "f769eb10ed6e4e8e",
         "group": "",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "ui": "",
         "name": "Style",
         "order": 0,
@@ -1406,12 +1402,12 @@
         ]
     },
     {
-        "id": "1a1ef5eec965761f",
+        "id": "6679aa49def8787a",
         "type": "ui-template",
-        "z": "91019fdea52bec6d",
-        "g": "6c77e80257b608a8",
+        "z": "6af5d35f8af16f9f",
+        "g": "f769eb10ed6e4e8e",
         "group": "",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "ui": "",
         "name": "Logo",
         "order": 0,
@@ -1431,25 +1427,25 @@
         ]
     },
     {
-        "id": "308f73c16a0cf14c",
+        "id": "e7b2f6ad5889ffc5",
         "type": "link out",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link out 1",
         "mode": "link",
         "links": [
-            "1c0b6b36200ec1b3",
-            "fc49d75c859b3437",
+            "d94679c4df212c3e",
+            "759a7c531c0a0697",
             "07780ff6c81baaed",
-            "10ebd2c6f0d80674",
-            "007c87ab2cd22d3f",
-            "b5a20e37b9ae4548",
-            "52b1a116a4859b7c",
-            "d231be53f572645c",
-            "989c92875faac4d8",
-            "1f5b131dbb72f1ee",
-            "77118f5f108dff10",
-            "b071544e037b586f",
-            "1a052fce7f5c5cb8",
+            "0cedab15bf537316",
+            "4e076702f7aea5b4",
+            "12bbfca88d3c4a99",
+            "3b83fe1fc8f978b7",
+            "c9ce7755ca38d39f",
+            "9a7b607f171abea9",
+            "18bf5de41cf91148",
+            "adeeb8467bc3ca8c",
+            "2635b66c0c38bcb5",
+            "b0d1d3c625c1b326",
             "a35c13575a932d7e",
             "c8a3c7ecd90c290c",
             "52c5f2bfb69f6948"
@@ -1459,9 +1455,9 @@
         "wires": []
     },
     {
-        "id": "7ce508476da5aad0",
+        "id": "5442a27ce3b22075",
         "type": "function",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "readyStatus",
         "func": "msg = {\n    \"status\": {\n        \"fill\": \"green\",\n        \"shape\": \"dot\",\n        \"text\": \"ready\"\n    }\n}\nreturn msg;",
         "outputs": 1,
@@ -1477,25 +1473,25 @@
         ]
     },
     {
-        "id": "d231be53f572645c",
+        "id": "c9ce7755ca38d39f",
         "type": "link in",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "link in 18",
         "links": [
-            "308f73c16a0cf14c"
+            "e7b2f6ad5889ffc5"
         ],
         "x": 495,
         "y": 400,
         "wires": [
             [
-                "7ce508476da5aad0"
+                "5442a27ce3b22075"
             ]
         ]
     },
     {
-        "id": "cce08819dc096604",
+        "id": "0d96e2fb91524ab7",
         "type": "switch",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "filterData",
         "property": "topic",
         "propertyType": "msg",
@@ -1513,16 +1509,16 @@
         "y": 540,
         "wires": [
             [
-                "78e439de3ff076e2"
+                "27571189e46c0ea4"
             ]
         ]
     },
     {
-        "id": "78e439de3ff076e2",
+        "id": "27571189e46c0ea4",
         "type": "switch",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "filterType",
-        "property": "data.sensor_type",
+        "property": "payload.sensor_type",
         "propertyType": "msg",
         "rules": [
             {
@@ -1541,64 +1537,15 @@
         "y": 540,
         "wires": [
             [
-                "308f73c16a0cf14c"
+                "e7b2f6ad5889ffc5"
             ],
-            [
-                "31e9a33a97b40dd9"
-            ]
-        ]
-    },
-    {
-        "id": "7779232d2a371ba0",
-        "type": "function",
-        "z": "91019fdea52bec6d",
-        "name": "errorTypeStatus",
-        "func": "msg = {\n    \"status\": {\n        \"fill\": \"red\",\n        \"shape\": \"dot\",\n        \"text\": \"Error Type\"\n    }\n}\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 360,
-        "wires": [
             []
         ]
     },
     {
-        "id": "a13a161bc03d9294",
-        "type": "link in",
-        "z": "91019fdea52bec6d",
-        "name": "link in 19",
-        "links": [
-            "31e9a33a97b40dd9"
-        ],
-        "x": 495,
-        "y": 360,
-        "wires": [
-            [
-                "7779232d2a371ba0"
-            ]
-        ]
-    },
-    {
-        "id": "31e9a33a97b40dd9",
-        "type": "link out",
-        "z": "91019fdea52bec6d",
-        "name": "link out 2",
-        "mode": "link",
-        "links": [
-            "a13a161bc03d9294"
-        ],
-        "x": 435,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "6c77e80257b608a8",
+        "id": "f769eb10ed6e4e8e",
         "type": "group",
-        "z": "91019fdea52bec6d",
+        "z": "6af5d35f8af16f9f",
         "name": "STYLE",
         "style": {
             "stroke": "#999999",
@@ -1608,8 +1555,8 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "96a13b5bdd2dba6e",
-            "1a1ef5eec965761f"
+            "882350dd13aaef44",
+            "6679aa49def8787a"
         ],
         "x": 1334,
         "y": 339,
@@ -1617,10 +1564,10 @@
         "h": 82
     },
     {
-        "id": "8609a1e48c75ce36",
+        "id": "a1614549c408f643",
         "type": "ui-group",
         "name": "dinCountGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 1,
@@ -1630,10 +1577,10 @@
         "disabled": "false"
     },
     {
-        "id": "32b2ad82168f24cd",
+        "id": "bb34489cec40b987",
         "type": "ui-group",
         "name": "dinUptimeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 6,
@@ -1643,10 +1590,10 @@
         "disabled": "false"
     },
     {
-        "id": "67b2d76f3ef24026",
+        "id": "061122425c5dc0ba",
         "type": "ui-group",
         "name": "ctInCountGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 2,
@@ -1656,10 +1603,10 @@
         "disabled": "false"
     },
     {
-        "id": "f005f662fb969c83",
+        "id": "061c5d801d70f8e9",
         "type": "ui-group",
         "name": "ctInUptimeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 7,
@@ -1669,10 +1616,10 @@
         "disabled": "false"
     },
     {
-        "id": "60dac27e40118e32",
+        "id": "e97e0ee50456d11d",
         "type": "ui-group",
         "name": "optoInCountGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 3,
@@ -1682,10 +1629,10 @@
         "disabled": "false"
     },
     {
-        "id": "95f77d3e0aa56c6b",
+        "id": "fbe59b88eea649ee",
         "type": "ui-group",
         "name": "optoInUptimeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 8,
@@ -1695,10 +1642,10 @@
         "disabled": "false"
     },
     {
-        "id": "4681a4bb8bbe4489",
+        "id": "03fa99e0c2b17b14",
         "type": "ui-group",
         "name": "accInCountGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 4,
@@ -1708,10 +1655,10 @@
         "disabled": "false"
     },
     {
-        "id": "91edaa31ad859b10",
+        "id": "9da508f4b638785d",
         "type": "ui-group",
         "name": "accInUptimeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 9,
@@ -1721,10 +1668,10 @@
         "disabled": "false"
     },
     {
-        "id": "47706f8387053152",
+        "id": "c5b43765ca326def",
         "type": "ui-group",
         "name": "magInCountGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "4",
         "height": "1",
         "order": 5,
@@ -1734,10 +1681,10 @@
         "disabled": "false"
     },
     {
-        "id": "d8b2f44011c1256d",
+        "id": "4434273855505cac",
         "type": "ui-group",
         "name": "magInUptimeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "4",
         "height": "1",
         "order": 10,
@@ -1747,10 +1694,10 @@
         "disabled": "false"
     },
     {
-        "id": "3ac226c433c7a219",
+        "id": "0bd2c4243f30c5d4",
         "type": "ui-group",
         "name": "batteryGaugeGroup",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "2",
         "height": "1",
         "order": 12,
@@ -1760,10 +1707,10 @@
         "disabled": "false"
     },
     {
-        "id": "b4d7507c9ab02da8",
+        "id": "b3e0efe3e78c4e09",
         "type": "ui-group",
         "name": "Battery Level History",
-        "page": "8e65fed866f8517d",
+        "page": "9c7c0c028d2ab7f2",
         "width": "8",
         "height": "1",
         "order": 11,
@@ -1773,21 +1720,21 @@
         "disabled": "false"
     },
     {
-        "id": "8e65fed866f8517d",
+        "id": "9c7c0c028d2ab7f2",
         "type": "ui-page",
         "name": "uptime-dashboard",
-        "ui": "ec459411017ddf37",
+        "ui": "0ee9ba68ec550cf9",
         "path": "/uptime1",
         "icon": "home",
         "layout": "grid",
-        "theme": "b5f491106ed516b4",
+        "theme": "ed51bf90fe5d9371",
         "order": 1,
         "className": "",
         "visible": "true",
         "disabled": "false"
     },
     {
-        "id": "ec459411017ddf37",
+        "id": "0ee9ba68ec550cf9",
         "type": "ui-base",
         "name": "ncd-ui-base",
         "path": "/dashboard",
@@ -1800,7 +1747,7 @@
         "navigationStyle": "default"
     },
     {
-        "id": "b5f491106ed516b4",
+        "id": "ed51bf90fe5d9371",
         "type": "ui-theme",
         "name": "ncdTheme",
         "colors": {
@@ -1818,7 +1765,7 @@
         }
     },
     {
-        "id": "0f850dc8977c3d53",
+        "id": "5aa9365e086c5f4a",
         "type": "tab",
         "label": "108 QS Example Dashboard",
         "disabled": false,
@@ -1826,18 +1773,18 @@
         "env": []
     },
     {
-        "id": "191e22cc37bd85af",
-        "type": "subflow:91019fdea52bec6d",
-        "z": "0f850dc8977c3d53",
+        "id": "38cc403e12f095f5",
+        "type": "subflow:6af5d35f8af16f9f",
+        "z": "5aa9365e086c5f4a",
         "name": "",
-        "x": 470,
+        "x": 450,
         "y": 180,
         "wires": []
     },
     {
-        "id": "3109bd3980631ac3",
+        "id": "d93c93ada58e2625",
         "type": "ncd-gateway-node",
-        "z": "0f850dc8977c3d53",
+        "z": "5aa9365e086c5f4a",
         "name": "",
         "connection": "3a158777559a1790",
         "unknown_devices": 0,
@@ -1846,7 +1793,7 @@
         "y": 180,
         "wires": [
             [
-                "191e22cc37bd85af"
+                "38cc403e12f095f5"
             ]
         ]
     },
