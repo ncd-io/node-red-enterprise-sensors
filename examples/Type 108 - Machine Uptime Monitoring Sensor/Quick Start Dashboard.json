@@ -7,8 +7,8 @@
         "category": "NCD",
         "in": [
             {
-                "x": 100,
-                "y": 540,
+                "x": 120,
+                "y": 580,
                 "wires": [
                     {
                         "id": "0d96e2fb91524ab7"
@@ -22,8 +22,8 @@
         "color": "#3FADB5",
         "icon": "@flowfuse/node-red-dashboard/ui-gauge.svg",
         "status": {
-            "x": 760,
-            "y": 400,
+            "x": 820,
+            "y": 380,
             "wires": [
                 {
                     "id": "5442a27ce3b22075",
@@ -36,12 +36,13 @@
         "id": "0dbd8cdac68f3b94",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "a1614549c408f643",
         "order": 1,
-        "width": 0,
+        "width": "2",
         "height": 0,
         "name": "Digital Input Counter",
-        "label": "Digital Input Counter",
+        "label": "Contact Closure Counter",
         "format": "{{msg.payload}}",
         "layout": "col-center",
         "style": true,
@@ -49,7 +50,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 760,
+        "x": 800,
         "y": 460,
         "wires": []
     },
@@ -57,6 +58,7 @@
         "id": "4bf29016c44d1fc8",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "a1614549c408f643",
         "page": "",
         "ui": "",
@@ -65,13 +67,13 @@
         "width": "2",
         "height": "2",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-numeric-1-box-outline\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Unit\n            </div>\n        </div>\n    </v-progress-circular>\n</template>\n<style>\n.gaugeVue{\n    font-size: 44px;\n    font-weight: bold !important;\n    top: -30px !important;\n    left: 25px !important;\n}\n</style>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-electric-switch\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Unit\n            </div>\n    </v-progress-circular>\n</template>\n<style>\n.gaugeVue{\n    font-size: 44px;\n    font-weight: bold !important;\n    top: -30px !important;\n    left: 25px !important;\n}\n.icon{\n    position: absolute;\n    top: 40px;\n    left: 43%;\n}\n.unit{\n    position: absolute;\n    top: 190px;\n    left: 40%;\n    font-size: 30px;\n}\n</style>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 760,
+        "x": 800,
         "y": 500,
         "wires": [
             []
@@ -81,12 +83,13 @@
         "id": "5620868c18230265",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "bb34489cec40b987",
         "order": 1,
         "width": 0,
         "height": 0,
         "name": "Digital Input Uptime",
-        "label": "Digital Input Uptime",
+        "label": "Contact Closure Uptime",
         "format": "{{msg.payload}}",
         "layout": "col-center",
         "style": true,
@@ -94,7 +97,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 770,
+        "x": 810,
         "y": 540,
         "wires": []
     },
@@ -102,6 +105,7 @@
         "id": "3126bad7f3b39d9c",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "bb34489cec40b987",
         "page": "",
         "ui": "",
@@ -110,13 +114,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-clock\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Sec\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-clock\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Sec\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 770,
+        "x": 810,
         "y": 580,
         "wires": [
             []
@@ -126,6 +130,7 @@
         "id": "453bd967e89403a4",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "061122425c5dc0ba",
         "order": 1,
         "width": 0,
@@ -139,7 +144,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1160,
+        "x": 1200,
         "y": 460,
         "wires": []
     },
@@ -147,6 +152,7 @@
         "id": "7752e7d623f58741",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "061122425c5dc0ba",
         "page": "",
         "ui": "",
@@ -155,13 +161,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-numeric-1-box-outline\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Unit\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi mdi-sine-wave\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Unit\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1160,
+        "x": 1200,
         "y": 500,
         "wires": [
             []
@@ -171,6 +177,7 @@
         "id": "a0bc12baef062058",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "061c5d801d70f8e9",
         "order": 1,
         "width": 0,
@@ -184,7 +191,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1160,
+        "x": 1200,
         "y": 540,
         "wires": []
     },
@@ -192,6 +199,7 @@
         "id": "2c2a81bd09fd0513",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "061c5d801d70f8e9",
         "page": "",
         "ui": "",
@@ -200,13 +208,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular bg-color=\"#383838\" class=\"gaugeVue\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-clock\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Sec\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular bg-color=\"#383838\" class=\"gaugeVue\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-clock\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Sec\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1160,
+        "x": 1200,
         "y": 580,
         "wires": [
             []
@@ -216,12 +224,13 @@
         "id": "0e90a1b56864e939",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "e97e0ee50456d11d",
         "order": 1,
         "width": 0,
         "height": 0,
         "name": "Opto Input Counter",
-        "label": "Opto Input Counter",
+        "label": "Digital Input Counter",
         "format": "{{msg.payload}}",
         "layout": "col-center",
         "style": true,
@@ -229,7 +238,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1530,
+        "x": 1570,
         "y": 460,
         "wires": []
     },
@@ -237,6 +246,7 @@
         "id": "be2555b50df4c07e",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "e97e0ee50456d11d",
         "page": "",
         "ui": "",
@@ -245,13 +255,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-numeric-1-box-outline\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Unit\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi mdi-square-wave\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Unit\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1530,
+        "x": 1570,
         "y": 500,
         "wires": [
             []
@@ -261,12 +271,13 @@
         "id": "6f6dde7348854ef6",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "fbe59b88eea649ee",
         "order": 1,
         "width": 0,
         "height": 0,
         "name": "Opto Input Uptime",
-        "label": "Opto Input Uptime",
+        "label": "Digital Input Uptime",
         "format": "{{msg.payload}}",
         "layout": "col-center",
         "style": true,
@@ -274,7 +285,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1530,
+        "x": 1570,
         "y": 540,
         "wires": []
     },
@@ -282,6 +293,7 @@
         "id": "9ff2072cd0fb2313",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "fbe59b88eea649ee",
         "page": "",
         "ui": "",
@@ -290,13 +302,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-clock\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Sec\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-clock\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Sec\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1530,
+        "x": 1570,
         "y": 580,
         "wires": [
             []
@@ -306,6 +318,7 @@
         "id": "b181f50335ad845e",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "03fa99e0c2b17b14",
         "order": 1,
         "width": 0,
@@ -319,7 +332,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 750,
+        "x": 810,
         "y": 640,
         "wires": []
     },
@@ -327,6 +340,7 @@
         "id": "2cc77291b162787a",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "03fa99e0c2b17b14",
         "page": "",
         "ui": "",
@@ -335,13 +349,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"larger\" color=\"yellow\" icon=\"mdi-pulse\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Unit\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi mdi-waveform\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Unit\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 750,
+        "x": 810,
         "y": 680,
         "wires": [
             []
@@ -351,6 +365,7 @@
         "id": "90d910e0f9e22bcd",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "9da508f4b638785d",
         "order": 1,
         "width": 0,
@@ -364,7 +379,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 760,
+        "x": 820,
         "y": 720,
         "wires": []
     },
@@ -372,6 +387,7 @@
         "id": "af4eaf3eeb57c204",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "9da508f4b638785d",
         "page": "",
         "ui": "",
@@ -380,13 +396,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-clock\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Sec\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-clock\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Sec\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 760,
+        "x": 820,
         "y": 760,
         "wires": [
             []
@@ -396,6 +412,7 @@
         "id": "96131db36375a9b7",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "c5b43765ca326def",
         "order": 1,
         "width": 0,
@@ -409,7 +426,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1150,
+        "x": 1210,
         "y": 640,
         "wires": []
     },
@@ -417,6 +434,7 @@
         "id": "6eea40e8b22a3ac6",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "c5b43765ca326def",
         "page": "",
         "ui": "",
@@ -425,13 +443,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-access-point\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Unit\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n           <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-access-point\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Unit\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
-        "passthru": true,
+        "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1150,
+        "x": 1210,
         "y": 680,
         "wires": [
             []
@@ -441,6 +459,7 @@
         "id": "d16a496eaf075b8a",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "4434273855505cac",
         "order": 1,
         "width": 0,
@@ -454,7 +473,7 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1160,
+        "x": 1220,
         "y": 720,
         "wires": []
     },
@@ -462,6 +481,7 @@
         "id": "801794203810d583",
         "type": "ui-template",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "4434273855505cac",
         "page": "",
         "ui": "",
@@ -470,13 +490,13 @@
         "width": "2",
         "height": "1",
         "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-clock\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.scale }}\n                <br>\n                Sec\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-clock\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.scale }}\n            </div>\n            <div class=\"unit\">\n                Sec\n            </div>\n    </v-progress-circular>\n</template>",
         "storeOutMessages": true,
-        "passthru": true,
+        "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1160,
+        "x": 1220,
         "y": 760,
         "wires": [
             []
@@ -486,6 +506,7 @@
         "id": "7e64924383193d38",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "0bd2c4243f30c5d4",
         "order": 1,
         "width": 0,
@@ -499,38 +520,15 @@
         "fontSize": "23",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1550,
+        "x": 1590,
         "y": 640,
         "wires": []
-    },
-    {
-        "id": "7723228a97bee36c",
-        "type": "ui-template",
-        "z": "6af5d35f8af16f9f",
-        "group": "0bd2c4243f30c5d4",
-        "page": "",
-        "ui": "",
-        "name": "batteryGauge",
-        "order": 2,
-        "width": "2",
-        "height": "1",
-        "head": "",
-        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n        <div class=\"text-center\">\n            <div>\n                <v-icon size=\"smaller\" color=\"yellow\" icon=\"mdi-battery-charging-60\"></v-icon>\n                <br>\n            </div>\n            <div>\n                {{ msg.payload.toFixed(2)}}\n                <br>\n                %\n                <br>\n            </div>\n        </div>\n    </v-progress-circular>\n</template>",
-        "storeOutMessages": true,
-        "passthru": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 1540,
-        "y": 680,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "d10e6d07c4588a15",
         "type": "ui-chart",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "b3e0efe3e78c4e09",
         "name": "Battery Percent History",
         "label": "",
@@ -577,7 +575,7 @@
         "width": "8",
         "height": "5",
         "className": "chartStyle",
-        "x": 1510,
+        "x": 1550,
         "y": 760,
         "wires": [
             []
@@ -587,6 +585,7 @@
         "id": "c12461b654b1dc6a",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -609,7 +608,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 555,
+        "x": 615,
         "y": 680,
         "wires": [
             [
@@ -622,11 +621,12 @@
         "id": "9a7b607f171abea9",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 1",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 505,
+        "x": 565,
         "y": 680,
         "wires": [
             [
@@ -638,6 +638,7 @@
         "id": "faa0c1e9296ab0e4",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -646,7 +647,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 605,
+        "x": 665,
         "y": 680,
         "wires": [
             [
@@ -659,6 +660,7 @@
         "id": "7ade61767da6c631",
         "type": "ui-text",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "group": "b3e0efe3e78c4e09",
         "order": 1,
         "width": 0,
@@ -672,7 +674,7 @@
         "fontSize": "19",
         "color": "#ffffff",
         "className": "textStyle",
-        "x": 1520,
+        "x": 1560,
         "y": 720,
         "wires": []
     },
@@ -680,6 +682,7 @@
         "id": "49e57135fa0f12c3",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -702,7 +705,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 565,
+        "x": 625,
         "y": 760,
         "wires": [
             [
@@ -715,11 +718,12 @@
         "id": "b0d1d3c625c1b326",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 6",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 505,
+        "x": 565,
         "y": 760,
         "wires": [
             [
@@ -731,6 +735,7 @@
         "id": "4f58392591eba5a4",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -739,7 +744,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 615,
+        "x": 675,
         "y": 760,
         "wires": [
             [
@@ -752,6 +757,7 @@
         "id": "b1cfde20e26f252e",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -774,7 +780,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 565,
+        "x": 615,
         "y": 500,
         "wires": [
             [
@@ -787,11 +793,12 @@
         "id": "4e076702f7aea5b4",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 7",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 515,
+        "x": 565,
         "y": 500,
         "wires": [
             [
@@ -803,6 +810,7 @@
         "id": "d1dde2c558966312",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -811,7 +819,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 615,
+        "x": 665,
         "y": 500,
         "wires": [
             [
@@ -824,6 +832,7 @@
         "id": "3a29ded820401139",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -846,7 +855,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 565,
+        "x": 615,
         "y": 580,
         "wires": [
             [
@@ -859,11 +868,12 @@
         "id": "adeeb8467bc3ca8c",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 8",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 515,
+        "x": 565,
         "y": 580,
         "wires": [
             [
@@ -875,6 +885,7 @@
         "id": "9a918c17c342279d",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -883,7 +894,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 615,
+        "x": 665,
         "y": 580,
         "wires": [
             [
@@ -896,6 +907,7 @@
         "id": "f3945bc1b91ed67c",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -918,7 +930,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 955,
+        "x": 1015,
         "y": 680,
         "wires": [
             [
@@ -931,11 +943,12 @@
         "id": "759a7c531c0a0697",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 9",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 905,
+        "x": 965,
         "y": 680,
         "wires": [
             [
@@ -947,6 +960,7 @@
         "id": "83dff13f781c8d76",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -955,7 +969,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 1005,
+        "x": 1065,
         "y": 680,
         "wires": [
             [
@@ -968,6 +982,7 @@
         "id": "7a065adbec7e7123",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -990,7 +1005,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 955,
+        "x": 1015,
         "y": 760,
         "wires": [
             [
@@ -1003,11 +1018,12 @@
         "id": "0cedab15bf537316",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 10",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 905,
+        "x": 965,
         "y": 760,
         "wires": [
             [
@@ -1019,6 +1035,7 @@
         "id": "b5a6f97e44a8f737",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1027,7 +1044,7 @@
         "round": true,
         "property": "payload",
         "name": "65535",
-        "x": 1005,
+        "x": 1065,
         "y": 760,
         "wires": [
             [
@@ -1040,6 +1057,7 @@
         "id": "e4f9ec6d20adfc32",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -1062,12 +1080,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1415,
+        "x": 1455,
         "y": 680,
         "wires": [
             [
-                "7723228a97bee36c",
-                "d10e6d07c4588a15"
+                "d10e6d07c4588a15",
+                "750f2e6132424c97"
             ]
         ],
         "l": false
@@ -1076,11 +1094,12 @@
         "id": "12bbfca88d3c4a99",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 12",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 1365,
+        "x": 1405,
         "y": 680,
         "wires": [
             [
@@ -1092,6 +1111,7 @@
         "id": "1479b2f738fa4f08",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -1114,7 +1134,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 955,
+        "x": 995,
         "y": 500,
         "wires": [
             [
@@ -1127,11 +1147,12 @@
         "id": "18bf5de41cf91148",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 13",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 905,
+        "x": 945,
         "y": 500,
         "wires": [
             [
@@ -1143,6 +1164,7 @@
         "id": "7521e7bc7d60dc7f",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1151,7 +1173,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 1005,
+        "x": 1045,
         "y": 500,
         "wires": [
             [
@@ -1164,6 +1186,7 @@
         "id": "fd5a25c48281654f",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -1186,7 +1209,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 955,
+        "x": 995,
         "y": 580,
         "wires": [
             [
@@ -1199,11 +1222,12 @@
         "id": "3b83fe1fc8f978b7",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 14",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 905,
+        "x": 945,
         "y": 580,
         "wires": [
             [
@@ -1215,6 +1239,7 @@
         "id": "fdb13f75496b2355",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1223,7 +1248,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 1005,
+        "x": 1045,
         "y": 580,
         "wires": [
             [
@@ -1236,6 +1261,7 @@
         "id": "1e1c9c8139945fe8",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -1258,7 +1284,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1345,
+        "x": 1385,
         "y": 500,
         "wires": [
             [
@@ -1271,11 +1297,12 @@
         "id": "2635b66c0c38bcb5",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 15",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 1295,
+        "x": 1335,
         "y": 500,
         "wires": [
             [
@@ -1287,6 +1314,7 @@
         "id": "cd84d3ed578c8c32",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1295,7 +1323,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 1395,
+        "x": 1435,
         "y": 500,
         "wires": [
             [
@@ -1308,6 +1336,7 @@
         "id": "1c9f89eefedc03a0",
         "type": "change",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "",
         "rules": [
             {
@@ -1330,7 +1359,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1345,
+        "x": 1385,
         "y": 580,
         "wires": [
             [
@@ -1343,11 +1372,12 @@
         "id": "d94679c4df212c3e",
         "type": "link in",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "name": "link in 16",
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 1295,
+        "x": 1335,
         "y": 580,
         "wires": [
             [
@@ -1359,6 +1389,7 @@
         "id": "e5481809417bf07e",
         "type": "range",
         "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
         "minin": "0",
         "maxin": "4294967295",
         "minout": "0",
@@ -1367,7 +1398,7 @@
         "round": true,
         "property": "payload",
         "name": "",
-        "x": 1395,
+        "x": 1435,
         "y": 580,
         "wires": [
             [
@@ -1389,14 +1420,14 @@
         "width": 0,
         "height": 0,
         "head": "",
-        "format": ".v-main {\n    background-color:#141316;\n    --v-layout-top: 0px !important;\n    --v-layout-left: 181px !important;\n}\n.bg-group-background{\n    background-color: #1f2027 !important;\n    border-color: #1f2027 !important;\n}\n.v-toolbar{\n    left: 12px !important;\n    top: 119px !important;\n    width: 68px !important;\n    height: 62px !important;\n    border-radius: 15px;\n    background-color: rgb(5, 5, 5, 141) !important;\n}\n.v-navigation-drawer--left{\n    top: 186px !important;\n    height: 160px !important;\n    border-radius: 15px;\n    left: 12px !important;\n    width: 167px !important;\n    background-color: rgba(4, 4, 4, 0.653) !important;\n}\n.textStyle\n{\n    top: -15px;\n    position: relative;\n    width: 280px !important;\n    font-weight: bold !important;  \n}\n.chartStyle{\n    position: relative;\n    top: -40px;\n}\n.mainGroups {\n    width: 355px !important; /*315*/\n}\n.nrdb-ui-group .v-card {\n    height: 322px;\n}\n",
+        "format": ".v-main {\n    background-color:#141316;\n    --v-layout-top: 0px !important;\n    --v-layout-left: 181px !important;\n}\n.bg-group-background{\n    border-radius: 30px !important;\n    background-color: #1f2027 !important;\n    border-color: #1f2027 !important;\n}\n.v-toolbar{\n    left: 12px !important;\n    top: 119px !important;\n    width: 68px !important;\n    height: 62px !important;\n    border-radius: 15px;\n    background-color: rgb(5, 5, 5, 141) !important;\n}\n.v-navigation-drawer--left{\n    top: 186px !important;\n    height: 160px !important;\n    border-radius: 15px;\n    left: 12px !important;\n    width: 167px !important;\n    background-color: rgba(4, 4, 4, 0.653) !important;\n}\n.textStyle\n{\n    top: -15px;\n    left: 20px;\n    position: relative;\n    width: 280px !important;\n    font-weight: bold !important;  \n}\n.chartStyle{\n    position: relative;\n    top: -40px;\n}\n.mainGroups {\n    width: 355px !important;\n}\n.nrdb-ui-group .v-card {\n    height: 322px;\n}\n",
         "storeOutMessages": true,
         "passthru": false,
         "resendOnRefresh": true,
         "templateScope": "page:style",
         "className": "",
-        "x": 1530,
-        "y": 380,
+        "x": 1610,
+        "y": 360,
         "wires": [
             []
         ]
@@ -1420,8 +1451,8 @@
         "resendOnRefresh": true,
         "templateScope": "widget:page",
         "className": "",
-        "x": 1410,
-        "y": 380,
+        "x": 1490,
+        "y": 360,
         "wires": [
             []
         ]
@@ -1450,8 +1481,8 @@
             "c8a3c7ecd90c290c",
             "52c5f2bfb69f6948"
         ],
-        "x": 435,
-        "y": 520,
+        "x": 455,
+        "y": 580,
         "wires": []
     },
     {
@@ -1466,8 +1497,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 400,
+        "x": 670,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1480,8 +1511,8 @@
         "links": [
             "e7b2f6ad5889ffc5"
         ],
-        "x": 495,
-        "y": 400,
+        "x": 555,
+        "y": 380,
         "wires": [
             [
                 "5442a27ce3b22075"
@@ -1505,8 +1536,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 200,
-        "y": 540,
+        "x": 220,
+        "y": 580,
         "wires": [
             [
                 "27571189e46c0ea4"
@@ -1525,20 +1556,41 @@
                 "t": "eq",
                 "v": "108",
                 "vt": "num"
-            },
-            {
-                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 340,
-        "y": 540,
+        "outputs": 1,
+        "x": 360,
+        "y": 580,
         "wires": [
             [
                 "e7b2f6ad5889ffc5"
-            ],
+            ]
+        ]
+    },
+    {
+        "id": "750f2e6132424c97",
+        "type": "ui-template",
+        "z": "6af5d35f8af16f9f",
+        "g": "f5f98d73b2f28dc3",
+        "group": "0bd2c4243f30c5d4",
+        "page": "",
+        "ui": "",
+        "name": "batteryGauge",
+        "order": 2,
+        "width": "2",
+        "height": "1",
+        "head": "",
+        "format": "<template>\n    <v-progress-circular class=\"gaugeVue\" bg-color=\"#383838\" model-value=\"20\" :size=\"270\" :width=\"10\" color=\"yellow\" v-model=\"value\">\n            <div class=\"icon\">\n                <v-icon size=\"smaller\" color=\"#ffce21\" icon=\"mdi-battery-charging-60\"></v-icon>\n            </div>\n            <div class=\"text-center\">\n                {{ msg.payload.toFixed(2)}}%\n            </div>\n    </v-progress-circular>\n</template>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1580,
+        "y": 680,
+        "wires": [
             []
         ]
     },
@@ -1558,10 +1610,81 @@
             "882350dd13aaef44",
             "6679aa49def8787a"
         ],
-        "x": 1334,
-        "y": 339,
+        "x": 1414,
+        "y": 319,
         "w": 272,
         "h": 82
+    },
+    {
+        "id": "f5f98d73b2f28dc3",
+        "type": "group",
+        "z": "6af5d35f8af16f9f",
+        "name": "SENSOR DATA",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "0dbd8cdac68f3b94",
+            "4bf29016c44d1fc8",
+            "5620868c18230265",
+            "3126bad7f3b39d9c",
+            "453bd967e89403a4",
+            "7752e7d623f58741",
+            "a0bc12baef062058",
+            "2c2a81bd09fd0513",
+            "0e90a1b56864e939",
+            "be2555b50df4c07e",
+            "6f6dde7348854ef6",
+            "9ff2072cd0fb2313",
+            "b181f50335ad845e",
+            "2cc77291b162787a",
+            "90d910e0f9e22bcd",
+            "af4eaf3eeb57c204",
+            "96131db36375a9b7",
+            "6eea40e8b22a3ac6",
+            "d16a496eaf075b8a",
+            "801794203810d583",
+            "7e64924383193d38",
+            "d10e6d07c4588a15",
+            "c12461b654b1dc6a",
+            "9a7b607f171abea9",
+            "faa0c1e9296ab0e4",
+            "7ade61767da6c631",
+            "49e57135fa0f12c3",
+            "b0d1d3c625c1b326",
+            "4f58392591eba5a4",
+            "b1cfde20e26f252e",
+            "4e076702f7aea5b4",
+            "d1dde2c558966312",
+            "3a29ded820401139",
+            "adeeb8467bc3ca8c",
+            "9a918c17c342279d",
+            "f3945bc1b91ed67c",
+            "759a7c531c0a0697",
+            "83dff13f781c8d76",
+            "7a065adbec7e7123",
+            "0cedab15bf537316",
+            "b5a6f97e44a8f737",
+            "e4f9ec6d20adfc32",
+            "12bbfca88d3c4a99",
+            "1479b2f738fa4f08",
+            "18bf5de41cf91148",
+            "7521e7bc7d60dc7f",
+            "fd5a25c48281654f",
+            "3b83fe1fc8f978b7",
+            "fdb13f75496b2355",
+            "1e1c9c8139945fe8",
+            "2635b66c0c38bcb5",
+            "cd84d3ed578c8c32",
+            "1c9f89eefedc03a0",
+            "d94679c4df212c3e",
+            "e5481809417bf07e",
+            "750f2e6132424c97"
+        ],
+        "x": 524,
+        "y": 419,
+        "w": 1162,
+        "h": 382
     },
     {
         "id": "a1614549c408f643",
@@ -1777,7 +1900,7 @@
         "type": "subflow:6af5d35f8af16f9f",
         "z": "5aa9365e086c5f4a",
         "name": "",
-        "x": 450,
+        "x": 470,
         "y": 180,
         "wires": []
     },
