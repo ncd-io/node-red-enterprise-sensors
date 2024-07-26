@@ -202,13 +202,13 @@
 			change_interval: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
 
 			current_calibration_13_active: {value: ""},
-			current_calibration_13: {value: "606", validate: NCD_validators.number_range(0, 65535)},
+			current_calibration_13: {value: "606", validate: NCD_validators.number_range(0, 42949672)},
 
 			current_calibration_ch2_19_active: {value: ""},
-			current_calibration_ch2_19: {value: "606", validate: NCD_validators.number_range(0, 65535)},
+			current_calibration_ch2_19: {value: "606", validate: NCD_validators.number_range(0, 42949672)},
 
 			current_calibration_ch3_28_active: {value: ""},
-			current_calibration_ch3_28: {value: "606", validate: NCD_validators.number_range(0, 65535)},
+			current_calibration_ch3_28: {value: "606", validate: NCD_validators.number_range(0, 42949672)},
 
 			bp_altitude: {value: "0", validate: NCD_validators.number_range(0, 65535)},
 			bp_pressure: {value: "0", validate: NCD_validators.number_range(0, 14000)},
@@ -443,7 +443,17 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value:0, validate: NCD_validators.number_range(0, 65534)}
+			smart_threshold_110: {value:0, validate: NCD_validators.number_range(0, 65534)},
+
+			rx485_timeout_1011_active:{value:""},
+			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
+
+			mode_1011_active:{value:""},
+			mode_1011:{value: 0},
+
+			auto_address_timeout_1011_active:{value:""},
+			auto_address_timeout_1011:{value:0, validate: NCD_validators.number_range(0, 65534)}
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -993,7 +1003,7 @@
 						<input type="checkbox" id="node-input-current_calibration_13_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_13_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_13"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
+						<label for="node-input-current_calibration_13"><i class="icon-tag"></i> Value:</label>
 						<input type="text" id="node-input-current_calibration_13">
 					</div>
 				</div>
@@ -1006,7 +1016,7 @@
 						<input type="checkbox" id="node-input-current_calibration_ch2_19_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_ch2_19_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_ch2_19"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
+						<label for="node-input-current_calibration_ch2_19"><i class="icon-tag"></i> Value:</label>
 						<input type="text" id="node-input-current_calibration_ch2_19">
 					</div>
 				</div>
@@ -1019,7 +1029,7 @@
 						<input type="checkbox" id="node-input-current_calibration_ch3_28_active" class="ncd-config-toggle" data-target-id="node-input-current_calibration_ch3_28_active" value="1">
 					</div>
 					<div>
-						<label for="node-input-current_calibration_ch3_28"><i class="icon-tag"></i> Calibration Option (1 - 65535)</label>
+						<label for="node-input-current_calibration_ch3_28"><i class="icon-tag"></i> Value:</label>
 						<input type="text" id="node-input-current_calibration_ch3_28">
 					</div>
 				</div>
@@ -2028,7 +2038,7 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Input One</strong>
+					<strong>Set Contact Closure Detection</strong>
 					<div>
 						<label for="node-input-input_one_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_one_108_active" class="ncd-config-toggle" data-target-id="node-input-input_one_108" value="1">
@@ -2036,13 +2046,13 @@
 					<div>
 						<label for="node-input-input_one_108"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-input_one_108">
-							<option value="0">Falling Edge trigger</option>
-							<option value="1">Rising Edge trigger</option>
+							<option value="0">Falling Edge Trigger</option>
+							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Input Two</strong>
+					<strong>Set Current Transducer Detection</strong>
 					<div>
 						<label for="node-input-input_two_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
@@ -2050,13 +2060,13 @@
 					<div>
 						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-input_two_108">
-							<option value="0">Falling Edge trigger</option>
-							<option value="1">Rising Edge trigger</option>
+							<option value="0">Falling Edge Trigger</option>
+							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Input Three</strong>
+					<strong>Set Wet Contact/Optical Sensor Detection</strong>
 					<div>
 						<label for="node-input-input_three_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_three_108_active" class="ncd-config-toggle" data-target-id="node-input-input_three_108" value="1">
@@ -2064,8 +2074,8 @@
 					<div>
 						<label for="node-input-input_three_108"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-input_three_108">
-							<option value="0">Falling Edge trigger</option>
-							<option value="1">Rising Edge trigger</option>
+							<option value="0" selected>Falling Edge Trigger</option>
+							<option value="1">Rising Edge Trigger</option>
 						</select>
 					</div>
 				</div>
@@ -2211,6 +2221,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set Rx Timeout</strong>
 					<div>
@@ -2222,8 +2234,47 @@
 						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
 					</div>
 				</div>
-			</div>	
-			<div class="ncd-dependent" data-sensor-539>	
+			</div>
+			<div class="ncd-dependent" data-sensor-1011>
+                <div class="form-row ncd-active-check">
+					<strong>Set rs485 Timeout</strong>
+					<div>
+						<label for="node-input-rx485_timeout_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-rx485_timeout_1011_active" class="ncd-config-toggle" data-target-id="node-input-rx485_timeout_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-rx485_timeout_1011"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rx485_timeout_1011" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Mode</strong>
+					<div>
+						<label for="node-input-mode_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-mode_1011_active" class="ncd-config-toggle" data-target-id="node-input-mode_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-mode_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_1011">
+							<option selected="selected" value="0">Auto Encoder</option>
+							<option value="1">Transparent</option>
+							<option value="2">NCD Emulator</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Address Timeout</strong>
+					<div>
+						<label for="node-input-auto_address_timeout_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_address_timeout_1011_active" class="ncd-config-toggle" data-target-id="node-input-rauto_address_timeout_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_address_timeout_1011"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_address_timeout_1011" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set Bootup Time</strong>
 					<div>
