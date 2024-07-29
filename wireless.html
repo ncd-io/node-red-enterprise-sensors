@@ -412,7 +412,7 @@
 			sub_device_type_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
 
 			number_of_regs_to_rd_539_active:{value:""},
-			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 10)},
+			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 32)},
 
 			register_value_0_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_1_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
@@ -424,6 +424,35 @@
 			register_value_7_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_8_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_9_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_10_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_11_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_12_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_13_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_14_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_15_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_16_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_17_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_18_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_19_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_20_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_21_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_22_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_23_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_24_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_25_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_26_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_27_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_28_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_29_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_30_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_31_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+
+			number_of_read_retrial_539_active:{value:""},
+			number_of_read_retrial_539:{value: 1, validate: NCD_validators.number_range(1, 3)},
+
+			read_parameter_539_active:{value:""},
+			read_parameter_539:{value: 3},
+
 			//config_set_reg_active_539:{value:""},
 			//config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 
@@ -2309,6 +2338,34 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
+					<strong>Set Number of Read Retrial</strong>
+					<p class="caption">
+						Range: 1 to 3.
+					</p>
+					<div>
+						<label for="node-input-number_of_read_retrial_539_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_read_retrial_539_active" class="ncd-config-toggle" data-target-id="node-input-number_of_read_retrial_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_read_retrial_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-number_of_read_retrial_539" placeholder="1" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Read Parameter</strong>
+					<div>
+						<label for="node-input-read_parameter_539_active">Active:</label>
+						<input type="checkbox" id="node-input-read_parameter_539_active" class="ncd-config-toggle" data-target-id="node-input-read_parameter_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-read_parameter_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-read_parameter_539">
+							<option selected="selected" value="3">Read Holding Register</option>
+							<option value="4">Read Input Register</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
 					<strong>Set Read Registers</strong>
 					<p class="caption">
 						Set the total number of registers to read on interval in the Register Reads field. Set the individual Registers to read below in the correspond Register field.
@@ -2331,6 +2388,27 @@
 							<option value="8">8</option>
 							<option value="9">9</option>
 							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
 						</select>
 					</div>
 					<hr>

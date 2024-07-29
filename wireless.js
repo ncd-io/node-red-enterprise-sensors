@@ -2007,6 +2007,12 @@ module.exports = function(RED) {
 								if(config.sub_device_type_539_active){
 									promises.sub_device_type_539 = node.config_gateway.config_set_sub_device_type_539(mac, parseInt(config.sub_device_type_539));
 								}
+								if(config.number_of_read_retrial_539_active){
+									promises.number_of_read_retrial_539 = node.config_gateway.config_number_of_read_retrial_539(mac, parseInt(config.number_of_read_retrial_539));
+								}
+								if(config.read_parameter_539_active){
+									promises.read_parameter_539 = node.config_gateway.config_read_parameter_539(mac, parseInt(config.read_parameter_539));
+								}
 								if(config.number_of_regs_to_rd_539_active){
 									let register_array = [];
 									for(let ind = 0; ind < config.number_of_regs_to_rd_539; ind++){
