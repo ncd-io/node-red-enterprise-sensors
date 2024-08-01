@@ -2008,10 +2008,10 @@ module.exports = function(RED) {
 									promises.sub_device_type_539 = node.config_gateway.config_set_sub_device_type_539(mac, parseInt(config.sub_device_type_539));
 								}
 								if(config.number_of_read_retries_539_active){
-									promises.number_of_read_retries_539 = node.config_gateway.config_number_of_read_retries_539(mac, parseInt(config.number_of_read_retries_539));
+									promises.number_of_read_retries_539 = node.config_gateway.config_set_number_of_read_retries_539(mac, parseInt(config.number_of_read_retries_539));
 								}
 								if(config.read_parameter_539_active){
-									promises.read_parameter_539 = node.config_gateway.config_read_parameter_539(mac, parseInt(config.read_parameter_539));
+									promises.read_parameter_539 = node.config_gateway.config_set_read_parameter_539(mac, parseInt(config.read_parameter_539));
 								}
 								if(config.number_of_regs_to_rd_539_active){
 									let register_array = [];
