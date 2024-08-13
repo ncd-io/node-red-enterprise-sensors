@@ -1877,6 +1877,11 @@ module.exports = function(RED) {
 									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								}
 								break;
+							case 531:
+								if(config.mode_531_active){
+									promises.mode_531 = node.config_gateway.config_set_operation_mode_531(mac, parseInt(config.mode_531));
+								}
+								break;
 							case 535:
 								if(config.force_calibration_co2_535_active){
 									promises.force_calibration_co2_535 = node.config_gateway.config_set_sensor_forced_calibration_535(mac);
