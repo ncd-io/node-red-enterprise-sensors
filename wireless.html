@@ -412,7 +412,7 @@
 			sub_device_type_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
 
 			number_of_regs_to_rd_539_active:{value:""},
-			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 10)},
+			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 32)},
 
 			register_value_0_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_1_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
@@ -424,6 +424,35 @@
 			register_value_7_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_8_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			register_value_9_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_10_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_11_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_12_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_13_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_14_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_15_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_16_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_17_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_18_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_19_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_20_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_21_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_22_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_23_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_24_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_25_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_26_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_27_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_28_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_29_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_30_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			register_value_31_539: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+
+			number_of_read_retries_539_active:{value:""},
+			number_of_read_retries_539:{value: 1, validate: NCD_validators.number_range(1, 3)},
+
+			read_parameter_539_active:{value:""},
+			read_parameter_539:{value: 3},
+
 			//config_set_reg_active_539:{value:""},
 			//config_set_reg_539:{value:50, validate: NCD_validators.number_range(0, 65534)},
 
@@ -452,7 +481,10 @@
 			mode_1011:{value: 0},
 
 			auto_address_timeout_1011_active:{value:""},
-			auto_address_timeout_1011:{value:0, validate: NCD_validators.number_range(0, 65534)}
+			auto_address_timeout_1011:{value:0, validate: NCD_validators.number_range(0, 65534)},
+
+			mode_531_active: {value: ""},
+			mode_531: {value: 0}
 
 		},
 		inputs: 0,
@@ -515,6 +547,7 @@
 					"53": "53 - Air Quality CO2 and PM Sensor",
 					"54": "54 - 3 Channel RTD",
 					"56": "56 - 2 Channel 0-10VDC Receiver",
+					"58": "58 - Tank Level v3",
 					"60": "60 - Air Velocity, Pressure, & Temperature Sensor",
 					"61": "61 - pH Temperature Sensor",
 					"62": "62 - ORP Temperature Sensor",
@@ -803,6 +836,7 @@
 			<option value="53">53 - Air Quality CO2 and PM Sensor</option>
 			<option value="54">54 - 3 Channel RTD</option>
 			<option value="56">56 - 2 Channel 0-10VDC Receiver</option>
+			<option value="58">58 - Tank Level v3</option>
 			<option value="60">60 - Air Velocity and Precision Pressure & Temperature Sensor</option>
 			<option value="61">61 - pH Temperature Sensor</option>
 			<option value="62">62 - ORP Temperature Sensor</option>
@@ -878,7 +912,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-58 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2309,6 +2343,34 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
+					<strong>Set Number of Read Retries</strong>
+					<p class="caption">
+						Range: 1 to 3.
+					</p>
+					<div>
+						<label for="node-input-number_of_read_retries_539_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_read_retries_539_active" class="ncd-config-toggle" data-target-id="node-input-number_of_read_retries_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_read_retries_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-number_of_read_retries_539" placeholder="1" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Read Parameter</strong>
+					<div>
+						<label for="node-input-read_parameter_539_active">Active:</label>
+						<input type="checkbox" id="node-input-read_parameter_539_active" class="ncd-config-toggle" data-target-id="node-input-read_parameter_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-read_parameter_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-read_parameter_539">
+							<option selected="selected" value="3">Read Holding Register 0x03</option>
+							<option value="4">Read Input Register 0x04</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
 					<strong>Set Read Registers</strong>
 					<p class="caption">
 						Set the total number of registers to read on interval in the Register Reads field. Set the individual Registers to read below in the correspond Register field.
@@ -2331,6 +2393,27 @@
 							<option value="8">8</option>
 							<option value="9">9</option>
 							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
 						</select>
 					</div>
 					<hr>
@@ -2466,6 +2549,24 @@
 					<div>
 						<label for="node-input-smart_threshold_110"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-smart_threshold_110" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-531>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Mode</strong>
+					<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
+					<div>
+						<label for="node-input-mode_531_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-mode_531_active" class="ncd-config-toggle" data-target-id="node-input-mode_531" value="1">
+					</div>
+					<div>
+						<label for="node-input-mode_531"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_531">
+							<option selected="selected" value="0">Processed</option>
+							<option value="1">Raw</option>
+						</select>
 					</div>
 				</div>
 			</div>
