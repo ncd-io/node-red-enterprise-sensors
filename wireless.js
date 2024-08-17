@@ -1044,6 +1044,17 @@ module.exports = function(RED) {
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
 								}
 							break;
+							case 58:
+								if(config.calibration_58){
+									promises.calibration_58 = node.config_gateway.config_set_calibration_58(mac);
+								}
+								if(config.factory_reset_tank_probe_58){
+									promises.factory_reset_tank_probe_58 = node.config_gateway.config_set_factory_reset_tank_probe_58(mac);
+								}
+								if(config.set_max_range_58_active){
+									promises.set_max_range_58 = node.config_gateway.config_set_max_range_58(mac, parseInt(config.set_max_range_58));
+								}
+							break;
 							case 76:
 								if(config.periodic_check_rate_76_active){
 									promises.periodic_check_rate_76 = node.config_gateway.config_set_periodic_check_rate_76(mac, parseInt(config.periodic_check_rate_76));
