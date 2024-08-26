@@ -489,7 +489,10 @@
 			max_range_58_active:{value: ""},
 			max_range_58: {value: 0, validate: NCD_validators.number_range(0, 16500)},
 			calibration_58: {value: 0},
-			factory_reset_tank_probe_58:{value:0}
+			factory_reset_tank_probe_58:{value:0},
+
+			push_notification_108_active:{value: ""},
+			push_notification_108: {value: 0}
 
 		},
 		inputs: 0,
@@ -2134,6 +2137,50 @@
 					<div>
 						<label for="node-input-counter_threshold_108"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-counter_threshold_108" placeholder="1000" value="1000">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<div>
+						<label for="node-input-push_notification_108_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_108_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_108">
+							<option value="0" selected>Disable All</option>
+							<option value="31">Enable All</option>
+							<option value="1">Enable on IO 1</option>
+							<option value="2">Enable on IO 2</option>
+							<option value="3">Enable on IO 2 and 1</option>
+							<option value="4">Enable on IO 3</option>
+							<option value="5">Enable on IO 3 and 1</option>
+							<option value="6">Enable on IO 3 and 2</option>
+							<option value="7">Enable on IO 3 to 1</option>
+							<option value="8">Enable on IO 4</option>
+							<option value="9">Enable on IO 4 and 1</option>
+							<option value="10">Enable on IO 4 and 2</option>
+							<option value="11">Enable on IO 4, 1 and 2</option>
+							<option value="12">Enable on IO 4 and 3</option>
+							<option value="13">Enable on IO 4, 1 and 3</option>
+							<option value="14">Enable on IO 4, 2 and 3</option>
+							<option value="15">Enable on IO 4 to 1</option>
+							<option value="16">Enable on IO 5</option>
+							<option value="17">Enable on IO 5 and 1</option>
+							<option value="18">Enable on IO 5 and 2</option>
+							<option value="19">Enable on IO 5, 2 and 1</option>
+							<option value="20">Enable on IO 5 and 3</option>
+							<option value="21">Enable on IO 5, 3 and 1</option>
+							<option value="22">Enable on IO 5, 3 and 2</option>
+							<option value="23">Enable on IO 5, 3, 2 and 1</option>
+							<option value="24">Enable on IO 5 and 4</option>
+							<option value="25">Enable on IO 5, 4 and 1</option>
+							<option value="26">Enable on IO 5, 4 and 2</option>
+							<option value="27">Enable on IO 5, 4, 2 and 1</option>
+							<option value="28">Enable on IO 5, 4 and 3</option>
+							<option value="29">Enable on IO 5, 4, 3 and 1</option>
+							<option value="30">Enable on IO 5, 4, 3, and 2</option>
+						</select>
 					</div>
 				</div>
 			</div>

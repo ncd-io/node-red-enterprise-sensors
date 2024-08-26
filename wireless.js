@@ -1423,6 +1423,9 @@ module.exports = function(RED) {
 								if(config.counter_threshold_108_active){
 									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
 								}
+								if(config.push_notification_108_active){
+									promises.push_notification_108 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_108));
+								}
 								break;
 							case 110:
 								if(config.current_calibration_c1_80_active){
