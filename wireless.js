@@ -54,9 +54,17 @@ module.exports = function(RED) {
 				this.gateway.digi.report_rssi = config.rssi;
 
 				if(config.comm_type == 'serial'){
-					setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+					if(config.port !== ''){
+						setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+					}else{
+						node.warn('No Port Selected for Serial Communications.')
+					}
 				}else{
-					setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+					if(config.tcp_port === '' || config.ip_address === ''){
+						node.warn('TCP Socket not configured for Network Communications. Please enter a Port and IP Address.');
+					}else{
+						setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+					}
 				}
 				node.gateway.digi.serial.on('ready', () => {
 					node.gateway.digi.send.at_command('SL').then((res) => {
