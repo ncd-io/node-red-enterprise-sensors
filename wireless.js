@@ -998,6 +998,23 @@ module.exports = function(RED) {
 									}
 								}
 								break;
+							case 33:
+								if(config.clear_counter_33){
+									promises.clear_counter_33 = node.config_gateway.config_clear_counter_33(mac);
+								}
+								if(config.input_two_108_active){
+									promises.input_two_108 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
+								if(config.debounce_time_108_active){
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								if(config.push_notification_33_active){
+									promises.push_notification_33 = node.config_gateway.config_set_push_notification_33(mac, parseInt(config.push_notification_33));
+								}
+							    break;
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));

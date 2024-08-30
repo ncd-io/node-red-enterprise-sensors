@@ -498,7 +498,10 @@
 			factory_reset_tank_probe_58:{value:0},
 
 			push_notification_108_active:{value: ""},
-			push_notification_108: {value: 0}
+			push_notification_108: {value: 0},
+			push_notification_33_active:{value: ""},
+			push_notification_33:{value: 0},
+			clear_counter_33:{value:0}
 
 		},
 		inputs: 0,
@@ -928,7 +931,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-33 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2108,13 +2111,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor108 data-sensor-33>
+			<div class="ncd-dependent" data-sensor-33>
+				<div class="form-row">
+					<label for="node-input-clear_counter_33"><i class="icon-tag"></i>Clear Counter Value</label>
+					<input type="checkbox" id="node-input-clear_counter_33" value="1">
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row">
 					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
 					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
 				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Threshold</strong>
 					<p class="caption">
@@ -2145,6 +2152,38 @@
 						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33>
+				<div class="form-row ncd-active-check">
+					<strong>Set Contact Closure Detection</strong>
+					<div>
+						<label for="node-input-input_two_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_two_108">
+							<option value="0">Falling Edge Trigger</option>
+							<option value="1" selected>Rising Edge Trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<div>
+						<label for="node-input-push_notification_33_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_33_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_33" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_33"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_33">
+							<option value="0" selected>Disable</option>
+							<option value="2">Enable</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Contact Closure Detection</strong>
 					<div>
@@ -2159,8 +2198,6 @@
 						</select>
 					</div>
 				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Current Transducer Detection</strong>
 					<div>
