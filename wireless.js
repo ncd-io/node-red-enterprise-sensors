@@ -1000,7 +1000,7 @@ module.exports = function(RED) {
 								break;
 							case 33:
 								if(config.clear_counter_33){
-									promises.clear_counter_33 = node.config_gateway.config_clear_counter_33(mac);
+									promises.clear_counter_33 = node.config_gateway.config_set_clear_counter_33(mac);
 								}
 								if(config.input_two_108_active){
 									promises.input_two_108 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
@@ -2139,6 +2139,15 @@ module.exports = function(RED) {
 								if(config.rx_timeout_539_active){
 									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
 								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								}
+								if(config.set_parity_1011_active){
+									promises.set_parity_1011 = node.config_gateway.config_set_set_parity_1011(mac, parseInt(config.set_parity_1011));
+								}
+								if(config.reboot_1011){
+									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
+								}
 								break;
 							case 1011:
 								if(config.stay_on_mode_539_active){
@@ -2155,6 +2164,15 @@ module.exports = function(RED) {
 								}
 								if(config.auto_address_timeout_1011_active){
 									promises.auto_address_timeout_1011 = node.config_gateway.config_set_auto_address_timeout_1011(mac, parseInt(config.auto_address_timeout_1011));
+								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								}
+								if(config.set_parity_1011_active){
+									promises.set_parity_1011 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
+								}
+								if(config.reboot_1011){
+									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
 								}
 								break;
 						}

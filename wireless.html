@@ -501,8 +501,15 @@
 			push_notification_108: {value: 0},
 			push_notification_33_active:{value: ""},
 			push_notification_33:{value: 0},
-			clear_counter_33:{value:0}
+			clear_counter_33:{value:0},
 
+			stop_bit_1011_active:{value: ""},
+			stop_bit_1011:{value:0},
+
+			set_parity_1011_active:{value: ""},
+			set_parity_1011:{value:0},
+
+			reboot_1011:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2112,7 +2119,7 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-33>
-				<div class="form-row">
+				<div class="form-row ncd-active-check">
 					<label for="node-input-clear_counter_33"><i class="icon-tag"></i>Clear Counter Value</label>
 					<input type="checkbox" id="node-input-clear_counter_33" value="1">
 				</div>
@@ -2417,22 +2424,38 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-539>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
-					<strong>Set Rx Timeout</strong>
+					<strong>Set Stop Bit</strong>
 					<div>
-						<label for="node-input-rx_timeout_539_active">Active:</label>
-						<input type="checkbox" id="node-input-rx_timeout_539_active" class="ncd-config-toggle" data-target-id="node-input-rx_timeout_539" value="1">
+						<label for="node-input-stop_bit_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-stop_bit_1011_active" class="ncd-config-toggle" data-target-id="node-input-stop_bit_1011" value="1">
 					</div>
 					<div>
-						<label for="node-input-rx_timeout_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
+						<label for="node-input-stop_bit_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stop_bit_1011">
+							<option selected="selected" value="0">1</option>
+							<option value="1">2</option>
+						</select>
 					</div>
 				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-1011>
+				<div class="form-row ncd-active-check">
+					<strong>Set Parity</strong>
+					<div>
+						<label for="node-input-set_parity_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-set_parity_1011_active" class="ncd-config-toggle" data-target-id="node-input-set_parity_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-set_parity_1011"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-set_parity_1011">
+							<option selected="selected" value="0">None</option>
+							<option value="1">Even</option>
+							<option value="2">Odd</option>
+						</select>
+					</div>
+				</div>
                 <div class="form-row ncd-active-check">
-					<strong>Set rs485 Timeout</strong>
+					<strong>Set Timeout</strong>
 					<div>
 						<label for="node-input-rx485_timeout_1011_active">Active:</label>
 						<input type="checkbox" id="node-input-rx485_timeout_1011_active" class="ncd-config-toggle" data-target-id="node-input-rx485_timeout_1011" value="1">
@@ -2442,6 +2465,23 @@
 						<input type="text" id="node-input-rx485_timeout_1011" placeholder="10" value="10">
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Address Timeout</strong>
+					<div>
+						<label for="node-input-auto_address_timeout_1011_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_address_timeout_1011_active" class="ncd-config-toggle" data-target-id="node-input-rauto_address_timeout_1011" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_address_timeout_1011"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_address_timeout_1011" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<label for="node-input-reboot_1011"><i class="icon-tag"></i><strong>Reboot Device</strong></label>
+					<input type="checkbox" id="node-input-reboot_1011" value="1">
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Mode</strong>
 					<div>
@@ -2457,19 +2497,19 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Auto Address Timeout</strong>
-					<div>
-						<label for="node-input-auto_address_timeout_1011_active">Active:</label>
-						<input type="checkbox" id="node-input-auto_address_timeout_1011_active" class="ncd-config-toggle" data-target-id="node-input-rauto_address_timeout_1011" value="1">
-					</div>
-					<div>
-						<label for="node-input-auto_address_timeout_1011"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-auto_address_timeout_1011" placeholder="10" value="10">
-					</div>
-				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-539>
+				<div class="form-row ncd-active-check">
+					<strong>Set Rx Timeout</strong>
+					<div>
+						<label for="node-input-rx_timeout_539_active">Active:</label>
+						<input type="checkbox" id="node-input-rx_timeout_539_active" class="ncd-config-toggle" data-target-id="node-input-rx_timeout_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-rx_timeout_539"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Bootup Time</strong>
 					<div>
