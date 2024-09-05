@@ -201,6 +201,17 @@
 			change_pr: {value: "0", validate: NCD_validators.number_range(0, 255)},
 			change_interval: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
 
+			change_detection_ch2_active: {value: ""},
+			change_enabled_ch2: {value: ""},
+			change_pr_ch2: {value: "0", validate: NCD_validators.number_range(0, 255)},
+			change_interval_ch2: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
+
+			change_detection_ch3_active: {value: ""},
+			change_enabled_ch3: {value: ""},
+			change_pr_ch3: {value: "0", validate: NCD_validators.number_range(0, 255)},
+			change_interval_ch3: {value: "0", validate: NCD_validators.number_range(0, 16712198)},
+
+
 			current_calibration_13_active: {value: ""},
 			current_calibration_13: {value: "60600", validate: NCD_validators.number_range(0, 42949672)},
 			current_calibration_13_dep_active: {value: ""},
@@ -1032,27 +1043,6 @@
 					<input type="text" id="node-input-retries">
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-3 data-sensor-10 data-sensor-13>
-				<div class="form-row ncd-active-check">
-					<strong>Percentage Change Detection</strong>
-					<div>
-						<label for="node-input-change_detection_t3_active">Active:</label>
-						<input type="checkbox" id="node-input-change_detection_t3_active" class="ncd-config-toggle" data-target-class="change_detection_t3" value="1">
-					</div>
-					<div class="form-row">
-						<label for="node-input-change_enabled"><i class="icon-tag"></i>Enable:</label>
-						<input type="checkbox" id="node-input-change_enabled" class="change_detection_t3" value="1">
-					</div>
-					<div class="form-row">
-						<label for="node-input-change_pr"><i class="icon-tag"></i>Percentage Change Threshold (0-255)</label>
-						<input type="text" id="node-input-change_pr" class="change_detection_t3">
-					</div>
-					<div class="form-row">
-						<label for="node-input-change_interval"><i class="icon-tag"></i>Percentage Change Interval (seconds)</label>
-						<input type="text" id="node-input-change_interval" class="change_detection_t3">
-					</div>
-				</div>
-			</div>
 			<!-- Current Monitor Options -->
 			<div class="ncd-dependent" data-sensor-13 data-sensor-19 data-sensor-28>
 				<hr>
@@ -1146,7 +1136,67 @@
 					</div>
 				</div>
 			</div>
-
+		<div class="ncd-dependent" data-sensor-3 data-sensor-10 data-sensor-13 data-sensor-28>
+			<div class="form-row ncd-active-check">
+				<strong>Percentage Change Detection - Channel 1</strong>
+				<div>
+					<label for="node-input-change_detection_t3_active">Active:</label>
+					<input type="checkbox" id="node-input-change_detection_t3_active" class="ncd-config-toggle" data-target-class="change_detection_t3" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_enabled"><i class="icon-tag"></i>Enable:</label>
+					<input type="checkbox" id="node-input-change_enabled" class="change_detection_t3" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_pr"><i class="icon-tag"></i>Percentage Change Threshold (0-255)</label>
+					<input type="text" id="node-input-change_pr" class="change_detection_t3">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_interval"><i class="icon-tag"></i>Percentage Change Interval (seconds)</label>
+					<input type="text" id="node-input-change_interval" class="change_detection_t3">
+				</div>
+			</div>
+		</div>
+		<div class="ncd-dependent" data-sensor-28>
+			<div class="form-row ncd-active-check">
+				<strong>Percentage Change Detection - Channel 2</strong>
+				<div>
+					<label for="node-input-change_detection_ch2_active">Active:</label>
+					<input type="checkbox" id="node-input-change_detection_ch2_active" class="ncd-config-toggle" data-target-class="change_detection_ch2" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_enabled_ch2"><i class="icon-tag"></i>Enable:</label>
+					<input type="checkbox" id="node-input-change_enabled_ch2" class="change_detection_ch2" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_pr_ch2"><i class="icon-tag"></i>Percentage Change Threshold (0-255)</label>
+					<input type="text" id="node-input-change_pr_ch2" class="change_detection_ch2">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_interval_ch2"><i class="icon-tag"></i>Percentage Change Interval (seconds)</label>
+					<input type="text" id="node-input-change_interval_ch2" class="change_detection_ch2">
+				</div>
+			</div>
+			<div class="form-row ncd-active-check">
+				<strong>Percentage Change Detection - Channel 3</strong>
+				<div>
+					<label for="node-input-change_detection_ch3_active">Active:</label>
+					<input type="checkbox" id="node-input-change_detection_ch3_active" class="ncd-config-toggle" data-target-class="change_detection_ch3" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_enabled_ch3"><i class="icon-tag"></i>Enable:</label>
+					<input type="checkbox" id="node-input-change_enabled_ch3" class="change_detection_ch3" value="1">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_pr_ch3"><i class="icon-tag"></i>Percentage Change Threshold (0-255)</label>
+					<input type="text" id="node-input-change_pr_ch3" class="change_detection_ch3">
+				</div>
+				<div class="form-row">
+					<label for="node-input-change_interval_ch3"><i class="icon-tag"></i>Percentage Change Interval (seconds)</label>
+					<input type="text" id="node-input-change_interval_ch3" class="change_detection_ch3">
+				</div>
+			</div>
+		</div>
 			<!-- Barometric Pressure Options -->
 			<div class="ncd-dependent" data-sensor-6>
 				<div class="form-row">
