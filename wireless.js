@@ -54,9 +54,17 @@ module.exports = function(RED) {
 				this.gateway.digi.report_rssi = config.rssi;
 
 				if(config.comm_type == 'serial'){
-					setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+					if(config.port !== ''){
+						setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+					}else{
+						node.warn('No Port Selected for Serial Communications.')
+					}
 				}else{
-					setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+					if(config.tcp_port === '' || config.ip_address === ''){
+						node.warn('TCP Socket not configured for Network Communications. Please enter a Port and IP Address.');
+					}else{
+						setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+					}
 				}
 				node.gateway.digi.serial.on('ready', () => {
 					node.gateway.digi.send.at_command('SL').then((res) => {
@@ -868,6 +876,12 @@ module.exports = function(RED) {
 										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
 									}
 								}
+								// if(config.current_calibration_13_dep_active){
+								// 	var cali = parseInt(config.current_calibration_13_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+								// 	}
+								// }
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
@@ -899,6 +913,18 @@ module.exports = function(RED) {
 										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
 									}
 								}
+								// if(config.current_calibration_13_dep_active){
+								// 	var cali = parseInt(config.current_calibration_13_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+								// 	}
+								// }
+								// if(config.current_calibration_ch2_19_dep_active){
+								// 	var cali = parseInt(config.current_calibration_ch2_19_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
+								// 	}
+								// }
 								break;
 							case 23:
 								if(config.thermocouple_type_23_active){
@@ -953,7 +979,51 @@ module.exports = function(RED) {
 										promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
 									}
 								}
+								// if(config.current_calibration_13_dep_active){
+								// 	var cali = parseInt(config.current_calibration_13_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+								// 	}
+								// }
+								// if(config.current_calibration_ch2_19_dep_active){
+								// 	var cali = parseInt(config.current_calibration_ch2_19_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
+								// 	}
+								// }
+								// if(config.current_calibration_ch3_28_dep_active){
+								// 	var cali = parseInt(config.current_calibration_ch3_28_dep);
+								// 	if(cali != 0){
+								// 		promises.current_calibration_ch3_28_dep = node.config_gateway.config_set_current_calibration_ch3_28_dep(mac, cali);
+								// 	}
+								// }
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								if(config.change_detection_ch2_active){
+									promises.change_detection_ch2 = node.config_gateway.config_set_change_detection_ch2(mac, config.change_enabled_ch2 ? 1 : 0, parseInt(config.change_pr_ch2), parseInt(config.change_interval_ch2));
+								}
+								if(config.change_detection_ch3_active){
+									promises.change_detection_ch3 = node.config_gateway.config_set_change_detection_ch3(mac, config.change_enabled_ch3 ? 1 : 0, parseInt(config.change_pr_ch3), parseInt(config.change_interval_ch3));
+								}
 								break;
+							case 33:
+								if(config.clear_counter_33){
+									promises.clear_counter_33 = node.config_gateway.config_set_clear_counter_33(mac);
+								}
+								if(config.input_two_108_active){
+									promises.input_two_108 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
+								if(config.debounce_time_108_active){
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								if(config.push_notification_33_active){
+									promises.push_notification_33 = node.config_gateway.config_set_push_notification_33(mac, parseInt(config.push_notification_33));
+								}
+							    break;
 							case 35:
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
@@ -1042,6 +1112,17 @@ module.exports = function(RED) {
 							case 56:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+							break;
+							case 58:
+								if(config.calibration_58){
+									promises.calibration_58 = node.config_gateway.config_set_calibration_58(mac);
+								}
+								if(config.factory_reset_tank_probe_58){
+									promises.factory_reset_tank_probe_58 = node.config_gateway.config_set_factory_reset_tank_probe_58(mac);
+								}
+								if(config.set_max_range_58_active){
+									promises.set_max_range_58 = node.config_gateway.config_set_max_range_58(mac, parseInt(config.set_max_range_58));
 								}
 							break;
 							case 76:
@@ -1411,6 +1492,9 @@ module.exports = function(RED) {
 								}
 								if(config.counter_threshold_108_active){
 									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
+								if(config.push_notification_108_active){
+									promises.push_notification_108 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_108));
 								}
 								break;
 							case 110:
@@ -2064,6 +2148,15 @@ module.exports = function(RED) {
 								if(config.rx_timeout_539_active){
 									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
 								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								}
+								if(config.set_parity_1011_active){
+									promises.set_parity_1011 = node.config_gateway.config_set_set_parity_1011(mac, parseInt(config.set_parity_1011));
+								}
+								if(config.reboot_1011){
+									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
+								}
 								break;
 							case 1011:
 								if(config.stay_on_mode_539_active){
@@ -2080,6 +2173,15 @@ module.exports = function(RED) {
 								}
 								if(config.auto_address_timeout_1011_active){
 									promises.auto_address_timeout_1011 = node.config_gateway.config_set_auto_address_timeout_1011(mac, parseInt(config.auto_address_timeout_1011));
+								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								}
+								if(config.set_parity_1011_active){
+									promises.set_parity_1011 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
+								}
+								if(config.reboot_1011){
+									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
 								}
 								break;
 						}
