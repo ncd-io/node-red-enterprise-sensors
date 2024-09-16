@@ -726,6 +726,7 @@ module.exports = function(RED) {
 					var promises = {};
 
 					promises.broadcast_rtc = node.config_gateway.config_set_rtc_101('00:00:00:00:00:00:FF:FF');
+					promises.broadcast_rtc_202 = node.config_gateway.config_set_rtc_202('00:00:00:00:00:00:FF:FF');
 
 					promises.finish = new Promise((fulfill, reject) => {
 						node.config_gateway.queue.add(() => {
@@ -1863,11 +1864,11 @@ module.exports = function(RED) {
 								}
 								break;
 							case 202:
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_202(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_202_active){
+									promises.sampling_interval_202 = node.config_gateway.config_set_sampling_interval_202(mac, parseInt(config.sampling_interval_202));
 								}
-								if(config.set_rtc_101){
-									promises.set_rtc_101 = node.config_gateway.config_set_rtc_202(mac);
+								if(config.set_rtc_202){
+									promises.set_rtc_202 = node.config_gateway.config_set_rtc_202(mac);
 								}
 							    break;
 							case 505:

@@ -323,6 +323,7 @@
 			acceleration_interrupt_threshold_84: {},
 
 			set_rtc_101:{value:0},
+			set_rtc_202:{value:0},
 
 			current_calibration_82:{Value:0},
 			current_calibration_82_active:{Value:""},
@@ -347,6 +348,8 @@
 			sampling_duration_101: {value: 1, validate: NCD_validators.number_range(1, 255)},
 			sampling_interval_101_active: {value: ""},
 			sampling_interval_101: {value: 1},
+			sampling_interval_202_active: {value: ""},
+			sampling_interval_202: {value: 1},
 			full_scale_range_101_active: {value: ""},
 			full_scale_range_101: {value: 1},
 			full_scale_range_101_m2_active: {value: ""},
@@ -1619,6 +1622,38 @@
 					<div>
 						<label for="node-input-set_rtc_101"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-set_rtc_101" value="1">
+					</div>
+				</div>
+			</div>
+
+			<div class="ncd-dependent" data-sensor-202>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Sampling Interval</strong>
+					<div>
+						<label for="node-input-sampling_interval_202_active">Active: </label>
+						<input type="checkbox" id="node-input-sampling_interval_202_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_202" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_interval_202"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sampling_interval_202">
+							<option value="1">5 Minutes</option>
+							<option value="2">10 Minutes</option>
+							<option value="3">15 Minutes</option>
+							<option value="4">20 Minutes</option>
+							<option value="5">30 Minutes</option>
+							<option value="6">60 Minutes</option>
+							<option value="7">120 Minutes</option>
+							<option value="8">180 Minutes</option>
+							<!-- <option value="9">1 Minute</option> -->
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTC</strong>
+					<div>
+						<label for="node-input-set_rtc_202"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-set_rtc_202" value="1">
 					</div>
 				</div>
 			</div>
