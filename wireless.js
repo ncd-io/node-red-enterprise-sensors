@@ -1864,10 +1864,10 @@ module.exports = function(RED) {
 								break;
 							case 202:
 								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_202(mac, parseInt(config.sampling_interval_101));
 								}
 								if(config.set_rtc_101){
-									promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+									promises.set_rtc_101 = node.config_gateway.config_set_rtc_202(mac);
 								}
 							    break;
 							case 505:
