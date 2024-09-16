@@ -1147,9 +1147,6 @@ module.exports = function(RED) {
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 							case 80:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1194,12 +1191,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 81:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -1498,9 +1489,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 110:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1560,12 +1548,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 111:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -1770,9 +1752,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 180:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1817,12 +1796,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 181:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -2039,9 +2012,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 538:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
