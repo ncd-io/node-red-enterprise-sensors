@@ -2277,7 +2277,7 @@ module.exports = function(RED) {
 						_send_otn_request(sensor);
 					}, 100);
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-					if(config.sensor_type == 101 || config.sensor_type == 102){
+					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
 							node.warn('Starting RTC Timer' + Date.now());
@@ -2299,7 +2299,7 @@ module.exports = function(RED) {
 					}else{
 						_config(sensor, true);
 					}
-				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY"){
+				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 						this.gateway.fly_101_in_progress = true;
 						node.warn('Starting RTC Timer' + Date.now());
@@ -2388,7 +2388,7 @@ module.exports = function(RED) {
 						}
 
 					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-						if(config.sensor_type == 101 || config.sensor_type == 102){
+						if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 							if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 								this.gateway.fly_101_in_progress = true;
 								node.warn('Starting RTC Timer' + Date.now());
@@ -2410,7 +2410,7 @@ module.exports = function(RED) {
 							_config(sensor, true);
 						}
 
-					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102){
+					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
 							node.warn('Starting RTC Timer' + Date.now());
