@@ -523,7 +523,10 @@
 			set_parity_1011_active:{value: ""},
 			set_parity_1011:{value:0},
 
-			reboot_1011:{value:0}
+			reboot_1011:{value:0},
+
+			fly_interval_110_active:{value: ""},
+			fly_interval_110:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2973,6 +2976,24 @@
 					<div>
 						<label for="node-input-smart_threshold_110"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-smart_threshold_110" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Interval</strong>
+					<div>
+						<label for="node-input-fly_interval_110_active">Active:</label>
+						<input type="checkbox" id="node-input-fly_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-fly_interval_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-fly_interval_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-fly_interval_110">
+							<option value="3600">1 Hour</option>
+							<option value=7200">2 Hours</option>
+							<option value=14400">4 Hours</option>
+							<option value=21600">6 Hours</option>
+							<option value=43200">12 Hours</option>
+							<option value=64800">18 Hours</option>
+						</select>
 					</div>
 				</div>
 			</div>

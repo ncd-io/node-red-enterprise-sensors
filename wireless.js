@@ -1547,6 +1547,9 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 111:
 								if(config.output_data_rate_p1_81_active){
@@ -1618,6 +1621,9 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 112:
 								if(config.current_calibration_82_active){
@@ -1679,6 +1685,9 @@ module.exports = function(RED) {
 								}
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
 								break;
 							case 114:
@@ -1750,6 +1759,9 @@ module.exports = function(RED) {
 								}
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
 								break;
 							case 180:
