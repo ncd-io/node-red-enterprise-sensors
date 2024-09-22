@@ -492,7 +492,7 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value:0, validate: NCD_validators.number_range(0, 65534)},
+			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534)},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -526,13 +526,16 @@
 			reboot_1011:{value:0},
 
 			fly_interval_110_active:{value: ""},
-			fly_interval_110:{value:0},
+			fly_interval_110:{value: 60},
 
 			scd_skip_samples_44_active:{value: ""},
 			scd_skip_samples_44:{value: 1, validate: NCD_validators.number_range(1, 10)},
 
 			sps_skip_samples_32_active:{value: ""},
-			sps_skip_samples_32:{value: 1, validate: NCD_validators.number_range(1, 10)}
+			sps_skip_samples_32:{value: 1, validate: NCD_validators.number_range(1, 10)},
+
+			sampling_interval_110_active:{value: ""},
+			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1602,8 +1605,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 ata-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
@@ -1632,12 +1634,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
 					<div>
-						<label for="node-input-sampling_interval_101_active">Active: </label>
-						<input type="checkbox" id="node-input-sampling_interval_101_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_101" value="1">
+						<label for="node-input-sampling_interval_110_active">Active: </label>
+						<input type="checkbox" id="node-input-sampling_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_110" value="1">
 					</div>
 					<div>
-						<label for="node-input-sampling_interval_101"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-sampling_interval_101">
+						<label for="node-input-sampling_interval_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sampling_interval_110">
 							<option value="8">1 Minute</option>
 							<option value="0">5 Minutes</option>
 							<option value="1">10 Minutes</option>
@@ -2940,8 +2942,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
@@ -2957,7 +2958,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
@@ -2985,7 +2985,7 @@
 						Example of targeted address: 41D5EC37
 					</p>
 				</div>
-				<div class="form-row ncd-active-check">
+				<!-- <div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
 						<label for="node-input-clear_probe_uptimers_110_active">Active:</label>
@@ -2998,9 +2998,10 @@
 							<option value="1">Enabled</option>
 						</select>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Threshold</strong>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
 					<div>
 						<label for="node-input-smart_threshold_110_active">Active:</label>
 						<input type="checkbox" id="node-input-smart_threshold_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_110" value="1">
@@ -3031,12 +3032,13 @@
 					<div>
 						<label for="node-input-fly_interval_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-fly_interval_110">
-							<option value="3600">1 Hour</option>
-							<option value=7200">2 Hours</option>
-							<option value=14400">4 Hours</option>
-							<option value=21600">6 Hours</option>
-							<option value=43200">12 Hours</option>
-							<option value=64800">18 Hours</option>
+							<option value="60">1 Hour</option>
+							<option value="120">2 Hours</option>
+							<option value="240">4 Hours</option>
+							<option value="480">8 Hours</option>
+							<option value="720">12 Hours</option>
+							<option value="1080">18 Hours</option>
+							<option value="1440">24 Hours</option>
 						</select>
 					</div>
 				</div>
