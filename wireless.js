@@ -679,7 +679,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -726,6 +726,7 @@ module.exports = function(RED) {
 					var promises = {};
 
 					promises.broadcast_rtc = node.config_gateway.config_set_rtc_101('00:00:00:00:00:00:FF:FF');
+					promises.broadcast_rtc_202 = node.config_gateway.config_set_rtc_202('00:00:00:00:00:00:FF:FF');
 
 					promises.finish = new Promise((fulfill, reject) => {
 						node.config_gateway.queue.add(() => {
@@ -1007,6 +1008,11 @@ module.exports = function(RED) {
 									promises.change_detection_ch3 = node.config_gateway.config_set_change_detection_ch3(mac, config.change_enabled_ch3 ? 1 : 0, parseInt(config.change_pr_ch3), parseInt(config.change_interval_ch3));
 								}
 								break;
+							case 32:
+								if(config.sps_skip_samples_32_active){
+									promises.sps_skip_samples_32 = node.config_gateway.config_set_sps_skip_samples_32(mac, parseInt(config.sps_skip_samples_32));
+								}
+								break;
 							case 33:
 								if(config.clear_counter_33){
 									promises.clear_counter_33 = node.config_gateway.config_set_clear_counter_33(mac);
@@ -1052,6 +1058,9 @@ module.exports = function(RED) {
 								}
 								if(config.temperature_offset_44_active){
 									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
+								}
+								if(config.scd_skip_samples_44_active){
+									promises.scd_skip_samples_44 = node.config_gateway.config_set_scd_skip_samples_44(mac, parseInt(config.scd_skip_samples_44));
 								}
 								break;
 							case 45:
@@ -1109,6 +1118,11 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 53:
+								if(config.scd_skip_samples_44_active){
+									promises.scd_skip_samples_44 = node.config_gateway.config_set_scd_skip_samples_44(mac, parseInt(config.scd_skip_samples_44));
+								}
+								break;
 							case 56:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
@@ -1147,9 +1161,6 @@ module.exports = function(RED) {
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 							case 80:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1194,12 +1205,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 81:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -1498,9 +1503,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 110:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1510,8 +1512,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_110_active){
+									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1558,14 +1560,11 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 111:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -1581,8 +1580,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_110_active){
+									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1635,6 +1634,9 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 112:
 								if(config.current_calibration_82_active){
@@ -1649,8 +1651,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_110_active){
+									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1697,6 +1699,9 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 114:
 								if(config.output_data_rate_101_active){
@@ -1708,8 +1713,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_110_active){
+									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1768,11 +1773,11 @@ module.exports = function(RED) {
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
 								}
+								if(config.fly_interval_110_active){
+									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
 								break;
 							case 180:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -1817,12 +1822,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 181:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
-								if(config.current_calibration_c2_80_active){
-									promises.current_calibration_c2_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c2_80), 3);
-								}
 								if(config.output_data_rate_p1_81_active){
 									promises.output_data_rate_p1_81 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_p1_81));
 								}
@@ -1889,6 +1888,14 @@ module.exports = function(RED) {
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
 								break;
+							case 202:
+								if(config.sampling_interval_202_active){
+									promises.sampling_interval_202 = node.config_gateway.config_set_sampling_interval_202(mac, parseInt(config.sampling_interval_202));
+								}
+								if(config.set_rtc_202){
+									promises.set_rtc_202 = node.config_gateway.config_set_rtc_202(mac);
+								}
+							    break;
 							case 505:
 								if(config.current_calibration_c1_80_active){
 									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
@@ -2031,9 +2038,6 @@ module.exports = function(RED) {
 								}
 								break;
 							case 538:
-								if(config.current_calibration_c1_80_active){
-									promises.current_calibration_c1_80 = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
-								}
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
 								}
@@ -2187,7 +2191,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
@@ -2299,7 +2303,7 @@ module.exports = function(RED) {
 						_send_otn_request(sensor);
 					}, 100);
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-					if(config.sensor_type == 101 || config.sensor_type == 102){
+					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
 							node.warn('Starting RTC Timer' + Date.now());
@@ -2321,7 +2325,7 @@ module.exports = function(RED) {
 					}else{
 						_config(sensor, true);
 					}
-				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY"){
+				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 						this.gateway.fly_101_in_progress = true;
 						node.warn('Starting RTC Timer' + Date.now());
@@ -2410,7 +2414,7 @@ module.exports = function(RED) {
 						}
 
 					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-						if(config.sensor_type == 101 || config.sensor_type == 102){
+						if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 							if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 								this.gateway.fly_101_in_progress = true;
 								node.warn('Starting RTC Timer' + Date.now());
@@ -2432,7 +2436,7 @@ module.exports = function(RED) {
 							_config(sensor, true);
 						}
 
-					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102){
+					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
 							node.warn('Starting RTC Timer' + Date.now());

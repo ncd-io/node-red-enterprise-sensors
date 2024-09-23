@@ -323,6 +323,7 @@
 			acceleration_interrupt_threshold_84: {},
 
 			set_rtc_101:{value:0},
+			set_rtc_202:{value:0},
 
 			current_calibration_82:{Value:0},
 			current_calibration_82_active:{Value:""},
@@ -347,6 +348,8 @@
 			sampling_duration_101: {value: 1, validate: NCD_validators.number_range(1, 255)},
 			sampling_interval_101_active: {value: ""},
 			sampling_interval_101: {value: 1},
+			sampling_interval_202_active: {value: ""},
+			sampling_interval_202: {value: 1},
 			full_scale_range_101_active: {value: ""},
 			full_scale_range_101: {value: 1},
 			full_scale_range_101_m2_active: {value: ""},
@@ -489,7 +492,7 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value:0, validate: NCD_validators.number_range(0, 65534)},
+			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534)},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -520,7 +523,19 @@
 			set_parity_1011_active:{value: ""},
 			set_parity_1011:{value:0},
 
-			reboot_1011:{value:0}
+			reboot_1011:{value:0},
+
+			fly_interval_110_active:{value: ""},
+			fly_interval_110:{value: 60},
+
+			scd_skip_samples_44_active:{value: ""},
+			scd_skip_samples_44:{value: 1, validate: NCD_validators.number_range(1, 10)},
+
+			sps_skip_samples_32_active:{value: ""},
+			sps_skip_samples_32:{value: 1, validate: NCD_validators.number_range(1, 10)},
+
+			sampling_interval_110_active:{value: ""},
+			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -949,7 +964,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-33 data-sensor-39 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1510,7 +1525,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
@@ -1590,8 +1605,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 ata-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
@@ -1614,11 +1628,69 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Sampling Interval</strong>
+					<div>
+						<label for="node-input-sampling_interval_110_active">Active: </label>
+						<input type="checkbox" id="node-input-sampling_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_interval_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sampling_interval_110">
+							<option value="8">1 Minute</option>
+							<option value="0">5 Minutes</option>
+							<option value="1">10 Minutes</option>
+							<option value="2">15 Minutes</option>
+							<option value="3">20 Minutes</option>
+							<option value="4">30 Minutes</option>
+							<option value="5">60 Minutes</option>
+							<option value="6">120 Minutes</option>
+							<option value="7">180 Minutes</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
 					<div>
 						<label for="node-input-set_rtc_101"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-set_rtc_101" value="1">
+					</div>
+				</div>
+			</div>
+
+			<div class="ncd-dependent" data-sensor-202>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Sampling Interval</strong>
+					<div>
+						<label for="node-input-sampling_interval_202_active">Active: </label>
+						<input type="checkbox" id="node-input-sampling_interval_202_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_202" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_interval_202"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sampling_interval_202">
+							<option value="1">5 Minutes</option>
+							<option value="2">10 Minutes</option>
+							<option value="3">15 Minutes</option>
+							<option value="4">20 Minutes</option>
+							<option value="5">30 Minutes</option>
+							<option value="6">60 Minutes</option>
+							<option value="7">120 Minutes</option>
+							<option value="8">180 Minutes</option>
+							<!-- <option value="9">1 Minute</option> -->
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTC</strong>
+					<div>
+						<label for="node-input-set_rtc_202"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-set_rtc_202" value="1">
 					</div>
 				</div>
 			</div>
@@ -2070,8 +2142,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-110 data-sensor-111 data-sensor-180 data-sensor-181 data-sensor-505 data-sensor-506 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-505 data-sensor-506>
 				<div class="form-row ncd-active-check">
 					<strong>Channel 1 Current Calibration Value</strong>
 					<p class="caption">
@@ -2088,8 +2159,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-81 data-sensor-111 data-sensor-181 data-sensor-506>
+			<div class="ncd-dependent" data-sensor-506>
 				<div class="form-row ncd-active-check">
 				<strong>Channel 2 Current Calibration Value</strong>
 				<p class="caption">
@@ -2106,7 +2176,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="ncd-dependent" data-sensor-506>
 				<div class="form-row ncd-active-check">
 					<strong>Channel 3 Current Calibration Value</strong>
@@ -2183,7 +2252,7 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-108>
-				<div class="form-row">
+				<div class="form-row ncd-active-check">
 					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
 					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
 				</div>
@@ -2873,8 +2942,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
@@ -2890,7 +2958,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
@@ -2918,7 +2985,7 @@
 						Example of targeted address: 41D5EC37
 					</p>
 				</div>
-				<div class="form-row ncd-active-check">
+				<!-- <div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
 						<label for="node-input-clear_probe_uptimers_110_active">Active:</label>
@@ -2931,9 +2998,10 @@
 							<option value="1">Enabled</option>
 						</select>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Threshold</strong>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
 					<div>
 						<label for="node-input-smart_threshold_110_active">Active:</label>
 						<input type="checkbox" id="node-input-smart_threshold_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_110" value="1">
@@ -2941,6 +3009,37 @@
 					<div>
 						<label for="node-input-smart_threshold_110"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-smart_threshold_110" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Smart Mode Skip Interval</strong>
+					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.</p>
+					<div>
+						<label for="node-input-smart_interval_110_active">Active:</label>
+						<input type="checkbox" id="node-input-smart_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_interval_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-smart_interval_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-smart_interval_110" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Interval</strong>
+					<div>
+						<label for="node-input-fly_interval_110_active">Active:</label>
+						<input type="checkbox" id="node-input-fly_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-fly_interval_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-fly_interval_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-fly_interval_110">
+							<option value="60">1 Hour</option>
+							<option value="120">2 Hours</option>
+							<option value="240">4 Hours</option>
+							<option value="480">8 Hours</option>
+							<option value="720">12 Hours</option>
+							<option value="1080">18 Hours</option>
+							<option value="1440">24 Hours</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -2986,6 +3085,36 @@
 					<div>
 						<label for="node-input-factory_reset_tank_probe_58"><i class="icon-tag"></i>Factory Reset Tank Probe:</label>
 						<input type="checkbox" id="node-input-factory_reset_tank_probe_58" class="ncd-config-toggle" data-target-id="node-input-factory_reset_tank_probe_58" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-44 data-sensor-53>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Set Skip Samples (CO2)</strong>
+					<p>Valid Range: 1 - 10 </p>
+					<div>
+						<label for="node-input-scd_skip_samples_44_active">Active:</label>
+						<input type="checkbox" id="node-input-scd_skip_samples_44_active" class="ncd-config-toggle" data-target-id="node-input-scd_skip_samples_44" value="1">
+					</div>
+					<div>
+						<label for="node-scd_skip_samples_44"><i class="icon-tag"></i> Value:</label>
+						<input type="text" id="node-input-scd_skip_samples_44">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-32 data-sensor-53>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Set Skip Samples (Particulate)</strong>
+					<p>Valid Range: 1 - 10 </p>
+					<div>
+						<label for="node-input-sps_skip_samples_32_active">Active:</label>
+						<input type="checkbox" id="node-input-sps_skip_samples_32_active" class="ncd-config-toggle" data-target-id="node-input-sps_skip_samples_32" value="1">
+					</div>
+					<div>
+						<label for="node-sps_skip_samples_32"><i class="icon-tag"></i> Value:</label>
+						<input type="text" id="node-input-sps_skip_samples_32">
 					</div>
 				</div>
 			</div>
