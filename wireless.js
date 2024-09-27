@@ -1549,7 +1549,7 @@ module.exports = function(RED) {
 									promises.auto_raw_interval_110 = node.config_gateway.config_set_auto_raw_interval_110(mac, parseInt(config.auto_raw_interval_110));
 								}
 								if(config.auto_raw_destination_110_active){
-									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110));
+									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
 								if(config.clear_probe_uptimers_110_active){
 									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
@@ -1623,7 +1623,7 @@ module.exports = function(RED) {
 									promises.auto_raw_interval_110 = node.config_gateway.config_set_auto_raw_interval_110(mac, parseInt(config.auto_raw_interval_110));
 								}
 								if(config.auto_raw_destination_110_active){
-									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110));
+									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
 								if(config.clear_probe_uptimers_110_active){
 									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
@@ -1688,7 +1688,7 @@ module.exports = function(RED) {
 									promises.auto_raw_interval_110 = node.config_gateway.config_set_auto_raw_interval_110(mac, parseInt(config.auto_raw_interval_110));
 								}
 								if(config.auto_raw_destination_110_active){
-									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110));
+									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
 								if(config.clear_probe_uptimers_110_active){
 									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
@@ -1762,7 +1762,7 @@ module.exports = function(RED) {
 									promises.auto_raw_interval_110 = node.config_gateway.config_set_auto_raw_interval_110(mac, parseInt(config.auto_raw_interval_110));
 								}
 								if(config.auto_raw_destination_110_active){
-									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110));
+									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
 								if(config.clear_probe_uptimers_110_active){
 									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
