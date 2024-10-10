@@ -133,12 +133,12 @@
 	NCD_validators = {
 		number_range: function(l, h, base, property_name = false){
 			if(!base) base = 10;
-			if(property_name === 'on_request_timeout_80'){
+			if(property_name === 'smart_threshold_110'){
 				return function(v){
 					var int = parseInt(v, base);
-					if(this.on_request_timeout_80 == 0){
-						console.log('ERROR: Invalid property detect. Setting on_request_timeout_80 to default value');
-						$("#node-input-on_request_timeout_80").val(1);
+					if(this.smart_threshold_110 == 0){
+						console.log('ERROR: Invalid property detect. Setting smart_threshold_110 to default value');
+						$("#node-input-smart_threshold_110").val(1);
 						return true;
 					} else if(v == undefined){
 						return true;
@@ -376,7 +376,9 @@
 			accelerometer_state_108:{value:0},
 			accelerometer_state_108_active:{value:""},
 
-			clear_all_counters_108:{value:0},
+			clear_timers_108_active:{value:""},
+			clear_timers_108:{value:7},
+
 			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
 			accelerometer_threshold_108_active:{value:""},
 			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
@@ -492,7 +494,7 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534)},
+			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -516,6 +518,8 @@
 			push_notification_33_active:{value: ""},
 			push_notification_33:{value: 0},
 			clear_counter_33:{value:0},
+			input_two_33:{value:1},
+			input_two_33_active:{value:""},
 
 			stop_bit_1011_active:{value: ""},
 			stop_bit_1011:{value:0},
@@ -535,7 +539,19 @@
 			sps_skip_samples_32:{value: 1, validate: NCD_validators.number_range(1, 10)},
 
 			sampling_interval_110_active:{value: ""},
-			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)}
+			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)},
+
+			qos_108_active:{value: ""},
+			qos_108: {value: 0},
+			deactivate_activate_accelero_108_active: {value: ""},
+			deactivate_activate_accelero_108: {value: 0},
+			reset_timeout_108_active:{value: ""},
+			reset_timeout_108: {value: 60, validate: NCD_validators.number_range(60, 65535)},
+			reset_mode_to_disabled_108_active: {value: ""},
+			reset_mode_to_disabled_108: {value: 0},
+			rtc_interval_108_active: {value: ""},
+			rtc_interval_108: {value: 0},
+			rtc_108:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -570,7 +586,7 @@
 					"25": "25 - Asset Monitor",
 					"26": "26 - Pressure Sensor",
 					"27": "27 - Environmental Sensor",
-					"28": "28 - 3 Channel Current Sensor",
+					"28": "28 - 3-Phase Current Sensor",
 					"29": "29 - Linear Displacement Sensor",
 					"30": "30 - Structural Monitoring Sensor",
 					"31": "31 - Air Quality TVOC eCO2 Temperature and Humidity Sensor",
@@ -641,6 +657,7 @@
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
+					"217": "217 - Wireless Weight Scale",
 					"502": "502 - C_50-27",
 					"505": "505 - Custom_SAP_Current_1C",
 					"506": "506 - Custom_SAP_Current_3C",
@@ -860,7 +877,7 @@
 			<option value="25">25 - Asset Monitor</option>
 			<option value="26">26 - Pressure & Temperature (PSI)</option>
 			<option value="27">27 - Environmental</option>
-			<option value="28">28 - 3-Channel Current Monitor</option>
+			<option value="28">28 - 3-Phase Current Monitor</option>
 			<option value="29">29 - Linear Displacement Sensor</option>
 			<option value="30">30 - Structural Monitoring Sensor</option>
 			<option value="31">31 - Air Quality TVOC eCO2 Temperature and Humidity Sensor</option>
@@ -933,6 +950,7 @@
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
+			<option value="217">217 - Wireless Weight Scale</option>
 			<option value="502">502 - C_50-27</option>
 			<option value="505">505 - Custom_SAP_Current_1C</option>
 			<option value="506">506 - Custom_SAP_Current_3C</option>
@@ -2253,8 +2271,19 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
-					<label for="node-input-clear_all_counters_108"><i class="icon-tag"></i>Clear All Counters</label>
-					<input type="checkbox" id="node-input-clear_all_counters_108" value="1">
+					<strong>Clear Counters</strong>
+					<div>
+						<label for="node-input-clear_timers_108_active">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_108_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-clear_timers_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-clear_timers_108">
+							<option value="7" selected>Digital in 1, 2 and 3</option>
+							<option value="16">Magnetometer</option>
+							<option value="8">Accelerometer</option>
+						</select>
+					</div>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Threshold</strong>
@@ -2291,12 +2320,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Contact Closure Detection</strong>
 					<div>
-						<label for="node-input-input_two_108_active">Active:</label>
-						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
+						<label for="node-input-input_two_33_active">Active:</label>
+						<input type="checkbox" id="node-input-input_two_33_active" class="ncd-config-toggle" data-target-id="node-input-input_two_33" value="1">
 					</div>
 					<div>
-						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-input_two_108">
+						<label for="node-input-input_two_33"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_two_33">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
@@ -2382,6 +2411,13 @@
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
+					<p>
+						IO1 - Digital input<br>
+						IO2 - Current Sensor<br>
+						IO3 - OPTO Input<br>
+						IO4 - Accelerometer<br>
+						IO5 - Magnetometer<br>
+					</p>
 					<div>
 						<label for="node-input-push_notification_108_active">Active:</label>
 						<input type="checkbox" id="node-input-push_notification_108_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_108" value="1">
@@ -2424,6 +2460,97 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Quality Of Service (QoS)</strong>
+					<div>
+						<label for="node-input-qos_108_active">Active:</label>
+						<input type="checkbox" id="node-input-qos_108_active" class="ncd-config-toggle" data-target-id="node-input-qos_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-qos_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-qos_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Accelerometer</strong>
+					<div>
+						<label for="node-input-deactivate_activate_accelero_108_active">Active:</label>
+						<input type="checkbox" id="node-input-deactivate_activate_accelero_108_active" class="ncd-config-toggle" data-target-id="node-input-deactivate_activate_accelero_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-deactivate_activate_accelero_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-deactivate_activate_accelero_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Reset Timeout</strong>
+					<p class="caption">
+						Valid range: 60 - 65535
+					</p>
+					<div>
+						<label for="node-input-reset_timeout_108_active">Active:</label>
+						<input type="checkbox" id="node-input-reset_timeout_108_active" class="ncd-config-toggle" data-target-id="node-input-reset_timeout_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-reset_timeout_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-reset_timeout_108" placeholder="60" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong> Set Reset Mode to Disabled</strong>
+					<div>
+						<label for="node-input-reset_mode_to_disabled_108_active">Active:</label>
+						<input type="checkbox" id="node-input-reset_mode_to_disabled_108_active" class="ncd-config-toggle" data-target-id="node-input-reset_mode_to_disabled_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-reset_mode_to_disabled_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-reset_mode_to_disabled_108">
+							<option value="0" selected>Do not reset counters</option>
+							<option value="1">Based on Shift Ends</option>
+							<option value="2">Based on the Timeout Provided</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTC</strong>
+					<div>
+						<label for="node-input-rtc_108"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-rtc_108" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong> Set RTC Interval</strong>
+					<div>
+						<label for="node-input-rtc_interval_108_active">Active:</label>
+						<input type="checkbox" id="node-input-rtc_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-rtc_interval_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-rtc_interval_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtc_interval_108">
+							<option value="0" selected>1 minute</option>
+							<option value="1">5 minutes</option>
+							<option value="2">10 minutes</option>
+							<option value="3">15 minutes</option>
+							<option value="4">30 minutes</option>
+							<option value="5">45 minutes</option>
+							<option value="6">1 hour</option>
+							<option value="7">2 hours</option>
+							<option value="8">3 hours</option>
+							<option value="9">4 hours</option>
+							<option value="10">6 hours</option>
+							<option value="11">8 hours</option>
+							<option value="12">12 hours</option>
+						</select>
+					</div>
+				</div>
+
+
 			</div>
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
 				<hr>
@@ -2961,6 +3088,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
+					<p>The interval is determined by the sample interval. If the value is set to 1 and the sample interval is 10 minutes, raw data will be sent every 10 minutes. If the value is set to 5, raw data will be sent every 50 minutes.</p>
 					<div>
 						<label for="node-input-auto_raw_interval_110_active">Active:</label>
 						<input type="checkbox" id="node-input-auto_raw_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-auto_raw_interval_110" value="1">
