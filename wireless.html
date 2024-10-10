@@ -133,12 +133,12 @@
 	NCD_validators = {
 		number_range: function(l, h, base, property_name = false){
 			if(!base) base = 10;
-			if(property_name === 'on_request_timeout_80'){
+			if(property_name === 'smart_threshold_110'){
 				return function(v){
 					var int = parseInt(v, base);
-					if(this.on_request_timeout_80 == 0){
-						console.log('ERROR: Invalid property detect. Setting on_request_timeout_80 to default value');
-						$("#node-input-on_request_timeout_80").val(1);
+					if(this.smart_threshold_110 == 0){
+						console.log('ERROR: Invalid property detect. Setting smart_threshold_110 to default value');
+						$("#node-input-smart_threshold_110").val(1);
 						return true;
 					} else if(v == undefined){
 						return true;
@@ -378,7 +378,7 @@
 
 			clear_timers_108_active:{value:""},
 			clear_timers_108:{value:7},
-			
+
 			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
 			accelerometer_threshold_108_active:{value:""},
 			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
@@ -494,7 +494,7 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534)},
+			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -2413,8 +2413,8 @@
 					<strong>Enable Push Notification</strong>
 					<p>
 						IO1 - Digital input<br>
-						IO2 - Current Sensor<br> 
-						IO3 - OPTO Input<br> 
+						IO2 - Current Sensor<br>
+						IO3 - OPTO Input<br>
 						IO4 - Accelerometer<br>
 						IO5 - Magnetometer<br>
 					</p>
@@ -2549,7 +2549,7 @@
 						</select>
 					</div>
 				</div>
-				
+
 
 			</div>
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
