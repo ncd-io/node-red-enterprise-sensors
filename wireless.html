@@ -392,6 +392,18 @@
 			input_three_108_active:{value:""},
 			counter_threshold_108:{value:1000, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_108_active:{value:""},
+			shift_one_108_active:{value:""},
+			shift_one_minutes_108:{value:0, validate: NCD_validators.number_range(0, 59)},
+			shift_one_hours_108:{value:0, validate: NCD_validators.number_range(0, 23)},
+			shift_two_108_active:{value:""},
+			shift_two_minutes_108:{value:0, validate: NCD_validators.number_range(0, 59)},
+			shift_two_hours_108:{value:0, validate: NCD_validators.number_range(0, 23)},
+			shift_three_108_active:{value:""},
+			shift_three_minutes_108:{value:0, validate: NCD_validators.number_range(0, 59)},
+			shift_three_hours_108:{value:0, validate: NCD_validators.number_range(0, 23)},
+			shift_four_108_active:{value:""},
+			shift_four_minutes_108:{value:0, validate: NCD_validators.number_range(0, 59)},
+			shift_four_hours_108:{value:0, validate: NCD_validators.number_range(0, 23)},
 
 			counter_threshold_35:{value:50, validate: NCD_validators.number_range(0, 65534)},
 			counter_threshold_35_active:{value:""},
@@ -2500,6 +2512,78 @@
 					<div>
 						<label for="node-input-reset_timeout_108"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-reset_timeout_108" placeholder="60" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Shift Time 1</strong>
+					<p class="caption">
+						24-hour time format
+					</p>
+					<div>
+						<label for="node-input-shift_one_108_active">Active:</label>
+						<input type="checkbox" id="node-input-shift_one_108_active" class="ncd-config-toggle" data-target-class="shift_one_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-shift_one_hours_108"><i class="icon-tag"></i>Hours:</label>
+						<input type="text" id="node-input-shift_one_hours_108" class="shift_one_108" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-shift_one_minutes_108"><i class="icon-tag"></i>Minutes:</label>
+						<input type="text" id="node-input-shift_one_minutes_108" class="shift_one_108" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Shift Time 2</strong>
+					<p class="caption">
+						24-hour time format
+					</p>
+					<div>
+						<label for="node-input-shift_two_108_active">Active:</label>
+						<input type="checkbox" id="node-input-shift_two_108_active" class="ncd-config-toggle" data-target-class="shift_two_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-shift_two_hours_108"><i class="icon-tag"></i>Hours:</label>
+						<input type="text" id="node-input-shift_two_hours_108" class="shift_two_108" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-shift_two_minutes_108"><i class="icon-tag"></i>Minutes:</label>
+						<input type="text" id="node-input-shift_two_minutes_108" class="shift_two_108" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Shift Time 3</strong>
+					<p class="caption">
+						24-hour time format
+					</p>
+					<div>
+						<label for="node-input-shift_three_108_active">Active:</label>
+						<input type="checkbox" id="node-input-shift_three_108_active" class="ncd-config-toggle" data-target-class="shift_three_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-shift_three_hours_108"><i class="icon-tag"></i>Hours:</label>
+						<input type="text" id="node-input-shift_three_hours_108" class="shift_three_108" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-shift_three_minutes_108"><i class="icon-tag"></i>Minutes:</label>
+						<input type="text" id="node-input-shift_three_minutes_108" class="shift_three_108" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Shift Time 4</strong>
+					<p class="caption">
+						24-hour time format
+					</p>
+					<div>
+						<label for="node-input-shift_four_108_active">Active:</label>
+						<input type="checkbox" id="node-input-shift_four_108_active" class="ncd-config-toggle" data-target-class="shift_four_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-shift_four_hours_108"><i class="icon-tag"></i>Hours:</label>
+						<input type="text" id="node-input-shift_four_hours_108" class="shift_four_108" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-shift_four_minutes_108"><i class="icon-tag"></i>Minutes:</label>
+						<input type="text" id="node-input-shift_four_minutes_108" class="shift_four_108" placeholder="0" value="00">
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">

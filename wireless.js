@@ -1519,6 +1519,18 @@ module.exports = function(RED) {
 								if(config.rtc_interval_108_active){
 									promises.rtc_interval_108 = node.config_gateway.config_set_rtc_interval_108(mac, parseInt(config.rtc_interval_108));
 								}
+								if(config.shift_one_108_active){
+									promises.shift_time1 = node.config_gateway.config_set_shift_one_108(mac, parseInt(config.shift_one_hours_108), parseInt(config.shift_one_minutes_108));
+								}
+								if(config.shift_two_108_active){
+									promises.shift_time2 = node.config_gateway.config_set_shift_two_108(mac, parseInt(config.shift_two_hours_108), parseInt(config.shift_two_minutes_108));
+								}
+								if(config.shift_three_108_active){
+									promises.shift_time3 = node.config_gateway.config_set_shift_three_108(mac, parseInt(config.shift_three_hours_108), parseInt(config.shift_three_minutes_108));
+								}
+								if(config.shift_four_108_active){
+									promises.shift_time4 = node.config_gateway.config_set_shift_four_108(mac, parseInt(config.shift_four_hours_108), parseInt(config.shift_four_minutes_108));
+								}
 								break;
 							case 110:
 								if(config.output_data_rate_101_active){
