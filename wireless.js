@@ -1012,6 +1012,21 @@ module.exports = function(RED) {
 								if(config.sps_skip_samples_32_active){
 									promises.sps_skip_samples_32 = node.config_gateway.config_set_sps_skip_samples_32(mac, parseInt(config.sps_skip_samples_32));
 								}
+								if(config.stop_sampling){
+									promises.stop_sampling = node.config_gateway.config_set_stop_sampling(mac);
+								}
+								if(config.extend_otf_timeout){
+									promises.extend_otf_timeout = node.config_gateway.config_set_extend_otf_timeout(mac);
+								}
+								if(config.end_cfg){
+									promises.end_cfg = node.config_gateway.config_set_end_cfg(mac);
+								}
+								if(config.change_otf_interval_active){
+									promises.change_otf_interval = node.config_gateway.config_set_change_otf_interval(mac, parseInt(config.change_otf_interval));
+								}
+								if(config.sampling_rate_duration_active){
+									promises.sampling_rate_duration = node.config_gateway.config_set_sampling_rate_duration(mac, parseInt(config.sampling_rate_duration));
+								}
 								break;
 							case 33:
 								if(config.clear_counter_33){
@@ -1061,6 +1076,21 @@ module.exports = function(RED) {
 								}
 								if(config.scd_skip_samples_44_active){
 									promises.scd_skip_samples_44 = node.config_gateway.config_set_scd_skip_samples_44(mac, parseInt(config.scd_skip_samples_44));
+								}
+								if(config.stop_sampling){
+									promises.stop_sampling = node.config_gateway.config_set_stop_sampling(mac);
+								}
+								if(config.extend_otf_timeout){
+									promises.extend_otf_timeout = node.config_gateway.config_set_extend_otf_timeout(mac);
+								}
+								if(config.end_cfg){
+									promises.end_cfg = node.config_gateway.config_set_end_cfg(mac);
+								}
+								if(config.change_otf_interval_active){
+									promises.change_otf_interval = node.config_gateway.config_set_change_otf_interval(mac, parseInt(config.change_otf_interval));
+								}
+								if(config.sampling_rate_duration_active){
+									promises.sampling_rate_duration = node.config_gateway.config_set_sampling_rate_duration(mac, parseInt(config.sampling_rate_duration));
 								}
 								break;
 							case 45:
@@ -1121,6 +1151,21 @@ module.exports = function(RED) {
 							case 53:
 								if(config.scd_skip_samples_44_active){
 									promises.scd_skip_samples_44 = node.config_gateway.config_set_scd_skip_samples_44(mac, parseInt(config.scd_skip_samples_44));
+								}
+								if(config.stop_sampling){
+									promises.stop_sampling = node.config_gateway.config_set_stop_sampling(mac);
+								}
+								if(config.extend_otf_timeout){
+									promises.extend_otf_timeout = node.config_gateway.config_set_extend_otf_timeout(mac);
+								}
+								if(config.end_cfg){
+									promises.end_cfg = node.config_gateway.config_set_end_cfg(mac);
+								}
+								if(config.change_otf_interval_active){
+									promises.change_otf_interval = node.config_gateway.config_set_change_otf_interval(mac, parseInt(config.change_otf_interval));
+								}
+								if(config.sampling_rate_duration_active){
+									promises.sampling_rate_duration = node.config_gateway.config_set_sampling_rate_duration(mac, parseInt(config.sampling_rate_duration));
 								}
 								break;
 							case 56:

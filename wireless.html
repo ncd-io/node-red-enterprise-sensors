@@ -563,7 +563,18 @@
 			reset_mode_to_disabled_108: {value: 0},
 			rtc_interval_108_active: {value: ""},
 			rtc_interval_108: {value: 0},
-			rtc_108:{value:0}
+			rtc_108:{value:0},
+
+			change_otf_interval_active:{value: ""},
+			change_otf_interval:{value: 60},
+
+			sampling_rate_duration_active:{value: ""},
+			sampling_rate_duration:{value: 30, validate: NCD_validators.number_range(30, 20000)},
+
+			stop_sampling:{value:0},
+			extend_otf_timeout:{value:0},
+			end_cfg:{value:0}
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3328,6 +3339,62 @@
 					<div>
 						<label for="node-sps_skip_samples_32"><i class="icon-tag"></i> Value:</label>
 						<input type="text" id="node-input-sps_skip_samples_32">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-32 data-sensor-44 data-sensor-53>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Rate</strong>
+					<div>
+						<label for="node-input-change_otf_interval_active">Active:</label>
+						<input type="checkbox" id="node-input-change_otf_interval_active" class="ncd-config-toggle" data-target-id="node-input-change_otf_interval_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-change_otf_interval"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-change_otf_interval">
+							<option value="60">1 Hour</option>
+							<option value="120">2 Hours</option>
+							<option value="240">4 Hours</option>
+							<option value="480">8 Hours</option>
+							<option value="720">12 Hours</option>
+							<option value="1080">18 Hours</option>
+							<option value="1440">24 Hours</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Samplig Rate</strong>
+					<p>
+						Valid Range: 30 - 20000 (Seconds).
+					</p>
+					<div>
+						<label for="node-input-sampling_rate_duration_active">Active:</label>
+						<input type="checkbox" id="node-input-sampling_rate_duration_active" class="ncd-config-toggle" data-target-id="node-input-sampling_rate_duration" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_rate_duration"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sampling_rate_duration" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Stop Sampling</strong>
+					<div>
+						<label for="node-input-stop_sampling"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-stop_sampling" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Extend OTF Timeout</strong>
+					<div>
+						<label for="node-input-extend_otf_timeout"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-extend_otf_timeout" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>End Configutation</strong>
+					<div>
+						<label for="node-input-end_cfg"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-end_cfg" value="1">
 					</div>
 				</div>
 			</div>
