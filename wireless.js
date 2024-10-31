@@ -559,6 +559,9 @@ module.exports = function(RED) {
 					// 	'address': "00:13:a2:00:42:2c:d2:aa"
 					// }
 					break;
+				case "remote_at_send":
+					node.gateway.remote_at_send(msg.payload.address, msg.payload.parameter, msg.payload.value, msg.payload.options).then().catch(console.log);
+					break;
 				default:
 					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
 					node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
