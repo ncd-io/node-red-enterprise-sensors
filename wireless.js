@@ -1067,6 +1067,14 @@ module.exports = function(RED) {
 									promises.config_set_debounce_time_35 = node.config_gateway.config_set_debounce_time_35(mac, parseInt(config.debounce_time_2));
 								}
 								break;
+							case 39:
+								if(config.rtd_type_39_active){
+									promises.rtd_type_39 = node.config_gateway.config_set_rtd_type_39(mac, parseInt(config.rtd_type_39));
+								}
+								if(config.rtd_range_39_active){
+									promises.rtd_range_39 = node.config_gateway.config_set_rtd_range_39(mac, parseInt(config.rtd_range_39));
+								}
+								break;
 							case 40:
 								promises.filtering = node.config_gateway.config_set_filtering(mac, parseInt(config.filtering));
 								promises.data_rate = node.config_gateway.config_set_data_rate(mac, parseInt(config.data_rate));
