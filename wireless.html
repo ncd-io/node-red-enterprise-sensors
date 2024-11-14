@@ -297,6 +297,10 @@
 			deadband_80_active: {value: ""},
 			deadband_80: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
+			auto_check_interval_88_active: {value: ""},
+			auto_check_interval_88: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+
+
 			filter_80_active: {value: ""},
 			filter_80: {value: 0},
 
@@ -2138,6 +2142,23 @@
 				</div>
 			</div>
 
+			<div class="ncd-dependent" data-sensor-88 data-sensor-89>
+				<div class="form-row ncd-active-check">
+					<strong>Auto Check Interval</strong>
+					<p class="caption">
+						<b>* To disable the auto check interval feature make this setting active and use a value of 0.</b>
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_88_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_88_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_88" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_88"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_88" placeholder="60" value="60">
+					</div>
+				</div>
+			</div>
+
 			<div class="ncd-dependent" data-sensor-78 data-sensor-79 data-sensor-91>
 				<div class="form-row ncd-active-check">
 					<strong>Sensor Boot Time</strong>
@@ -3398,7 +3419,7 @@
 							<option selected="selected" value="0">2 Wires</option>
 							<option value="1">3 Wires</option>
 							<option value="2">4 Wires</option>
-							
+
 						</select>
 					</div>
 				</div>
@@ -3414,7 +3435,7 @@
 						<select id="node-input-rtd_range_39">
 							<option selected="selected" value="0">PT 100</option>
 							<option value="1">PT 1000</option>
-							
+
 						</select>
 					</div>
 				</div>
