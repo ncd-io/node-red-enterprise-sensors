@@ -354,6 +354,8 @@
 			sampling_interval_101: {value: 1},
 			sampling_interval_202_active: {value: ""},
 			sampling_interval_202: {value: 1},
+			probe_boot_time_202_active: {value: ""},
+			probe_boot_time_202: {value: 30, validate: NCD_validators.number_range(0, 255)},
 			full_scale_range_101_active: {value: ""},
 			full_scale_range_101: {value: 1},
 			full_scale_range_101_m2_active: {value: ""},
@@ -1743,6 +1745,17 @@
 					<div>
 						<label for="node-input-set_rtc_202"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-set_rtc_202" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Probe Boot Time</strong>
+					<div>
+						<label for="node-input-probe_boot_time_202_active">Active:</label>
+						<input type="checkbox" id="node-input-probe_boot_time_202_active" class="ncd-config-toggle" data-target-id="node-input-probe_boot_time_202" value="1">
+					</div>
+					<div>
+						<label for="node-input-probe_boot_time_202"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-probe_boot_time_202">
 					</div>
 				</div>
 			</div>
