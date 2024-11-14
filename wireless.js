@@ -1421,6 +1421,9 @@ module.exports = function(RED) {
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
+								if(config.auto_check_interval_88_active){
+									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_check_88(mac, parseInt(config.auto_check_interval_88));
+								}
 								break;
 							case 89:
 								if(config.sensor_boot_time_420ma_active){
@@ -1434,6 +1437,9 @@ module.exports = function(RED) {
 								}
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.auto_check_interval_88_active){
+									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_check_88(mac, parseInt(config.auto_check_interval_88));
 								}
 								break;
 							case 91:

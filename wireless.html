@@ -297,6 +297,9 @@
 			deadband_80_active: {value: ""},
 			deadband_80: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
+			auto_check_interval_88_active: {value: ""},
+			auto_check_interval_88: {value: 60, validate: NCD_validators.number_range(0, 65535)},
+
 			filter_80_active: {value: ""},
 			filter_80: {value: 0},
 
@@ -2128,6 +2131,23 @@
 					<div>
 						<label for="node-input-sensor_boot_time_420ma"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-sensor_boot_time_420ma" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+
+			<div class="ncd-dependent" data-sensor-88 data-sensor-89>
+				<div class="form-row ncd-active-check">
+					<strong>Auto Check Interval</strong>
+					<p class="caption">
+						<b>* To disable the auto check interval feature make this setting active and use a value of 0.</b>
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_88_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_88_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_88" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_88"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_88" placeholder="60" value="60">
 					</div>
 				</div>
 			</div>
