@@ -1973,7 +1973,7 @@ module.exports = function(RED) {
 									promises.set_rtc_202 = node.config_gateway.config_set_rtc_202(mac);
 								}
 								if(config.probe_boot_time_202_active){
-									promises.probe_boot_time_202 = node.config_gateway.config_set_probe_boot_time_202(mac, parseInt(config.probe_boot_time_202);
+									promises.probe_boot_time_202 = node.config_gateway.config_set_probe_boot_time_202(mac, parseInt(config.probe_boot_time_202));
 								}
 							    break;
 							case 505:
