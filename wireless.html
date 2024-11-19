@@ -299,6 +299,8 @@
 
 			auto_check_interval_88_active: {value: ""},
 			auto_check_interval_88: {value: 60, validate: NCD_validators.number_range(0, 65535)},
+			auto_check_threshold_88_active: {value: ""},
+			auto_check_threshold_88: {value: 20, validate: NCD_validators.number_range(0, 100)},
 
 			filter_80_active: {value: ""},
 			filter_80: {value: 0},
@@ -353,6 +355,8 @@
 			sampling_interval_101: {value: 1},
 			sampling_interval_202_active: {value: ""},
 			sampling_interval_202: {value: 1},
+			probe_boot_time_202_active: {value: ""},
+			probe_boot_time_202: {value: 30, validate: NCD_validators.number_range(0, 255)},
 			full_scale_range_101_active: {value: ""},
 			full_scale_range_101: {value: 1},
 			full_scale_range_101_m2_active: {value: ""},
@@ -576,7 +580,13 @@
 
 			stop_sampling:{value:0},
 			extend_otf_timeout:{value:0},
-			end_cfg:{value:0}
+			end_cfg:{value:0},
+
+			rtd_type_39_active:{value: ""},
+			rtd_type_39:{value:0},
+
+			rtd_range_39_active:{value: ""},
+			rtd_range_39:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -698,10 +708,10 @@
 					"535": "535 - Custom CO2 Sensor",
 					"537": "537 - Custom Standalone Smart Vibration Sensor",
 					"538": "538 - Custom One Channel Vibration Plus",
-					"539": "539 - RS-485 Modbus Wireless Converter",
+					"539": "539 - RS485 Modbus Wireless Converter",
 					"540": "540 - Wireless Ultrasonic Flow Meter FD-Q32C",
-					"1010": "1010 - RS-232 Wireless Converter 1010",
-					"1011": "1011 - RS-485 Wireless Converter 1011",
+					"1010": "1010 - RS232 Wireless Converter 1010",
+					"1011": "1011 - RS485 Wireless Converter 1011",
 					"10000": "10000 - 4-Channel Relay",
 					"10006": "10006 - 4-Channel 4-20 mA Input",
 					"10007": "10007 - 4-Channel Current Monitor",
@@ -992,10 +1002,10 @@
 			<option value="535">535 - Custom CO2 Sensor</option>
 			<option value="537">537 - Custom Standalone Smart Vibration Sensor</option>
 			<option value="538">538 - Custom One Channel Vibration Plus</option>
-			<option value="539">539 - RS-485 Modbus Wireless Converter</option>
+			<option value="539">539 - RS485 Modbus Wireless Converter</option>
 			<option value="540">540 - Wireless Ultrasonic Flow Meter FD-Q32C</option>
-			<option value="1010">1010 - RS-232 Wireless Converter 1010</option>
-			<option value="1011">1011 - RS-485 Wireless Converter 1011</option>
+			<option value="1010">1010 - RS232 Wireless Converter 1010</option>
+			<option value="1011">1011 - RS485 Wireless Converter 1011</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
 			<option value="10006">10006 - 4-Channel 4-20 mA Input</option>
 			<option value="10007">10007 - 4-Channel Current Monitor</option>
@@ -1738,6 +1748,17 @@
 						<input type="checkbox" id="node-input-set_rtc_202" value="1">
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Probe Boot Time</strong>
+					<div>
+						<label for="node-input-probe_boot_time_202_active">Active:</label>
+						<input type="checkbox" id="node-input-probe_boot_time_202_active" class="ncd-config-toggle" data-target-id="node-input-probe_boot_time_202" value="1">
+					</div>
+					<div>
+						<label for="node-input-probe_boot_time_202"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-probe_boot_time_202">
+					</div>
+				</div>
 			</div>
 
 			<div class="ncd-dependent" data-sensor-81  data-sensor-111 data-sensor-181>
@@ -2117,7 +2138,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-88 data-sensor-89 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Sensor Boot Time</strong>
 					<p class="caption">
@@ -2135,7 +2156,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-88 data-sensor-89>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45  data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-76 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Auto Check Interval</strong>
 					<p class="caption">
@@ -2148,6 +2169,21 @@
 					<div>
 						<label for="node-input-auto_check_interval_88"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-auto_check_interval_88" placeholder="60" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Auto Check Threshold</strong>
+					<p class="caption">
+						<b>This is a percent value. It will dictate a new transmission if the percentage change since last transmission exceeds the percentage set in this field.<br>
+						Ex: Threshold set to 20% and last reading was 5. If Auto Check detects a value below 4 or above 6 a transmission will be sent.</b>
+					</p>
+					<div>
+						<label for="node-input-auto_check_threshold_88_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_threshold_88_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_threshold_88" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_threshold_88"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_threshold_88" placeholder="20" value="20">
 					</div>
 				</div>
 			</div>
@@ -2169,7 +2205,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-88 data-sensor-89 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-200 data-sensor-540>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-200 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Low Calibration Point</strong>
 					<div>
@@ -2776,7 +2812,7 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Baudrate</strong>
+					<strong>Set Baud Rate</strong>
 					<div>
 						<label for="node-input-baudrate_539_active">Active:</label>
 						<input type="checkbox" id="node-input-baudrate_539_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_539" value="1">
@@ -3381,39 +3417,55 @@
 						</select>
 					</div>
 				</div>
+				<!--
+					<div class="form-row ncd-active-check">
+						<strong>Set Sampling Rate</strong>
+						<p>
+							Valid Range: 30 - 20000 (Seconds).
+						</p>
+						<div>
+							<label for="node-input-sampling_rate_duration_active">Active:</label>
+							<input type="checkbox" id="node-input-sampling_rate_duration_active" class="ncd-config-toggle" data-target-id="node-input-sampling_rate_duration" value="1">
+						</div>
+						<div>
+							<label for="node-input-sampling_rate_duration"><i class="icon-tag"></i>Value:</label>
+							<input type="text" id="node-input-sampling_rate_duration" placeholder="0" value="0">
+						</div>
+					</div>
+				-->
+			</div>
+			<div class="ncd-dependent" data-sensor-39>
 				<div class="form-row ncd-active-check">
-					<strong>Set Sampling Rate</strong>
-					<p>
-						Valid Range: 30 - 20000 (Seconds).
-					</p>
+					<strong>Set RTD Wire Type</strong>
+					<p>The wire type of RTD Sensor Probe to be connected.</p>
 					<div>
-						<label for="node-input-sampling_rate_duration_active">Active:</label>
-						<input type="checkbox" id="node-input-sampling_rate_duration_active" class="ncd-config-toggle" data-target-id="node-input-sampling_rate_duration" value="1">
+						<label for="node-input-rtd_type_39_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_type_39_active" class="ncd-config-toggle" data-target-id="node-input-rtd_type_39" value="1">
 					</div>
 					<div>
-						<label for="node-input-sampling_rate_duration"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-sampling_rate_duration" placeholder="0" value="0">
+						<label for="node-input-rtd_type_39"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_type_39">
+							<option selected="selected" value="0">2 Wires</option>
+							<option value="1">3 Wires</option>
+							<option value="2">4 Wires</option>
+
+						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Stop Sampling</strong>
+					<strong>Set RTD Range</strong>
+					<p>Type of PT Sensor Probe to be connected.</p>
 					<div>
-						<label for="node-input-stop_sampling"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-stop_sampling" value="1">
+						<label for="node-input-rtd_range_39_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_range_39_active" class="ncd-config-toggle" data-target-id="node-input-rtd_range_39" value="1">
 					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Extend OTF Timeout</strong>
 					<div>
-						<label for="node-input-extend_otf_timeout"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-extend_otf_timeout" value="1">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>End Configuration</strong>
-					<div>
-						<label for="node-input-end_cfg"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-end_cfg" value="1">
+						<label for="node-input-rtd_range_39"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_range_39">
+							<option selected="selected" value="0">PT 100</option>
+							<option value="1">PT 1000</option>
+
+						</select>
 					</div>
 				</div>
 			</div>
