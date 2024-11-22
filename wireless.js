@@ -2574,9 +2574,13 @@ module.exports = function(RED) {
 					// _send_otn_request(sensor);
 					// Sensors having issues seeing OTN request sent too quickly
 					// Added timeout to fix issue
-					var tout = setTimeout(() => {
-						_send_otn_request(sensor);
-					}, 100);
+					if(config.sensor_type == 1010 || config.sensor_type == 1011){
+						_config(sensor, true);
+					}else{
+						var tout = setTimeout(() => {
+							_send_otn_request(sensor);
+						}, 100);
+					}
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
 					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
