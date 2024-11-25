@@ -586,7 +586,18 @@
 			rtd_type_39:{value:0},
 
 			rtd_range_39_active:{value: ""},
-			rtd_range_39:{value:0}
+			rtd_range_39:{value:0},
+
+			pressure_sensor_fs_ch1_118_active:{value: ""},
+			pressure_sensor_fs_ch1_118:{value:0},
+			pressure_sensor_fs_ch2_118_active:{value: ""},
+			pressure_sensor_fs_ch2_118:{value:0},
+			auto_check_interval_118_active:{value: ""},
+			auto_check_interval_118:{value: 0, validate: NCD_validators.number_range(0, 65000)},
+			press_auto_check_percent_118_active:{value: ""},
+			press_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+			temp_auto_check_percent_118_active:{value: ""},
+			temp_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -689,6 +700,7 @@
 					"111": "111 - Two Channel Vibration Plus v4",
 					"112": "112 - Condition Based/Predictive Maintenance Sensor v4",
 					"114": "114 - Standalone Smart Vibration Sensor v4",
+					"118": "118 - Pressure and Temperature Sensor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -983,6 +995,7 @@
 			<option value="111">111 - Two Channel Vibration Plus v4</option>
 			<option value="112">112 - Condition Based/Predictive Maintenance Sensor v4</option>
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
+			<option value="118">118 - Pressure and Temperature Sensor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -3466,6 +3479,86 @@
 							<option value="1">PT 1000</option>
 
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-118>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor FS - Channel 1</strong>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch1_118_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_fs_ch1_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch1_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch1_118"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_fs_ch1_118">
+							<option selected="selected" value="0">10</option>
+							<option value="1">20</option>
+							<option value="2">100</option>
+							<option value="3">500</option>
+							<option value="4">1000</option>
+							<option value="5">5000</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor FS - Channel 2</strong>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch2_118_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_fs_ch2_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch2_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch2_118"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_fs_ch2_118">
+							<option selected="selected" value="0">10</option>
+							<option value="1">20</option>
+							<option value="2">100</option>
+							<option value="3">500</option>
+							<option value="4">1000</option>
+							<option value="5">5000</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Check Interval</strong>
+					<p>
+						Valid Range: 0 - 65000 (Seconds).
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_118_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_118_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_118" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Auto Check Percentage</strong>
+					<p>
+						Valid Range: 0 - 100%
+					</p>
+					<div>
+						<label for="node-input-press_auto_check_percent_118_active">Active:</label>
+						<input type="checkbox" id="node-input-press_auto_check_percent_118_active" class="ncd-config-toggle" data-target-id="node-input-press_auto_check_percent_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-press_auto_check_percent_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-press_auto_check_percent_118" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Temperature Auto Check Percentage</strong>
+					<p>
+						Valid Range: 0 - 100%
+					</p>
+					<div>
+						<label for="node-input-temp_auto_check_percent_118_active">Active:</label>
+						<input type="checkbox" id="node-input-temp_auto_check_percent_118_active" class="ncd-config-toggle" data-target-id="node-input-temp_auto_check_percent_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-temp_auto_check_percent_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-temp_auto_check_percent_118" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>

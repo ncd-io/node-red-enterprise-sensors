@@ -2057,6 +2057,23 @@ module.exports = function(RED) {
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
 								break;
+							case 118:
+								if(config.pressure_sensor_fs_ch1_118_active){
+									promises.pressure_sensor_fs_ch1_118 = node.config_gateway.config_set_pressure_sensor_fs_ch1_118(mac, parseInt(config.pressure_sensor_fs_ch1_118));
+								}
+								if(config.pressure_sensor_fs_ch2_118_active){
+									promises.pressure_sensor_fs_ch2_118 = node.config_gateway.config_set_pressure_sensor_fs_ch2_118(mac, parseInt(config.pressure_sensor_fs_ch2_118));
+								}
+								if(config.auto_check_interval_118_active){
+									promises.auto_check_interval_118 = node.config_gateway.config_set_auto_check_interval_118(mac, parseInt(config.auto_check_interval_118));
+								}
+								if(config.press_auto_check_percent_118_active){
+									promises.press_auto_check_percent_118 = node.config_gateway.config_set_press_auto_check_percent_118(mac, parseInt(config.press_auto_check_percent_118));
+								}
+								if(config.temp_auto_check_percent_118_active){
+									promises.temp_auto_check_percent_118 = node.config_gateway.config_set_temp_auto_check_percent_118(mac, parseInt(config.temp_auto_check_percent_118));
+								}
+								break;
 							case 180:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
