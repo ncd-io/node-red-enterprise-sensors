@@ -1751,9 +1751,6 @@ module.exports = function(RED) {
 								if(config.push_notification_108_active){
 									promises.push_notification_108 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_108));
 								}
-								if(config.qos_108_active){
-									promises.qos_108 = node.config_gateway.config_set_qos_108(mac, parseInt(config.qos_108));
-								}
 								if(config.deactivate_activate_accelero_108_active){
 									promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
 								}

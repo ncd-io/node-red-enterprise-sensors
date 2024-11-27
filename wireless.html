@@ -560,8 +560,6 @@
 			sampling_interval_110_active:{value: ""},
 			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)},
 
-			qos_108_active:{value: ""},
-			qos_108: {value: 0},
 			deactivate_activate_accelero_108_active: {value: ""},
 			deactivate_activate_accelero_108: {value: 0},
 			reset_timeout_108_active:{value: ""},
@@ -2550,20 +2548,6 @@
 							<option value="20">Enable on IO 3 and 5</option>
 							<option value="28">Enable on IO 3, 4 and 5</option>
 							<option value="24">Enable on IO 4 and 5</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Enable Quality Of Service (QoS)</strong>
-					<div>
-						<label for="node-input-qos_108_active">Active:</label>
-						<input type="checkbox" id="node-input-qos_108_active" class="ncd-config-toggle" data-target-id="node-input-qos_108" value="1">
-					</div>
-					<div>
-						<label for="node-input-qos_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-qos_108">
-							<option value="0" selected>Disabled</option>
-							<option value="1">Enabled</option>
 						</select>
 					</div>
 				</div>
