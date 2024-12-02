@@ -1608,25 +1608,51 @@ module.exports = function(RED) {
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
 								break;
+							case 97:
+								if(config.raw_length_97_active){
+									promises.raw_length_97 = node.config_gateway.config_set_raw_length_97(mac, parseInt(config.raw_length_97));
+								}
+								if(config.raw_timeout_97_active){
+									promises.raw_timeout_97 = node.config_gateway.config_set_raw_timeout_97(mac, parseInt(config.raw_timeout_97));
+								}
+								if(config.fly_rate_97_active){
+									promises.fly_rate_97 = node.config_gateway.config_set_fly_rate_97(mac, parseInt(config.fly_rate_97));
+								}
+								if(config.boot_up_time_97_active){
+									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
+								}
+								break;
 							case 98:
-								if(config.sensor_boot_time_420ma_active){
-									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								if(config.raw_length_97_active){
+									promises.raw_length_97 = node.config_gateway.config_set_raw_length_97(mac, parseInt(config.raw_length_97));
 								}
-								if(config.low_calibration_420ma_active){
-									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								if(config.raw_timeout_97_active){
+									promises.raw_timeout_97 = node.config_gateway.config_set_raw_timeout_97(mac, parseInt(config.raw_timeout_97));
 								}
-								if(config.mid_calibration_420ma_active){
-									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								if(config.fly_rate_97_active){
+									promises.fly_rate_97 = node.config_gateway.config_set_fly_rate_97(mac, parseInt(config.fly_rate_97));
 								}
-								if(config.high_calibration_420ma_active){
-									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								if(config.boot_up_time_97_active){
+									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
 								}
-								if(config.auto_check_interval_88_active){
-									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
-								}
-								if(config.auto_check_threshold_88_active){
-									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
-								}
+								// if(config.sensor_boot_time_420ma_active){
+								// 	promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								// }
+								// if(config.low_calibration_420ma_active){
+								// 	promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								// }
+								// if(config.mid_calibration_420ma_active){
+								// 	promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								// }
+								// if(config.high_calibration_420ma_active){
+								// 	promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								// }
+								// if(config.auto_check_interval_88_active){
+								// 	promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
+								// }
+								// if(config.auto_check_threshold_88_active){
+								// 	promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								// }
 								break;
 							case 101:
 								if(config.output_data_rate_101_m2_active){

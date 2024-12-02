@@ -595,7 +595,17 @@
 			press_auto_check_percent_118_active:{value: ""},
 			press_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
 			temp_auto_check_percent_118_active:{value: ""},
-			temp_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)}
+			temp_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+
+			raw_length_97_active:{value: ""},
+			raw_length_97:{value:3, validate: NCD_validators.number_range(0, 3)},
+			raw_timeout_97_active:{value: ""},
+			raw_timeout_97:{value: 0, validate: NCD_validators.number_range(0, 10)},
+			fly_rate_97_active:{value: ""},
+			fly_rate_97:{value: 0},
+			boot_up_time_97_active:{value: ""},
+			boot_up_time_97:{value: 0, validate: NCD_validators.number_range(0, 255)},
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3549,6 +3559,71 @@
 					<div>
 						<label for="node-input-temp_auto_check_percent_118"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-temp_auto_check_percent_118" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-97 data-sensor-98>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw Length</strong>
+					<div>
+						<label for="node-input-raw_length_97_active">Active:</label>
+						<input type="checkbox" id="node-input-raw_length_97_active" class="ncd-config-toggle" data-target-id="node-input-raw_length_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-raw_length_97"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-raw_length_97">
+							<option value="0">55 Bytes</option>
+							<option value="1">100 Bytes</option>
+							<option value="2">150 Bytes</option>
+							<option selected="selected" value="3">180 Bytes</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw Timeout</strong>
+					<p>
+						Valid Range: 0 - 10 Seconds
+					</p>
+					<div>
+						<label for="node-input-raw_timeout_97_active">Active:</label>
+						<input type="checkbox" id="node-input-raw_timeout_97_active" class="ncd-config-toggle" data-target-id="node-input-raw_timeout_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-raw_timeout_97"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-raw_timeout_97" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Rate</strong>
+					<div>
+						<label for="node-input-fly_rate_97_active">Active:</label>
+						<input type="checkbox" id="node-input-fly_rate_97_active" class="ncd-config-toggle" data-target-id="node-input-fly_rate_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-fly_rate_97"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-fly_rate_97">
+							<option value="3600">1 Hour</option>
+							<option value="7200">2 Hours</option>
+							<option value="14400">4 Hours</option>
+							<option value="28800">8 Hours</option>
+							<option value="43200">12 Hours</option>
+							<option value="64800">18 Hours</option>
+							<option value="86400">24 Hours</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Boot Time</strong>
+					<p>
+						Valid Range: 0 - 255 Seconds
+					</p>
+					<div>
+						<label for="node-input-boot_up_time_97_active">Active:</label>
+						<input type="checkbox" id="node-input-boot_up_time_97_active" class="ncd-config-toggle" data-target-id="node-input-boot_up_time_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-boot_up_time_97"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-boot_up_time_97" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>
