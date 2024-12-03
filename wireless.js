@@ -967,6 +967,12 @@ module.exports = function(RED) {
 								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
 								// 	}
 								// }
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								if(config.change_detection_ch2_active){
+									promises.change_detection_ch2 = node.config_gateway.config_set_change_detection_ch2(mac, config.change_enabled_ch2 ? 1 : 0, parseInt(config.change_pr_ch2), parseInt(config.change_interval_ch2));
+								}
 								break;
 							case 23:
 								if(config.thermocouple_type_23_active){
