@@ -851,6 +851,26 @@ module.exports = function(RED) {
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
 								break;
+							case 4:
+								if(config.thermocouple_type_23_active){
+									promises.thermocouple_type_4 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_4 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_4 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_4 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_4 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_4 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
+								}
+								break;
 							case 5:
 								promises.acceleration_range = node.config_gateway.config_set_amgt_accel(mac, parseInt(config.amgt_accel));
 								promises.magnetometer_gain = node.config_gateway.config_set_amgt_magnet(mac, parseInt(config.amgt_mag));
@@ -883,6 +903,26 @@ module.exports = function(RED) {
 							case 10:
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								break;
+							case 12:
+								if(config.thermocouple_type_23_active){
+									promises.thermocouple_type_12 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_12 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_12 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_12 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_12 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_12 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
 								break;
 							case 13:
@@ -977,6 +1017,21 @@ module.exports = function(RED) {
 							case 23:
 								if(config.thermocouple_type_23_active){
 									promises.thermocouple_type_23 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_23 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_23 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_23 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_23 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_23 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
 								break;
 							case 24:

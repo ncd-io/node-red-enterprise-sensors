@@ -605,7 +605,17 @@
 			fly_rate_97:{value: 0},
 			boot_up_time_97_active:{value: ""},
 			boot_up_time_97:{value: 0, validate: NCD_validators.number_range(0, 255)},
-
+			
+			filter_thermocouple_active:{value: ""},
+			filter_thermocouple:{value:0},
+			cold_junction_thermocouple_active:{value: ""},
+			cold_junction_thermocouple:{value:0},
+			sample_resolution_thermocouple_active:{value: ""},
+			sample_resolution_thermocouple:{value:0},
+			number_of_samples_thermocouple_active:{value: ""},
+			number_of_samples_thermocouple:{value:0},
+			measurement_type_thermocouple_active:{value: ""},
+			measurement_type_thermocouple:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2750,10 +2760,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-23>
+			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>
 				<div class="form-row ncd-active-check">
-					<strong>Thermocouple Type</strong>
+					<strong>Set Thermocouple Type</strong>
 					<div>
 						<label for="node-input-thermocouple_type_23_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
@@ -2769,6 +2779,91 @@
 							<option value="80">E Type</option>
 							<option value="96">B Type</option>
 							<option value="112">R Type</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Filter Level</strong>
+					<div>
+						<label for="node-input-filter_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-filter_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-filter_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-filter_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-filter_thermocouple">
+							<option selected="selected" value="0">Level 0</option>
+							<option value="1">Level 1</option>
+							<option value="2">Level 2</option>
+							<option value="3">Level 3</option>
+							<option value="4">Level 4</option>
+							<option value="5">Level 5</option>
+							<option value="6">Level 6</option>
+							<option value="7">Level 7</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Cold Junction Resolution</strong>
+					<div>
+						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-cold_junction_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-cold_junction_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-cold_junction_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-cold_junction_thermocouple">
+							<option selected="selected" value="0">0.0625⁰C</option>
+							<option value="128">0.25⁰C</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set ADC Resolution</strong>
+					<div>
+						<label for="node-input-sample_resolution_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-sample_resolution_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-sample_resolution_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-sample_resolution_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sample_resolution_thermocouple">
+							<option selected="selected" value="0">18 Bits</option>
+							<option value="32">16 Bits</option>
+							<option value="64">14 Bits</option>
+							<option value="96">12 Bits</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Number of Samples</strong>
+					<div>
+						<label for="node-input-number_of_samples_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_samples_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-number_of_samples_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_samples_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-number_of_samples_thermocouple">
+							<option selected="selected" value="0">1 Sample</option>
+							<option value="4">2 Samples</option>
+							<option value="8">4 Samples</option>
+							<option value="12">8 Samples</option>
+							<option value="16">16 Samples</option>
+							<option value="20">32 Samples</option>
+							<option value="24">64 Samples</option>
+							<option value="28">128 Samples</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Measurement Type</strong>
+					<div>
+						<label for="node-input-measurement_type_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-measurement_type_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-measurement_type_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-measurement_type_thermocouple">
+							<option selected="selected" value="0">Cold Junction</option>
+							<option value="1">Hot Junction</option>
+							<option value="2">Delta</option>
 						</select>
 					</div>
 				</div>
