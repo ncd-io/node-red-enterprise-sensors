@@ -506,7 +506,6 @@
 			auto_raw_destination_110_active:{value:""},
 			auto_raw_destination_110: {value: '0000FFFF', validate: NCD_validators.number_range(0, 0xFFFFFFFF, 16)},//(0 - 0xFFFFFFFF)
 
-			clear_probe_uptimers_110_active:{value:""},
 			clear_probe_uptimers_110: {value:0},
 
 			smart_interval_110_active:{value:""},
@@ -514,6 +513,8 @@
 
 			smart_threshold_110_active:{value:""},
 			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
+			smart_threshold_p2_110_active:{value:""},
+			smart_threshold_p2_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -3334,15 +3335,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
-						<label for="node-input-clear_probe_uptimers_110_active">Active:</label>
-						<input type="checkbox" id="node-input-clear_probe_uptimers_110_active" class="ncd-config-toggle" data-target-id="node-input-clear_probe_uptimers_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-clear_probe_uptimers_110">
-							<option value="0">Disabled</option>
-							<option value="1">Enabled</option>
-						</select>
+						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
 				</div>
 			</div>
@@ -3388,6 +3382,8 @@
 						</select>
 					</div>
 				</div> -->
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Threshold</strong>
 					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
@@ -3400,6 +3396,22 @@
 						<input type="text" id="node-input-smart_threshold_110" value="1">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-111>
+				<div class="form-row ncd-active-check">
+					<strong>Set Smart Mode Threshold Probe 2</strong>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
+					<div>
+						<label for="node-input-smart_threshold_p2_110_active">Active:</label>
+						<input type="checkbox" id="node-input-smart_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_p2_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-smart_threshold_p2_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-smart_threshold_p2_110" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Skip Interval</strong>
 					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.</p>

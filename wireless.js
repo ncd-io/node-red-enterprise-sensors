@@ -1915,8 +1915,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
@@ -1989,14 +1989,17 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+								}
+								if(config.smart_threshold_p2_110_active){
+									promises.smart_threshold_p2_110 = node.config_gateway.config_set_smart_threshold_p2_110(mac, parseInt(config.smart_threshold_p2_110));
 								}
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
@@ -2054,8 +2057,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
@@ -2128,8 +2131,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
