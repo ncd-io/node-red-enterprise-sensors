@@ -671,7 +671,8 @@ module.exports = function(RED) {
 			// OFF: {fill:"green",shape:"dot",text:"OFF Recieved, OTF Configuration Completed"}
 			FLY: {fill:"yellow",shape:"ring",text:"FLY"},
 			OTN: {fill:"yellow",shape:"ring",text:"OTN Received, Config Entered"},
-			OTF: {fill:"green",shape:"dot",text:"OTF Received, Config Complete"}
+			OTF: {fill:"green",shape:"dot",text:"OTF Received, Config Complete"},
+			UPTHWRN: {fill:"yellow",shape:"ring",text:"Threshold is low"}
 		};
 		var events = {};
 		var pgm_events = {};
