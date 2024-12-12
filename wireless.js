@@ -41,7 +41,10 @@ module.exports = function(RED) {
 					if(!config.ip_address){
 						return;
 					}
-					var comm = new comms.NcdTCP(config.ip_address, this.port);
+					if(!config.tcp_inactive_timeout){
+						config.tcp_inactive_timeout = 900000;
+					}
+					var comm = new comms.NcdTCP(config.ip_address, this.port, false, parseInt(config.tcp_inactive_timeout));
 					comm._emitter.on('error', (err) => {
 						console.log('tcp init error', err);
 					});
@@ -671,7 +674,8 @@ module.exports = function(RED) {
 			// OFF: {fill:"green",shape:"dot",text:"OFF Recieved, OTF Configuration Completed"}
 			FLY: {fill:"yellow",shape:"ring",text:"FLY"},
 			OTN: {fill:"yellow",shape:"ring",text:"OTN Received, Config Entered"},
-			OTF: {fill:"green",shape:"dot",text:"OTF Received, Config Complete"}
+			OTF: {fill:"green",shape:"dot",text:"OTF Received, Config Complete"},
+			UPTHWRN: {fill:"yellow",shape:"ring",text:"Threshold is low"}
 		};
 		var events = {};
 		var pgm_events = {};
@@ -694,7 +698,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 97, 98, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -851,6 +855,26 @@ module.exports = function(RED) {
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
 								break;
+							case 4:
+								if(config.thermocouple_type_23_active){
+									promises.thermocouple_type_4 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_4 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_4 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_4 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_4 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_4 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
+								}
+								break;
 							case 5:
 								promises.acceleration_range = node.config_gateway.config_set_amgt_accel(mac, parseInt(config.amgt_accel));
 								promises.magnetometer_gain = node.config_gateway.config_set_amgt_magnet(mac, parseInt(config.amgt_mag));
@@ -883,6 +907,26 @@ module.exports = function(RED) {
 							case 10:
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								break;
+							case 12:
+								if(config.thermocouple_type_23_active){
+									promises.thermocouple_type_12 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_12 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_12 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_12 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_12 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_12 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
 								break;
 							case 13:
@@ -967,10 +1011,31 @@ module.exports = function(RED) {
 								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
 								// 	}
 								// }
+								if(config.change_detection_t3_active){
+									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
+								}
+								if(config.change_detection_ch2_active){
+									promises.change_detection_ch2 = node.config_gateway.config_set_change_detection_ch2(mac, config.change_enabled_ch2 ? 1 : 0, parseInt(config.change_pr_ch2), parseInt(config.change_interval_ch2));
+								}
 								break;
 							case 23:
 								if(config.thermocouple_type_23_active){
 									promises.thermocouple_type_23 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));
+								}
+								if(config.filter_thermocouple_active){
+									promises.filter_thermocouple_23 = node.config_gateway.config_set_filter_thermocouple(mac, parseInt(config.filter_thermocouple));
+								}
+								if(config.cold_junction_thermocouple_active){
+									promises.cold_junction_thermocouple_23 = node.config_gateway.config_set_cold_junction_thermocouple(mac, parseInt(config.cold_junction_thermocouple));
+								}
+								if(config.sample_resolution_thermocouple_active){
+									promises.sample_resolution_thermocouple_23 = node.config_gateway.config_set_sample_resolution_thermocouple(mac, parseInt(config.sample_resolution_thermocouple));
+								}
+								if(config.number_of_samples_thermocouple_active){
+									promises.number_of_samples_thermocouple_23 = node.config_gateway.config_set_number_of_samples_thermocouple(mac, parseInt(config.number_of_samples_thermocouple));
+								}
+								if(config.measurement_type_thermocouple_active){
+									promises.measurement_type_thermocouple_23 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
 								break;
 							case 24:
@@ -1608,25 +1673,51 @@ module.exports = function(RED) {
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
 								break;
+							case 97:
+								if(config.raw_length_97_active){
+									promises.raw_length_97 = node.config_gateway.config_set_raw_length_97(mac, parseInt(config.raw_length_97));
+								}
+								if(config.raw_timeout_97_active){
+									promises.raw_timeout_97 = node.config_gateway.config_set_raw_timeout_97(mac, parseInt(config.raw_timeout_97));
+								}
+								if(config.fly_rate_97_active){
+									promises.fly_rate_97 = node.config_gateway.config_set_fly_rate_97(mac, parseInt(config.fly_rate_97));
+								}
+								if(config.boot_up_time_97_active){
+									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
+								}
+								break;
 							case 98:
-								if(config.sensor_boot_time_420ma_active){
-									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								if(config.raw_length_97_active){
+									promises.raw_length_97 = node.config_gateway.config_set_raw_length_97(mac, parseInt(config.raw_length_97));
 								}
-								if(config.low_calibration_420ma_active){
-									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								if(config.raw_timeout_97_active){
+									promises.raw_timeout_97 = node.config_gateway.config_set_raw_timeout_97(mac, parseInt(config.raw_timeout_97));
 								}
-								if(config.mid_calibration_420ma_active){
-									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								if(config.fly_rate_97_active){
+									promises.fly_rate_97 = node.config_gateway.config_set_fly_rate_97(mac, parseInt(config.fly_rate_97));
 								}
-								if(config.high_calibration_420ma_active){
-									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								if(config.boot_up_time_97_active){
+									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
 								}
-								if(config.auto_check_interval_88_active){
-									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
-								}
-								if(config.auto_check_threshold_88_active){
-									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
-								}
+								// if(config.sensor_boot_time_420ma_active){
+								// 	promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								// }
+								// if(config.low_calibration_420ma_active){
+								// 	promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								// }
+								// if(config.mid_calibration_420ma_active){
+								// 	promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								// }
+								// if(config.high_calibration_420ma_active){
+								// 	promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								// }
+								// if(config.auto_check_interval_88_active){
+								// 	promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
+								// }
+								// if(config.auto_check_threshold_88_active){
+								// 	promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								// }
 								break;
 							case 101:
 								if(config.output_data_rate_101_m2_active){
@@ -1751,9 +1842,6 @@ module.exports = function(RED) {
 								if(config.push_notification_108_active){
 									promises.push_notification_108 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_108));
 								}
-								if(config.qos_108_active){
-									promises.qos_108 = node.config_gateway.config_set_qos_108(mac, parseInt(config.qos_108));
-								}
 								if(config.deactivate_activate_accelero_108_active){
 									promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
 								}
@@ -1831,8 +1919,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
@@ -1905,14 +1993,17 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
 								}
 								if(config.smart_threshold_110_active){
 									promises.smart_threshold_110 = node.config_gateway.config_set_smart_threshold_110(mac, parseInt(config.smart_threshold_110));
+								}
+								if(config.smart_threshold_p2_110_active){
+									promises.smart_threshold_p2_110 = node.config_gateway.config_set_smart_threshold_p2_110(mac, parseInt(config.smart_threshold_p2_110));
 								}
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
@@ -1970,8 +2061,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
@@ -2044,8 +2135,8 @@ module.exports = function(RED) {
 								if(config.auto_raw_destination_110_active){
 									promises.auto_raw_destination_110 = node.config_gateway.config_set_auto_raw_destination_110(mac, parseInt(config.auto_raw_destination_110, 16));
 								}
-								if(config.clear_probe_uptimers_110_active){
-									promises.clear_probe_uptimers_110 = node.config_gateway.config_set_clear_probe_uptimers_110(mac, parseInt(config.clear_probe_uptimers_110));
+								if(config.clear_probe_uptimers_110){
+									promises.clear_probe_uptimers = node.config_gateway.config_set_clear_probe_uptimers_110(mac);
 								}
 								if(config.smart_interval_110_active){
 									promises.smart_interval_110 = node.config_gateway.config_set_smart_interval_110(mac, parseInt(config.smart_interval_110));
@@ -2055,6 +2146,23 @@ module.exports = function(RED) {
 								}
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
+								}
+								break;
+							case 118:
+								if(config.pressure_sensor_fs_ch1_118_active){
+									promises.pressure_sensor_fs_ch1_118 = node.config_gateway.config_set_pressure_sensor_fs_ch1_118(mac, parseInt(config.pressure_sensor_fs_ch1_118));
+								}
+								if(config.pressure_sensor_fs_ch2_118_active){
+									promises.pressure_sensor_fs_ch2_118 = node.config_gateway.config_set_pressure_sensor_fs_ch2_118(mac, parseInt(config.pressure_sensor_fs_ch2_118));
+								}
+								if(config.auto_check_interval_118_active){
+									promises.auto_check_interval_118 = node.config_gateway.config_set_auto_check_interval_118(mac, parseInt(config.auto_check_interval_118));
+								}
+								if(config.press_auto_check_percent_118_active){
+									promises.press_auto_check_percent_118 = node.config_gateway.config_set_press_auto_check_percent_118(mac, parseInt(config.press_auto_check_percent_118));
+								}
+								if(config.temp_auto_check_percent_118_active){
+									promises.temp_auto_check_percent_118 = node.config_gateway.config_set_temp_auto_check_percent_118(mac, parseInt(config.temp_auto_check_percent_118));
 								}
 								break;
 							case 180:
@@ -2371,6 +2479,12 @@ module.exports = function(RED) {
 								if(config.baudrate_539_active){
 									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
+								if(config.stop_bit_1011_active){
+									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								}
+								if(config.set_parity_1011_active){
+									promises.set_parity_1011 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
+								}
 								if(config.rx_timeout_539_active){
 									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
 								}
@@ -2466,7 +2580,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 97, 98, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
@@ -2491,7 +2605,30 @@ module.exports = function(RED) {
 					for(var i in promises){
 						(function(name){
 							promises[name].then((f) => {
-								if(name != 'finish') success[name] = true;
+								if(name != 'finish'){
+									// console.log('IN PROMISE RESOLVE');
+									// console.log(f);
+									// success[name] = true;
+									if(Object.hasOwn(f, 'result')){
+										switch(f.result){
+											case 255:
+												success[name] = true;
+												break;
+											default:
+												success[name] = {
+													res: "Bad Response",
+													result: f.result,
+													sent: f.sent
+												};
+										}
+									}else{
+										success[name] = {
+											res: "no result",
+											result: null,
+											sent: f.sent
+										}
+									}
+								}
 								else{
 									// #OTF
 									node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
@@ -2574,9 +2711,13 @@ module.exports = function(RED) {
 					// _send_otn_request(sensor);
 					// Sensors having issues seeing OTN request sent too quickly
 					// Added timeout to fix issue
-					var tout = setTimeout(() => {
-						_send_otn_request(sensor);
-					}, 100);
+					if(config.sensor_type == 1010 || config.sensor_type == 1011){
+						_config(sensor, true);
+					}else{
+						var tout = setTimeout(() => {
+							_send_otn_request(sensor);
+						}, 100);
+					}
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
 					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){

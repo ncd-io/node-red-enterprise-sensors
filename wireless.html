@@ -506,7 +506,6 @@
 			auto_raw_destination_110_active:{value:""},
 			auto_raw_destination_110: {value: '0000FFFF', validate: NCD_validators.number_range(0, 0xFFFFFFFF, 16)},//(0 - 0xFFFFFFFF)
 
-			clear_probe_uptimers_110_active:{value:""},
 			clear_probe_uptimers_110: {value:0},
 
 			smart_interval_110_active:{value:""},
@@ -514,6 +513,8 @@
 
 			smart_threshold_110_active:{value:""},
 			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
+			smart_threshold_p2_110_active:{value:""},
+			smart_threshold_p2_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
@@ -560,8 +561,6 @@
 			sampling_interval_110_active:{value: ""},
 			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)},
 
-			qos_108_active:{value: ""},
-			qos_108: {value: 0},
 			deactivate_activate_accelero_108_active: {value: ""},
 			deactivate_activate_accelero_108: {value: 0},
 			reset_timeout_108_active:{value: ""},
@@ -586,7 +585,38 @@
 			rtd_type_39:{value:0},
 
 			rtd_range_39_active:{value: ""},
-			rtd_range_39:{value:0}
+			rtd_range_39:{value:0},
+
+			pressure_sensor_fs_ch1_118_active:{value: ""},
+			pressure_sensor_fs_ch1_118:{value:0},
+			pressure_sensor_fs_ch2_118_active:{value: ""},
+			pressure_sensor_fs_ch2_118:{value:0},
+			auto_check_interval_118_active:{value: ""},
+			auto_check_interval_118:{value: 0, validate: NCD_validators.number_range(0, 65000)},
+			press_auto_check_percent_118_active:{value: ""},
+			press_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+			temp_auto_check_percent_118_active:{value: ""},
+			temp_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+
+			raw_length_97_active:{value: ""},
+			raw_length_97:{value:3, validate: NCD_validators.number_range(0, 3)},
+			raw_timeout_97_active:{value: ""},
+			raw_timeout_97:{value: 0, validate: NCD_validators.number_range(0, 10)},
+			fly_rate_97_active:{value: ""},
+			fly_rate_97:{value: 0},
+			boot_up_time_97_active:{value: ""},
+			boot_up_time_97:{value: 0, validate: NCD_validators.number_range(0, 255)},
+
+			filter_thermocouple_active:{value: ""},
+			filter_thermocouple:{value:0},
+			cold_junction_thermocouple_active:{value: ""},
+			cold_junction_thermocouple:{value:0},
+			sample_resolution_thermocouple_active:{value: ""},
+			sample_resolution_thermocouple:{value:0},
+			number_of_samples_thermocouple_active:{value: ""},
+			number_of_samples_thermocouple:{value:0},
+			measurement_type_thermocouple_active:{value: ""},
+			measurement_type_thermocouple:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -661,7 +691,7 @@
 //					"70": "70 - 2 Channel Soil Moisture Temperature and EC Sensor",
 					"71": "71 - 3 Channel Soil Moisture Temperature and EC Sensor",
 					"72": "72 - SDI Soil Moisture Temperature Moisture Probe",
-					"74": "74 - Wireless Temp Humidity Pressure Air quality Sensor",
+					"74": "74 - Wireless Temp Humidity Pressure Air quality Sensor V2",
 					"75": "75 - Siemens Air Velocity Probe",
 					"76": "76 - Wireless CO Gas Sensor",
 					"77": "77 - 3 Channel SDI Soil Moisture Temperature Moisture Probe",
@@ -679,6 +709,8 @@
 					"92": "92 - Sound Sensor",
 					"95": "95 - 16-Bit 1-Channel 0-24VDC Receiver",
 					"96": "96 - 16-Bit 1-Channel 0-48VDC Receiver",
+					"97": "97 - One channel Dynamic Ultrasound vibration Sensor",
+					"98": "98 - Two channel Dynamic Ultrasound vibration Sensor",
 					"101": "101 - Pro Vibration",
 					"102": "102 - Strain Gauge",
 					"105": "105 - 1 Channel Automatic Luber With Ultrasound Vibration Sensor",
@@ -689,6 +721,7 @@
 					"111": "111 - Two Channel Vibration Plus v4",
 					"112": "112 - Condition Based/Predictive Maintenance Sensor v4",
 					"114": "114 - Standalone Smart Vibration Sensor v4",
+					"118": "118 - Dual Pressure and Temperature Sensor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -955,7 +988,7 @@
 -->
 			<option value="71">71 - 3 Channel Soil Moisture Temperature and EC Sensor</option>
 			<option value="72">72 - SDI-12 Wireless</option>
-			<option value="74">74 - Wireless Temp Humidity Pressure Air quality Sensor</option>
+			<option value="74">74 - Wireless Temp Humidity Pressure Air quality Sensor V2</option>
 			<option value="75">75 - Siemens Air Velocity Probe</option>
 			<option value="76">76 - Wireless CO Gas Sensor</option>
 			<option value="77">77 - 3 Channel SDI Soil Moisture Temperature Moisture Probe</option>
@@ -973,6 +1006,8 @@
 			<option value="92">92 - Sound Sensor</option>
 			<option value="95">95 - 16-Bit 1-Channel 0-24VDC Receiver</option>
 			<option value="96">96 - 16-Bit 1-Channel 0-48VDC Receiver</option>
+			<option value="97">97 - One channel Dynamic Ultrasound vibration Sensor</option>
+			<option value="98">98 - Two channel Dynamic Ultrasound vibration Sensor</option>
 			<option value="101">101 - Pro Vibration</option>
 			<option value="102">102 - Strain Gauge</option>
 			<option value="105">105 - 1 Channel Automatic Luber With Ultrasound Vibration Sensor</option>
@@ -983,6 +1018,7 @@
 			<option value="111">111 - Two Channel Vibration Plus v4</option>
 			<option value="112">112 - Condition Based/Predictive Maintenance Sensor v4</option>
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
+			<option value="118">118 - Dual Pressure and Temperature Sensor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1019,7 +1055,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-118 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1214,7 +1250,7 @@
 					</div>
 				-->
 			</div>
-		<div class="ncd-dependent" data-sensor-3 data-sensor-10 data-sensor-13 data-sensor-28>
+		<div class="ncd-dependent" data-sensor-3 data-sensor-10 data-sensor-13 data-sensor-19 data-sensor-28>
 			<div class="form-row ncd-active-check">
 				<strong>Percentage Change Detection - Channel 1</strong>
 				<div>
@@ -1235,7 +1271,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="ncd-dependent" data-sensor-28>
+		<div class="ncd-dependent" data-sensor-28 data-sensor-19>
 			<div class="form-row ncd-active-check">
 				<strong>Percentage Change Detection - Channel 2</strong>
 				<div>
@@ -1255,6 +1291,8 @@
 					<input type="text" id="node-input-change_interval_ch2" class="change_detection_ch2">
 				</div>
 			</div>
+		</div>
+		<div class="ncd-dependent" data-sensor-28>
 			<div class="form-row ncd-active-check">
 				<strong>Percentage Change Detection - Channel 3</strong>
 				<div>
@@ -2138,7 +2176,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Sensor Boot Time</strong>
 					<p class="caption">
@@ -2156,7 +2194,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45  data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-76 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45  data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-76 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Auto Check Interval</strong>
 					<p class="caption">
@@ -2205,7 +2243,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-98 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-200 data-sensor-540>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-200 data-sensor-540>
 				<div class="form-row ncd-active-check">
 					<strong>Low Calibration Point</strong>
 					<div>
@@ -2541,20 +2579,6 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Enable Quality Of Service (QoS)</strong>
-					<div>
-						<label for="node-input-qos_108_active">Active:</label>
-						<input type="checkbox" id="node-input-qos_108_active" class="ncd-config-toggle" data-target-id="node-input-qos_108" value="1">
-					</div>
-					<div>
-						<label for="node-input-qos_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-qos_108">
-							<option value="0" selected>Disabled</option>
-							<option value="1">Enabled</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
 					<strong>Enable Accelerometer</strong>
 					<div>
 						<label for="node-input-deactivate_activate_accelero_108_active">Active:</label>
@@ -2737,10 +2761,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-23>
+			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>
 				<div class="form-row ncd-active-check">
-					<strong>Thermocouple Type</strong>
+					<strong>Set Thermocouple Type</strong>
 					<div>
 						<label for="node-input-thermocouple_type_23_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
@@ -2756,6 +2780,91 @@
 							<option value="80">E Type</option>
 							<option value="96">B Type</option>
 							<option value="112">R Type</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Filter Level</strong>
+					<div>
+						<label for="node-input-filter_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-filter_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-filter_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-filter_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-filter_thermocouple">
+							<option selected="selected" value="0">Level 0</option>
+							<option value="1">Level 1</option>
+							<option value="2">Level 2</option>
+							<option value="3">Level 3</option>
+							<option value="4">Level 4</option>
+							<option value="5">Level 5</option>
+							<option value="6">Level 6</option>
+							<option value="7">Level 7</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Cold Junction Resolution</strong>
+					<div>
+						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-cold_junction_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-cold_junction_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-cold_junction_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-cold_junction_thermocouple">
+							<option selected="selected" value="0">0.0625⁰C</option>
+							<option value="128">0.25⁰C</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set ADC Resolution</strong>
+					<div>
+						<label for="node-input-sample_resolution_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-sample_resolution_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-sample_resolution_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-sample_resolution_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sample_resolution_thermocouple">
+							<option selected="selected" value="0">18 Bits</option>
+							<option value="32">16 Bits</option>
+							<option value="64">14 Bits</option>
+							<option value="96">12 Bits</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Number of Samples</strong>
+					<div>
+						<label for="node-input-number_of_samples_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_samples_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-number_of_samples_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_samples_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-number_of_samples_thermocouple">
+							<option selected="selected" value="0">1 Sample</option>
+							<option value="4">2 Samples</option>
+							<option value="8">4 Samples</option>
+							<option value="12">8 Samples</option>
+							<option value="16">16 Samples</option>
+							<option value="20">32 Samples</option>
+							<option value="24">64 Samples</option>
+							<option value="28">128 Samples</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Measurement Type</strong>
+					<div>
+						<label for="node-input-measurement_type_thermocouple_active">Active:</label>
+						<input type="checkbox" id="node-input-measurement_type_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple" value="1">
+					</div>
+					<div>
+						<label for="node-input-measurement_type_thermocouple"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-measurement_type_thermocouple">
+							<option selected="selected" value="0">Cold Junction</option>
+							<option value="1">Hot Junction</option>
+							<option value="2">Delta</option>
 						</select>
 					</div>
 				</div>
@@ -2829,7 +2938,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011 data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set Stop Bit</strong>
 					<div>
@@ -2859,6 +2968,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
                 <div class="form-row ncd-active-check">
 					<strong>Set Timeout</strong>
 					<div>
@@ -3224,15 +3335,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<div>
-						<label for="node-input-clear_probe_uptimers_110_active">Active:</label>
-						<input type="checkbox" id="node-input-clear_probe_uptimers_110_active" class="ncd-config-toggle" data-target-id="node-input-clear_probe_uptimers_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-clear_probe_uptimers_110">
-							<option value="0">Disabled</option>
-							<option value="1">Enabled</option>
-						</select>
+						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
 				</div>
 			</div>
@@ -3278,6 +3382,8 @@
 						</select>
 					</div>
 				</div> -->
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Threshold</strong>
 					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
@@ -3290,6 +3396,22 @@
 						<input type="text" id="node-input-smart_threshold_110" value="1">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-111>
+				<div class="form-row ncd-active-check">
+					<strong>Set Smart Mode Threshold Probe 2</strong>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
+					<div>
+						<label for="node-input-smart_threshold_p2_110_active">Active:</label>
+						<input type="checkbox" id="node-input-smart_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_p2_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-smart_threshold_p2_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-smart_threshold_p2_110" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Skip Interval</strong>
 					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.</p>
@@ -3469,6 +3591,157 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-118>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor FS - Channel 1</strong>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch1_118_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_fs_ch1_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch1_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch1_118"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_fs_ch1_118">
+							<option selected="selected" value="0">10</option>
+							<option value="1">20</option>
+							<option value="2">100</option>
+							<option value="3">500</option>
+							<option value="4">1000</option>
+							<option value="5">5000</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor FS - Channel 2</strong>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch2_118_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_fs_ch2_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch2_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_fs_ch2_118"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_fs_ch2_118">
+							<option selected="selected" value="0">10</option>
+							<option value="1">20</option>
+							<option value="2">100</option>
+							<option value="3">500</option>
+							<option value="4">1000</option>
+							<option value="5">5000</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Check Interval</strong>
+					<p>
+						Valid Range: 0 - 65000 (Seconds).
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_118_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_118_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_118" value="1">
+					</div>
+				-->
+			</div>
+			<div class="ncd-dependent" data-sensor-39>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTD Wire Type</strong>
+					<p>The wire type of RTD Sensor Probe to be connected.</p>
+					<div>
+						<label for="node-input-auto_check_interval_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_118" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Auto Check Percentage</strong>
+					<p>
+						Valid Range: 0 - 100%
+					</p>
+					<div>
+						<label for="node-input-press_auto_check_percent_118_active">Active:</label>
+						<input type="checkbox" id="node-input-press_auto_check_percent_118_active" class="ncd-config-toggle" data-target-id="node-input-press_auto_check_percent_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-press_auto_check_percent_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-press_auto_check_percent_118" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Temperature Auto Check Percentage</strong>
+					<p>
+						Valid Range: 0 - 100%
+					</p>
+					<div>
+						<label for="node-input-temp_auto_check_percent_118_active">Active:</label>
+						<input type="checkbox" id="node-input-temp_auto_check_percent_118_active" class="ncd-config-toggle" data-target-id="node-input-temp_auto_check_percent_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-temp_auto_check_percent_118"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-temp_auto_check_percent_118" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-97 data-sensor-98>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw Length</strong>
+					<div>
+						<label for="node-input-raw_length_97_active">Active:</label>
+						<input type="checkbox" id="node-input-raw_length_97_active" class="ncd-config-toggle" data-target-id="node-input-raw_length_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-raw_length_97"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-raw_length_97">
+							<option value="0">55 Bytes</option>
+							<option value="1">100 Bytes</option>
+							<option value="2">150 Bytes</option>
+							<option selected="selected" value="3">180 Bytes</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw Timeout</strong>
+					<p>
+						Valid Range: 0 - 10 Seconds
+					</p>
+					<div>
+						<label for="node-input-raw_timeout_97_active">Active:</label>
+						<input type="checkbox" id="node-input-raw_timeout_97_active" class="ncd-config-toggle" data-target-id="node-input-raw_timeout_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-raw_timeout_97"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-raw_timeout_97" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Rate</strong>
+					<div>
+						<label for="node-input-fly_rate_97_active">Active:</label>
+						<input type="checkbox" id="node-input-fly_rate_97_active" class="ncd-config-toggle" data-target-id="node-input-fly_rate_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-fly_rate_97"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-fly_rate_97">
+							<option value="3600">1 Hour</option>
+							<option value="7200">2 Hours</option>
+							<option value="14400">4 Hours</option>
+							<option value="28800">8 Hours</option>
+							<option value="43200">12 Hours</option>
+							<option value="64800">18 Hours</option>
+							<option value="86400">24 Hours</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Boot Time</strong>
+					<p>
+						Valid Range: 0 - 255 Seconds
+					</p>
+					<div>
+						<label for="node-input-boot_up_time_97_active">Active:</label>
+						<input type="checkbox" id="node-input-boot_up_time_97_active" class="ncd-config-toggle" data-target-id="node-input-boot_up_time_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-boot_up_time_97"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-boot_up_time_97" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </script>
@@ -3538,6 +3811,7 @@
 			comm_type: {value: "serial"},
 			ip_address: {value: ""},
 			tcp_port: {value: 2101, validate:RED.validators.number()},
+			tcp_inactive_timeout: {value: 900000},
 			port: {value: ""},
 			baudRate: {value: 115200, validate:RED.validators.number()},
 			pan_id: {value: '7FFF', validate: NCD_validators.number_range(0, 0x7FFF, 16)},
@@ -3649,6 +3923,10 @@
 		<div class="form-row">
 			<label for="node-config-input-ip_address"><i class="fa fa-random"></i> IP Address</label>
 			<input type="text" id="node-config-input-ip_address" style="width:60%;" >
+		</div>
+		<div class="form-row">
+			<label for="node-config-input-tcp_inactive_timeout"><i class="fa fa-random"></i> Socket Timeout (Seconds) Experimental</label>
+			<input type="text" id="node-config-input-tcp_inactive_timeout" style="width:60%;" >
 		</div>
 	</div>
 	<div class="serial-options">
