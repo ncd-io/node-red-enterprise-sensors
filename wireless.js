@@ -42,9 +42,13 @@ module.exports = function(RED) {
 						return;
 					}
 					if(!config.tcp_inactive_timeout){
-						config.tcp_inactive_timeout = 900000;
+						config.tcp_inactive_timeout = 1200;
 					}
-					var comm = new comms.NcdTCP(config.ip_address, this.port, false, parseInt(config.tcp_inactive_timeout));
+					if(config.tcp_inactive_timeout_active){
+						var comm = new comms.NcdTCP(config.ip_address, this.port, false, parseInt(config.tcp_inactive_timeout));
+					}else{
+						var comm = new comms.NcdTCP(config.ip_address, this.port, false, false);
+					}
 					comm._emitter.on('error', (err) => {
 						console.log('tcp init error', err);
 					});

@@ -3637,12 +3637,6 @@
 						<label for="node-input-auto_check_interval_118_active">Active:</label>
 						<input type="checkbox" id="node-input-auto_check_interval_118_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_118" value="1">
 					</div>
-				-->
-			</div>
-			<div class="ncd-dependent" data-sensor-39>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTD Wire Type</strong>
-					<p>The wire type of RTD Sensor Probe to be connected.</p>
 					<div>
 						<label for="node-input-auto_check_interval_118"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-auto_check_interval_118" placeholder="0" value="0">
@@ -3811,7 +3805,8 @@
 			comm_type: {value: "serial"},
 			ip_address: {value: ""},
 			tcp_port: {value: 2101, validate:RED.validators.number()},
-			tcp_inactive_timeout: {value: 900000},
+			tcp_inactive_timeout_active: {value: 0},
+			tcp_inactive_timeout: {value: 1200},
 			port: {value: ""},
 			baudRate: {value: 115200, validate:RED.validators.number()},
 			pan_id: {value: '7FFF', validate: NCD_validators.number_range(0, 0x7FFF, 16)},
@@ -3924,9 +3919,17 @@
 			<label for="node-config-input-ip_address"><i class="fa fa-random"></i> IP Address</label>
 			<input type="text" id="node-config-input-ip_address" style="width:60%;" >
 		</div>
-		<div class="form-row">
-			<label for="node-config-input-tcp_inactive_timeout"><i class="fa fa-random"></i> Socket Timeout (Seconds) Experimental</label>
-			<input type="text" id="node-config-input-tcp_inactive_timeout" style="width:60%;" >
+		<div class="form-row ncd-active-check">
+			<strong>Socket Timeout *Experimental</strong>
+			<p class="caption">*This feature is experimental and will close and reopen the socket if no data is received in the timeout.</p>
+			<div>
+				<label for="node-config-input-tcp_inactive_timeout_active">Active:</label>
+				<input type="checkbox" id="node-config-input-tcp_inactive_timeout_active" class="ncd-config-toggle" data-target-id="node-config-input-tcp_inactive_timeout" value="1">
+			</div>
+			<div>
+				<label for="node-config-input-tcp_inactive_timeout"><i class="icon-tag"></i>Seconds:</label>
+				<input type="text" id="node-config-input-tcp_inactive_timeout" style="width:60%;" >
+			</div>
 		</div>
 	</div>
 	<div class="serial-options">
