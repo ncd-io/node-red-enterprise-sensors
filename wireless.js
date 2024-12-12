@@ -41,8 +41,6 @@ module.exports = function(RED) {
 					if(!config.ip_address){
 						return;
 					}
-					console.log('++++++++');
-					console.log(config.tcp_inactive_timeout);
 					if(!config.tcp_inactive_timeout){
 						config.tcp_inactive_timeout = 900000;
 					}
