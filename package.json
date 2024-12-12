@@ -38,6 +38,6 @@
         }
     },
     "dependencies": {
-        "ncd-red-comm": "2.0.2"
+        "ncd-red-comm": "2.0.3"
     }
 }
