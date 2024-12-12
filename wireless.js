@@ -41,7 +41,12 @@ module.exports = function(RED) {
 					if(!config.ip_address){
 						return;
 					}
-					var comm = new comms.NcdTCP(config.ip_address, this.port);
+					console.log('++++++++');
+					console.log(config.tcp_inactive_timeout);
+					if(!config.tcp_inactive_timeout){
+						config.tcp_inactive_timeout = 900000;
+					}
+					var comm = new comms.NcdTCP(config.ip_address, this.port, false, parseInt(config.tcp_inactive_timeout));
 					comm._emitter.on('error', (err) => {
 						console.log('tcp init error', err);
 					});
@@ -2602,7 +2607,30 @@ module.exports = function(RED) {
 					for(var i in promises){
 						(function(name){
 							promises[name].then((f) => {
-								if(name != 'finish') success[name] = true;
+								if(name != 'finish'){
+									// console.log('IN PROMISE RESOLVE');
+									// console.log(f);
+									// success[name] = true;
+									if(Object.hasOwn(f, 'result')){
+										switch(f.result){
+											case 255:
+												success[name] = true;
+												break;
+											default:
+												success[name] = {
+													res: "Bad Response",
+													result: f.result,
+													sent: f.sent
+												};
+										}
+									}else{
+										success[name] = {
+											res: "no result",
+											result: null,
+											sent: f.sent
+										}
+									}
+								}
 								else{
 									// #OTF
 									node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
