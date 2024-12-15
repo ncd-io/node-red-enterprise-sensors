@@ -324,8 +324,10 @@
 			led_velocity_threshold_84_active: {value: ""},
 			led_velocity_threshold_84: {},
 
-			acceleration_interrupt_threshold_84_active: {value: ""},
-			acceleration_interrupt_threshold_84: {},
+			acceleration_interrupt_threshold_p1_84_active: {value: ""},
+			acceleration_interrupt_threshold_p1_84: {},
+			acceleration_interrupt_threshold_p2_84_active: {value: ""},
+			acceleration_interrupt_threshold_p2_84: {},
 
 			set_rtc_101:{value:0},
 			set_rtc_202:{value:0},
@@ -1556,7 +1558,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-84 data-sensor-114 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>LED Alert Mode</strong>
@@ -1601,6 +1603,9 @@
 						<input type="text" id="node-input-led_velocity_threshold_84" placeholder="10" value="10">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<hr>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Set Acceleration Wake/Interrupt Threshold</strong>
@@ -1608,16 +1613,32 @@
 						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
 					</div>
 					<div>
-						<label for="node-input-acceleration_interrupt_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-acceleration_interrupt_threshold_84_active" class="ncd-config-toggle" data-target-id="node-input-acceleration_interrupt_threshold_84" value="1">
+						<label for="node-input-acceleration_interrupt_threshold_p1_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-acceleration_interrupt_threshold_p1_84_active" class="ncd-config-toggle" data-target-id="node-input-acceleration_interrupt_threshold_p1_84" value="1">
 					</div>
 					<div>
-						<label for="node-input-acceleration_interrupt_threshold_84"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-acceleration_interrupt_threshold_84" placeholder="10" value="10">
+						<label for="node-input-acceleration_interrupt_threshold_p1_84"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-acceleration_interrupt_threshold_p1_84" placeholder="10" value="10">
 					</div>
 				</div>
 			</div>
-
+			<div class="ncd-dependent" data-sensor-111>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Acceleration Wake/Interrupt Threshold Probe 2</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+					</div>
+					<div>
+						<label for="node-input-acceleration_interrupt_threshold_p2_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-acceleration_interrupt_threshold_p2_84_active" class="ncd-config-toggle" data-target-id="node-input-acceleration_interrupt_threshold_p2_84" value="1">
+					</div>
+					<div>
+						<label for="node-input-acceleration_interrupt_threshold_p2_84"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-acceleration_interrupt_threshold_p2_84" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<hr>
 				<div class="form-row ncd-active-check">

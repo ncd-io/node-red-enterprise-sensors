@@ -1935,6 +1935,9 @@ module.exports = function(RED) {
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
+								if(config.acceleration_interrupt_threshold_p1_84_active){
+									promises.acceleration_interrupt_threshold_p1_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_p1_84(mac, parseInt(config.acceleration_interrupt_threshold_p1_84));
+								}
 								break;
 							case 111:
 								if(config.output_data_rate_p1_81_active){
@@ -2012,6 +2015,12 @@ module.exports = function(RED) {
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
+								if(config.acceleration_interrupt_threshold_p1_84_active){
+									promises.acceleration_interrupt_threshold_p1_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_p1_84(mac, parseInt(config.acceleration_interrupt_threshold_p1_84));
+								}
+								if(config.acceleration_interrupt_threshold_p2_84_active){
+									promises.acceleration_interrupt_threshold_p2_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_p2_84(mac, parseInt(config.acceleration_interrupt_threshold_p2_84));
+								}
 								break;
 							case 112:
 								if(config.current_calibration_82_active){
@@ -2077,6 +2086,9 @@ module.exports = function(RED) {
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
 								}
+								if(config.acceleration_interrupt_threshold_p1_84_active){
+									promises.acceleration_interrupt_threshold_p1_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_p1_84(mac, parseInt(config.acceleration_interrupt_threshold_p1_84));
+								}
 								break;
 							case 114:
 								if(config.output_data_rate_101_active){
@@ -2124,8 +2136,8 @@ module.exports = function(RED) {
 								if(config.led_velocity_threshold_84_active){
 									promises.led_velocity_threshold_84 = node.config_gateway.config_set_led_velocity_threshold_84(mac, parseInt(config.led_velocity_threshold_84));
 								}
-								if(config.acceleration_interrupt_threshold_84_active){
-									promises.acceleration_interrupt_threshold_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_84(mac, parseInt(config.acceleration_interrupt_threshold_84));
+								if(config.acceleration_interrupt_threshold_p1_84_active){
+									promises.acceleration_interrupt_threshold_p1_84 = node.config_gateway.config_set_acceleration_interrupt_threshold_p1_84(mac, parseInt(config.acceleration_interrupt_threshold_p1_84));
 								}
 								if(config.payload_length_80_active){
 									promises.payload_length_80 = node.config_gateway.config_set_payload_length_80(mac, parseInt(config.payload_length_80));
