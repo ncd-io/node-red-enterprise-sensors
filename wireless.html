@@ -618,7 +618,10 @@
 			number_of_samples_thermocouple_active:{value: ""},
 			number_of_samples_thermocouple:{value:0},
 			measurement_type_thermocouple_active:{value: ""},
-			measurement_type_thermocouple:{value:0}
+			measurement_type_thermocouple:{value:0},
+			
+			mode_97_active: {value: ""},
+			mode_97: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3693,6 +3696,23 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-97 data-sensor-98>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Set Mode</strong>
+					<p> WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
+					<div>
+						<label for="node-input-mode_97_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-mode_97_active" class="ncd-config-toggle" data-target-id="node-input-mode_97" value="1">
+					</div>
+					<div>
+						<label for="node-input-mode_97"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_97">
+							<option value="0">Processed</option>
+							<option value="1">Raw</option>
+							<option value="2">Processed + Raw on demand</option>
+						</select>
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Raw Length</strong>
 					<div>

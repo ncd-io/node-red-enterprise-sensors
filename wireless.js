@@ -1690,6 +1690,9 @@ module.exports = function(RED) {
 								if(config.boot_up_time_97_active){
 									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
 								}
+								if(config.mode_97_active){
+									promises.mode = node.config_gateway.config_set_mode_97(mac, parseInt(config.mode_97));
+								}
 								break;
 							case 98:
 								if(config.raw_length_97_active){
@@ -1703,6 +1706,9 @@ module.exports = function(RED) {
 								}
 								if(config.boot_up_time_97_active){
 									promises.boot_up_time_97 = node.config_gateway.config_set_boot_up_time_97(mac, parseInt(config.boot_up_time_97));
+								}
+								if(config.mode_97_active){
+									promises.mode = node.config_gateway.config_set_mode_97(mac, parseInt(config.mode_97));
 								}
 								// if(config.sensor_boot_time_420ma_active){
 								// 	promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
