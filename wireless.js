@@ -1022,6 +1022,11 @@ module.exports = function(RED) {
 									promises.change_detection_ch2 = node.config_gateway.config_set_change_detection_ch2(mac, config.change_enabled_ch2 ? 1 : 0, parseInt(config.change_pr_ch2), parseInt(config.change_interval_ch2));
 								}
 								break;
+							case 21:
+								if(config.pressure_sensor_type_21_active){
+									promises.pressure_sensor_type_21 = node.config_gateway.config_set_pressure_sensor_type_21(mac, parseInt(config.pressure_sensor_type_21));
+								}
+								break;
 							case 23:
 								if(config.thermocouple_type_23_active){
 									promises.thermocouple_type_23 = node.config_gateway.config_set_thermocouple_type_23(mac, parseInt(config.thermocouple_type_23));

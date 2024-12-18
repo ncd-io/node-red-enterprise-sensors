@@ -621,7 +621,10 @@
 			measurement_type_thermocouple:{value:0},
 			
 			mode_97_active: {value: ""},
-			mode_97: {value: 0}
+			mode_97: {value: 0},
+
+			pressure_sensor_type_21_active: {value: ""},
+			pressure_sensor_type_21: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3774,6 +3777,48 @@
 					<div>
 						<label for="node-input-boot_up_time_97"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-boot_up_time_97" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-21>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor Type (code)</strong>
+					<p>
+						D: Differential/relative.<br>
+						D-B: Bidirectional Differential.<br>
+						A: Absolute.<br>
+						B: Absolute (barometric).<br>
+					</p>
+					<div>
+						<label for="node-input-pressure_sensor_type_21_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_type_21_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_type_21" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_type_21"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_type_21">
+							<option value="0">Type 0000-D</option>
+							<option value="1">Type 0001-D</option>
+							<option value="2">Type 0000-D-B</option>
+							<option value="3">Type 000-1-D-B</option>
+							<option value="4">Type 0003-D</option>
+							<option value="5">Type 0008-D</option>
+							<option value="6">Type 0015-D</option>
+							<option value="7">Type 0003-D-B</option>
+							<option value="8">Type 0008-D-B</option>
+							<option value="9">Type 0015-D-B</option>
+							<option value="10">Type 0030-D</option>
+							<option value="11">Type 0050-D</option>
+							<option value="12">Type 0150-D</option>
+							<option value="13">Type 0300-D</option>
+							<option value="14">Type 0600-D</option>
+							<option value="15">Type 1000-D</option>
+							<option value="16">Type 0030-D-B</option>
+							<option value="17">Type 0050-D-B</option>
+							<option value="18">Type 0150-D-B</option>
+							<option value="19">Type 0150-B</option>
+							<option value="20">Type 0150-A</option>
+							<option value="21">Type 0300-A</option>
+						</select>
 					</div>
 				</div>
 			</div>
