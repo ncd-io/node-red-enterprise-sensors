@@ -324,11 +324,6 @@
 			led_velocity_threshold_84_active: {value: ""},
 			led_velocity_threshold_84: {},
 
-			acceleration_interrupt_threshold_p1_84_active: {value: ""},
-			acceleration_interrupt_threshold_p1_84: {},
-			acceleration_interrupt_threshold_p2_84_active: {value: ""},
-			acceleration_interrupt_threshold_p2_84: {},
-
 			set_rtc_101:{value:0},
 			set_rtc_202:{value:0},
 
@@ -619,7 +614,7 @@
 			number_of_samples_thermocouple:{value:0},
 			measurement_type_thermocouple_active:{value: ""},
 			measurement_type_thermocouple:{value:0},
-			
+
 			mode_97_active: {value: ""},
 			mode_97: {value: 0},
 
@@ -659,20 +654,14 @@
 			high_pass_filter_p1_110: {value:0},
 			high_pass_filter_p2_110_active: {value: ""},
 			high_pass_filter_p2_110: {value:0},
-			
+
+			acceleration_interrupt_threshold_84_active: {value: ""},
+			acceleration_interrupt_threshold_84: {},
+
 			motion_detect_threshold_p1_110_active: {value: ""},
 			motion_detect_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
 			motion_detect_threshold_p2_110_active: {value: ""},
 			motion_detect_threshold_p2_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
-			led_acc_alert_threshold_p1_110_active: {value: ""},
-			led_acc_alert_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
-			led_acc_alert_threshold_p2_110_active: {value: ""},
-			led_acc_alert_threshold_p2_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
-			led_vel_alert_threshold_p1_110_active: {value: ""},
-			led_vel_alert_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
-			led_vel_alert_threshold_p2_110_active: {value: ""},
-			led_vel_alert_threshold_p2_110: {value: 0, validate: NCD_validators.number_range(0, 40)}
-
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1612,7 +1601,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-84 data-sensor-114 data-sensor-519 data-sensor-537>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>LED Alert Mode</strong>
@@ -1630,71 +1619,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 1: LED Accelerometer Threshold</strong>
-						<p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p>
-					</div>
-					<div>
-						<label for="node-input-led_acc_alert_threshold_p1_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-led_acc_alert_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-led_acc_alert_threshold_p1_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-led_acc_alert_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-led_acc_alert_threshold_p1_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-111>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 2: LED Accelerometer Threshold</strong>
-						<p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p>
-					</div>
-					<div>
-						<label for="node-input-led_acc_alert_threshold_p2_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-led_acc_alert_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-led_acc_alert_threshold_p2_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-led_acc_alert_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-led_acc_alert_threshold_p2_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 1: LED Velocity Threshold</strong>
-						<p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p>
-					</div>
-					<div>
-						<label for="node-input-led_vel_alert_threshold_p1_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-led_vel_alert_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-led_vel_alert_threshold_p1_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-led_vel_alert_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-led_vel_alert_threshold_p1_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-111>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 2: LED Velocity Threshold</strong>
-						<p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p>
-					</div>
-					<div>
-						<label for="node-input-led_vel_alert_threshold_p2_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-led_vel_alert_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-led_vel_alert_threshold_p2_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-led_vel_alert_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-led_vel_alert_threshold_p2_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-84 data-sensor-519 data-sensor-537>
+			<div class="ncd-dependent" data-sensor-84 data-sensor-114 data-sensor-519 data-sensor-537>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>LED Accelerometer Threshold</strong>
@@ -3021,6 +2946,23 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-84 data-sensor-519 data-sensor-537>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Acceleration Wake/Interrupt Threshold</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+					</div>
+					<div>
+						<label for="node-input-acceleration_interrupt_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-acceleration_interrupt_threshold_84_active" class="ncd-config-toggle" data-target-id="node-input-acceleration_interrupt_threshold_84" value="1">
+					</div>
+					<div>
+						<label for="node-input-acceleration_interrupt_threshold_84"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-acceleration_interrupt_threshold_84" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<div>
@@ -3325,7 +3267,7 @@
 							<option value="2">Burst Mode</option>
 						</select>
 					</div>
-				</div> 
+				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>

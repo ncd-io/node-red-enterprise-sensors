@@ -1952,15 +1952,6 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
-								if(config.led_alert_mode_84_active){
-									promises.led_alert_mode_110 = node.config_gateway.config_set_led_alert_mode_84(mac, parseInt(config.led_alert_mode_84));
-								}
-								if(config.led_acc_alert_threshold_p1_110_active){
-									promises.led_acc_alert_threshold_p1_110 = node.config_gateway.config_set_led_acc_alert_threshold_p1_110(mac, parseInt(config.led_acc_alert_threshold_p1_110));
-								}
-								if(config.led_vel_alert_threshold_p1_110_active){
-									promises.led_vel_alert_threshold_p1_110 = node.config_gateway.config_set_led_vel_alert_threshold_p1_110(mac, parseInt(config.led_vel_alert_threshold_p1_110));
-								}
 								break;
 							case 111:
 								if(config.odr_p1_110_active){
@@ -2046,21 +2037,6 @@ module.exports = function(RED) {
 								}
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_111 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
-								}
-								if(config.led_alert_mode_84_active){
-									promises.led_alert_mode_111 = node.config_gateway.config_set_led_alert_mode_84(mac, parseInt(config.led_alert_mode_84));
-								}
-								if(config.led_acc_alert_threshold_p1_110_active){
-									promises.led_acc_alert_threshold_p1_111 = node.config_gateway.config_set_led_acc_alert_threshold_p1_110(mac, parseInt(config.led_acc_alert_threshold_p1_110));
-								}
-								if(config.led_vel_alert_threshold_p1_110_active){
-									promises.led_vel_alert_threshold_p1_111 = node.config_gateway.config_set_led_vel_alert_threshold_p1_110(mac, parseInt(config.led_vel_alert_threshold_p1_110));
-								}
-								if(config.led_acc_alert_threshold_p2_110_active){
-									promises.led_acc_alert_threshold_p2_111 = node.config_gateway.config_set_led_acc_alert_threshold_p2_110(mac, parseInt(config.led_acc_alert_threshold_p2_110));
-								}
-								if(config.led_vel_alert_threshold_p2_110_active){
-									promises.led_vel_alert_threshold_p2_111 = node.config_gateway.config_set_led_vel_alert_threshold_p2_110(mac, parseInt(config.led_vel_alert_threshold_p2_110));
 								}
 								break;
 							case 112:
@@ -2154,15 +2130,6 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_112 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
-								if(config.led_alert_mode_84_active){
-									promises.led_alert_mode_112 = node.config_gateway.config_set_led_alert_mode_84(mac, parseInt(config.led_alert_mode_84));
-								}
-								if(config.led_acc_alert_threshold_p1_110_active){
-									promises.led_acc_alert_threshold_p1_112 = node.config_gateway.config_set_led_acc_alert_threshold_p1_110(mac, parseInt(config.led_acc_alert_threshold_p1_110));
-								}
-								if(config.led_vel_alert_threshold_p1_110_active){
-									promises.led_vel_alert_threshold_p1_112 = node.config_gateway.config_set_led_vel_alert_threshold_p1_110(mac, parseInt(config.led_vel_alert_threshold_p1_110));
-								}
 								break;
 							case 114:
 								if(config.odr_p1_110_active){
@@ -2204,11 +2171,11 @@ module.exports = function(RED) {
 								if(config.led_alert_mode_84_active){
 									promises.led_alert_mode_84 = node.config_gateway.config_set_led_alert_mode_84(mac, parseInt(config.led_alert_mode_84));
 								}
-								if(config.led_acc_alert_threshold_p1_110_active){
-									promises.led_acc_alert_threshold_p1_114 = node.config_gateway.config_set_led_acc_alert_threshold_p1_110(mac, parseInt(config.led_acc_alert_threshold_p1_110));
+								if(config.led_accelerometer_threshold_84_active){
+									promises.led_accelerometer_threshold_84 = node.config_gateway.config_set_led_accelerometer_threshold_84(mac, parseInt(config.led_accelerometer_threshold_84));
 								}
-								if(config.led_vel_alert_threshold_p1_110_active){
-									promises.led_vel_alert_threshold_p1_114 = node.config_gateway.config_set_led_vel_alert_threshold_p1_110(mac, parseInt(config.led_vel_alert_threshold_p1_110));
+								if(config.led_velocity_threshold_84_active){
+									promises.led_velocity_threshold_84 = node.config_gateway.config_set_led_velocity_threshold_84(mac, parseInt(config.led_velocity_threshold_84));
 								}
 								if(config.motion_detect_threshold_p1_110_active){
 									promises.motion_detect_threshold_p1_114 = node.config_gateway.config_set_motion_detect_threshold_p1_110(mac, parseInt(config.motion_detect_threshold_p1_110));
