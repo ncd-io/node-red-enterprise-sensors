@@ -656,7 +656,7 @@
 			high_pass_filter_p2_110: {value:0},
 
 			acceleration_interrupt_threshold_84_active: {value: ""},
-			acceleration_interrupt_threshold_84: {},
+			acceleration_interrupt_threshold_84: {value: 0, validate: NCD_validators.number_range(0, 40)},
 
 			motion_detect_threshold_p1_110_active: {value: ""},
 			motion_detect_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
@@ -1607,6 +1607,8 @@
 						<strong>Set Acceleration Wake/Interrupt Threshold</strong>
 						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
 						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+						<p>Valid Input Range: 0 - 40</p>
+						<p>A value of 0 will disable this feature.</p>
 					</div>
 					<div>
 						<label for="node-input-acceleration_interrupt_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
@@ -1615,6 +1617,44 @@
 					<div>
 						<label for="node-input-acceleration_interrupt_threshold_84"><i class="icon-tag"></i>  Value</label>
 						<input type="text" id="node-input-acceleration_interrupt_threshold_84" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+						<p>Valid Input Range: 0 - 40</p>
+						<p>A value of 0 will disable this feature.</p>
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-motion_detect_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p1_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-motion_detect_threshold_p1_110" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-111>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+						<p>Valid Input Range: 0 - 40</p>
+						<p>A value of 0 will disable this feature.</p>
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-motion_detect_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p2_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-motion_detect_threshold_p2_110" placeholder="10" value="10">
 					</div>
 				</div>
 			</div>
@@ -2960,42 +3000,6 @@
 							<option value="8">1024</option>
 							<option value="9">2048</option>
 						</select>
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40</p>
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-motion_detect_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p1_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-motion_detect_threshold_p1_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-111>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 means turn the wake the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40</p>
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>  Auto Config</label>
-						<input type="checkbox" id="node-input-motion_detect_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p2_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-motion_detect_threshold_p2_110" placeholder="10" value="10">
 					</div>
 				</div>
 			</div>
