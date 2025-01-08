@@ -146,6 +146,19 @@
 					return int >= l && int <= h;
 				}
 			}
+			if(property_name === 'acceleration_interrupt_threshold_84'){
+				return function(v){
+					var int = parseInt(v, base);
+					if(this.acceleration_interrupt_threshold_84 == 0){
+						console.log('ERROR: Invalid property detect. Setting smart_threshold_110 to default value');
+						$("#node-input-acceleration_interrupt_threshold_84").val(0);
+						return true;
+					} else if(v == undefined){
+						return true;
+					}
+					return int >= l && int <= h;
+				}
+			}
 			if(base == 'decimal'){
 				return function(v){
 					var n = parseFloat(v);
@@ -656,7 +669,7 @@
 			high_pass_filter_p2_110: {value:0},
 
 			acceleration_interrupt_threshold_84_active: {value: ""},
-			acceleration_interrupt_threshold_84: {value: 0, validate: NCD_validators.number_range(0, 40)},
+			acceleration_interrupt_threshold_84: {value: 0, validate: NCD_validators.number_range(0, 40, 10, 'acceleration_interrupt_threshold_84')},
 
 			motion_detect_threshold_p1_110_active: {value: ""},
 			motion_detect_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
