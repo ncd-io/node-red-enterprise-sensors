@@ -1892,9 +1892,6 @@ module.exports = function(RED) {
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
 								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
-								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
@@ -1965,9 +1962,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p2_110_active){
 									promises.sampling_duration_p2_111 = node.config_gateway.config_set_sampling_duration_p2_110(mac, parseInt(config.sampling_duration_p2_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -2048,9 +2042,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_112 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -2137,9 +2128,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_114 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
