@@ -3293,7 +3293,8 @@
 			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Thermocouple Type</strong>
+					<strong>Set Thermocouple Type</strong>
+					<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>
 					<div>
 						<label for="node-input-thermocouple_type_23_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
@@ -3313,7 +3314,19 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Filter Level</strong>
+					<strong>Set Filter Level</strong>
+					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time. 
+						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response. 
+						A lower filter level offers quicker response but with potentially more noise in the data.<br>
+						<br>
+						0: Filter off (No filtering applied).<br>
+						1: Minimum filter (Light filtering, minimal impact on noise).<br>
+						2: Slightly higher filtering than level 1.<br>
+						3: Moderate filtering.<br>
+						4: Mid filter (Balanced filtering for most use cases).<br>
+						5: Stronger filtering.<br>
+						6: Higher filtering than level 5.<br>
+						7: Maximum filter (Strongest filtering for noisy environments).</p>
 					<div>
 						<label for="node-input-filter_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-filter_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-filter_thermocouple" value="1">
@@ -3333,7 +3346,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Cold Junction Resolution</strong>
+					<strong>Set Cold Junction Resolution</strong>
+					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature. 
+						The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>
 					<div>
 						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-cold_junction_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-cold_junction_thermocouple" value="1">
@@ -3347,7 +3362,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP ADC Resolution</strong>
+					<strong>Set ADC Resolution</strong>
+					<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with
+						reduced resolution. This feature is useful to detect fast transient temperatures.</p>
 					<div>
 						<label for="node-input-sample_resolution_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-sample_resolution_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-sample_resolution_thermocouple" value="1">
@@ -3363,7 +3380,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Number of Samples</strong>
+					<strong>Set Number of Samples</strong>
+					<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter
+						engine is applied to each temperature sample.</p>
 					<div>
 						<label for="node-input-number_of_samples_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-number_of_samples_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-number_of_samples_thermocouple" value="1">
@@ -3383,7 +3402,8 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Measurement Type</strong>
+					<strong>Set Measurement Type</strong>
+					<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>
 					<div>
 						<label for="node-input-measurement_type_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-measurement_type_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple" value="1">
