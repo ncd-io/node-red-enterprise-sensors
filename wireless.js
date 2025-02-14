@@ -1884,6 +1884,9 @@ module.exports = function(RED) {
 								if(config.shift_four_108_active){
 									promises.shift_time4 = node.config_gateway.config_set_shift_four_108(mac, parseInt(config.shift_four_hours_108), parseInt(config.shift_four_minutes_108));
 								}
+								if(config.quality_of_service_108_active){
+									promises.quality_of_service_108 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								}
 								break;
 							case 110:
 								if(config.odr_p1_110_active){

@@ -675,6 +675,9 @@
 			motion_detect_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
 			motion_detect_threshold_p2_110_active: {value: ""},
 			motion_detect_threshold_p2_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
+
+			quality_of_service_108_active: {value: ""},
+			quality_of_service_108: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2782,6 +2785,20 @@
 							<option value="0" selected>Do not reset counters</option>
 							<option value="1">Based on Shift Ends</option>
 							<option value="2">Based on the Timeout Provided</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Quality Of Service</strong>
+					<div>
+						<label for="node-input-quality_of_service_108_active">Active:</label>
+						<input type="checkbox" id="node-input-quality_of_service_108_active" class="ncd-config-toggle" data-target-id="node-input-quality_of_service_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-quality_of_service_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-quality_of_service_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
 						</select>
 					</div>
 				</div>
