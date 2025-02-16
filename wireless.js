@@ -1952,6 +1952,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 111:
 								if(config.odr_p1_110_active){
@@ -2034,6 +2037,9 @@ module.exports = function(RED) {
 								}
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_111 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
+								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
 								break;
 							case 112:
@@ -2124,6 +2130,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_112 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 114:
 								if(config.odr_p1_110_active){
@@ -2197,6 +2206,9 @@ module.exports = function(RED) {
 								}
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
+								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
 								break;
 							case 118:
