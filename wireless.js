@@ -428,6 +428,46 @@ module.exports = function(RED) {
 					break;
 				case "fidelity_test":
 					break;
+				case "converter_send_single":
+					// Example message:
+					// msg.topic = 'rs485_single';
+					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
+					// msg.payload.data = [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE];
+					// msg.payload.meta = {
+					// 	'command_id': 'query_water_levels',
+					// 	'description': 'Query water levels in mm/cm',
+					// 	'target_parser': 'parse_water_levels'
+					// }
+					if(msg.payload.hasOwnProperty('meta')){
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
+					}else{
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
+					}
+					break;
+				case "converter_send_multiple":
+					// Example message:
+					// msg.topic = 'converter_send_multiple';
+					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
+					// msg.payload.commands = [
+					// 	{
+					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
+					// 		'meta': {
+					// 			'command_id': 'command_1',
+					// 			'description': 'Example Command 1',
+					// 			'target_parser': 'parse_water_levels'
+					// 		}
+					// 	},
+					// 	{
+					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
+					// 		'meta': {
+					// 			'command_id': 'command_2',
+					// 			'description': 'Example Command 2',
+					// 			'target_parser': 'parse_temperature'
+					// 		}
+					// 	}
+					// ];
+					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
+					break;
 				case "start_luber":
 					// msg = {
 					// 'topic': start_luber,
@@ -633,6 +673,12 @@ module.exports = function(RED) {
 		node.gateway.on("link_info",(d)=>{
 			msg1 = {topic:"link_info",payload:d};
 			node.send(msg1);
+		});
+		node.gateway.on('converter_response', (d) => {
+			node.set_status();
+			d.topic = 'converter_response';
+			d.time = Date.now();
+			node.send(d);
 		});
 
 		node.set_status();
@@ -2719,6 +2765,13 @@ module.exports = function(RED) {
 					payload: data.sensor_data,
 					time: Date.now()
 				});
+			});
+			this.gtw_on('converter_response-'+config.addr, (data) => {
+				node.status(modes.RUN);
+				data.modem_mac = this.gateway.modem_mac;
+				data.topic = 'converter_response';
+				data.time = Date.now();
+				node.send(data);
 			});
 			this.gtw_on('set_destination_address'+config.addr, (d) => {
 				if(config.auto_config){
