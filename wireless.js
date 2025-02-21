@@ -2274,6 +2274,23 @@ module.exports = function(RED) {
 									promises.temp_auto_check_percent_118 = node.config_gateway.config_set_temp_auto_check_percent_118(mac, parseInt(config.temp_auto_check_percent_118));
 								}
 								break;
+							case 120:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_120 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.always_on_120){
+									promises.always_on_120 = node.config_gateway.config_set_to_always_on_120(mac);
+								}
+								if(config.sensor_reset_120){
+									promises.sensor_reset_120 = node.config_gateway.config_set_sensor_reset_120(mac);
+								}
+								if(config.sensor_calib_120){
+									promises.sensor_calib_120 = node.config_gateway.config_set_sensor_calib_120(mac);
+								}
+								if(config.alert_threshold_120_active){
+									promises.alert_threshold_120 = node.config_gateway.config_set_alert_threshold_120(mac, parseInt(config.alert_threshold_120));
+								}
+								break;
 							case 180:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));

@@ -680,7 +680,13 @@
 			quality_of_service_108: {value: 0},
 
 			max_raw_sample_110_active: {value: ""},
-			max_raw_sample_110: {value: 0}
+			max_raw_sample_110: {value: 0},
+
+			always_on_120: {value:0},
+			sensor_reset_120: {value:0},
+			sensor_calib_120: {value:0},
+			alert_threshold_120_active: {value: ""},
+			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -781,6 +787,7 @@
 					"106": "106 - 2 Channel Automatic Luber With Ultrasound Vibration Sensor",
 					"107": "107 - 4 Channel 4-20mA Receiver",
 					"108": "108 - Machine Uptime Monitoring Sensor",
+					"109": "109 - Wireless Custom Solar Sensor",
 					"110": "110 - One Channel Vibration Plus v4",
 					"111": "111 - Two Channel Vibration Plus v4",
 					"112": "112 - Condition Based/Predictive Maintenance Sensor v4",
@@ -1080,6 +1087,7 @@
 			<option value="106">106 - 2 Channel Automatic Luber With Ultrasound Vibration Sensor</option>
 			<option value="107">107 - 4 Channel 4-20mA Receiver</option>
 			<option value="108">108 - Machine Uptime Monitoring Sensor</option>
+			<option value="109">109 - Wireless Custom Solar Sensor</option>
 			<option value="110">110 - One Channel Vibration Plus v4</option>
 			<option value="111">111 - Two Channel Vibration Plus v4</option>
 			<option value="112">112 - Condition Based/Predictive Maintenance Sensor v4</option>
@@ -1123,7 +1131,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-118 data-sensor-120 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-118 data-sensor-120 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -3495,7 +3503,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
+			<div class="ncd-dependent" data-sensor-120 data-sensor-539 data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Stay On Mode</strong>
 					<div>
@@ -3510,6 +3518,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Baud Rate</strong>
 					<div>
@@ -4269,6 +4279,42 @@
 							<option value="20">Type 0150-A</option>
 							<option value="21">Type 0300-A</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-120>
+				<div class="form-row ncd-active-check">
+					<strong>Set Always On</strong>
+					<div>
+						<label for="node-input-always_on_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-always_on_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Reset</strong>
+					<div>
+						<label for="node-input-sensor_reset_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_reset_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Calibration</strong>
+					<div>
+						<label for="node-input-sensor_calib_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_calib_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Alert Threshold</strong>
+					</div>
+					<div>
+						<label for="node-input-alert_threshold_120_active"><i class="icon-tag"></i>  Auto Config</label>
+						<input type="checkbox" id="node-input-alert_threshold_120_active" class="ncd-config-toggle" data-target-id="node-input-alert_threshold_120" value="1">
+					</div>
+					<div>
+						<label for="node-input-alert_threshold_120"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-alert_threshold_120" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>
