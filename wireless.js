@@ -875,6 +875,9 @@ module.exports = function(RED) {
 						// 	destination: node.config_gateway.config_set_destination(mac, parseInt(config.destination, 16)),
 						// 	network_id: node.config_gateway.config_set_pan_id(mac, parseInt(config.pan_id, 16))
 						// };
+						if(config.security_encryption_key_active){
+							promises.security_encryption_key = node.config_gateway.config_set_security_encryption_key(mac, config.security_encryption_key);
+						}
 						if(config.node_id_delay_active){
 							promises.id_and_delay = node.config_gateway.config_set_id_delay(mac, parseInt(config.node_id), parseInt(config.delay));
 						}
