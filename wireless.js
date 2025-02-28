@@ -355,9 +355,17 @@ module.exports = function(RED) {
 			node.status(statuses[node._gateway_node.is_config]);
 		};
 		node.temp_send_1024 = function(frame){
-			console.log('TODO - Move to Emitter');
+			console.log('node.temp_send_1024 TODO - Move to Emitter');
 			node.send({
 				topic: "remote_at_response",
+				payload: frame,
+				time: Date.now()
+			});
+		}
+		node.temp_send_local = function(frame){
+			console.log('node.temp_send_local TODO - Move to Emitter');
+			node.send({
+				topic: "local_at_response",
 				payload: frame,
 				time: Date.now()
 			});
@@ -620,6 +628,10 @@ module.exports = function(RED) {
 					break;
 				case "remote_at_send":
 					node.gateway.remote_at_send(msg.payload.address, msg.payload.parameter, msg.payload.value, msg.payload.options).then(node.temp_send_1024, console.log).catch(console.log);
+					break;
+				case "local_at_send":
+					msg.payload.value = Array.from(msg.payload.value);
+					node.gateway.local_at_send(msg.payload.parameter, msg.payload.value).then(node.temp_send_local, console.log).catch(console.log);
 					break;
 				default:
 					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
