@@ -686,10 +686,7 @@
 			sensor_reset_120: {value:0},
 			sensor_calib_120: {value:0},
 			alert_threshold_120_active: {value: ""},
-			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)},
-
-			security_encryption_key_active: {value:""},
-			security_encryption_key: {value: '55AA55AA55AA55AA55AA55AA55AA55AA'}
+			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -836,18 +833,6 @@
 				$("#node-config-input-addr").autocomplete( "destroy" );
 			} catch(err) {}
 			$('.ncd-dependent[sensor_type]').hide();
-			var encryptionInput = $("#node-input-security_encryption_key");
-			encryptionInput.attr("type", "password");
-			encryptionInput.on("input", function() {
-				if (this.value.length === 0) {
-					this.type = "text"; 
-				}
-			});
-			encryptionInput.on("blur", function() {
-				if (this.value.length > 0) {
-					this.type = "password"; 
-				}
-			});
 			// loops through all settings that need validation and sets default values
 			// Solves library upgrades that add new properties
 			for(let prop in this._def.defaults){
@@ -1196,22 +1181,6 @@
 					<strong>WARNING</strong>: Setting this to active while your sensor supports OTF will put sensors into a reboot cycle.<br>
 					Once all of the sensors have had their Network ID updated you must disable this configuration.
 				</p>
-			</div>
-			<div class="form-row ncd-active-check">
-				<strong>Encryption Key</strong>
-				<p class="caption">
-					Enter 32 hexadecimal characters as the key value (e.g., "00..." or "55AA...").<br>
-					Use exactly 32 characters (16 bytes).<br>
-					<strong>Default:</strong> 55AA55AA55AA55AA55AA55AA55AA55AA
-				</p>
-				<div>
-					<label for="node-input-security_encryption_key_active">Active:</label>
-					<input type="checkbox" id="node-input-security_encryption_key_active" class="ncd-config-toggle" data-target-class="node-input-security_encryption_key" value="1">
-				</div>
-				<div>
-					<label for="node-input-security_encryption_key"><i class="icon-tag"></i>Key:</label>
-					<input type="password" id="node-input-security_encryption_key" value="55AA55AA55AA55AA55AA55AA55AA55AA" minLength="32" maxlength="32">
-				</div>
 			</div>
 			<div class="form-row ncd-active-check">
 				<strong>Node ID and Delay</strong>
