@@ -627,10 +627,22 @@ module.exports = function(RED) {
 					// }
 					break;
 				case "remote_at_send":
+					if(!Object.hasOwn(msg.payload, 'value')){
+						msg.payload.value = undefined;
+					}else if(typeof msg.payload.value === 'string' ){
+						msg.payload.value = Array.from(string2HexArray(msg.payload.value));
+					}
 					node.gateway.remote_at_send(msg.payload.address, msg.payload.parameter, msg.payload.value, msg.payload.options).then(node.temp_send_1024, console.log).catch(console.log);
 					break;
 				case "local_at_send":
-					if(msg.payload.value !== undefined){
+					// If there is no value then its a read command and the DigiParser is expecting an undefined
+					if(!Object.hasOwn(msg.payload, 'value')){
+						msg.payload.value = undefined;
+					}else if(typeof msg.payload.value === 'string' ){
+						// break into byte array. Primarily used for NID and Encryption
+						msg.payload.value = Array.from(string2HexArray(msg.payload.value));
+					}else if(msg.payload.value !== undefined){
+						// The DigiParser checks the constructor and not all Arrays are the same
 						msg.payload.value = Array.from(msg.payload.value);
 					}
 					node.gateway.local_at_send(msg.payload.parameter, msg.payload.value).then(node.temp_send_local, console.log).catch(console.log);
@@ -3166,6 +3178,31 @@ function int2Bytes(i, l){
 		}
 	}
 	return bytes;
+}
+function string2HexArray(hexString) {
+	if (typeof hexString !== 'string') {
+		console.error('Input must be a string.');
+		return undefined;
+	}
+
+	const cleanedHexString = hexString.replace(/:/g, ''); //Remove colons.
+
+	if (cleanedHexString.length % 2 !== 0) {
+		console.error('Hex string length must be divisible by two.');
+		return undefined;
+	}
+
+	let byteArray = [];
+	for (let i = 0; i < cleanedHexString.length; i += 2) {
+		const byte = cleanedHexString.substring(i, i + 2);
+		const byteValue = parseInt(byte, 16);
+		if (isNaN(byteValue)) {
+			console.error("Invalid hex character in string");
+			return undefined;
+		}
+		byteArray.push(byteValue);
+	}
+	return byteArray;
 }
 function toHex(n){return ('00' + n.toString(16)).substr(-2);}
 function toMac(arr){
