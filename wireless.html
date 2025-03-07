@@ -577,8 +577,8 @@
 			reset_timeout_108: {value: 60, validate: NCD_validators.number_range(60, 65535)},
 			reset_mode_to_disabled_108_active: {value: ""},
 			reset_mode_to_disabled_108: {value: 0},
-			rtc_interval_108_active: {value: ""},
-			rtc_interval_108: {value: 0},
+			transmission_interval_108_active: {value: ""},
+			transmission_interval_108: {value: 0},
 			rtc_108:{value:0},
 
 			change_otf_interval_active:{value: ""},
@@ -2675,14 +2675,17 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong> Sample Data Interval Rate </strong>
+					<strong>Data Transmission Interval</strong>
+					<p class="caption">
+						This setting dictates the interval at which the sensor will wake up and transmit its data. This interval works independently from any configured interrupt driven messages.
+					</p>
 					<div>
-						<label for="node-input-rtc_interval_108_active">Active:</label>
-						<input type="checkbox" id="node-input-rtc_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-rtc_interval_108" value="1">
+						<label for="node-input-transmission_interval_108_active">Active:</label>
+						<input type="checkbox" id="node-input-transmission_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-transmission_interval_108" value="1">
 					</div>
 					<div>
-						<label for="node-input-rtc_interval_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtc_interval_108">
+						<label for="node-input-transmission_interval_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-transmission_interval_108">
 							<option value="9">5 seconds</option>
 							<option value="10">10 seconds</option>
 							<option value="11">15 seconds</option>
@@ -2803,6 +2806,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Quality of Service</strong>
+					<p class="caption">
+						This setting only functions when a Destination Address is also configured into the sensor.<br>
+						If QoS is enabled the sensor will wait for a receipt acknowledgement from the intended receiver before resuming sleep.<br>
+						If no receipt acknowledgement is received the sensor will one more time to transmit the data.
+					</p>
 					<div>
 						<label for="node-input-quality_of_service_108_active">Active:</label>
 						<input type="checkbox" id="node-input-quality_of_service_108_active" class="ncd-config-toggle" data-target-id="node-input-quality_of_service_108" value="1">
@@ -3364,8 +3372,8 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filter Level</strong>
-					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time. 
-						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response. 
+					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time.
+						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response.
 						A lower filter level offers quicker response but with potentially more noise in the data.<br>
 						<br>
 						0: Filter off (No filtering applied).<br>
@@ -3396,7 +3404,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Cold Junction Resolution</strong>
-					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature. 
+					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature.
 						The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>
 					<div>
 						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
@@ -4534,4 +4542,3 @@
 		<input type="checkbox" id="node-config-input-rssi" value="1">
 	</div>
 </script>
-

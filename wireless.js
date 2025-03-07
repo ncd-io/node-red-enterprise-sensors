@@ -1941,8 +1941,8 @@ module.exports = function(RED) {
 								if(config.rtc_108){
 									promises.rtc_108 = node.config_gateway.config_set_rtc_108(mac);
 								}
-								if(config.rtc_interval_108_active){
-									promises.rtc_interval_108 = node.config_gateway.config_set_rtc_interval_108(mac, parseInt(config.rtc_interval_108));
+								if(config.transmission_interval_108_active){
+									promises.transmission_interval_108 = node.config_gateway.config_set_transmission_interval_108(mac, parseInt(config.transmission_interval_108));
 								}
 								if(config.shift_one_108_active){
 									promises.shift_time1 = node.config_gateway.config_set_shift_one_108(mac, parseInt(config.shift_one_hours_108), parseInt(config.shift_one_minutes_108));
