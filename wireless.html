@@ -577,8 +577,8 @@
 			reset_timeout_108: {value: 60, validate: NCD_validators.number_range(60, 65535)},
 			reset_mode_to_disabled_108_active: {value: ""},
 			reset_mode_to_disabled_108: {value: 0},
-			rtc_interval_108_active: {value: ""},
-			rtc_interval_108: {value: 0},
+			transmission_interval_108_active: {value: ""},
+			transmission_interval_108: {value: 0},
 			rtc_108:{value:0},
 
 			change_otf_interval_active:{value: ""},
@@ -675,6 +675,18 @@
 			motion_detect_threshold_p1_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
 			motion_detect_threshold_p2_110_active: {value: ""},
 			motion_detect_threshold_p2_110: {value: 0, validate: NCD_validators.number_range(0, 40)},
+
+			quality_of_service_108_active: {value: ""},
+			quality_of_service_108: {value: 0},
+
+			max_raw_sample_110_active: {value: ""},
+			max_raw_sample_110: {value: 0},
+
+			always_on_120: {value:0},
+			sensor_reset_120: {value:0},
+			sensor_calib_120: {value:0},
+			alert_threshold_120_active: {value: ""},
+			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -702,7 +714,7 @@
 					"18": "18 - Pulse Frequency",
 					"19": "19 - 2 Channel Current Sensor",
 					"20": "20 - High Precision Pressure Sensor",
-					"21": "21 - Differential Bi directional Pressure Sensor",
+					"21": "21 - Differential Bidirectional Pressure Sensor",
 					"22": "22 - 0-24V AC/DC Optically Isolated Inputs",
 					"23": "23 - 2 Channel Thermocouple Sensor",
 					"24": "24 - Activity Detection",
@@ -775,11 +787,13 @@
 					"106": "106 - 2 Channel Automatic Luber With Ultrasound Vibration Sensor",
 					"107": "107 - 4 Channel 4-20mA Receiver",
 					"108": "108 - Machine Uptime Monitoring Sensor",
+					"109": "109 - Wireless Custom Solar Sensor",
 					"110": "110 - One Channel Vibration Plus v4",
 					"111": "111 - Two Channel Vibration Plus v4",
 					"112": "112 - Condition Based/Predictive Maintenance Sensor v4",
 					"114": "114 - Standalone Smart Vibration Sensor v4",
 					"118": "118 - Dual Pressure and Temperature Sensor",
+					"120": "120 - Wireless H2S Sensor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -791,6 +805,7 @@
 					"507": "507 - Custom_SAP_Current_7C",
 					"510": "510 - GreenLight",
 					"515": "515 - Custom_SAP_Current_48C",
+					"518": "518 - Custom Air Velocity",
 					"519": "519: Custom Vibration 1",
 					"520": "520: Custom 6 Channel Current Temperature & Humidity",
 					"521": "521 - Custom 3 Channel Light Sensor",
@@ -997,7 +1012,7 @@
 			<option value="18">18 - Pulse/Frequency</option>
 			<option value="19">19 - 2-channel 24-bit Current Monitor</option>
 			<option value="20">20 - Precision Pressure & Temperature (pA)</option>
-			<option value="21">21 - AMS Pressure & Temperature</option>
+			<option value="21">21 - Differential Bidirectional Pressure Sensor</option>
 			<option value="22">22 - 0-24V AC/DC Optically Isolated Inputs</option>
 			<option value="23">23 - 2-channel Thermocouple</option>
 			<option value="24">24 - Activity Detection</option>
@@ -1072,11 +1087,13 @@
 			<option value="106">106 - 2 Channel Automatic Luber With Ultrasound Vibration Sensor</option>
 			<option value="107">107 - 4 Channel 4-20mA Receiver</option>
 			<option value="108">108 - Machine Uptime Monitoring Sensor</option>
+			<option value="109">109 - Wireless Custom Solar Sensor</option>
 			<option value="110">110 - One Channel Vibration Plus v4</option>
 			<option value="111">111 - Two Channel Vibration Plus v4</option>
 			<option value="112">112 - Condition Based/Predictive Maintenance Sensor v4</option>
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
 			<option value="118">118 - Dual Pressure and Temperature Sensor</option>
+			<option value="120">120 - Wireless H2S Sensor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1088,6 +1105,7 @@
 			<option value="507">507 - Custom_SAP_Current_7C</option>
 			<option value="510">510 - GreenLight</option>
 			<option value="515">515 - Custom_SAP_Current_48C</option>
+			<option value="518">518 - Custom Air Velocity</option>
 			<option value="519">519 - Type 519: Custom Vibration 1</option>
 			<option value="520">520 - Type 520: Custom 6 Channel Current Temperature & Humidity</option>
 			<option value="521">521 - Custom 3 Channel Light Sensor</option>
@@ -1113,7 +1131,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-118 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-118 data-sensor-120 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1577,7 +1595,7 @@
 						<p>This command will take 3 minutes to execute as the sensor calibrates. Do not reboot the sensor during this time. The configuration completed command through the UI is referring to the receipt and acknowledgement of the configuration packet.</p>
 					</div>
 					<div class="form-row">
-						<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-force_calibration_co2_auto_config"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-force_calibration_co2_auto_config" class="ncd-config-toggle" data-target-id="node-input-force_calibration_co2" value="1">
 					</div>
 					<div class="form-row">
@@ -1605,7 +1623,7 @@
 						<strong>Temperature Offset</strong>
 					</div>
 					<div>
-						<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-temperature_offset_44_active" class="ncd-config-toggle" data-target-id="node-input-temperature_offset_44" value="1">
 					</div>
 					<div>
@@ -1625,7 +1643,7 @@
 						Only applies to sensor with firmware version 24 and above.</p>
 					</div>
 					<div>
-						<label for="node-input-acceleration_interrupt_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-acceleration_interrupt_threshold_84_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-acceleration_interrupt_threshold_84_active" class="ncd-config-toggle" data-target-id="node-input-acceleration_interrupt_threshold_84" value="1">
 					</div>
 					<div>
@@ -1641,11 +1659,10 @@
 						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
 						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
 						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.<br>
-						Only applies to sensor with firmware version 24 and above.</p>
+						A value of 0 will disable this feature.</p>
 					</div>
 					<div>
-						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-motion_detect_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p1_110" value="1">
 					</div>
 					<div>
@@ -1665,7 +1682,7 @@
 						Only applies to sensor with firmware version 24 and above.</p>
 					</div>
 					<div>
-						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-motion_detect_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p2_110" value="1">
 					</div>
 					<div>
@@ -1699,7 +1716,7 @@
 						<p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p>
 					</div>
 					<div>
-						<label for="node-input-led_accelerometer_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-led_accelerometer_threshold_84_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-led_accelerometer_threshold_84_active" class="ncd-config-toggle" data-target-id="node-input-led_accelerometer_threshold_84" value="1">
 					</div>
 					<div>
@@ -1713,7 +1730,7 @@
 						<p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p>
 					</div>
 					<div>
-						<label for="node-input-led_velocity_threshold_84_active"><i class="icon-tag"></i>  Auto Config</label>
+						<label for="node-input-led_velocity_threshold_84_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-led_velocity_threshold_84_active" class="ncd-config-toggle" data-target-id="node-input-led_velocity_threshold_84" value="1">
 					</div>
 					<div>
@@ -2208,6 +2225,8 @@
 						<input type="text" id="node-input-deadband_80">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
 					<strong>Configure Enabled Axes</strong>
 					<div>
@@ -2656,27 +2675,30 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong> Sample Data Interval Rate </strong>
+					<strong>Data Transmission Interval</strong>
+					<p class="caption">
+						This setting dictates the interval at which the sensor will wake up and transmit its data. This interval works independently from any configured interrupt driven messages.
+					</p>
 					<div>
-						<label for="node-input-rtc_interval_108_active">Active:</label>
-						<input type="checkbox" id="node-input-rtc_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-rtc_interval_108" value="1">
+						<label for="node-input-transmission_interval_108_active">Active:</label>
+						<input type="checkbox" id="node-input-transmission_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-transmission_interval_108" value="1">
 					</div>
 					<div>
-						<label for="node-input-rtc_interval_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtc_interval_108">
+						<label for="node-input-transmission_interval_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-transmission_interval_108">
+							<option value="9">5 seconds</option>
+							<option value="10">10 seconds</option>
+							<option value="11">15 seconds</option>
+							<option value="12">30 seconds</option>
 							<option value="0" selected>1 minute</option>
 							<option value="1">5 minutes</option>
-							<option value="2">10 minutes</option>
-							<option value="3">15 minutes</option>
-							<option value="4">30 minutes</option>
-							<option value="5">45 minutes</option>
-							<option value="6">1 hour</option>
-							<option value="7">2 hours</option>
-							<option value="8">3 hours</option>
-							<option value="9">4 hours</option>
-							<option value="10">6 hours</option>
-							<option value="11">8 hours</option>
-							<option value="12">12 hours</option>
+							<option value="2">15 minutes</option>
+							<option value="3">30 minutes</option>
+							<option value="4">1 hour</option>
+							<option value="5">2 hours</option>
+							<option value="6">3 hours</option>
+							<option value="7">6 hours</option>
+							<option value="8">12 hours</option>
 						</select>
 					</div>
 				</div>
@@ -2779,6 +2801,25 @@
 							<option value="0" selected>Do not reset counters</option>
 							<option value="1">Based on Shift Ends</option>
 							<option value="2">Based on the Timeout Provided</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Quality of Service</strong>
+					<p class="caption">
+						This setting only functions when a Destination Address is also configured into the sensor.<br>
+						If QoS is enabled the sensor will wait for a receipt acknowledgement from the intended receiver before resuming sleep.<br>
+						If no receipt acknowledgement is received the sensor will one more time to transmit the data.
+					</p>
+					<div>
+						<label for="node-input-quality_of_service_108_active">Active:</label>
+						<input type="checkbox" id="node-input-quality_of_service_108_active" class="ncd-config-toggle" data-target-id="node-input-quality_of_service_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-quality_of_service_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-quality_of_service_108">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
 						</select>
 					</div>
 				</div>
@@ -3166,6 +3207,23 @@
 						</select>
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Raw Sample</strong>
+					<div>
+						<label for="node-input-max_raw_sample_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-max_raw_sample_110_active" class="ncd-config-toggle" data-target-id="node-input-max_raw_sample_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-max_raw_sample_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-max_raw_sample_110">
+							<option selected="selected" value="1024">1024 Samples</option>
+							<option value="2048">2048 Samples</option>
+							<option value="4096">4096 Samples</option>
+							<option value="6400">6400 Samples</option>
+							<option value="8100">8100 Samples</option>
+						</select>
+					</div>
+				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-112>
 				<div class="form-row ncd-active-check">
@@ -3292,7 +3350,8 @@
 			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Thermocouple Type</strong>
+					<strong>Set Thermocouple Type</strong>
+					<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>
 					<div>
 						<label for="node-input-thermocouple_type_23_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
@@ -3312,7 +3371,19 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Filter Level</strong>
+					<strong>Set Filter Level</strong>
+					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time.
+						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response.
+						A lower filter level offers quicker response but with potentially more noise in the data.<br>
+						<br>
+						0: Filter off (No filtering applied).<br>
+						1: Minimum filter (Light filtering, minimal impact on noise).<br>
+						2: Slightly higher filtering than level 1.<br>
+						3: Moderate filtering.<br>
+						4: Mid filter (Balanced filtering for most use cases).<br>
+						5: Stronger filtering.<br>
+						6: Higher filtering than level 5.<br>
+						7: Maximum filter (Strongest filtering for noisy environments).</p>
 					<div>
 						<label for="node-input-filter_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-filter_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-filter_thermocouple" value="1">
@@ -3332,7 +3403,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Cold Junction Resolution</strong>
+					<strong>Set Cold Junction Resolution</strong>
+					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature.
+						The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>
 					<div>
 						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-cold_junction_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-cold_junction_thermocouple" value="1">
@@ -3346,7 +3419,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP ADC Resolution</strong>
+					<strong>Set ADC Resolution</strong>
+					<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with
+						reduced resolution. This feature is useful to detect fast transient temperatures.</p>
 					<div>
 						<label for="node-input-sample_resolution_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-sample_resolution_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-sample_resolution_thermocouple" value="1">
@@ -3362,7 +3437,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Number of Samples</strong>
+					<strong>Set Number of Samples</strong>
+					<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter
+						engine is applied to each temperature sample.</p>
 					<div>
 						<label for="node-input-number_of_samples_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-number_of_samples_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-number_of_samples_thermocouple" value="1">
@@ -3382,7 +3459,8 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Measurement Type</strong>
+					<strong>Set Measurement Type</strong>
+					<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>
 					<div>
 						<label for="node-input-measurement_type_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-measurement_type_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple" value="1">
@@ -3433,7 +3511,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
+			<div class="ncd-dependent" data-sensor-120 data-sensor-539 data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Stay On Mode</strong>
 					<div>
@@ -3448,6 +3526,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Baud Rate</strong>
 					<div>
@@ -4207,6 +4287,42 @@
 							<option value="20">Type 0150-A</option>
 							<option value="21">Type 0300-A</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-120>
+				<div class="form-row ncd-active-check">
+					<strong>Set Always On</strong>
+					<div>
+						<label for="node-input-always_on_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-always_on_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Sensor Reset</strong>
+					<div>
+						<label for="node-input-sensor_reset_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_reset_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Calibration</strong>
+					<div>
+						<label for="node-input-sensor_calib_120"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_calib_120" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Alert Threshold</strong>
+					</div>
+					<div>
+						<label for="node-input-alert_threshold_120_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-alert_threshold_120_active" class="ncd-config-toggle" data-target-id="node-input-alert_threshold_120" value="1">
+					</div>
+					<div>
+						<label for="node-input-alert_threshold_120"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-alert_threshold_120" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>

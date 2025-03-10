@@ -355,9 +355,17 @@ module.exports = function(RED) {
 			node.status(statuses[node._gateway_node.is_config]);
 		};
 		node.temp_send_1024 = function(frame){
-			console.log('TODO - Move to Emitter');
+			console.log('node.temp_send_1024 TODO - Move to Emitter');
 			node.send({
 				topic: "remote_at_response",
+				payload: frame,
+				time: Date.now()
+			});
+		}
+		node.temp_send_local = function(frame){
+			console.log('node.temp_send_local TODO - Move to Emitter');
+			node.send({
+				topic: "local_at_response",
 				payload: frame,
 				time: Date.now()
 			});
@@ -427,6 +435,46 @@ module.exports = function(RED) {
 					node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
 					break;
 				case "fidelity_test":
+					break;
+				case "converter_send_single":
+					// Example message:
+					// msg.topic = 'rs485_single';
+					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
+					// msg.payload.data = [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE];
+					// msg.payload.meta = {
+					// 	'command_id': 'query_water_levels',
+					// 	'description': 'Query water levels in mm/cm',
+					// 	'target_parser': 'parse_water_levels'
+					// }
+					if(msg.payload.hasOwnProperty('meta')){
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
+					}else{
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
+					}
+					break;
+				case "converter_send_multiple":
+					// Example message:
+					// msg.topic = 'converter_send_multiple';
+					// msg.payload.address = "00:13:a2:00:42:37:3e:e2";
+					// msg.payload.commands = [
+					// 	{
+					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
+					// 		'meta': {
+					// 			'command_id': 'command_1',
+					// 			'description': 'Example Command 1',
+					// 			'target_parser': 'parse_water_levels'
+					// 		}
+					// 	},
+					// 	{
+					// 		'command': [0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE],
+					// 		'meta': {
+					// 			'command_id': 'command_2',
+					// 			'description': 'Example Command 2',
+					// 			'target_parser': 'parse_temperature'
+					// 		}
+					// 	}
+					// ];
+					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
 					break;
 				case "start_luber":
 					// msg = {
@@ -579,7 +627,25 @@ module.exports = function(RED) {
 					// }
 					break;
 				case "remote_at_send":
+					if(!Object.hasOwn(msg.payload, 'value')){
+						msg.payload.value = undefined;
+					}else if(typeof msg.payload.value === 'string' ){
+						msg.payload.value = Array.from(string2HexArray(msg.payload.value));
+					}
 					node.gateway.remote_at_send(msg.payload.address, msg.payload.parameter, msg.payload.value, msg.payload.options).then(node.temp_send_1024, console.log).catch(console.log);
+					break;
+				case "local_at_send":
+					// If there is no value then its a read command and the DigiParser is expecting an undefined
+					if(!Object.hasOwn(msg.payload, 'value')){
+						msg.payload.value = undefined;
+					}else if(typeof msg.payload.value === 'string' ){
+						// break into byte array. Primarily used for NID and Encryption
+						msg.payload.value = Array.from(string2HexArray(msg.payload.value));
+					}else if(msg.payload.value !== undefined){
+						// The DigiParser checks the constructor and not all Arrays are the same
+						msg.payload.value = Array.from(msg.payload.value);
+					}
+					node.gateway.local_at_send(msg.payload.parameter, msg.payload.value).then(node.temp_send_local, console.log).catch(console.log);
 					break;
 				default:
 					const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
@@ -633,6 +699,12 @@ module.exports = function(RED) {
 		node.gateway.on("link_info",(d)=>{
 			msg1 = {topic:"link_info",payload:d};
 			node.send(msg1);
+		});
+		node.gateway.on('converter_response', (d) => {
+			node.set_status();
+			d.topic = 'converter_response';
+			d.time = Date.now();
+			node.send(d);
 		});
 
 		node.set_status();
@@ -702,7 +774,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 97, 98, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -1869,8 +1941,8 @@ module.exports = function(RED) {
 								if(config.rtc_108){
 									promises.rtc_108 = node.config_gateway.config_set_rtc_108(mac);
 								}
-								if(config.rtc_interval_108_active){
-									promises.rtc_interval_108 = node.config_gateway.config_set_rtc_interval_108(mac, parseInt(config.rtc_interval_108));
+								if(config.transmission_interval_108_active){
+									promises.transmission_interval_108 = node.config_gateway.config_set_transmission_interval_108(mac, parseInt(config.transmission_interval_108));
 								}
 								if(config.shift_one_108_active){
 									promises.shift_time1 = node.config_gateway.config_set_shift_one_108(mac, parseInt(config.shift_one_hours_108), parseInt(config.shift_one_minutes_108));
@@ -1884,6 +1956,9 @@ module.exports = function(RED) {
 								if(config.shift_four_108_active){
 									promises.shift_time4 = node.config_gateway.config_set_shift_four_108(mac, parseInt(config.shift_four_hours_108), parseInt(config.shift_four_minutes_108));
 								}
+								if(config.quality_of_service_108_active){
+									promises.quality_of_service_108 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								}
 								break;
 							case 110:
 								if(config.odr_p1_110_active){
@@ -1891,9 +1966,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -1952,6 +2024,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 111:
 								if(config.odr_p1_110_active){
@@ -1965,9 +2040,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p2_110_active){
 									promises.sampling_duration_p2_111 = node.config_gateway.config_set_sampling_duration_p2_110(mac, parseInt(config.sampling_duration_p2_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -2038,6 +2110,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_111 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 112:
 								if(config.current_calibration_82_active){
@@ -2048,9 +2123,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_112 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -2130,6 +2202,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_112 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 114:
 								if(config.odr_p1_110_active){
@@ -2137,9 +2212,6 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_114 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
-								}
-								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
-									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
@@ -2207,6 +2279,9 @@ module.exports = function(RED) {
 								if(config.enable_rpm_calculate_status_110_active){
 									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
+								if(config.max_raw_sample_110_active){
+									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
 								break;
 							case 118:
 								if(config.pressure_sensor_fs_ch1_118_active){
@@ -2223,6 +2298,23 @@ module.exports = function(RED) {
 								}
 								if(config.temp_auto_check_percent_118_active){
 									promises.temp_auto_check_percent_118 = node.config_gateway.config_set_temp_auto_check_percent_118(mac, parseInt(config.temp_auto_check_percent_118));
+								}
+								break;
+							case 120:
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_120 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.always_on_120){
+									promises.always_on_120 = node.config_gateway.config_set_to_always_on_120(mac);
+								}
+								if(config.sensor_reset_120){
+									promises.sensor_reset_120 = node.config_gateway.config_set_sensor_reset_120(mac);
+								}
+								if(config.sensor_calib_120){
+									promises.sensor_calib_120 = node.config_gateway.config_set_sensor_calib_120(mac);
+								}
+								if(config.alert_threshold_120_active){
+									promises.alert_threshold_120 = node.config_gateway.config_set_alert_threshold_120(mac, parseInt(config.alert_threshold_120));
 								}
 								break;
 							case 180:
@@ -2640,7 +2732,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 97, 98, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
@@ -2716,6 +2808,13 @@ module.exports = function(RED) {
 					payload: data.sensor_data,
 					time: Date.now()
 				});
+			});
+			this.gtw_on('converter_response-'+config.addr, (data) => {
+				node.status(modes.RUN);
+				data.modem_mac = this.gateway.modem_mac;
+				data.topic = 'converter_response';
+				data.time = Date.now();
+				node.send(data);
 			});
 			this.gtw_on('set_destination_address'+config.addr, (d) => {
 				if(config.auto_config){
@@ -3079,6 +3178,31 @@ function int2Bytes(i, l){
 		}
 	}
 	return bytes;
+}
+function string2HexArray(hexString) {
+	if (typeof hexString !== 'string') {
+		console.error('Input must be a string.');
+		return undefined;
+	}
+
+	const cleanedHexString = hexString.replace(/:/g, ''); //Remove colons.
+
+	if (cleanedHexString.length % 2 !== 0) {
+		console.error('Hex string length must be divisible by two.');
+		return undefined;
+	}
+
+	let byteArray = [];
+	for (let i = 0; i < cleanedHexString.length; i += 2) {
+		const byte = cleanedHexString.substring(i, i + 2);
+		const byteValue = parseInt(byte, 16);
+		if (isNaN(byteValue)) {
+			console.error("Invalid hex character in string");
+			return undefined;
+		}
+		byteArray.push(byteValue);
+	}
+	return byteArray;
 }
 function toHex(n){return ('00' + n.toString(16)).substr(-2);}
 function toMac(arr){
