@@ -2300,6 +2300,14 @@ module.exports = function(RED) {
 									promises.temp_auto_check_percent_118 = node.config_gateway.config_set_temp_auto_check_percent_118(mac, parseInt(config.temp_auto_check_percent_118));
 								}
 								break;
+							case 119:
+								if(config.wood_type_119_active){
+									promises.wood_type_119 = node.config_gateway.config_set_wood_type_119(mac, parseInt(config.wood_type_119));
+								}
+								if(config.quality_of_service_108_active){
+									promises.quality_of_service_119 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								}
+								break;
 							case 120:
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_120 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
