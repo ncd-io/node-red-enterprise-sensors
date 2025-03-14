@@ -689,7 +689,9 @@
 			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)},
 
 			wood_type_121_active: {value: ""},
-			wood_type_121: {value: 0}
+			wood_type_121: {value: 0},
+			quality_of_service_121_active: {value: ""},
+			quality_of_service_121: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2811,8 +2813,6 @@
 						</select>
 					</div>
 				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-121>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Quality of Service</strong>
 					<p class="caption">
@@ -2832,8 +2832,6 @@
 						</select>
 					</div>
 				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
 					<div>
@@ -4338,6 +4336,25 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-121>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Quality of Service</strong>
+					<p class="caption">
+						This setting only functions when a Destination Address is also configured into the sensor.<br>
+						If QoS is enabled the sensor will wait for a receipt acknowledgement from the intended receiver before resuming sleep.<br>
+						If no receipt acknowledgement is received the sensor will one more time to transmit the data.
+					</p>
+					<div>
+						<label for="node-input-quality_of_service_121_active">Active:</label>
+						<input type="checkbox" id="node-input-quality_of_service_121_active" class="ncd-config-toggle" data-target-id="node-input-quality_of_service_121" value="1">
+					</div>
+					<div>
+						<label for="node-input-quality_of_service_121"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-quality_of_service_121">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Wood Type</strong>
 					<div>

@@ -2408,8 +2408,8 @@ module.exports = function(RED) {
 								if(config.wood_type_121_active){
 									promises.wood_type_121 = node.config_gateway.config_set_wood_type_121(mac, parseInt(config.wood_type_121));
 								}
-								if(config.quality_of_service_108_active){
-									promises.quality_of_service_121 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								if(config.quality_of_service_121_active){
+									promises.quality_of_service_121 = node.config_gateway.config_set_quality_of_service_121(mac, parseInt(config.quality_of_service_121));
 								}
 								break;
 							case 180:
