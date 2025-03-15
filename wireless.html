@@ -691,7 +691,10 @@
 			wood_type_121_active: {value: ""},
 			wood_type_121: {value: 0},
 			quality_of_service_121_active: {value: ""},
-			quality_of_service_121: {value: 0}
+			quality_of_service_121: {value: 0},
+
+			enable_filtering_110_active: {value: ""},
+			enable_filtering_110: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2875,6 +2878,20 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<div class="form-row ncd-active-check">
+					<strong>Set Filtering</strong>
+					<div>
+						<label for="node-input-enable_filtering_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-enable_filtering_110_active" class="ncd-config-toggle" data-target-id="node-input-enable_filtering_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-enable_filtering_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-enable_filtering_110">
+							<option selected="selected" value="0">Enabled</option>
+							<option value="1">Disabled</option>
+						</select>
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Output Data Rate</strong>
 					<div>

@@ -2051,6 +2051,9 @@ module.exports = function(RED) {
 								if(config.odr_p1_110_active){
 									promises.odr_p1_110 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
 								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_110 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
+								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
 								}
@@ -2118,6 +2121,9 @@ module.exports = function(RED) {
 							case 111:
 								if(config.odr_p1_110_active){
 									promises.odr_p1_111 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_111 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_111 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
@@ -2208,6 +2214,9 @@ module.exports = function(RED) {
 								if(config.odr_p1_110_active){
 									promises.odr_p1_112 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
 								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_112 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
+								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_112 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
 								}
@@ -2296,6 +2305,9 @@ module.exports = function(RED) {
 							case 114:
 								if(config.odr_p1_110_active){
 									promises.odr_p1_114 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_114 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_114 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
