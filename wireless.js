@@ -262,74 +262,89 @@ module.exports = function(RED) {
 		node.start_firmware_update_v13 = function(manifest_data, firmware_data){
 			console.log('V13');
 			return new Promise((top_fulfill, top_reject) => {
-				var success = {};
+				var success = {successes:{}, failures:{}};
 
-				setTimeout(() => {
-					let chunk_size = 128;
-					let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+				let chunk_size = 128;
+				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
 
-					var promises = {};
-					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-					firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+				var promises = {};
+				promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
 
-					var index = 0;
-					if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-						index = node.sensor_list[manifest_data.addr].last_chunk_success;
-					}
-					var temp_count = 0;
-					while(index*chunk_size < firmware_data.manifest.image_size){
-						let offset = index*chunk_size;
-						// console.log(index);
-						// let packet = [254, 59, 0, 0, 0];
-						let offset_bytes = int2Bytes(offset, 4);
-						let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
-						temp_count += 1;
-						// packet = packet.concat(offset_bytes, firmware_chunk);
-						promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
-						// promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
-						index++;
-					}
-					console.log('___________________________');
-					console.log(Object.keys(promises).length);
+				var index = 0;
+				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+					index = node.sensor_list[manifest_data.addr].last_chunk_success;
+				}
+				var temp_count = 0;
+				while(index*chunk_size < firmware_data.manifest.image_size){
+					let offset = index*chunk_size;
+					let offset_bytes = int2Bytes(offset, 4);
+					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+					temp_count += 1;
+					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
+					index++;
+				}
+				console.log('___________________________');
+				console.log(Object.keys(promises).length);
 
-					promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+				var firmware_continue = true;
+				for(var i in promises){
+					(function(name){
+						let retryCount = 0;
+						const maxRetries = 3; // Set the maximum number of retries
 
-					for(var i in promises){
-						(function(name){
-							promises[name].then((f) => {
+						function attemptPromise() {
+							promises[name].then((status_frame) => {
 								console.log('SUCCESS');
-								console.log(name);
-								console.log(f);
+								// console.log(promises.length);
+								// console.log(status_frame);
 								if(name == 'manifest'){
-									// delete node.sensor_list[manifest_data.addr].promises[name];
 									node.sensor_list[manifest_data.addr].test_check = {name: true};
 									node.sensor_list[manifest_data.addr].update_in_progress = true;
-								}else {
+								}
+								// else if(name.includes('_check')){
+								// 	let last_chunk = f.data.reduce(msbLsb);
+								// 	if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
+								// 		console.log('ERROR DETECTED IN OTA UPDATE');
+								// 		success.failures[name] = {chunk: last_chunk};
+								// 		node.gateway.clear_queue_except_last();
+								// 	} else {
+								// 		success.successes[name] = {chunk: last_chunk};
+								// 	}
+								// }
+								else {
+									console.log(name);
 									success[name] = true;
 									node.sensor_list[manifest_data.addr].test_check[name] = true;
 									node.sensor_list[manifest_data.addr].last_chunk_success = name;
-									// delete node.sensor_list[manifest_data.addr].promises[name];
 								}
 							}).catch((err) => {
-								console.log('ERROR');
-								console.log(err);
-								if(name != 'reboot'){
-									node.gateway.clear_queue();
-									success[name] = err;
-								}else{
-									delete node.sensor_list[manifest_data.addr].last_chunk_success;
-									delete node.sensor_list[manifest_data.addr].update_request;
+								// console.log('ERROR');
+								// console.log(err);
+								// if(retryCount < maxRetries && name != 'reboot') {
+								// 	retryCount++;
+								// 	console.log(`Retrying ${name} (attempt ${retryCount})...`);
+								// 	attemptPromise(); // Retry the promise
+								// } else {
+									console.log(`Max retries reached for ${name}.`);
+									if(name != 'reboot'){
+										node.gateway.clear_queue();
+										success[name] = err;
+									} else {
+										delete node.sensor_list[manifest_data.addr].last_chunk_success;
+										delete node.sensor_list[manifest_data.addr].update_request;
+										node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+										top_fulfill(success);
+									}
 									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									// #OTF
-									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-									top_fulfill(success);
-								}
-								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-								node.resume_normal_operation();
+									node.resume_normal_operation();
+								// }
 							});
-						})(i);
-					}
-				}, 1000);
+						}
+						attemptPromise(); // Start the initial attempt
+					})(i);
+				}
 			});
 		};
 		node.resume_normal_operation = function(){
