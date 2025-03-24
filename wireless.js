@@ -304,15 +304,16 @@ module.exports = function(RED) {
 						const maxRetries = 3; // Set the maximum number of retries
 
 						function attemptPromise() {
-							console.log('___________________________');
-							console.log('___________________________');
-							console.log('NEXT PACKET NAME');
 							console.log(name);
 							promises[name].then((status_frame) => {
 								console.log('SUCCESS');
 								// console.log(promises.length);
-								// console.log(status_frame);
+								console.log(name);
+								console.log(status_frame);
 								if(name == 'manifest'){
+									console.log('--------------------------')
+									console.log('--------------------------')
+									console.log('MANIFEST SUCCESFULLY SENT');
 									node.sensor_list[manifest_data.addr].test_check = {name: true};
 									node.sensor_list[manifest_data.addr].update_in_progress = true;
 								}
