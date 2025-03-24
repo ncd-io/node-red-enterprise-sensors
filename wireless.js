@@ -2600,6 +2600,14 @@ module.exports = function(RED) {
 									promises.probe_boot_time_202 = node.config_gateway.config_set_probe_boot_time_202(mac, parseInt(config.probe_boot_time_202));
 								}
 							    break;
+							case 217:
+								if(config.tare_the_scale_217){
+									promises.tare_the_scale_217 = node.config_gateway.config_set_tare_the_scale_217(mac);
+								}
+								if(config.weight_calib_217_active){
+									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
+								}
+								break;
 							case 505:
 								if(config.current_calibration_c1_80_active){
 									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);

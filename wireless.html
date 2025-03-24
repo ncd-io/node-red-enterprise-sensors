@@ -697,7 +697,12 @@
 			enable_filtering_110: {value: 0},
 
 			fly_interval_108_active: {value: ""},
-			fly_interval_108: {value: 0}
+			fly_interval_108: {value: 0},
+
+			tare_the_scale_217: {value:0},
+			weight_calib_217_active: {value: ""},
+			weight_calib_217: {value: 0}
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3250,8 +3255,8 @@
 					<div>
 						<label for="node-input-enable_rpm_calculate_status_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_rpm_calculate_status_110">
-							<option selected="selected" value="0">Enabled</option>
-							<option value="1">Disabled</option>
+							<option selected="selected" value="1">Enabled</option>
+							<option value="0">Disabled</option>
 						</select>
 					</div>
 				</div>
@@ -3275,7 +3280,8 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-112>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Thermocouple Type</strong>
+					<strong>Set Thermocouple Type</strong>
+					<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>
 					<div>
 						<label for="node-input-thermocouple_type_112_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_112_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_112" value="1">
@@ -3295,7 +3301,19 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Filter Level</strong>
+					<strong>Set Thermocouple Filter Level</strong>
+					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time.
+						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response.
+						A lower filter level offers quicker response but with potentially more noise in the data.<br>
+						<br>
+						0: Filter off (No filtering applied).<br>
+						1: Minimum filter (Light filtering, minimal impact on noise).<br>
+						2: Slightly higher filtering than level 1.<br>
+						3: Moderate filtering.<br>
+						4: Mid filter (Balanced filtering for most use cases).<br>
+						5: Stronger filtering.<br>
+						6: Higher filtering than level 5.<br>
+						7: Maximum filter (Strongest filtering for noisy environments).</p>
 					<div>
 						<label for="node-input-filter_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-filter_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-filter_thermocouple_112" value="1">
@@ -3315,7 +3333,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Cold Junction Resolution</strong>
+					<strong>Set Thermocouple Cold Junction Resolution</strong>
+					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature.
+						The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>
 					<div>
 						<label for="node-input-cold_junction_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-cold_junction_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-cold_junction_thermocouple_112" value="1">
@@ -3329,7 +3349,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP ADC Resolution</strong>
+					<strong>Set Thermocouple ADC Resolution</strong>
+					<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with
+						reduced resolution. This feature is useful to detect fast transient temperatures.</p>
 					<div>
 						<label for="node-input-sample_resolution_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-sample_resolution_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-sample_resolution_thermocouple_112" value="1">
@@ -3345,7 +3367,9 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Number of Samples</strong>
+					<strong>Set Thermocouple Number of Samples</strong>
+					<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter
+						engine is applied to each temperature sample.</p>
 					<div>
 						<label for="node-input-number_of_samples_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-number_of_samples_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-number_of_samples_thermocouple_112" value="1">
@@ -3365,7 +3389,8 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Measurement Type</strong>
+					<strong>Set Thermocuple Measurement Type</strong>
+					<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>
 					<div>
 						<label for="node-input-measurement_type_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-measurement_type_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple_112" value="1">
@@ -3380,7 +3405,7 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set MCP Operation Mode</strong>
+					<strong>Set Thermocouple Operation Mode</strong>
 					<div>
 						<label for="node-input-operation_mode_thermocouple_112_active">Active:</label>
 						<input type="checkbox" id="node-input-operation_mode_thermocouple_112_active" class="ncd-config-toggle" data-target-id="node-input-operation_mode_thermocouple_112" value="1">
@@ -4429,6 +4454,28 @@
 							<option value="23">Oak White</option>
 							<option value="24">Walnut Black</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-217>
+				<div class="form-row ncd-active-check">
+					<strong>Tare The Scale</strong>
+					<div>
+						<label for="node-input-tare_the_scale_217"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-tare_the_scale_217" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Weight Calibration</strong>
+					</div>
+					<div>
+						<label for="node-input-weight_calib_217_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-weight_calib_217_active" class="ncd-config-toggle" data-target-id="node-input-weight_calib_217" value="1">
+					</div>
+					<div>
+						<label for="node-input-weight_calib_217"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-weight_calib_217" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>
