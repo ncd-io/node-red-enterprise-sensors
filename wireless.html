@@ -701,8 +701,10 @@
 
 			tare_the_scale_217: {value:0},
 			weight_calib_217_active: {value: ""},
-			weight_calib_217: {value: 0}
+			weight_calib_217: {value: 0},
 
+			sample_rate_108_active: {value: ""},
+			sample_rate_108: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2866,6 +2868,24 @@
 							<option value="720">12 Hours</option>
 							<option value="1080">18 Hours</option>
 							<option value="1440">24 Hours</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sample Rate</strong>
+					<div>
+						<label for="node-input-sample_rate_108_active">Active:</label>
+						<input type="checkbox" id="node-input-sample_rate_108_active" class="ncd-config-toggle" data-target-id="node-input-sample_rate_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-sample_rate_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sample_rate_108">
+							<option value="0">10 Hz</option>
+							<option value="1">20 Hz</option>
+							<option value="2">50 Hz</option>
+							<option value="3">100 Hzs</option>
+							<option value="4">200 Hz</option>
+							<option value="5">400 Hz</option>
 						</select>
 					</div>
 				</div>
