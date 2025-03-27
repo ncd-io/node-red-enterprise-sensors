@@ -686,7 +686,11 @@
 			sensor_reset_120: {value:0},
 			sensor_calib_120: {value:0},
 			alert_threshold_120_active: {value: ""},
-			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)}
+			alert_threshold_120: {value: 0, validate: NCD_validators.number_range(0, 40)},
+
+			tare_the_scale_217: {value:0},
+ 			weight_calib_217_active: {value: ""},
+ 			weight_calib_217: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4326,6 +4330,28 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-217>
+ 				<div class="form-row ncd-active-check">
+ 					<strong>Tare The Scale</strong>
+ 					<div>
+ 						<label for="node-input-tare_the_scale_217"><i class="icon-tag"></i>Active:</label>
+ 						<input type="checkbox" id="node-input-tare_the_scale_217" value="1">
+ 					</div>
+ 				</div>
+ 				<div class="form-row ncd-active-check">
+ 					<div>
+ 						<strong>Set Weight Calibration</strong>
+ 					</div>
+ 					<div>
+ 						<label for="node-input-weight_calib_217_active"><i class="icon-tag"></i>Active:</label>
+ 						<input type="checkbox" id="node-input-weight_calib_217_active" class="ncd-config-toggle" data-target-id="node-input-weight_calib_217" value="1">
+ 					</div>
+ 					<div>
+ 						<label for="node-input-weight_calib_217"><i class="icon-tag"></i>  Value</label>
+ 						<input type="text" id="node-input-weight_calib_217" placeholder="0" value="0">
+ 					</div>
+ 				</div>
+ 			</div>
 		</div>
 	</div>
 </script>
