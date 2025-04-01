@@ -690,7 +690,13 @@
 
 			tare_the_scale_217: {value:0},
  			weight_calib_217_active: {value: ""},
- 			weight_calib_217: {value: 0}
+ 			weight_calib_217: {value: 0},
+
+			fly_interval_108_active: {value: ""},
+ 			fly_interval_108: {value: 0},
+
+			sample_rate_108_active: {value: ""},
+ 			sample_rate_108: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2834,6 +2840,46 @@
 						<input type="checkbox" id="node-input-rtc_108" value="1">
 					</div>
 				</div>
+				<div class="form-row ncd-active-check">
+ 					<strong>Set FLY Interval</strong>
+ 					<div>
+ 						<label for="node-input-fly_interval_108_active">Active:</label>
+ 						<input type="checkbox" id="node-input-fly_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-fly_interval_108" value="1">
+ 					</div>
+ 					<div>
+ 						<label for="node-input-fly_interval_108"><i class="icon-tag"></i>Value:</label>
+ 						<select id="node-input-fly_interval_108">
+ 							<option value="60">1 Hour</option>
+ 							<option value="120">2 Hours</option>
+ 							<option value="240">4 Hours</option>
+ 							<option value="480">8 Hours</option>
+ 							<option value="720">12 Hours</option>
+ 							<option value="1080">18 Hours</option>
+ 							<option value="1440">24 Hours</option>
+ 						</select>
+ 					</div>
+ 				</div>
+				<div class="form-row ncd-active-check">
+ 					<strong>Set Sample Rate</strong>
+					<p class="caption">
+ 						Only applies to sensor with firmware version 8 and above.
+ 					</p>
+ 					<div>
+ 						<label for="node-input-sample_rate_108_active">Active:</label>
+ 						<input type="checkbox" id="node-input-sample_rate_108_active" class="ncd-config-toggle" data-target-id="node-input-sample_rate_108" value="1">
+ 					</div>
+ 					<div>
+ 						<label for="node-input-sample_rate_108"><i class="icon-tag"></i>Value:</label>
+ 						<select id="node-input-sample_rate_108">
+ 							<option value="0">10 Hz</option>
+ 							<option value="1">20 Hz</option>
+ 							<option value="2">50 Hz</option>
+ 							<option value="3">100 Hz</option>
+ 							<option value="4">200 Hz</option>
+ 							<option value="5">400 Hz</option>
+ 						</select>
+ 					</div>
+ 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
 				<hr>
