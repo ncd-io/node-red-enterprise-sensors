@@ -1959,6 +1959,12 @@ module.exports = function(RED) {
 								if(config.quality_of_service_108_active){
 									promises.quality_of_service_108 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
 								}
+								if(config.fly_interval_108_active){
+ 									promises.fly_interval_108 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
+ 								}
+								if(config.sample_rate_108_active){
+ 									promises.sample_rate_108 = node.config_gateway.config_set_sample_rate_108(mac, parseInt(config.sample_rate_108));
+ 								}
 								break;
 							case 110:
 								if(config.odr_p1_110_active){
