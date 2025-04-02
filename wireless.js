@@ -20,6 +20,9 @@ module.exports = function(RED) {
 		this._emitter = new events.EventEmitter();
 		this.on = (e,c) => this._emitter.on(e, c);
 
+		// comms_timer object var added to clear the time to prevent issues with rapid redeploy
+		this.comms_timer;
+
 		if(config.comm_type == 'serial'){
 			this.key = config.port;
 		}
@@ -62,7 +65,7 @@ module.exports = function(RED) {
 
 				if(config.comm_type == 'serial'){
 					if(config.port !== ''){
-						setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+						this.comms_timer = setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
 					}else{
 						node.warn('No Port Selected for Serial Communications.')
 					}
@@ -70,7 +73,7 @@ module.exports = function(RED) {
 					if(config.tcp_port === '' || config.ip_address === ''){
 						node.warn('TCP Socket not configured for Network Communications. Please enter a Port and IP Address.');
 					}else{
-						setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+						this.comms_timer = setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
 					}
 				}
 				node.gateway.digi.serial.on('ready', () => {
@@ -400,11 +403,13 @@ module.exports = function(RED) {
 			if(typeof gateway_pool[this.key] != 'undefined'){
 				if(config.comm_type == 'serial'){
 					node.gateway.digi.serial.close();
+					clearTimeout(this.comms_timer);
 					// node.gateway.digi.serial.close(() => {
 					delete gateway_pool[this.key];
 					// });
 				}else{
 					node.gateway.digi.serial.close();
+					clearTimeout(this.comms_timer);
 					// node.gateway.digi.serial.close(() => {
 					delete gateway_pool[this.key];
 					// });
