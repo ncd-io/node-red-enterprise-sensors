@@ -2171,27 +2171,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
-				<div class="form-row ncd-active-check">
-					<strong>Full Scale Range</strong>
-					<div>
-						<label for="node-input-full_scale_range_101_active">Active:</label>
-						<input type="checkbox" id="node-input-full_scale_range_101_active" class="ncd-config-toggle" data-target-id="node-input-full_scale_range_101" value="1">
-					</div>
-					<div>
-						<label for="node-input-full_scale_range_101"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-full_scale_range_101">
-							<option value="0">+/- 2g</option>
-							<option value="1">+/- 4g</option>
-							<option value="2">+/- 8g</option>
-							<option value="3">+/- 16g</option>
-							<option value="4">+/- 32g</option>
-							<option value="5">+/- 64g</option>
-						</select>
-					</div>
-				</div>
-			</div>
 			<div class="ncd-dependent" data-sensor-101>
 				<div class="form-row ncd-active-check">
 					<strong>Full Scale Range</strong>
@@ -2206,21 +2185,6 @@
 							<option value="1">+/- 20g</option>
 							<option value="2">+/- 40g</option>
 						</select>
-					</div>
-				</div>
-			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
-				<div class="form-row ncd-active-check">
-					<strong>Set Dead Band in mg</strong>
-					<p>Filters out acceleration values below the dead band threshold, treating them as noise.</p>
-					<div>
-						<label for="node-input-deadband_80_active">Active:</label>
-						<input type="checkbox" id="node-input-deadband_80_active" class="ncd-config-toggle" data-target-id="node-input-deadband_80" value="35">
-					</div>
-					<div>
-						<label for="node-input-deadband_80"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-deadband_80">
 					</div>
 				</div>
 			</div>
@@ -3223,14 +3187,41 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
-					<strong>Clear Probe Uptimers</strong>
+					<strong>Full Scale Range</strong>
 					<div>
-						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
+						<label for="node-input-full_scale_range_101_active">Active:</label>
+						<input type="checkbox" id="node-input-full_scale_range_101_active" class="ncd-config-toggle" data-target-id="node-input-full_scale_range_101" value="1">
+					</div>
+					<div>
+						<label for="node-input-full_scale_range_101"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-full_scale_range_101">
+							<option value="0">+/- 2g</option>
+							<option value="1">+/- 4g</option>
+							<option value="2">+/- 8g</option>
+							<option value="3">+/- 16g</option>
+							<option value="4">+/- 32g</option>
+							<option value="5">+/- 64g</option>
+						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band in mg</strong>
+					<p>Filters out acceleration values below the dead band threshold, treating them as noise.</p>
+					<div>
+						<label for="node-input-deadband_80_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_80_active" class="ncd-config-toggle" data-target-id="node-input-deadband_80" value="35">
+					</div>
+					<div>
+						<label for="node-input-deadband_80"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_80">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
 					<div>
@@ -3290,6 +3281,13 @@
 							<option value="6400">6400 Samples</option>
 							<option value="8100">8100 Samples</option>
 						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Clear Probe Uptimers</strong>
+					<div>
+						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
 				</div>
 			</div>
