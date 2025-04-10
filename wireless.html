@@ -1675,41 +1675,28 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<hr>
 				<div class="form-row ncd-active-check">
+					<strong>Mode</strong>
+					<p>
+						- <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>
+						- <strong>Raw:</strong> The Raw data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
+						- <strong>Processed + Raw On demand:</strong> Transmit Processed data at intervals, with the option to request a Raw data packet.<br>
+						- <strong>Smart:</strong> Transmit Processed data at intervals and Raw on request, with auto Raw data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br>
+					</p>
+					<p><br>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
 					<div>
-						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.</p>
+						<label for="node-input-mode_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-mode_110_active" class="ncd-config-toggle" data-target-id="node-input-mode_110" value="1">
 					</div>
 					<div>
-						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-motion_detect_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p1_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-motion_detect_threshold_p1_110" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-111>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.<br>
-						Only applies to sensor with firmware version 24 and above.</p>
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-motion_detect_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p2_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-motion_detect_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-motion_detect_threshold_p2_110" placeholder="10" value="10">
+						<label for="node-input-mode_110"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-mode_110">
+							<option value="0">Processed</option>
+							<option value="1">Raw</option>
+							<option value="2">Processed + Raw on demand</option>
+							<option value="3">Smart</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -1780,7 +1767,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
 					<strong>Measurement Mode</strong>
 					<div>
@@ -1846,17 +1833,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTC</strong>
-					<div>
-						<label for="node-input-set_rtc_101"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-set_rtc_101" value="1">
-					</div>
-				</div>
-			</div>
-
 			<div class="ncd-dependent" data-sensor-202>
 				<hr>
 				<div class="form-row ncd-active-check">
@@ -2907,26 +2883,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
-				<hr>
-				<div class="form-row ncd-active-check">
-					<strong>Payload Length</strong>
-					<div>
-						<label for="node-input-payload_length_80_active">Active:</label>
-						<input type="checkbox" id="node-input-payload_length_80_active" class="ncd-config-toggle" data-target-id="node-input-payload_length_80" value="1">
-					</div>
-					<div>
-						<label for="node-input-payload_length_80"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-payload_length_80">
-							<option value="0">55 Bytes</option>
-							<option value="1">100 Bytes</option>
-							<option value="2">150 Bytes</option>
-							<option selected="selected" value="3">180 Bytes</option>
-						</select>
-					</div>
-				</div>
-			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filtering</strong>
@@ -3139,24 +3095,6 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
-				<hr>
-				<div class="form-row ncd-active-check">
-					<strong>Mode</strong>
-					<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>
-					<div>
-						<label for="node-input-mode_110_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-mode_110_active" class="ncd-config-toggle" data-target-id="node-input-mode_110" value="1">
-					</div>
-					<div>
-						<label for="node-input-mode_110"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-mode_110">
-							<option value="0">Processed</option>
-							<option value="1">Raw</option>
-							<option value="2">Processed + Raw on demand</option>
-							<option value="3">Smart</option>
-						</select>
-					</div>
-				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
 					<div>
@@ -3178,13 +3116,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Clear Probe Uptimers</strong>
-					<div>
-						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
-					</div>
-				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
 					<p>The interval is determined by the sample interval. If the value is set to 1 and the sample interval is 10 minutes, raw data will be sent every 10 minutes. If the value is set to 5, raw data will be sent every 50 minutes.</p>
@@ -3253,6 +3186,52 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+						<p>Valid Input Range: 0 - 40<br>
+						A value of 0 will disable this feature.</p>
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-motion_detect_threshold_p1_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p1_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p1_110"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-motion_detect_threshold_p1_110" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-111>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
+						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
+						<p>Valid Input Range: 0 - 40<br>
+						A value of 0 will disable this feature.<br>
+						Only applies to sensor with firmware version 24 and above.</p>
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-motion_detect_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_p2_110" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_p2_110"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-motion_detect_threshold_p2_110" placeholder="10" value="10">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+				<div class="form-row ncd-active-check">
+					<strong>Clear Probe Uptimers</strong>
+					<div>
+						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
 					<div>
 						<label for="node-input-fly_interval_110_active">Active:</label>
@@ -3285,6 +3264,17 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTC</strong>
+					<div>
+						<label for="node-input-set_rtc_101"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-set_rtc_101" value="1">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Max Raw Sample</strong>
 					<div>
@@ -3299,6 +3289,24 @@
 							<option value="4096">4096 Samples</option>
 							<option value="6400">6400 Samples</option>
 							<option value="8100">8100 Samples</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+				<div class="form-row ncd-active-check">
+					<strong>Payload Length</strong>
+					<div>
+						<label for="node-input-payload_length_80_active">Active:</label>
+						<input type="checkbox" id="node-input-payload_length_80_active" class="ncd-config-toggle" data-target-id="node-input-payload_length_80" value="1">
+					</div>
+					<div>
+						<label for="node-input-payload_length_80"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-payload_length_80">
+							<option value="0">55 Bytes</option>
+							<option value="1">100 Bytes</option>
+							<option value="2">150 Bytes</option>
+							<option selected="selected" value="3">180 Bytes</option>
 						</select>
 					</div>
 				</div>
