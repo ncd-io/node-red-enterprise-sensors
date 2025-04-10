@@ -3160,6 +3160,129 @@ module.exports = function(RED) {
 			res.json({needs_input: false});
 		}
 	});
+	
+	
+
+
+
+
+
+
+
+	
+	function NcdAPIConfigNode(config){
+		RED.nodes.createNode(this,config);
+
+		this._gateway_node = RED.nodes.getNode(config.connection);
+
+		this._gateway_node.open_comms();
+		this.gateway = this._gateway_node.gateway;
+
+
+
+
+		var node = this;
+
+		node.on('close', function(){
+			this._gateway_node.close_comms();
+		});
+
+		node.is_config = false;
+		var statuses =[
+			{fill:"green",shape:"dot",text:"Ready"},
+			{fill:"yellow",shape:"ring",text:"Configuring"},
+			{fill:"red",shape:"dot",text:"Failed to Connect"},
+			{fill:"green",shape:"ring",text:"Connecting..."}
+		];
+
+		node.set_status = function(){
+			node.status(statuses[node._gateway_node.is_config]);
+		};
+		
+
+		node.on('input', function(msg){
+			switch(msg.topic){
+				case 'set_desired_configs':
+					break;
+				case 'get_sensor_info':
+					break;
+				case 'get_all_sensor_info':
+					break;
+				case 'get_sensor_list':
+					break;
+				// default:
+				// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+				// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			}
+
+
+			// console.log("input triggered, topic:"+msg.topic);
+			// if(msg.topic == "transmit"){
+			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
+			// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
+			// }
+			// if(msg.topic == "route_trace"){
+			// 	var opts = {trace:1};
+			// 	node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
+			// }
+			// if(msg.topic == "link_test"){
+			// 	node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
+			// }
+			// if(msg.topic == "fft_request"){
+
+			// }
+			// if(msg.topic == "fidelity_test"){
+			// }
+		});
+		
+		node.gateway.on('ncd_error', (data) => {
+			node.send({
+				topic: 'ncd_error',
+				data: data,
+				payload: data.error,
+				time: Date.now()
+			});
+		});
+		node.gateway.on('sensor_data', (d) => {
+			node.set_status();
+			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
+		});
+		node.gateway.on('sensor_mode', (d) => {
+			node.set_status();
+			node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+		});
+		node.gateway.on('receive_packet-unknown_device',(d)=>{
+			node.set_status();
+			msg1 = {topic:'somethingTopic',payload:"something"};
+			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		});
+		node.gateway.on("route_info",(d)=>{
+			msg1 = {topic:"route_info",payload:d};
+			node.send(msg1);
+		});
+		node.gateway.on("link_info",(d)=>{
+			msg1 = {topic:"link_info",payload:d};
+			node.send(msg1);
+		});
+		node.gateway.on('converter_response', (d) => {
+			node.set_status();
+			d.topic = 'converter_response';
+			d.time = Date.now();
+			node.send(d);
+		});
+
+		node.set_status();
+		node._gateway_node.on('mode_change', (mode) => {
+			node.set_status();
+			if(this.gateway.modem_mac && this._gateway_node.is_config == 0 || this.gateway.modem_mac && this._gateway_node.is_config == 1){
+				node.send({topic: 'modem_mac', payload: this.gateway.modem_mac, time: Date.now()});
+			}else{
+				node.send({topic: 'error', payload: {code: 1, description: 'Wireless module did not respond'}, time: Date.now()});
+			}
+		});
+	}
+	// register a new node called ncd-api-config
+	RED.nodes.registerType("ncd-api-config", NcdAPIConfigNode);
 };
 function getSerialDevices(ftdi, res){
 	var busses = [];

@@ -1,6 +1,6 @@
 {
     "name": "@ncd-io/node-red-enterprise-sensors",
-    "version": "1.2.3",
+    "version": "3.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
