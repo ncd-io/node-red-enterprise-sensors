@@ -1294,6 +1294,14 @@ module.exports = function(RED) {
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
 								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
 								break;
+							case 26:
+								if(config.pressure_limit_26_active){
+									promises.pressure_limit_26 = node.config_gateway.config_set_pressure_limit_26(mac, parseInt(config.pressure_limit_26));
+								}
+								if(config.auto_pressure_check_26_active){
+									promises.auto_pressure_check_26 = node.config_gateway.config_set_auto_pressure_check_26(mac, parseInt(config.auto_pressure_check_26));
+								}
+								break;
 							case 28:
 								if(config.current_calibration_13_active){
 									var cali = parseInt(config.current_calibration_13);

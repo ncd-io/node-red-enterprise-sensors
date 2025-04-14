@@ -704,7 +704,12 @@
 			weight_calib_217: {value: 0},
 
 			sample_rate_108_active: {value: ""},
-			sample_rate_108: {value: 0}
+			sample_rate_108: {value: 0},
+
+			pressure_limit_26_active: {value: ""},
+			pressure_limit_26: {value: 5, validate: NCD_validators.number_range(5, 5000)},
+			auto_pressure_check_26_active: {value: ""},
+			auto_pressure_check_26: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4579,6 +4584,42 @@
 					<div>
 						<label for="node-input-weight_calib_217"><i class="icon-tag"></i>  Value</label>
 						<input type="text" id="node-input-weight_calib_217" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-26>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Pressure Limit</strong>
+						<p>
+							If the pressure goes above the threshold, the sensor will start sending data every second, which will quickly drain the battery.<br><br>
+							Valid range: 5 - 5000.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-pressure_limit_26_active" class="ncd-config-toggle" data-target-id="node-input-pressure_limit_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_26"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-pressure_limit_26" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Auto Pressure Check</strong>
+					<p>
+						Enable or disable the auto pressure check, keep in mind it will drain the battery if enabled.
+					</p>
+					<div>
+						<label for="node-input-auto_pressure_check_26_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_pressure_check_26_active" class="ncd-config-toggle" data-target-id="node-input-auto_pressure_check_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_pressure_check_26"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-auto_pressure_check_26">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
 					</div>
 				</div>
 			</div>
