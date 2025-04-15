@@ -2875,11 +2875,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Output Data Rate</strong>
-					<p>Set the ODR signal.<br> 
-						This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
+					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
 						In accordance with the Nyquist equation:<br>
 						<br>
-						f_max = ODR/2.56 Hz
+						f_max = ODR/2.56 Hz<br><br>
+						Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.
 					</p>
 					<div>
 						<label for="node-input-odr_p1_110_active"><i class="icon-tag"></i>Active:</label>
@@ -2905,11 +2905,11 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Output Data Rate</strong>
-					<p>Set the ODR signal for Probe 2.<br> 
-						This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
+					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
 						In accordance with the Nyquist equation:<br>
 						<br>
-						f_max = ODR/2.56 Hz
+						f_max = ODR/2.56 Hz<br><br>
+						Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.
 					</p>
 					<div>
 						<label for="node-input-odr_p2_110_active"><i class="icon-tag"></i>Active:</label>
@@ -2935,7 +2935,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Sampling Duration</strong>
 					<p>
-						The sampling duration depends on the ODR.<br>
+						Set the amount of time which the samples are taken.<br><br>
+						Note: The sampling duration depends on the ODR.<br><br>
 						1= 50msec, 2= 100msec<br>
 						Valid range: 1 - 100.
 					</p>
@@ -2953,7 +2954,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Sampling Duration</strong>
 					<p>
-						The sampling duration depends on the ODR.<br>
+						Set the amount of time which the samples are taken.<br><br>
+						Note: The sampling duration depends on the ODR.<br><br>
 						1= 50msec, 2= 100msec<br>
 						Valid range: 1 - 100.
 					</p>
@@ -3111,13 +3113,14 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
 					<p>
-						Set the Auto Time Domain (Raw) data transmission Interval.<br>
+						Set the Auto Time Domain (Raw) data transmission Interval, this interval is multiplied by the sample interval to determine how often the sensor should automatically transmit Time Domain (Raw) data.<br>
 						The Auto Raw interval is determined by the sample interval value.<br><br> 
 						Example:<br>
 						If the Auto Raw value is set to 1 and the sample interval is set to 10 minutes, 
 						Raw data will be transmitted automatically every 10 minutes.<br>
 						If the Auto Raw value is set to 5 and the sample interval is set to 10 minutes, 
 						Raw data will be transmitted automatically every 50 minutes.<br><br>
+						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
 						<label for="node-input-auto_raw_interval_110_active">Active:</label>
@@ -3134,7 +3137,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Destination Address</strong>
 					<p>
-						Set the address where the Auto Time Domain (Raw) data will be transmitted, we recommend setting this to your gateway’s address.<br>
+						Set the address where the Auto Time Domain (Raw) data will be transmitted, we recommend setting this to your gateway’s address.<br><br>
+						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
 						<label for="node-input-auto_raw_destination_110_active">Active:</label>
@@ -3151,7 +3155,9 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set Smart Mode Threshold</strong>
-					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
+						Note: This feature only works when the sensor is operating in Smart Mode.
+					</p>
 					<div>
 						<label for="node-input-smart_threshold_110_active">Active:</label>
 						<input type="checkbox" id="node-input-smart_threshold_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_110" value="1">
@@ -3165,7 +3171,9 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Set Smart Mode Threshold</strong>
-					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.</p>
+					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
+						Note: This feature only works when the sensor is operating in Smart Mode.
+					</p>
 					<div>
 						<label for="node-input-smart_threshold_p2_110_active">Active:</label>
 						<input type="checkbox" id="node-input-smart_threshold_p2_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_threshold_p2_110" value="1">
@@ -3179,7 +3187,9 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Skip Interval</strong>
-					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.</p>
+					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.<br><br>
+						Note: This feature only works when the sensor is operating in Smart Mode.
+					</p>
 					<div>
 						<label for="node-input-smart_interval_110_active">Active:</label>
 						<input type="checkbox" id="node-input-smart_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-smart_interval_110" value="1">
@@ -3263,7 +3273,7 @@
 					<p>
 						Filters out acceleration values below the dead band threshold, treating them as noise.<br>
 						This value determines the minimum acceleration would have to be for it to be registered as a measurement. Values below the threshold it  would be perceived as 0.<br><br>
-						Example: a value of 10 would mean that vibrations below 10mg would be considered as 0.
+						Example: A value of 10 would mean that vibrations below 10mg would be considered as 0.
 					</p>
 					<div>
 						<label for="node-input-deadband_80_active">Active:</label>
@@ -3279,7 +3289,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
 					<p>
-						Set the interval at which the sensor performs FLY Mode transmissions in hours.<br>
+						Set the interval at which the sensor will transmit FLY packets. FLY packets are what allows Node-Red to reconfigure the sensor so this determines how often the sensor should check in for updated configurations.<br>
 					</p>
 					<div>
 						<label for="node-input-fly_interval_110_active">Active:</label>
@@ -3301,7 +3311,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>RPM Calculate Status</strong>
 					<p>
-						Enable/Disable RPM Calculate Status<br>
+						Enable/Disable Revolutions Per Minute Calculate Status<br>
 						When a measurement sample is taken you can choose to not calculate the RPM, this will shorten the measurement time and save on battery.<br>
 					</p>
 					<div>
@@ -3333,7 +3343,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Max Raw Sample</strong>
 					<p>
-						Set the maximum number of samples the sensor captures for Time Domain data (Raw), by reducing the sample duration.
+						Set the maximum number of samples the sensor captures for Time Domain (Raw) data , by reducing the sample duration.
 					</p>
 					<div>
 						<label for="node-input-max_raw_sample_110_active"><i class="icon-tag"></i>Active:</label>
@@ -3353,15 +3363,13 @@
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<p>
-						This setting will zero out the uptime value.<br>
+						This setting will zero out the uptime value.<br><br>
+						Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.
 					</p>
 					<div>
 						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
-					<p class="caption">
-						<i>Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.</i>
-					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
