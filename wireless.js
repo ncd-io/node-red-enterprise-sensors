@@ -4,6 +4,7 @@ const sp = require('serialport');
 const Queue = require("promise-queue");
 const events = require("events");
 const fs = require('fs');
+const path = require('path');
 const home_dir = require('os').homedir
 module.exports = function(RED) {
 	var gateway_pool = {};
@@ -710,6 +711,31 @@ module.exports = function(RED) {
 							console.log(err);
 						};
 						console.log('Success');
+					});
+					fs.readdir(firmware_dir, (err, files) => {
+						if (err) {
+							node.error('Error reading firmware directory: ' + err);
+							return;
+						}
+						
+						// Create firmware files array
+						const firmwareFiles = files
+						.filter(file => file.endsWith('.ncd'))
+						.map((file) => {
+							const stats = fs.statSync(path.join(firmware_dir, file));
+							const file_info = file.split("-");
+							return {
+								file_name: file,
+								download_date: stats.mtime,
+								for_sensor_type: Number(file_info[0]),
+								for_hardware_type: file_info[1].substring(0, file_info[1].length - 4)
+							};
+						});
+						// Send firmware files list
+						node.send({
+							topic: 'local_firmware_files',
+							payload: firmwareFiles
+						});
 					});
 					node.send(new_msg);
 					break;
