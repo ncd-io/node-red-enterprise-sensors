@@ -712,31 +712,6 @@ module.exports = function(RED) {
 						};
 						console.log('Success');
 					});
-					fs.readdir(firmware_dir, (err, files) => {
-						if (err) {
-							node.error('Error reading firmware directory: ' + err);
-							return;
-						}
-						
-						// Create firmware files array
-						const firmwareFiles = files
-						.filter(file => file.endsWith('.ncd'))
-						.map((file) => {
-							const stats = fs.statSync(path.join(firmware_dir, file));
-							const file_info = file.split("-");
-							return {
-								file_name: file,
-								download_date: stats.mtime,
-								for_sensor_type: Number(file_info[0]),
-								for_hardware_type: file_info[1].substring(0, file_info[1].length - 4)
-							};
-						});
-						// Send firmware files list
-						node.send({
-							topic: 'local_firmware_files',
-							payload: firmwareFiles
-						});
-					});
 					node.send(new_msg);
 					break;
 				// case "get_firmware_file":
@@ -751,6 +726,32 @@ module.exports = function(RED) {
 					// 	device_type: 80,
 					// 	hardware_id: [88, 88, 88]
 					// }
+					let fw_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
+					fs.readdir(fw_dir, (err, files) => {
+						if (err) {
+							node.error('Error reading firmware directory: ' + err);
+							return;
+						}
+						
+						// Create firmware files array
+						const firmwareFiles = files
+						.filter(file => file.endsWith('.ncd'))
+						.map((file) => {
+							const stats = fs.statSync(path.join(fw_dir, file));
+							const file_info = file.split("-");
+							return {
+								file_name: file,
+								download_date: stats.mtime,
+								for_sensor_type: Number(file_info[0]),
+								for_hardware_id: file_info[1].substring(0, file_info[1].length - 4)
+							};
+						});
+						// Send firmware files list
+						node.send({
+							topic: 'check_firmware_file_response',
+							payload: firmwareFiles
+						});
+					});
 					break;
 				case "ota_firmware_update_single":
 					// msg.payload = {

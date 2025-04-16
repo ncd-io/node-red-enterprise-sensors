@@ -1689,11 +1689,11 @@
 					<strong>Mode</strong>
 					<p><br>
 						• <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>
-						• <strong>Raw:</strong> The Raw data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
+						• <strong>Raw (Time Domain Data):</strong> The Raw data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
 						• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Raw data packet.<br>
 						• <strong>Smart:</strong> Transmit Processed data at intervals and Raw on request, with auto Raw data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br>
 					</p>
-					<p><br><i><strong>WARNING</strong>: If Mode is set to Raw, Raw on demand or Auto Raw (in Smart Mode) it is recommended to also set the Destination Address (Auto Raw Destination Address in Smart mode) configuration to the address of your Receiver/Gateway.</i></p>
+					<p><br><i><strong>WARNING</strong>: If Mode is set to Time Domain (Raw) data or Auto Time Domain (Raw) data (in Smart Mode) it is recommended to also set the Destination Address (Auto Raw Destination Address in Smart mode) configuration to the address of your Receiver/Gateway.</i></p>
 					<div>
 						<label for="node-input-mode_110_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-mode_110_active" class="ncd-config-toggle" data-target-id="node-input-mode_110" value="1">
