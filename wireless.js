@@ -286,20 +286,14 @@ module.exports = function(RED) {
 					let offset_bytes = int2Bytes(offset, 4);
 					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
 					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
-					if(((index + 1) % 25) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
+					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
 						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
 					};
 					index++;
 				}
-				console.log('___________________________');
-				console.log('___________________________');
-				console.log('___________________________');
 				console.log('Update Started');
 				console.log(Object.keys(promises).length);
 				console.log(Date.now());
-				console.log('___________________________');
-				console.log('___________________________');
-				console.log('___________________________');
 				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
 				var firmware_continue = true;
 				for(var i in promises){
@@ -310,76 +304,47 @@ module.exports = function(RED) {
 						function attemptPromise() {
 							console.log(name);
 							promises[name].then((status_frame) => {
-								console.log('SUCCESS');
-								// console.log(promises.length);
-								console.log(name);
-								console.log(status_frame);
 								if(name == 'manifest'){
-									console.log('--------------------------')
-									console.log('--------------------------')
 									console.log('MANIFEST SUCCESFULLY SENT');
 									node.sensor_list[manifest_data.addr].test_check = {name: true};
 									node.sensor_list[manifest_data.addr].update_in_progress = true;
 								}
 								else if(name.includes('_check')){
-									console.log('___________________________');
-									console.log('___________________________');
-									console.log('CHECKING');
 									console.log(name);
-									console.log(status_frame);
-									console.log('Alpha');
 									console.log(parseInt(name.split('_')[0]) * chunk_size);
-									console.log('Bravo');
 									let last_chunk = status_frame.data.reduce(msbLsb);
 									console.log(last_chunk);
-									console.log('Charlie');
-									console.log(status_frame);
-									console.log('Delta');
 									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
 										console.log('ERROR DETECTED IN OTA UPDATE');
 										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
-										node.gateway.clear_queue_except_last();
+										// node.gateway.clear_queue_except_last();
+										node.gateway.clear_queue();
+										node.resume_normal_operation();
 									} else {
 										success.successes[name] = {chunk: last_chunk};
 									}
 								}
 								else {
-									console.log(name);
 									success[name] = true;
 									node.sensor_list[manifest_data.addr].test_check[name] = true;
 									node.sensor_list[manifest_data.addr].last_chunk_success = name;
 								}
 							}).catch((err) => {
-								// console.log('ERROR');
-								// console.log(err);
-								// if(retryCount < maxRetries && name != 'reboot') {
-								// 	retryCount++;
-								// 	console.log(`Retrying ${name} (attempt ${retryCount})...`);
-								// 	attemptPromise(); // Retry the promise
-								// } else {
-									console.log(`Max retries reached for ${name}.`);
-									console.log(err);
-									if(name != 'reboot'){
-										node.gateway.clear_queue();
-										success[name] = err;
-									} else {
-										delete node.sensor_list[manifest_data.addr].last_chunk_success;
-										delete node.sensor_list[manifest_data.addr].update_request;
-										node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-										top_fulfill(success);
-									}
-									console.log('___________________________');
-									console.log('___________________________');
-									console.log('___________________________');
-									console.log('Update Finished')
-									console.log(Object.keys(promises).length);
-									console.log(Date.now());
-									console.log('___________________________');
-									console.log('___________________________');
-									console.log('___________________________');
+								console.log(name);
+								console.log(err);
+								if(name != 'reboot'){
+									node.gateway.clear_queue();
+									success[name] = err;
+								} else {
+									delete node.sensor_list[manifest_data.addr].last_chunk_success;
+									delete node.sensor_list[manifest_data.addr].update_request;
 									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									node.resume_normal_operation();
-								// }
+									top_fulfill(success);
+								}
+								console.log('Update Finished')
+								console.log(Date.now());
+								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+								node.resume_normal_operation();
 							});
 						}
 						attemptPromise(); // Start the initial attempt
