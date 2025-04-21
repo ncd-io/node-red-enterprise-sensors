@@ -1065,6 +1065,9 @@ module.exports = function(RED) {
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 4:
 								if(config.thermocouple_type_23_active){
@@ -1176,6 +1179,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 15:
 								if(config.sensor_boot_time_420ma_active){
@@ -1195,6 +1201,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 19:
@@ -1435,6 +1444,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 46:
 								if(config.motion_threshold_46_active){
@@ -1468,6 +1480,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 52:
 								if(config.sensor_boot_time_420ma_active){
@@ -1487,6 +1502,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 53:
@@ -1518,6 +1536,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 58:
@@ -1791,6 +1812,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 88:
 								if(config.sensor_boot_time_420ma_active){
@@ -1810,6 +1834,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 89:
@@ -1831,6 +1858,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 90:
 								if(config.sensor_boot_time_420ma_active){
@@ -1850,6 +1880,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 91:
@@ -1876,6 +1909,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 96:
 								if(config.sensor_boot_time_420ma_active){
@@ -1895,6 +1931,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 97:
@@ -2003,6 +2042,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 106:
 								if(config.sensor_boot_time_420ma_active){
@@ -2023,6 +2065,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 107:
 								if(config.sensor_boot_time_420ma_active){
@@ -2042,6 +2087,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 108:
@@ -2493,6 +2541,9 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_122 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
 								break;
 							case 180:
 								if(config.output_data_rate_101_active){
@@ -2603,6 +2654,9 @@ module.exports = function(RED) {
 								}
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 202:
@@ -2866,6 +2920,9 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								break;
 							case 1010:

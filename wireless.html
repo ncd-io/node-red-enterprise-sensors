@@ -709,7 +709,10 @@
 			pressure_limit_26_active: {value: ""},
 			pressure_limit_26: {value: 5, validate: NCD_validators.number_range(5, 5000)},
 			auto_pressure_check_26_active: {value: ""},
-			auto_pressure_check_26: {value: 0}
+			auto_pressure_check_26: {value: 0},
+
+			fsr_420ma_active: {value: ""},
+			fsr_420ma: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2331,6 +2334,24 @@
 					<div>
 						<label for="node-input-high_calibration_420ma"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-high_calibration_420ma" placeholder="68714" value="68714">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FSR</strong>
+					<div>
+						<label for="node-input-fsr_420ma_active">Active:</label>
+						<input type="checkbox" id="node-input-fsr_420ma_active" class="ncd-config-toggle" data-target-id="node-input-fsr_420ma" value="1">
+					</div>
+					<div>
+						<label for="node-input-fsr_420ma"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-fsr_420ma">
+							<option value="5">0.256</option>
+							<option value="4">0.512</option>
+							<option value="3">1.024</option>
+							<option value="2">2.048</option>
+							<option value="1">4.096</option>
+							<option value="0" selected>6.114</option>
+						</select>
 					</div>
 				</div>
 			</div>
