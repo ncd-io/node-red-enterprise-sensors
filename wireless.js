@@ -909,7 +909,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -2974,7 +2974,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
