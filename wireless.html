@@ -1692,9 +1692,9 @@
 					<strong>Mode</strong>
 					<p><br>
 						• <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>
-						• <strong>Raw (Time Domain Data):</strong> The Raw data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
-						• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Raw data packet.<br>
-						• <strong>Smart:</strong> Transmit Processed data at intervals and Raw on request, with auto Raw data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br>
+						• <strong>Time Domain (Raw):</strong> The Time Domain (Raw) data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
+						• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Time Domain (Raw) data packet.<br>
+						• <strong>Smart:</strong> Transmit Processed data at intervals and Time Domain (Raw) data on request, with auto Time Domain (Raw) data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br>
 					</p>
 					<p><br><i><strong>WARNING</strong>: If Mode is set to Time Domain (Raw) data or Auto Time Domain (Raw) data (in Smart Mode) it is recommended to also set the Destination Address (Auto Raw Destination Address in Smart mode) configuration to the address of your Receiver/Gateway.</i></p>
 					<div>
@@ -3115,7 +3115,9 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
-					<p>Set how often will the sensor transmit measurement data.</p>
+					<p>Set how often will the sensor transmit measurement data.<br><br>
+					Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.
+					</p>
 					<div>
 						<label for="node-input-sampling_interval_110_active">Active: </label>
 						<input type="checkbox" id="node-input-sampling_interval_110_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_110" value="1">
@@ -3144,9 +3146,9 @@
 						The Auto Raw interval is determined by the sample interval value.<br><br> 
 						Example:<br>
 						If the Auto Raw value is set to 1 and the sample interval is set to 10 minutes, 
-						Raw data will be transmitted automatically every 10 minutes.<br>
+						Time Domain (Raw) data will be transmitted automatically every 10 minutes.<br>
 						If the Auto Raw value is set to 5 and the sample interval is set to 10 minutes, 
-						Raw data will be transmitted automatically every 50 minutes.<br><br>
+						Time Domain (Raw) data will be transmitted automatically every 50 minutes.<br><br>
 						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
