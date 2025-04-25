@@ -1068,6 +1068,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 4:
 								if(config.thermocouple_type_23_active){
@@ -1182,6 +1185,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 15:
 								if(config.sensor_boot_time_420ma_active){
@@ -1204,6 +1210,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 19:
@@ -1447,6 +1456,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 46:
 								if(config.motion_threshold_46_active){
@@ -1483,6 +1495,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 52:
 								if(config.sensor_boot_time_420ma_active){
@@ -1505,6 +1520,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 53:
@@ -1539,6 +1557,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 58:
@@ -1815,6 +1836,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 88:
 								if(config.sensor_boot_time_420ma_active){
@@ -1837,6 +1861,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 89:
@@ -1861,6 +1888,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 90:
 								if(config.sensor_boot_time_420ma_active){
@@ -1883,6 +1913,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 91:
@@ -1912,6 +1945,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 96:
 								if(config.sensor_boot_time_420ma_active){
@@ -1934,6 +1970,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 97:
@@ -2045,6 +2084,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 106:
 								if(config.sensor_boot_time_420ma_active){
@@ -2068,6 +2110,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 107:
 								if(config.sensor_boot_time_420ma_active){
@@ -2090,6 +2135,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 108:
@@ -2544,6 +2592,9 @@ module.exports = function(RED) {
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 180:
 								if(config.output_data_rate_101_active){
@@ -2657,6 +2708,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 202:
@@ -2923,6 +2977,9 @@ module.exports = function(RED) {
 								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 1010:

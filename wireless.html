@@ -712,7 +712,9 @@
 			auto_pressure_check_26: {value: 0},
 
 			fsr_420ma_active: {value: ""},
-			fsr_420ma: {value: 0}
+			fsr_420ma: {value: 0},
+			always_on_420ma_active: {value: ""},
+			always_on_420ma: {value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2355,6 +2357,21 @@
 							<option value="2">2.048</option>
 							<option value="1">4.096</option>
 							<option value="0" selected>6.114</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Always On</strong>
+					<p>This command will keep the external power to the sensor always enabled.</p>
+					<div>
+						<label for="node-input-always_on_420ma_active">Active:</label>
+						<input type="checkbox" id="node-input-always_on_420ma_active" class="ncd-config-toggle" data-target-id="node-input-always_on_420ma" value="1">
+					</div>
+					<div>
+						<label for="node-input-always_on_420ma"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-always_on_420ma">
+							<option value="0" selected>Disable</option>
+							<option value="1">Enable</option>
 						</select>
 					</div>
 				</div>
