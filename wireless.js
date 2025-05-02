@@ -1251,6 +1251,12 @@ module.exports = function(RED) {
 								if(config.pressure_sensor_type_21_active){
 									promises.pressure_sensor_type_21 = node.config_gateway.config_set_pressure_sensor_type_21(mac, parseInt(config.pressure_sensor_type_21));
 								}
+								if(config.pressure_sensor_range_AMS5812_21_active){
+									promises.pressure_sensor_range_AMS5812_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5812_21));
+								}
+								if(config.pressure_sensor_range_AMS5915_21_active){
+									promises.pressure_sensor_range_AMS5915_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5915_21));
+								}
 								break;
 							case 23:
 								if(config.thermocouple_type_23_active){
