@@ -739,10 +739,10 @@ module.exports = function(RED) {
 					// }
 					// TODO unfinished
 					msg.payload.addresses.forEach((address) => {
-						if(!Object.hasOwn(node._gateway_node.sensor_list, msg.payload.address)){
+						if(!Object.hasOwn(node._gateway_node.sensor_list, address)){
 							node._gateway_node.sensor_list[address] = {};
 						};
-						if(!Object.hasOwn(node._gateway_node.sensor_list[msg.payload.address], 'update_request')){
+						if(!Object.hasOwn(node._gateway_node.sensor_list[address], 'update_request')){
 							node._gateway_node.sensor_list[address].update_request = true;
 						};
 					});
