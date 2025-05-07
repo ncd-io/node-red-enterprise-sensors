@@ -555,10 +555,13 @@ module.exports = function(RED) {
 					// 	'description': 'Query water levels in mm/cm',
 					// 	'target_parser': 'parse_water_levels'
 					// }
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
 					if(msg.payload.hasOwnProperty('meta')){
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta, msg.payload.timeout);
 					}else{
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, null, msg.payload.timeout);
 					}
 					break;
 				case "converter_send_multiple":
@@ -583,7 +586,10 @@ module.exports = function(RED) {
 					// 		}
 					// 	}
 					// ];
-					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
+					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands, msg.payload.timeout);
 					break;
 				case "start_luber":
 					// msg = {
