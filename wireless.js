@@ -162,7 +162,6 @@ module.exports = function(RED) {
 														console.log('OLD PROCESSS');
 														console.log(manifest_data);
 														node.start_firmware_update(manifest_data, firmware_data);
-														
 													}
 												});
 											}
@@ -543,6 +542,17 @@ module.exports = function(RED) {
 
 		node.on('close', function(){
 			this._gateway_node.close_comms();
+			this._gateway_node._emitter.removeAllListeners('send_manifest');
+			this._gateway_node._emitter.removeAllListeners('send_firmware_stats');
+			this._gateway_node._emitter.removeAllListeners('mode_change');
+			this.gateway._emitter.removeAllListeners('ncd_error');
+			this.gateway._emitter.removeAllListeners('sensor_data');
+			this.gateway._emitter.removeAllListeners('sensor_mode');
+			this.gateway._emitter.removeAllListeners('receive_packet-unknown_device');
+			this.gateway._emitter.removeAllListeners('route_info');
+			this.gateway._emitter.removeAllListeners('link_info');
+			this.gateway._emitter.removeAllListeners('converter_response');
+			console.log(this.gateway._emitter.eventNames());
 		});
 
 		node.is_config = false;
@@ -3449,9 +3459,10 @@ module.exports = function(RED) {
 			for(var p in pgm_events){
 				node.config_gateway._emitter.removeAllListeners(p);
 			}
+
 			node.gateway_node.close_comms();
 			if(typeof node.config_gateway_node != 'undefined'){
-				node.config_gateway_node.close_comms();
+				console.log(node.config_gateway_node.close_comms());
 			}
 		});
 	}
