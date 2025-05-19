@@ -552,6 +552,7 @@ module.exports = function(RED) {
 			this.gateway._emitter.removeAllListeners('route_info');
 			this.gateway._emitter.removeAllListeners('link_info');
 			this.gateway._emitter.removeAllListeners('converter_response');
+			this.gateway._emitter.removeAllListeners('manifest_received');
 			console.log(this.gateway._emitter.eventNames());
 		});
 
