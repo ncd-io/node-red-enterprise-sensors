@@ -356,23 +356,48 @@ module.exports = function(RED) {
 			});
 		};
 		node.start_firmware_update_v17 = function(manifest_data, firmware_data){
-			console.log('V17');
+			console.log('V17 Update Start');
+			var start_offset = 0;
+			setTimeout(() => {
+				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+					node.gateway.firmware_read_last_chunk_segment(manifest_data.addr).then((status_frame) => {
+						console.log('Last Chunk Segment Read');
+						console.log(status_frame);
+						start_offset = status_frame.data.slice(4,8).reduce(msbLsb);
+						node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+					}).catch((err) => {
+						// TODO FOTA EMIT ERROR FOTA
+						console.log('Error reading last chunk segment');
+						node.resume_normal_operation();
+					});
+				}else{
+					node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+				};
+			}, 1000);
+		};
+		node.queue_firmware_update_v17 = function(manifest_data, firmware_data, start_offset){
+			console.log('V17 Queue Update Start');
+			console.log('Start Offset: '+start_offset);
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {successes:{}, failures:{}};
 
 				let chunk_size = 128;
 				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-
-				var promises = {
-					manifest: node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1))
+				var promises = {};
+				if(start_offset == 0){
+					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
 				};
 				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
 				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
 
-				var index = 0;
-				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-					index = node.sensor_list[manifest_data.addr].last_chunk_success;
-				}
+				// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+				// 	index = node.sensor_list[manifest_data.addr].last_chunk_success;
+				// }
+
+				// reverse calculate index based on start_offset.
+				var index = parseInt(start_offset / chunk_size);
+				console.log('~~~~~~~~~~~~~~~~~~~~~~~');
+				console.log('Index: '+index);
 				while(index*chunk_size < firmware_data.manifest.image_size){
 					let offset = index*chunk_size;
 					let offset_bytes = int2Bytes(offset, 4);
@@ -418,6 +443,8 @@ module.exports = function(RED) {
 								}
 								else {
 									success[name] = true;
+									console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+									console.log(node.sensor_list[manifest_data.addr]);
 									node.sensor_list[manifest_data.addr].test_check[name] = true;
 									node.sensor_list[manifest_data.addr].last_chunk_success = name;
 								}
@@ -443,7 +470,7 @@ module.exports = function(RED) {
 					})(i);
 				}
 			});
-		};
+		}
 		node.resume_normal_operation = function(){
 			let pan_id = parseInt(config.pan_id, 16);
 			node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then().catch().then(() => {
