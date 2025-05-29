@@ -396,7 +396,6 @@ module.exports = function(RED) {
 
 				// reverse calculate index based on start_offset.
 				var index = parseInt(start_offset / chunk_size);
-				console.log('~~~~~~~~~~~~~~~~~~~~~~~');
 				console.log('Index: '+index);
 				while(index*chunk_size < firmware_data.manifest.image_size){
 					let offset = index*chunk_size;
@@ -443,8 +442,6 @@ module.exports = function(RED) {
 								}
 								else {
 									success[name] = true;
-									console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-									console.log(node.sensor_list[manifest_data.addr]);
 									node.sensor_list[manifest_data.addr].test_check[name] = true;
 									node.sensor_list[manifest_data.addr].last_chunk_success = name;
 								}
