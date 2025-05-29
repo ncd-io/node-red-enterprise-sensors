@@ -150,15 +150,18 @@ module.exports = function(RED) {
 												// enter ota mode
 												node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
 													console.log(manifest_data);
-													if(manifest_data.enter_ota_fota_version <13){
-														console.log('OLD PROCESSS');
+													if(manifest_data.enter_ota_fota_version > 16){
+														console.log('V17 PROCESS');
 														console.log(manifest_data);
-														// console.log(firmware_data);
-														node.start_firmware_update(manifest_data, firmware_data);
-													}else{
-														console.log('NEW PROCESS');
+														node.start_firmware_update_v17(manifest_data, firmware_data);
+													}else if(manifest_data.enter_ota_fota_version > 12){
+														console.log('V13 PROCESS');
 														console.log(manifest_data);
 														node.start_firmware_update_v13(manifest_data, firmware_data);
+													}else{
+														console.log('OLD PROCESSS');
+														console.log(manifest_data);
+														node.start_firmware_update(manifest_data, firmware_data);
 													}
 												});
 											}
@@ -352,6 +355,119 @@ module.exports = function(RED) {
 				}
 			});
 		};
+		node.start_firmware_update_v17 = function(manifest_data, firmware_data){
+			console.log('V17 Update Start');
+			var start_offset = 0;
+			setTimeout(() => {
+				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+					node.gateway.firmware_read_last_chunk_segment(manifest_data.addr).then((status_frame) => {
+						console.log('Last Chunk Segment Read');
+						console.log(status_frame);
+						start_offset = status_frame.data.slice(4,8).reduce(msbLsb);
+						node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+					}).catch((err) => {
+						// TODO FOTA EMIT ERROR FOTA
+						console.log('Error reading last chunk segment');
+						node.resume_normal_operation();
+					});
+				}else{
+					node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+				};
+			}, 1000);
+		};
+		node.queue_firmware_update_v17 = function(manifest_data, firmware_data, start_offset){
+			console.log('V17 Queue Update Start');
+			console.log('Start Offset: '+start_offset);
+			return new Promise((top_fulfill, top_reject) => {
+				var success = {successes:{}, failures:{}};
+
+				let chunk_size = 128;
+				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+				var promises = {};
+				if(start_offset == 0){
+					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				};
+				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+
+				// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+				// 	index = node.sensor_list[manifest_data.addr].last_chunk_success;
+				// }
+
+				// reverse calculate index based on start_offset.
+				var index = parseInt(start_offset / chunk_size);
+				console.log('Index: '+index);
+				while(index*chunk_size < firmware_data.manifest.image_size){
+					let offset = index*chunk_size;
+					let offset_bytes = int2Bytes(offset, 4);
+					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
+					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
+						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
+					};
+					index++;
+				}
+				console.log('Update Started');
+				console.log(Object.keys(promises).length);
+				console.log(Date.now());
+				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+				var firmware_continue = true;
+				for(var i in promises){
+					(function(name){
+						let retryCount = 0;
+						const maxRetries = 3; // Set the maximum number of retries
+
+						function attemptPromise() {
+							console.log(name);
+							promises[name].then((status_frame) => {
+								if(name == 'manifest'){
+									console.log('MANIFEST SUCCESFULLY SENT');
+									node.sensor_list[manifest_data.addr].test_check = {name: true};
+									node.sensor_list[manifest_data.addr].update_in_progress = true;
+								}
+								else if(name.includes('_check')){
+									console.log(name);
+									console.log(parseInt(name.split('_')[0]) * chunk_size);
+									let last_chunk = status_frame.data.slice(0,4).reduce(msbLsb);
+									console.log(last_chunk);
+									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
+										console.log('ERROR DETECTED IN OTA UPDATE');
+										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
+										// node.gateway.clear_queue_except_last();
+										node.gateway.clear_queue();
+										node.resume_normal_operation();
+									} else {
+										success.successes[name] = {chunk: last_chunk};
+									}
+								}
+								else {
+									success[name] = true;
+									node.sensor_list[manifest_data.addr].test_check[name] = true;
+									node.sensor_list[manifest_data.addr].last_chunk_success = name;
+								}
+							}).catch((err) => {
+								console.log(name);
+								console.log(err);
+								if(name != 'reboot'){
+									node.gateway.clear_queue();
+									success[name] = err;
+								} else {
+									delete node.sensor_list[manifest_data.addr].last_chunk_success;
+									delete node.sensor_list[manifest_data.addr].update_request;
+									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+									top_fulfill(success);
+								}
+								console.log('Update Finished')
+								console.log(Date.now());
+								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+								node.resume_normal_operation();
+							});
+						}
+						attemptPromise(); // Start the initial attempt
+					})(i);
+				}
+			});
+		}
 		node.resume_normal_operation = function(){
 			let pan_id = parseInt(config.pan_id, 16);
 			node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then().catch().then(() => {
@@ -450,6 +566,18 @@ module.exports = function(RED) {
 
 		node.on('close', function(){
 			this._gateway_node.close_comms();
+			this._gateway_node._emitter.removeAllListeners('send_manifest');
+			this._gateway_node._emitter.removeAllListeners('send_firmware_stats');
+			this._gateway_node._emitter.removeAllListeners('mode_change');
+			this.gateway._emitter.removeAllListeners('ncd_error');
+			this.gateway._emitter.removeAllListeners('sensor_data');
+			this.gateway._emitter.removeAllListeners('sensor_mode');
+			this.gateway._emitter.removeAllListeners('receive_packet-unknown_device');
+			this.gateway._emitter.removeAllListeners('route_info');
+			this.gateway._emitter.removeAllListeners('link_info');
+			this.gateway._emitter.removeAllListeners('converter_response');
+			this.gateway._emitter.removeAllListeners('manifest_received');
+			console.log(this.gateway._emitter.eventNames());
 		});
 
 		node.is_config = false;
@@ -555,10 +683,13 @@ module.exports = function(RED) {
 					// 	'description': 'Query water levels in mm/cm',
 					// 	'target_parser': 'parse_water_levels'
 					// }
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
 					if(msg.payload.hasOwnProperty('meta')){
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta, msg.payload.timeout);
 					}else{
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, null, msg.payload.timeout);
 					}
 					break;
 				case "converter_send_multiple":
@@ -583,7 +714,10 @@ module.exports = function(RED) {
 					// 		}
 					// 	}
 					// ];
-					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
+					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands, msg.payload.timeout);
 					break;
 				case "start_luber":
 					// msg = {
@@ -739,10 +873,10 @@ module.exports = function(RED) {
 					// }
 					// TODO unfinished
 					msg.payload.addresses.forEach((address) => {
-						if(!Object.hasOwn(node._gateway_node.sensor_list, msg.payload.address)){
+						if(!Object.hasOwn(node._gateway_node.sensor_list, address)){
 							node._gateway_node.sensor_list[address] = {};
 						};
-						if(!Object.hasOwn(node._gateway_node.sensor_list[msg.payload.address], 'update_request')){
+						if(!Object.hasOwn(node._gateway_node.sensor_list[address], 'update_request')){
 							node._gateway_node.sensor_list[address].update_request = true;
 						};
 					});
@@ -1250,6 +1384,12 @@ module.exports = function(RED) {
 							case 21:
 								if(config.pressure_sensor_type_21_active){
 									promises.pressure_sensor_type_21 = node.config_gateway.config_set_pressure_sensor_type_21(mac, parseInt(config.pressure_sensor_type_21));
+								}
+								if(config.pressure_sensor_range_AMS5812_21_active){
+									promises.pressure_sensor_range_AMS5812_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5812_21));
+								}
+								if(config.pressure_sensor_range_AMS5915_21_active){
+									promises.pressure_sensor_range_AMS5915_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5915_21));
 								}
 								break;
 							case 23:
@@ -3344,9 +3484,10 @@ module.exports = function(RED) {
 			for(var p in pgm_events){
 				node.config_gateway._emitter.removeAllListeners(p);
 			}
+
 			node.gateway_node.close_comms();
 			if(typeof node.config_gateway_node != 'undefined'){
-				node.config_gateway_node.close_comms();
+				console.log(node.config_gateway_node.close_comms());
 			}
 		});
 	}
