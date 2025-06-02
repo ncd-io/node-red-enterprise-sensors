@@ -836,6 +836,7 @@
 					"120": "120 - Wireless H2S Sensor",
 					"121": "121 - Wireless Wood Moisture Sensor",
 					"122": "122 - Wireless 4-20mA Current Splitter",
+					"123": "123 - 3 Channel Production Counter",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -1140,6 +1141,7 @@
 			<option value="120">120 - Wireless H2S Sensor</option>
 			<option value="121">121 - Wireless Wood Moisture Sensor</option>
 			<option value="122">122 - Wireless 4-20mA Current Splitter</option>
+			<option value="123">123 - 3 Channel Production Counter</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1177,7 +1179,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2527,7 +2529,22 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-33>
+			<div class="ncd-dependent" data-sensor-123>
+				<div class="form-row ncd-active-check">
+					<strong>Clear Counters</strong>
+					<div>
+						<label for="node-input-clear_timers_108_active">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_108_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-clear_timers_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-clear_timers_108">
+							<option value="7" selected>Digital in 1, 2 and 3</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -2617,7 +2634,51 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-33>
+			<div class="ncd-dependent" data-sensor-123>
+				<div class="form-row ncd-active-check">
+					<strong>Set Digital Input 1 Detection</strong>
+					<div>
+						<label for="node-input-input_one_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_one_108_active" class="ncd-config-toggle" data-target-id="node-input-input_one_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_one_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_one_108">
+							<option value="0">Falling Edge Trigger</option>
+							<option value="1" selected>Rising Edge Trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Digital Input 2 Detection</strong>
+					<div>
+						<label for="node-input-input_two_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_two_108">
+							<option value="0">Falling Edge Trigger</option>
+							<option value="1" selected>Rising Edge Trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Digital Input 3 Detection</strong>
+					<div>
+						<label for="node-input-input_three_108_active">Active:</label>
+						<input type="checkbox" id="node-input-input_three_108_active" class="ncd-config-toggle" data-target-id="node-input-input_three_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_three_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_three_108">
+							<option value="0" selected>Falling Edge Trigger</option>
+							<option value="1">Rising Edge Trigger</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
@@ -2701,6 +2762,36 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-123>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p>
+						IO1-Digital Input 1<br>
+						IO2-Digital Input 2<br>
+						IO3-Digital Input 3<br>
+					</p>
+					<div>
+						<label for="node-input-push_notification_108_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_108_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_108">
+							<option value="0" selected>Disable All</option>
+							<!-- <option value="31">Enable All</option> -->
+							<option value="1">Enable on IO1</option>
+							<option value="2">Enable on IO2</option>
+							<option value="4">Enable on IO3</option>
+							<option value="3">Enable on IO1 and IO2</option>
+							<option value="5">Enable on IO1 and IO3</option>
+							<option value="6">Enable on IO2 and IO3</option>
+							<option value="7">Enable on IO1, IO2 and IO3</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
@@ -2876,6 +2967,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Sample Rate</strong>
 					<p class="caption">
