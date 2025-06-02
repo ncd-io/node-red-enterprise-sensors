@@ -2412,6 +2412,12 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_110 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_110 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 111:
 								if(config.odr_p1_110_active){
@@ -2497,6 +2503,12 @@ module.exports = function(RED) {
 								}
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_111 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_111 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
 								}
 								break;
 							case 112:
@@ -2590,6 +2602,12 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_112 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_112 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 114:
 								if(config.odr_p1_110_active){
@@ -2666,6 +2684,12 @@ module.exports = function(RED) {
 								}
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
+								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_114 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_114 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
 								}
 								break;
 							case 118:

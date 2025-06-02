@@ -719,7 +719,12 @@
 			pressure_sensor_range_AMS5812_21_active: {value: ""},
 			pressure_sensor_range_AMS5812_21: {value: 0},
 			pressure_sensor_range_AMS5915_21_active: {value: ""},
-			pressure_sensor_range_AMS5915_21: {value: 0}
+			pressure_sensor_range_AMS5915_21: {value: 0},
+			
+			motion_to_sampling_delay_110_active: {value: ""},
+			motion_to_sampling_delay_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
+			max_num_motion_tx_delay_110_active: {value: ""},
+			max_num_motion_tx_delay_110: {value: 1, validate: NCD_validators.number_range(1, 255)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3416,6 +3421,44 @@
 						<label for="node-input-clear_probe_uptimers_110"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Motion to Sampling Delay</strong>
+					<p>
+						Once motion is detected, the sensor will wait for the configured duration before sampling and computing vibration data.<br>
+						1= 50msec, 2= 100msec, 100= 5000msec (5sec)<br><br>
+						**Only applies to sensor with firmware version 6 and above.
+					</p>
+					<div>
+						<label for="node-input-motion_to_sampling_delay_110_active">Active:</label>
+						<input type="checkbox" id="node-input-motion_to_sampling_delay_110_active" class="ncd-config-toggle" data-target-id="node-input-motion_to_sampling_delay_110" value="35">
+					</div>
+					<div>
+						<label for="node-input-motion_to_sampling_delay_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-motion_to_sampling_delay_110">
+					</div>
+					<p class="caption">
+						Default value: 100 (5000msec)
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Number Motion Tx Per Interval</strong>
+					<p>
+						Set Number of times it will send data due to motion triggers.<br><br>
+						**Only applies to sensor with firmware version 6 and above.
+					</p>
+					<div>
+						<label for="node-input-max_num_motion_tx_delay_110_active">Active:</label>
+						<input type="checkbox" id="node-input-max_num_motion_tx_delay_110_active" class="ncd-config-toggle" data-target-id="node-input-max_num_motion_tx_delay_110" value="35">
+					</div>
+					<div>
+						<label for="node-input-max_num_motion_tx_delay_110"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_num_motion_tx_delay_110">
+					</div>
+					<p class="caption">
+						Default value: 1<br>
+						<i>Note: Setting this to a higher value will drain the battery.</i>
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
