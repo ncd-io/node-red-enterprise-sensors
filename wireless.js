@@ -1043,7 +1043,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -2201,6 +2201,32 @@ module.exports = function(RED) {
 								// 	promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
 								// }
 								// promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
+								break;
+							case 103:
+								if(config.output_data_rate_103_active){
+									promises.output_data_rate_103 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_103));
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_103 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.enable_sensor_103_active){
+									promises.enable_sensor_103 = node.config_gateway.config_set_enable_sensor_103(mac, parseInt(config.enable_sensor_103));
+								}
+								if(config.enable_hp_filter_cutoff_103_active){
+									promises.enable_hp_filter_cutoff_103 = node.config_gateway.config_set_enable_hp_filter_cutoff_103(mac, parseInt(config.enable_hp_filter_cutoff_103));
+								}
+								if(config.gyro_fsr_103_active){
+									promises.gyro_fsr_103 = node.config_gateway.config_set_gyro_fsr_103(mac, parseInt(config.gyro_fsr_103));
+								}
+								if(config.adxl_fsr_103_active){
+									promises.adxl_fsr_103 = node.config_gateway.config_set_adxl_fsr_103(mac, parseInt(config.adxl_fsr_103));
+								}
+								if(config.sampling_duration_103_active){
+									promises.sampling_duration_103 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_103));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_103 = node.config_gateway.config_set_rtc_101(mac);
+								}
 								break;
 							case 105:
 								if(config.sensor_boot_time_420ma_active){
