@@ -398,7 +398,7 @@
 
 			accelerometer_threshold_108:{value:10, validate: NCD_validators.number_range(0, 255)},
 			accelerometer_threshold_108_active:{value:""},
-			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 255)},
+			debounce_time_108:{value:10, validate: NCD_validators.number_range(0, 65000)},
 			debounce_time_108_active:{value:""},
 
 			input_one_108:{value:1},
@@ -738,6 +738,8 @@
 			adxl_fsr_103: {value: 0},
 			sampling_duration_103_active: {value: ""},
 			sampling_duration_103: {value: 20, validate: NCD_validators.number_range(1, 20)},
+			debounce_time_123:{value:10, validate: NCD_validators.number_range(0, 65000)},
+			debounce_time_123_active:{value:""}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2557,11 +2559,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-123>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
-						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
+						Range: 0 - 255msec.<br>
+						**Sensors with firmware version 10 or higher have a range of 0 to 65000 msec.
 					</p>
 					<div>
 						<label for="node-input-debounce_time_108_active">Active:</label>
@@ -2648,6 +2652,21 @@
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-123>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
+						Range: 0 - 65000msec.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_123_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_123_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_123" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_123"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_123" placeholder="10" value="10">
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 1 Detection</strong>
 					<div>
