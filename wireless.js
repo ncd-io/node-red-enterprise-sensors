@@ -2319,6 +2319,9 @@ module.exports = function(RED) {
 								if(config.debounce_time_108_active){
 									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
 								}
+								if(config.debounce_time_v10_108_active){
+									promises.debounce_time_v10_108 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_v10_108));
+								}
 								if(config.input_one_108_active){
 									promises.input_one_108 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
 								}
@@ -2791,7 +2794,7 @@ module.exports = function(RED) {
 									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_108));
 								}
 								if(config.debounce_time_123_active){
-									promises.debounce_time_123 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_123));
+									promises.debounce_time_123 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
 								}
 								if(config.input_one_108_active){
 									promises.input_one_123 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
