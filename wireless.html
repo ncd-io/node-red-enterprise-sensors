@@ -738,9 +738,9 @@
 			adxl_fsr_103: {value: 0},
 			sampling_duration_103_active: {value: ""},
 			sampling_duration_103: {value: 20, validate: NCD_validators.number_range(1, 20)},
-			debounce_time_123:{value:10, validate: NCD_validators.number_range(0, 65000)},
+			debounce_time_123:{value:10, validate: NCD_validators.number_range(10, 65000)},
 			debounce_time_123_active:{value:""},
-			debounce_time_v10_108:{value:10, validate: NCD_validators.number_range(0, 65000)},
+			debounce_time_v10_108:{value:10, validate: NCD_validators.number_range(10, 65000)},
 			debounce_time_v10_108_active:{value:""}
 		},
 		inputs: 0,
@@ -2582,7 +2582,7 @@
 					<p class="caption">
 						<b>**Set Input Debounce Time for Sensors with firmware version 10 or higher.</b><br><br>
 						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
-						Range: 0 - 65000 msec.<br>
+						Range: 10 - 65000 msec.<br>
 					</p>
 					<div>
 						<label for="node-input-debounce_time_v10_108_active">Active:</label>
@@ -2673,7 +2673,7 @@
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
 						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
-						Range: 0 - 65000msec.
+						Range: 10 - 65000msec.
 					</p>
 					<div>
 						<label for="node-input-debounce_time_123_active">Active:</label>
