@@ -738,10 +738,27 @@
 			adxl_fsr_103: {value: 0},
 			sampling_duration_103_active: {value: ""},
 			sampling_duration_103: {value: 20, validate: NCD_validators.number_range(1, 20)},
-			debounce_time_123:{value:10, validate: NCD_validators.number_range(10, 65000)},
-			debounce_time_123_active:{value:""},
-			debounce_time_v10_108:{value:10, validate: NCD_validators.number_range(10, 65000)},
-			debounce_time_v10_108_active:{value:""}
+			debounce_time_123: {value:10, validate: NCD_validators.number_range(10, 65000)},
+			debounce_time_123_active: {value:""},
+			debounce_time_v10_108: {value:10, validate: NCD_validators.number_range(10, 65000)},
+			debounce_time_v10_108_active: {value:""},
+
+			do_read_rate_270_active: {value:""},
+			do_read_rate_270: {value:0, validate: NCD_validators.number_range(0, 255)},
+			do_boot_time_270_active: {value:""},
+			do_boot_time_270: {value:0, validate: NCD_validators.number_range(0, 255)},
+			do_dev_id_270_active:{value:""},
+			do_dev_id_1_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			do_dev_id_2_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			do_dev_id_3_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			do_dev_id_4_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_boot_time_270_active: {value:""},
+			ec_boot_time_270: {value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_dev_id_270_active:{value:""},
+			ec_dev_id_1_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_dev_id_2_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_dev_id_3_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_dev_id_4_270:{value:0, validate: NCD_validators.number_range(0, 255)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -859,6 +876,7 @@
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
 					"217": "217 - Wireless Weight Scale",
+					"270": "270 - Custom Salinity DO sensor",
 					"502": "502 - C_50-27",
 					"505": "505 - Custom_SAP_Current_1C",
 					"506": "506 - Custom_SAP_Current_3C",
@@ -1164,6 +1182,7 @@
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
 			<option value="217">217 - Wireless Weight Scale</option>
+			<option value="270">270 - Custom Salinity DO sensor</option>
 			<option value="502">502 - C_50-27</option>
 			<option value="505">505 - Custom_SAP_Current_1C</option>
 			<option value="506">506 - Custom_SAP_Current_3C</option>
@@ -1196,7 +1215,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -5009,6 +5028,91 @@
 							<option value="1">20g</option>
 							<option value="2">40g</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-270>
+				<!-- <div class="form-row ncd-active-check">
+					<strong>Set Sensors Read Rate</strong>
+					<div>
+						<label for="node-input-do_read_rate_270_active">Active:</label>
+						<input type="checkbox" id="node-input-do_read_rate_270_active" class="ncd-config-toggle" data-target-id="node-input-do_read_rate_270" value="1">
+					</div>
+					<div>
+						<label for="node-input-do_read_rate_270"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-do_read_rate_270">
+					</div>
+				</div> -->
+				<div class="form-row ncd-active-check">
+					<strong>Set DO Boot Time</strong>
+					<p>This value represents the number of seconds to wait after applying power to the DO sensor before taking a reading.</p>
+					<div>
+						<label for="node-input-do_boot_time_270_active">Active:</label>
+						<input type="checkbox" id="node-input-do_boot_time_270_active" class="ncd-config-toggle" data-target-id="node-input-do_boot_time_270" value="1">
+					</div>
+					<div>
+						<label for="node-input-do_boot_time_270"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-do_boot_time_270">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set DO Device ID</strong>
+					<p>Set the Modbus Slave device address connected to this device</p>
+					<div>
+						<label for="node-input-do_dev_id_270_active">Active:</label>
+						<input type="checkbox" id="node-input-do_dev_id_270_active" class="ncd-config-toggle" data-target-id="node-input-do_dev_id_270" value="1">
+					</div>
+					<div>
+						<label for="node-input-do_dev_id_1_270"><i class="icon-tag"></i>ID 1:</label>
+						<input type="text" id="node-input-do_dev_id_1_270" class="do_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-do_dev_id_2_270"><i class="icon-tag"></i>ID 2:</label>
+						<input type="text" id="node-input-do_dev_id_2_270" class="do_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-do_dev_id_3_270"><i class="icon-tag"></i>ID 3:</label>
+						<input type="text" id="node-input-do_dev_id_3_270" class="do_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-do_dev_id_4_270"><i class="icon-tag"></i>ID 4:</label>
+						<input type="text" id="node-input-do_dev_id_4_270" class="do_dev_id_270" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set EC Boot Time</strong>
+					<p>This value represents the number of seconds to wait after applying power to the EC sensor before taking a reading.</p>
+					<div>
+						<label for="node-input-ec_boot_time_270_active">Active:</label>
+						<input type="checkbox" id="node-input-ec_boot_time_270_active" class="ncd-config-toggle" data-target-id="node-input-ec_boot_time_270" value="1">
+					</div>
+					<div>
+						<label for="node-input-ec_boot_time_270"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ec_boot_time_270">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set EC Device ID</strong>
+					<p>Set the Modbus Slave device address connected to this device</p>
+					<div>
+						<label for="node-input-ec_dev_id_270_active">Active:</label>
+						<input type="checkbox" id="node-input-ec_dev_id_270_active" class="ncd-config-toggle" data-target-id="node-input-ec_dev_id_270" value="1">
+					</div>
+					<div>
+						<label for="node-input-ec_dev_id_1_270"><i class="icon-tag"></i>ID 1:</label>
+						<input type="text" id="node-input-ec_dev_id_1_270" class="ec_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-ec_dev_id_2_270"><i class="icon-tag"></i>ID 2:</label>
+						<input type="text" id="node-input-ec_dev_id_2_270" class="ec_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-ec_dev_id_3_270"><i class="icon-tag"></i>ID 3:</label>
+						<input type="text" id="node-input-ec_dev_id_3_270" class="ec_dev_id_270" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-ec_dev_id_4_270"><i class="icon-tag"></i>ID 4:</label>
+						<input type="text" id="node-input-ec_dev_id_4_270" class="ec_dev_id_270" placeholder="0" value="00">
 					</div>
 				</div>
 			</div>

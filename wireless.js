@@ -2978,6 +2978,23 @@ module.exports = function(RED) {
 									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
 								}
 								break;
+							case 270:
+								// if(config.do_read_rate_270_active){
+								// 	promises.sensors_read_rate_270 = node.config_gateway.config_set_do_read_rate_270(mac, parseInt(config.do_read_rate_270));
+								// }
+								if(config.do_boot_time_270_active){
+									promises.do_boot_time_270 = node.config_gateway.config_set_do_boot_time_270(mac, parseInt(config.do_boot_time_270));
+								}
+								if(config.do_dev_id_270_active){
+									promises.do_dev_id_270 = node.config_gateway.config_set_do_dev_id_270(mac, parseInt(config.do_dev_id_1_270), parseInt(config.do_dev_id_2_270), parseInt(config.do_dev_id_3_270), parseInt(config.do_dev_id_4_270));
+								}
+								if(config.ec_boot_time_270_active){
+									promises.ec_boot_time_270 = node.config_gateway.config_set_ec_boot_time_270(mac, parseInt(config.ec_boot_time_270));
+								}
+								if(config.ec_dev_id_270_active){
+									promises.ec_dev_id_270 = node.config_gateway.config_set_ec_dev_id_270(mac, parseInt(config.ec_dev_id_1_270), parseInt(config.ec_dev_id_2_270), parseInt(config.ec_dev_id_3_270), parseInt(config.ec_dev_id_4_270));
+								}
+								break;
 							case 505:
 								if(config.current_calibration_c1_80_active){
 									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
