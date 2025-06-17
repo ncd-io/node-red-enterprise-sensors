@@ -2790,26 +2790,26 @@ module.exports = function(RED) {
 								}
 								break;
 							case 123:
-								if(config.clear_timers_108_active){
-									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_108));
+								if(config.clear_timers_123_active){
+									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_123));
 								}
 								if(config.debounce_time_123_active){
 									promises.debounce_time_123 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
 								}
-								if(config.input_one_108_active){
-									promises.input_one_123 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
+								if(config.input_one_123_active){
+									promises.input_one_123 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
 								}
-								if(config.input_two_108_active){
-									promises.input_two_123 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_108));
+								if(config.input_two_123_active){
+									promises.input_two_123 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_123));
 								}
-								if(config.input_three_108_active){
-									promises.input_three_123 = node.config_gateway.config_set_input_three_108(mac, parseInt(config.input_three_108));
+								if(config.input_three_123_active){
+									promises.input_three_123 = node.config_gateway.config_set_input_three_108(mac, parseInt(config.input_three_123));
 								}
 								if(config.counter_threshold_108_active){
 									promises.counter_threshold_123 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
 								}
-								if(config.push_notification_108_active){
-									promises.push_notification_123 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_108));
+								if(config.push_notification_123_active){
+									promises.push_notification_123 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_123));
 								}
 								if(config.reset_timeout_108_active){
 									promises.reset_timeout_123 = node.config_gateway.config_set_reset_timeout_108(mac, parseInt(config.reset_timeout_108));

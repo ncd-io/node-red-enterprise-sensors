@@ -697,7 +697,7 @@
 			enable_filtering_110: {value: 0},
 
 			fly_interval_108_active: {value: ""},
-			fly_interval_108: {value: 0},
+			fly_interval_108: {value: 60},
 
 			tare_the_scale_217: {value:0},
 			weight_calib_217_active: {value: ""},
@@ -758,7 +758,17 @@
 			ec_dev_id_1_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			ec_dev_id_2_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			ec_dev_id_3_270:{value:0, validate: NCD_validators.number_range(0, 255)},
-			ec_dev_id_4_270:{value:0, validate: NCD_validators.number_range(0, 255)}
+			ec_dev_id_4_270:{value:0, validate: NCD_validators.number_range(0, 255)},
+			push_notification_123_active: {value: ""},
+			push_notification_123: {value:0},
+			clear_timers_123_active: {value: ""},
+			clear_timers_123: {value:7},
+			input_one_123_active: {value: ""},
+			input_one_123: {value:1},
+			input_two_123_active: {value: ""},
+			input_two_123: {value:1},
+			input_three_123_active: {value: ""},
+			input_three_123: {value:1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2569,13 +2579,13 @@
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
 					<div>
-						<label for="node-input-clear_timers_108_active">Active:</label>
-						<input type="checkbox" id="node-input-clear_timers_108_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_108" value="1">
+						<label for="node-input-clear_timers_123_active">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_123_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_123" value="1">
 					</div>
 					<div>
-						<label for="node-input-clear_timers_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-clear_timers_108">
-							<option value="7" selected>Digital in 1, 2 and 3</option>
+						<label for="node-input-clear_timers_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-clear_timers_123">
+							<option value="7" selected>Enable</option>
 						</select>
 					</div>
 				</div>
@@ -2706,12 +2716,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 1 Detection</strong>
 					<div>
-						<label for="node-input-input_one_108_active">Active:</label>
-						<input type="checkbox" id="node-input-input_one_108_active" class="ncd-config-toggle" data-target-id="node-input-input_one_108" value="1">
+						<label for="node-input-input_one_123_active">Active:</label>
+						<input type="checkbox" id="node-input-input_one_123_active" class="ncd-config-toggle" data-target-id="node-input-input_one_123" value="1">
 					</div>
 					<div>
-						<label for="node-input-input_one_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-input_one_108">
+						<label for="node-input-input_one_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_one_123">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
@@ -2720,12 +2730,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 2 Detection</strong>
 					<div>
-						<label for="node-input-input_two_108_active">Active:</label>
-						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
+						<label for="node-input-input_two_123_active">Active:</label>
+						<input type="checkbox" id="node-input-input_two_123_active" class="ncd-config-toggle" data-target-id="node-input-input_two_123" value="1">
 					</div>
 					<div>
-						<label for="node-input-input_two_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-input_two_108">
+						<label for="node-input-input_two_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_two_123">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
@@ -2734,12 +2744,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 3 Detection</strong>
 					<div>
-						<label for="node-input-input_three_108_active">Active:</label>
-						<input type="checkbox" id="node-input-input_three_108_active" class="ncd-config-toggle" data-target-id="node-input-input_three_108" value="1">
+						<label for="node-input-input_three_123_active">Active:</label>
+						<input type="checkbox" id="node-input-input_three_123_active" class="ncd-config-toggle" data-target-id="node-input-input_three_123" value="1">
 					</div>
 					<div>
-						<label for="node-input-input_three_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-input_three_108">
+						<label for="node-input-input_three_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_three_123">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
@@ -2840,12 +2850,12 @@
 						IO3-Digital Input 3<br>
 					</p>
 					<div>
-						<label for="node-input-push_notification_108_active">Active:</label>
-						<input type="checkbox" id="node-input-push_notification_108_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_108" value="1">
+						<label for="node-input-push_notification_123_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_123_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_123" value="1">
 					</div>
 					<div>
-						<label for="node-input-push_notification_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-push_notification_108">
+						<label for="node-input-push_notification_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_123">
 							<option value="0" selected>Disable All</option>
 							<!-- <option value="31">Enable All</option> -->
 							<option value="1">Enable on IO1</option>
@@ -3025,7 +3035,7 @@
 					<div>
 						<label for="node-input-fly_interval_108"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-fly_interval_108">
-							<option value="60">1 Hour</option>
+							<option value="60" selected>1 Hour</option>
 							<option value="120">2 Hours</option>
 							<option value="240">4 Hours</option>
 							<option value="480">8 Hours</option>
@@ -3510,7 +3520,7 @@
 					<div>
 						<label for="node-input-fly_interval_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-fly_interval_110">
-							<option value="60">1 Hour</option>
+							<option value="60" selected>1 Hour</option>
 							<option value="120">2 Hours</option>
 							<option value="240">4 Hours</option>
 							<option value="480">8 Hours</option>
