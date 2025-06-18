@@ -2523,7 +2523,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Enable Accelerometer Error Reporting</strong>
 					<p class="caption">
-						Enables error reporting for the accelerometer probe. If this option is enabled errors will be reported when the accelerometer probe is non-functional.
+						Enables the sensor to report errors if the accelerometer probe becomes non-functional. These errors will be included in the sensor data.
 					</p>
 					<div>
 						<label for="node-input-accelerometer_state_108_active">Active:</label>
@@ -2547,6 +2547,7 @@
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
+					<p>Resets the selected Input counters and their corresponding uptime values to zero.</p>
 					<div>
 						<label for="node-input-clear_timers_108_active">Active:</label>
 						<input type="checkbox" id="node-input-clear_timers_108_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_108" value="1">
@@ -2578,6 +2579,7 @@
 			<div class="ncd-dependent" data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
+					<p>Resets the Digital Inputs 1, 2, and 3 counters and their corresponding uptime values to zero.</p>
 					<div>
 						<label for="node-input-clear_timers_123_active">Active:</label>
 						<input type="checkbox" id="node-input-clear_timers_123_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_123" value="1">
@@ -2606,11 +2608,13 @@
 						<input type="text" id="node-input-debounce_time_108" placeholder="10" value="10">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
-						<b>**Set Input Debounce Time for Sensors with firmware version 10 or higher.</b><br><br>
-						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br>
+						<b>**Only applies to sensor with firmware version 10 and above.</b><br><br>
 						Range: 10 - 65000 msec.<br>
 					</p>
 					<div>
@@ -2656,6 +2660,11 @@
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Set Contact Closure Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Contact Closure Input:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_one_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_one_108_active" class="ncd-config-toggle" data-target-id="node-input-input_one_108" value="1">
@@ -2670,6 +2679,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Current Transducer Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Current Transducer Input:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_two_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_two_108_active" class="ncd-config-toggle" data-target-id="node-input-input_two_108" value="1">
@@ -2684,6 +2698,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Wet Contact/Optical Sensor Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Contact/Optical Input:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_three_108_active">Active:</label>
 						<input type="checkbox" id="node-input-input_three_108_active" class="ncd-config-toggle" data-target-id="node-input-input_three_108" value="1">
@@ -2701,7 +2720,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
-						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
+						Configures the debounce time in milliseconds for all digital inputs. State changes occurring within this debounce period will be ignored.<br>
+						Note: This setting is recommended for mechanically triggered inputs like buttons or relay/contactor outputs.<br><br>
 						Range: 10 - 65000msec.
 					</p>
 					<div>
@@ -2715,6 +2735,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 1 Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Digital Input 1:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_one_123_active">Active:</label>
 						<input type="checkbox" id="node-input-input_one_123_active" class="ncd-config-toggle" data-target-id="node-input-input_one_123" value="1">
@@ -2729,6 +2754,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 2 Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Digital Input 2:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_two_123_active">Active:</label>
 						<input type="checkbox" id="node-input-input_two_123_active" class="ncd-config-toggle" data-target-id="node-input-input_two_123" value="1">
@@ -2743,6 +2773,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 3 Detection</strong>
+					<p>
+						Configures how the counter increments and how uptime is calculated for Digital Input 3:<br><br>
+						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
+						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
+					</p>
 					<div>
 						<label for="node-input-input_three_123_active">Active:</label>
 						<input type="checkbox" id="node-input-input_three_123_active" class="ncd-config-toggle" data-target-id="node-input-input_three_123" value="1">
@@ -2760,7 +2795,9 @@
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
-						Device will send data when any counters reaches multiple of the Threshold.
+						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
+						**Report type will be 'Threshold'.
+						<br>
 						<br>
 						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
 					</p>
@@ -2778,6 +2815,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
 					<p>
+						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
+						**Report type will be 'Interrupt'.<br><br>
 						IO1 - Digital input<br>
 						IO2 - Current Sensor<br>
 						IO3 - OPTO Input<br>
@@ -2845,9 +2884,11 @@
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
 					<p>
-						IO1-Digital Input 1<br>
-						IO2-Digital Input 2<br>
-						IO3-Digital Input 3<br>
+						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
+						**Report type will be 'Interrupt'.<br><br>
+						IO1 - Digital input 1<br>
+						IO2 - Digital input 2<br>
+						IO3 - Digital input 3<br>
 					</p>
 					<div>
 						<label for="node-input-push_notification_123_active">Active:</label>
@@ -2857,6 +2898,7 @@
 						<label for="node-input-push_notification_123"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-push_notification_123">
 							<option value="0" selected>Disable All</option>
+							<option value="7">Enable All</option>
 							<!-- <option value="31">Enable All</option> -->
 							<option value="1">Enable on IO1</option>
 							<option value="2">Enable on IO2</option>
@@ -2864,7 +2906,6 @@
 							<option value="3">Enable on IO1 and IO2</option>
 							<option value="5">Enable on IO1 and IO3</option>
 							<option value="6">Enable on IO2 and IO3</option>
-							<option value="7">Enable on IO1, IO2 and IO3</option>
 						</select>
 					</div>
 				</div>
@@ -2873,7 +2914,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
-						This setting dictates the interval at which the sensor will wake up and transmit its data. This interval works independently from any configured interrupt driven messages.
+						Sets the regular interval at which the sensor wakes up and transmits its data. This interval operates independently of any interrupt-driven (Push Notifications or Resets).<br>
+						**Report type will be 'Regular'.
 					</p>
 					<div>
 						<label for="node-input-transmission_interval_108_active">Active:</label>
@@ -2901,7 +2943,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Reset Timeout</strong>
 					<p class="caption">
-						Sensor will reset after this time and before reset it will set it data value.<br>
+						Defines the duration (in seconds) after which the sensor will automatically reset. Before resetting, it will transmit its current data values.<br>
+						**Report type will be 'Shift end'.<br><br>
 						Valid range: 60 - 65535
 					</p>
 					<div>
@@ -2916,7 +2959,9 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 1</strong>
 					<p class="caption">
-						24-hour time format
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
+						**Report type will be 'Shift end'.<br><br>
+						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
 						<label for="node-input-shift_one_108_active">Active:</label>
@@ -2934,7 +2979,9 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 2</strong>
 					<p class="caption">
-						24-hour time format
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
+						**Report type will be 'Shift end'.<br><br>
+						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
 						<label for="node-input-shift_two_108_active">Active:</label>
@@ -2952,7 +2999,9 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 3</strong>
 					<p class="caption">
-						24-hour time format
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
+						**Report type will be 'Shift end'.<br><br>
+						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
 						<label for="node-input-shift_three_108_active">Active:</label>
@@ -2970,7 +3019,9 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 4</strong>
 					<p class="caption">
-						24-hour time format
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
+						**Report type will be 'Shift end'.<br><br>
+						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
 						<label for="node-input-shift_four_108_active">Active:</label>
@@ -2987,6 +3038,11 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong> Set Reset Mode</strong>
+					<p>
+						This setting specifies which automatic reset option the sensor will utilize.<br>
+						Note: Works in conjunction with the "Reset Timeout" and "Set Shift Time" commands.<br><br>
+						Default value: Disabled
+					</p>
 					<div>
 						<label for="node-input-reset_mode_to_disabled_108_active">Active:</label>
 						<input type="checkbox" id="node-input-reset_mode_to_disabled_108_active" class="ncd-config-toggle" data-target-id="node-input-reset_mode_to_disabled_108" value="1">
@@ -3021,6 +3077,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
+					<p>Sets the sensor's internal Real-Time Clock (RTC) to the current time.</p>
 					<div>
 						<label for="node-input-rtc_108"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-rtc_108" value="1">
@@ -3028,6 +3085,8 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
+					<p>This setting dictates the interval at which the sensor will transmit the FLY message.<br> 
+						**The FLY Message is used to trigger automatic sensor configuration and firmware updates.</p>
 					<div>
 						<label for="node-input-fly_interval_108_active">Active:</label>
 						<input type="checkbox" id="node-input-fly_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-fly_interval_108" value="1">
@@ -3050,7 +3109,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Sample Rate</strong>
 					<p class="caption">
-						Only applies to sensor with firmware version 8 and above.
+						**Only applies to sensor with firmware version 8 and above.
 					</p>
 					<div>
 						<label for="node-input-sample_rate_108_active">Active:</label>
