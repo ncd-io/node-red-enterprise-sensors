@@ -746,14 +746,14 @@
 			do_read_rate_270_active: {value:""},
 			do_read_rate_270: {value:0, validate: NCD_validators.number_range(0, 255)},
 			do_boot_time_270_active: {value:""},
-			do_boot_time_270: {value:0, validate: NCD_validators.number_range(0, 255)},
+			do_boot_time_270: {value:1, validate: NCD_validators.number_range(1, 60)},
 			do_dev_id_270_active:{value:""},
 			do_dev_id_1_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			do_dev_id_2_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			do_dev_id_3_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			do_dev_id_4_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			ec_boot_time_270_active: {value:""},
-			ec_boot_time_270: {value:0, validate: NCD_validators.number_range(0, 255)},
+			ec_boot_time_270: {value:1, validate: NCD_validators.number_range(1, 60)},
 			ec_dev_id_270_active:{value:""},
 			ec_dev_id_1_270:{value:0, validate: NCD_validators.number_range(0, 255)},
 			ec_dev_id_2_270:{value:0, validate: NCD_validators.number_range(0, 255)},
@@ -5114,7 +5114,9 @@
 				</div> -->
 				<div class="form-row ncd-active-check">
 					<strong>Set DO Boot Time</strong>
-					<p>This value represents the number of seconds to wait after applying power to the DO sensor before taking a reading.</p>
+					<p>This value represents the number of seconds to wait after applying power to the DO sensor before taking a reading.<br>
+					Valid range: 1 - 60 Seconds.
+					</p>
 					<div>
 						<label for="node-input-do_boot_time_270_active">Active:</label>
 						<input type="checkbox" id="node-input-do_boot_time_270_active" class="ncd-config-toggle" data-target-id="node-input-do_boot_time_270" value="1">
@@ -5123,6 +5125,9 @@
 						<label for="node-input-do_boot_time_270"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-do_boot_time_270">
 					</div>
+					<p class="caption">
+						Default value: 1 second.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set DO Device ID</strong>
@@ -5150,7 +5155,8 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set EC Boot Time</strong>
-					<p>This value represents the number of seconds to wait after applying power to the EC sensor before taking a reading.</p>
+					<p>This value represents the number of seconds to wait after applying power to the EC sensor before taking a reading.<br>
+						Valid range: 1 - 60 Seconds.</p>
 					<div>
 						<label for="node-input-ec_boot_time_270_active">Active:</label>
 						<input type="checkbox" id="node-input-ec_boot_time_270_active" class="ncd-config-toggle" data-target-id="node-input-ec_boot_time_270" value="1">
@@ -5159,6 +5165,9 @@
 						<label for="node-input-ec_boot_time_270"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-ec_boot_time_270">
 					</div>
+					<p class="caption">
+						Default value: 1 second.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set EC Device ID</strong>
