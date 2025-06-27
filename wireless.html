@@ -768,7 +768,13 @@
 			input_two_123_active: {value: ""},
 			input_two_123: {value:1},
 			input_three_123_active: {value: ""},
-			input_three_123: {value:1}
+			input_three_123: {value:1},
+			oxygen_rate_211_active: {value:""},
+			oxygen_rate_211: {value:15, validate: NCD_validators.number_range(0, 255)},
+			oxygen_timeout_211_active: {value:""},
+			oxygen_timeout_211: {value:600, validate: NCD_validators.number_range(0, 65000)},
+			oxygen_threshold_211_active: {value:""},
+			oxygen_threshold_211: {value:8, validate: NCD_validators.number_range(0, 65000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -885,6 +891,7 @@
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
+					"211": "211 - D0 and Flow Sensor",
 					"217": "217 - Wireless Weight Scale",
 					"270": "270 - Custom Salinity DO sensor",
 					"502": "502 - C_50-27",
@@ -1191,6 +1198,7 @@
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
+			<option value="211">211 - D0 and Flow Sensor</option>
 			<option value="217">217 - Wireless Weight Scale</option>
 			<option value="270">270 - Custom Salinity DO sensor</option>
 			<option value="502">502 - C_50-27</option>
@@ -1225,7 +1233,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -5192,6 +5200,56 @@
 						<label for="node-input-ec_dev_id_4_270"><i class="icon-tag"></i>ID 4:</label>
 						<input type="text" id="node-input-ec_dev_id_4_270" class="ec_dev_id_270" placeholder="0" value="00">
 					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-211>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Rate</strong>
+					<p>Set the Oxygen Rate.<br>
+						Valid range: 0 - 255 Minutes.</p>
+					<div>
+						<label for="node-input-oxygen_rate_211_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_rate_211_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_rate_211" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_rate_211"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_rate_211">
+					</div>
+					<p class="caption">
+						Default value: 15 minutes.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Timeout</strong>
+					<p>Set the Oxygen Timeout in seconds.<br>
+						Valid range: 0 (Disable) - 65500 Seconds.</p>
+					<div>
+						<label for="node-input-oxygen_timeout_211_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_timeout_211_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_timeout_211" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_timeout_211"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_timeout_211">
+					</div>
+					<p class="caption">
+						Default value: 600 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Threshold</strong>
+					<p>Set the Oxygen threshold in mg/l.<br>
+						Valid range: 0 - 65500 mg/l.</p>
+					<div>
+						<label for="node-input-oxygen_threshold_211_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_threshold_211_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_threshold_211" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_threshold_211"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_threshold_211">
+					</div>
+					<p class="caption">
+						Default value: 8 mg/l.
+					</p>
 				</div>
 			</div>
 		</div>

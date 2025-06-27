@@ -2970,6 +2970,17 @@ module.exports = function(RED) {
 									promises.probe_boot_time_202 = node.config_gateway.config_set_probe_boot_time_202(mac, parseInt(config.probe_boot_time_202));
 								}
 							    break;
+							case 211:
+								if(config.oxygen_rate_211_active){
+									promises.oxygen_rate_211 = node.config_gateway.config_set_oxygen_rate_211(mac, parseInt(config.oxygen_rate_211));
+								}
+								if(config.oxygen_timeout_211_active){
+									promises.oxygen_timeout_211 = node.config_gateway.config_set_oxygen_timeout_211(mac, parseInt(config.oxygen_timeout_211));
+								}
+								if(config.oxygen_threshold_211_active){
+									promises.oxygen_threshold_211 = node.config_gateway.config_set_oxygen_threshold_211(mac, parseInt(config.oxygen_threshold_211));
+								}
+								break;
 							case 217:
 								if(config.tare_the_scale_217){
 									promises.tare_the_scale_217 = node.config_gateway.config_set_tare_the_scale_217(mac);
