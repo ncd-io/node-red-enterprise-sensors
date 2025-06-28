@@ -774,7 +774,9 @@
 			oxygen_timeout_211_active: {value:""},
 			oxygen_timeout_211: {value:600, validate: NCD_validators.number_range(0, 65000)},
 			oxygen_threshold_211_active: {value:""},
-			oxygen_threshold_211: {value:8, validate: NCD_validators.number_range(0, 65000)}
+			oxygen_threshold_211: {value:8, validate: NCD_validators.number_range(0, 65000)},
+			interrupt_timeout_108_active: {value:""},
+			interrupt_timeout_108: {value:0, validate: NCD_validators.number_range(0, 65000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3134,6 +3136,22 @@
 							<option value="5">400 Hz</option>
 						</select>
 					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Interrupt Timeout</strong>
+					<p>Set the sensor to detect an initial IO (input/output) change and ignore subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in seconds, set it to 0 to disable ignoring.<br><br>
+						**Only applies to sensor with firmware version 11 and above.</p>
+					<div>
+						<label for="node-input-interrupt_timeout_108_active">Active:</label>
+						<input type="checkbox" id="node-input-interrupt_timeout_108_active" class="ncd-config-toggle" data-target-id="node-input-interrupt_timeout_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-interrupt_timeout_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-interrupt_timeout_108" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 0 seconds (Disabled)
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
