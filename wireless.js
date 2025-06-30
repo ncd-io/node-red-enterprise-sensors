@@ -2844,6 +2844,9 @@ module.exports = function(RED) {
 								if(config.fly_interval_108_active){
 									promises.fly_interval_123 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
 								}
+								if(config.interrupt_timeout_108_active){
+									promises.interrupt_timeout_123 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_108));
+								}
 								break;
 							case 180:
 								if(config.output_data_rate_101_active){
