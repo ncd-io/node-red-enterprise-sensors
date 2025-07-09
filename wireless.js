@@ -1675,6 +1675,9 @@ module.exports = function(RED) {
 								if(config.sampling_rate_duration_active){
 									promises.sampling_rate_duration = node.config_gateway.config_set_sampling_rate_duration(mac, parseInt(config.sampling_rate_duration));
 								}
+								if(config.start_sps30_fan_cleaning_53){
+									promises.start_sps30_fan_cleaning_53 = node.config_gateway.config_set_start_sps30_fan_cleaning_53(mac);
+								}
 								break;
 							case 56:
 								if(config.sensor_boot_time_420ma_active){
@@ -2208,6 +2211,9 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_interval_101_active){
 									promises.sampling_interval_103 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.acc_threshold_103_active){
+									promises.acc_threshold_103 = node.config_gateway.config_set_acc_threshold_103(mac, parseInt(config.acc_threshold_103));
 								}
 								if(config.enable_sensor_103_active){
 									promises.enable_sensor_103 = node.config_gateway.config_set_enable_sensor_103(mac, parseInt(config.enable_sensor_103));

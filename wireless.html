@@ -776,7 +776,10 @@
 			oxygen_threshold_211_active: {value:""},
 			oxygen_threshold_211: {value:8, validate: NCD_validators.number_range(0, 65000)},
 			interrupt_timeout_108_active: {value:""},
-			interrupt_timeout_108: {value:0, validate: NCD_validators.number_range(0, 65000)}
+			interrupt_timeout_108: {value:0, validate: NCD_validators.number_range(0, 65000)},
+			acc_threshold_103_active: {value:""},
+			acc_threshold_103: {value:1, validate: NCD_validators.number_range(0, 255)},
+			start_sps30_fan_cleaning_53:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4552,6 +4555,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-53>
+				<div class="form-row ncd-active-check">
+					<strong>Start Fan Cleaning</strong>
+					<p>Force the sensor automatically runs the fan clean function</p>
+					<div>
+						<label for="node-input-start_sps30_fan_cleaning_53"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-start_sps30_fan_cleaning_53" value="1">
+					</div>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-32 data-sensor-44 data-sensor-53>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Rate</strong>
@@ -5050,7 +5063,17 @@
 						<input type="text" id="node-input-sampling_duration_103">
 					</div>
 				</div>
-				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Set Acceleration Threshold</strong>
+					<div>
+						<label for="node-input-acc_threshold_103_active">Active:</label>
+						<input type="checkbox" id="node-input-acc_threshold_103_active" class="ncd-config-toggle" data-target-id="node-input-acc_threshold_103" value="1">
+					</div>
+					<div>
+						<label for="node-input-acc_threshold_103"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-acc_threshold_103">
+					</div>
+				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Output Data Rate</strong>
 					<div>
