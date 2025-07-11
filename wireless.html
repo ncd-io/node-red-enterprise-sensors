@@ -779,7 +779,11 @@
 			interrupt_timeout_108: {value:0, validate: NCD_validators.number_range(0, 65000)},
 			acc_threshold_103_active: {value:""},
 			acc_threshold_103: {value:1, validate: NCD_validators.number_range(0, 255)},
-			start_sps30_fan_cleaning_53:{value:0}
+			start_sps30_fan_cleaning_53:{value:0},
+			max_flow_541_active: {value:""},
+			max_flow_541: {value:1, validate: NCD_validators.number_range(0, 255)},
+			min_flow_541_active: {value:""},
+			min_flow_541: {value:1, validate: NCD_validators.number_range(0, 255)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5296,6 +5300,32 @@
 					<p class="caption">
 						Default value: 8 mg/l.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-541>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Flow</strong>
+					<p>Set the maximum flow sensor reads</p>
+					<div>
+						<label for="node-input-max_flow_541_active">Active:</label>
+						<input type="checkbox" id="node-input-max_flow_541_active" class="ncd-config-toggle" data-target-id="node-input-max_flow_541" value="1">
+					</div>
+					<div>
+						<label for="node-input-max_flow_541"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_flow_541">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Min Flow</strong>
+					<p>Set the minimum flow sensor reads</p>
+					<div>
+						<label for="node-input-min_flow_541_active">Active:</label>
+						<input type="checkbox" id="node-input-min_flow_541_active" class="ncd-config-toggle" data-target-id="node-input-min_flow_541" value="1">
+					</div>
+					<div>
+						<label for="node-input-min_flow_541"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-min_flow_541">
+					</div>
 				</div>
 			</div>
 		</div>

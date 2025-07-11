@@ -3293,6 +3293,12 @@ module.exports = function(RED) {
 								if(config.always_on_420ma_active){
 									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
+								if(config.max_flow_541_active){
+									promises.max_flow_541 = node.config_gateway.config_set_max_flow_541(mac, parseInt(config.max_flow_541));
+								}
+								if(config.min_flow_541_active){
+									promises.min_flow_541 = node.config_gateway.config_set_min_flow_541(mac, parseInt(config.min_flow_541));
+								}
 								break;
 							case 1010:
 								if(config.stay_on_mode_539_active){
