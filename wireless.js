@@ -1043,7 +1043,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -1981,6 +1981,26 @@ module.exports = function(RED) {
 								}
 								if(config.always_on_420ma_active){
 									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								break;
+							case 87:
+								if(config.ct_constant_87_active){
+									promises.ct_constant_87 = node.config_gateway.config_set_ct_constant_87(mac, parseInt(config.ct_constant_87));
+								}
+								if(config.deadband_87_active){
+									promises.deadband_87 = node.config_gateway.config_set_deadband_87(mac, parseInt(config.deadband_87));
+								}
+								if(config.sampling_frequency_87_active){
+									promises.sampling_frequency_87 = node.config_gateway.config_set_sampling_frequency_87(mac, parseInt(config.sampling_frequency_87));
+								}
+								if(config.raw_length_87_active){
+									promises.raw_length_87 = node.config_gateway.config_set_raw_length_87(mac, parseInt(config.raw_length_87));
+								}
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_87 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.quality_of_service_121_active){
+									promises.quality_of_service_87 = node.config_gateway.config_set_quality_of_service_121(mac, parseInt(config.quality_of_service_121));
 								}
 								break;
 							case 88:
@@ -3349,7 +3369,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
