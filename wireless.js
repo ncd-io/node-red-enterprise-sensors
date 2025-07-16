@@ -142,28 +142,32 @@ module.exports = function(RED) {
 												// IF we receive an FON message with success
 												if(Object.hasOwn(res, 'data') && res.data[0] == 70 && res.data[1] == 79 && res.data[2] == 78 && res.result == 255){
 													manifest_data.enter_ota_fota_version = res.original.data[5];
-													console.log('Great Success');
+													manifest_data.enter_ota_success = true;
 													console.log(res);
+												}else{
+													manifest_data.enter_ota_success = false;
 												}
 												console.log(name);
 											} else{
-												// enter ota mode
-												node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
-													console.log(manifest_data);
-													if(manifest_data.enter_ota_fota_version > 16){
-														console.log('V17 PROCESS');
+												if(manifest_data.enter_ota_success){
+													// enter ota mode
+													node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
 														console.log(manifest_data);
-														node.start_firmware_update_v17(manifest_data, firmware_data);
-													}else if(manifest_data.enter_ota_fota_version > 12){
-														console.log('V13 PROCESS');
-														console.log(manifest_data);
-														node.start_firmware_update_v13(manifest_data, firmware_data);
-													}else{
-														console.log('OLD PROCESSS');
-														console.log(manifest_data);
-														node.start_firmware_update(manifest_data, firmware_data);
-													}
-												});
+														if(manifest_data.enter_ota_fota_version > 16){
+															console.log('V17 PROCESS');
+															console.log(manifest_data);
+															node.start_firmware_update_v17(manifest_data, firmware_data);
+														}else if(manifest_data.enter_ota_fota_version > 12){
+															console.log('V13 PROCESS');
+															console.log(manifest_data);
+															node.start_firmware_update_v13(manifest_data, firmware_data);
+														}else{
+															console.log('OLD PROCESSS');
+															console.log(manifest_data);
+															node.start_firmware_update(manifest_data, firmware_data);
+														}
+													});
+												}
 											}
 										}).catch((err) => {
 											console.log(err);
