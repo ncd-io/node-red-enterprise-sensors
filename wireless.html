@@ -5157,7 +5157,10 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Enable HP Filter Cutoff</strong>
+					<strong>Set HP Filter Cutoff</strong>
+					<p>This setting will set the High Pass Filter freq to Sample Rate multiply by Selected Value<br><br>
+						Example: Sample Rate = 125 and Filter Coefficient = 0.00247<br>
+						HPF freq (Hz) = 125 * 0.00247</p>
 					<div>
 						<label for="node-input-enable_hp_filter_cutoff_103_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-enable_hp_filter_cutoff_103_active" class="ncd-config-toggle" data-target-id="node-input-enable_hp_filter_cutoff_103" value="1">
@@ -5165,8 +5168,12 @@
 					<div>
 						<label for="node-input-enable_hp_filter_cutoff_103"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_hp_filter_cutoff_103">
-							<option value="0" selected>Disable</option>
-							<option value="1">Enable</option>
+							<option value="0">0.00247</option>
+							<option value="1">0.00062084</option>
+							<option value="2">0.00015545</option>
+							<option value="3">0.00003862</option>
+							<option value="4">0.00000954</option>
+							<option value="5">0.00000238</option>
 						</select>
 					</div>
 				</div>
