@@ -791,7 +791,9 @@
 			sampling_frequency_87_active: {value:""},
 			sampling_frequency_87: {value:0},
 			raw_length_87_active: {value:""},
-			raw_length_87: {value:0}
+			raw_length_87: {value:0},
+			sampling_interval_80_active:{value: ""},
+			sampling_interval_80: {value: 1, validate: NCD_validators.number_range(0, 8)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1915,13 +1917,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
 					<p>Set how often will the sensor transmit measurement data.<br><br>
 						Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.<br>
-						<b>**1 Minute option only applies to sensor with firmware version 26 and above.</b><br><br>
 					</p>
 					<div>
 						<label for="node-input-sampling_interval_101_active">Active: </label>
@@ -1930,6 +1931,34 @@
 					<div>
 						<label for="node-input-sampling_interval_101"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-sampling_interval_101">
+							<!-- <option value="8">1 Minute</option> -->
+							<option value="0">5 Minutes</option>
+							<option value="1">10 Minutes</option>
+							<option value="2">15 Minutes</option>
+							<option value="3">20 Minutes</option>
+							<option value="4">30 Minutes</option>
+							<option value="5">60 Minutes</option>
+							<option value="6">120 Minutes</option>
+							<option value="7">180 Minutes</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Sampling Interval</strong>
+					<p>Set how often will the sensor transmit measurement data.<br><br>
+						Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.<br>
+						<b>**1 Minute option only applies to sensor with firmware version 26 and above.</b><br><br>
+					</p>
+					<div>
+						<label for="node-input-sampling_interval_80_active">Active: </label>
+						<input type="checkbox" id="node-input-sampling_interval_80_active" class="ncd-config-toggle" data-target-id="node-input-sampling_interval_80" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_interval_80"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sampling_interval_80">
 							<option value="8">1 Minute</option>
 							<option value="0">5 Minutes</option>
 							<option value="1">10 Minutes</option>
