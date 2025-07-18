@@ -5150,8 +5150,8 @@
 					<div>
 						<label for="node-input-enable_sensor_103"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_sensor_103">
-							<option value="1">Gyro</option>
-							<option value="2">Adxl</option>
+							<option value="1">Gyroscope only</option>
+							<option value="2">Accelerometer only</option>
 							<option value="3"selected>All enabled</option>
 						</select>
 					</div>
@@ -5168,17 +5168,18 @@
 					<div>
 						<label for="node-input-enable_hp_filter_cutoff_103"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_hp_filter_cutoff_103">
-							<option value="0">0.00247</option>
-							<option value="1">0.00062084</option>
-							<option value="2">0.00015545</option>
-							<option value="3">0.00003862</option>
-							<option value="4">0.00000954</option>
-							<option value="5">0.00000238</option>
+							<option value="0">Disabled</option>
+							<option value="1">0.00247</option>
+							<option value="2">0.00062084</option>
+							<option value="3">0.00015545</option>
+							<option value="4">0.00003862</option>
+							<option value="5">0.00000954</option>
+							<option value="6">0.00000238</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Gyro FSR</strong>
+					<strong>Set Gyroscope FSR</strong>
 					<div>
 						<label for="node-input-gyro_fsr_103_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-gyro_fsr_103_active" class="ncd-config-toggle" data-target-id="node-input-gyro_fsr_103" value="1">
@@ -5189,7 +5190,7 @@
 							<option value="0" selected>250dps</option>
 							<option value="1">500dps</option>
 							<option value="2">1000dps</option>
-							<option value="3">2000dps</option>
+							<option value="3">3000dps</option>
 						</select>
 					</div>
 				</div>
