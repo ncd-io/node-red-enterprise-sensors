@@ -2878,6 +2878,38 @@ module.exports = function(RED) {
 									promises.interrupt_timeout_123 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_108));
 								}
 								break;
+							case 124:
+								if(config.volume_flow_unit_124_active){
+									promises.volume_flow_unit_124 = node.config_gateway.config_set_volume_flow_unit_124(mac, parseInt(config.volume_flow_unit_124));
+								}
+								if(config.total_1_flow_unit_124_active){
+									promises.total_1_flow_unit_124 = node.config_gateway.config_set_total_1_flow_unit_124(mac, parseInt(config.total_1_flow_unit_124));
+								}
+								if(config.total_2_flow_unit_124_active){
+									promises.total_2_flow_unit_124 = node.config_gateway.config_set_total_2_flow_unit_124(mac, parseInt(config.total_2_flow_unit_124));
+								}
+								if(config.total_3_flow_unit_124_active){
+									promises.total_3_flow_unit_124 = node.config_gateway.config_set_total_3_flow_unit_124(mac, parseInt(config.total_3_flow_unit_124));
+								}
+								if(config.pressure_unit_124_active){
+									promises.pressure_unit_124 = node.config_gateway.config_set_pressure_unit_124(mac, parseInt(config.pressure_unit_124));
+								}
+								if(config.total_1_op_mode_124_active){
+									promises.total_1_op_mode_124 = node.config_gateway.config_set_total_1_op_mode_124(mac, parseInt(config.total_1_op_mode_124));
+								}
+								if(config.total_2_op_mode_124_active){
+									promises.total_2_op_mode_124 = node.config_gateway.config_set_total_2_op_mode_124(mac, parseInt(config.total_2_op_mode_124));
+								}
+								if(config.total_3_op_mode_124_active){
+									promises.total_3_op_mode_124 = node.config_gateway.config_set_total_3_op_mode_124(mac, parseInt(config.total_3_op_mode_124));
+								}
+								if(config.conductivity_unit_124_active){
+									promises.conductivity_unit_124 = node.config_gateway.config_set_conductivity_unit_124(mac, parseInt(config.conductivity_unit_124));
+								}
+								if(config.reset_all_totalizers_124){
+									promises.reset_all_totalizers_124 = node.config_gateway.config_set_reset_all_totalizers_124(mac);
+								}
+								break;
 							case 180:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
