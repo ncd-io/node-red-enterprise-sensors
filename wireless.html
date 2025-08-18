@@ -822,6 +822,11 @@
 			conductivity_unit_124_active:{value: ""},
 			conductivity_unit_124:{value:1},
 			reset_all_totalizers_124:{value: ""},
+
+			screen_control_108_active:{value: ""},
+			screen_control_108:{value:0},
+			screen_on_time_108_active:{value:""},
+			screen_on_time_108:{value:5, validate: NCD_validators.number_range(0, 255)},
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3233,6 +3238,49 @@
 					</div>
 					<p class="caption">
 						Default value: 0 milliseconds (Disabled)
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108>
+				<div class="form-row ncd-active-check">
+					<strong>Set Screen On Time</strong>
+					<p>Set the duration, in seconds, that the screen will remain active after a sensor transmission. Once this time elapses, the screen will automatically turn off.<br><br>
+						**Only applies to screen version
+					</p>
+					<div>
+						<label for="node-input-screen_on_time_108_active">Active:</label>
+						<input type="checkbox" id="node-input-screen_on_time_108_active" class="ncd-config-toggle" data-target-id="node-input-screen_on_time_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-screen_on_time_108"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-screen_on_time_108" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 5 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Screen Control</strong>
+					<p>
+						Selects the type of input or data that will be displayed on the screen.<br><br>
+						**Only applies to screen version
+					</p>
+					<div>
+						<label for="node-input-screen_control_108_active">Active:</label>
+						<input type="checkbox" id="node-input-screen_control_108_active" class="ncd-config-toggle" data-target-id="node-input-screen_control_108" value="1">
+					</div>
+					<div>
+						<label for="node-input-screen_control_108"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-screen_control_108">
+							<option value="0">IO1</option>
+							<option value="1">IO2</option>
+							<option value="2">IO3</option>
+							<option value="3">Accelerometer</option>
+							<option value="4">Magnetometer</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: IO1.
 					</p>
 				</div>
 			</div>
