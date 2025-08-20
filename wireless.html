@@ -3263,8 +3263,10 @@
 			<div class="ncd-dependent" data-sensor-108 data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Set Interrupt Timeout</strong>
-					<p>Set the sensor to detect an initial IO (input/output) change and ignore subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
-						**Only applies to sensor with firmware version 11 and above.</p>
+					<p>Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
+						**Only applies to sensor with firmware version 11 and above.<br><br>
+						Valid range: 0 - 65000 milliseconds.
+					</p>
 					<div>
 						<label for="node-input-interrupt_timeout_108_active">Active:</label>
 						<input type="checkbox" id="node-input-interrupt_timeout_108_active" class="ncd-config-toggle" data-target-id="node-input-interrupt_timeout_108" value="1">
