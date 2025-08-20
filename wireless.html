@@ -827,6 +827,41 @@
 			screen_control_108:{value:0},
 			screen_on_time_108_active:{value:""},
 			screen_on_time_108:{value:5, validate: NCD_validators.number_range(0, 255)},
+
+			oxygen_boot_time_536_active:{value: ""},
+			oxygen_boot_time_536:{value:3, validate: NCD_validators.number_range(1, 100)},
+			flow_boot_time_536_active:{value: ""},
+			flow_boot_time_536:{value:3, validate: NCD_validators.number_range(1, 100)},
+			oxygen_dev_addr_536_active:{value: ""},
+			oxygen_addr_1_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			oxygen_addr_2_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			oxygen_addr_3_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			oxygen_addr_4_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			flow_dev_addr_536_active:{value: ""},
+			flow_addr_1_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			flow_addr_2_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			flow_addr_3_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			flow_addr_4_536:{value:0, validate: NCD_validators.number_range(0, 255)},
+			oxygen_rate_536_active:{value: ""},
+			oxygen_rate_536:{value:2, validate: NCD_validators.number_range(0, 255)},
+			oxygen_timeout_536_active:{value: ""},
+			oxygen_timeout_536:{value:5, validate: NCD_validators.number_range(0, 65000)},
+			oxygen_max_threshold_s1_536_active:{value: ""},
+			oxygen_max_threshold_s1_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s2_536_active:{value: ""},
+			oxygen_max_threshold_s2_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s3_536_active:{value: ""},
+			oxygen_max_threshold_s3_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s4_536_active:{value: ""},
+			oxygen_max_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s1_536_active:{value: ""},
+			oxygen_min_threshold_s1_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s2_536_active:{value: ""},
+			oxygen_min_threshold_s2_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s3_536_active:{value: ""},
+			oxygen_min_threshold_s3_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s4_536_active:{value: ""},
+			oxygen_min_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -960,6 +995,7 @@
 					"524": "524 - SDI Multi Soil Probe",
 					"531": "531 - Custom Noise Sensor",
 					"535": "535 - Custom CO2 Sensor",
+					"536": "536 - Wireless Oxygen Flow Meter",
 					"537": "537 - Custom Standalone Smart Vibration Sensor",
 					"538": "538 - Custom One Channel Vibration Plus",
 					"539": "539 - RS485 Modbus Wireless Converter",
@@ -1269,6 +1305,7 @@
 			<option value="524">524 - SDI Multi Soil Probe</option>
 			<option value="531">531 - Custom Noise Sensor</option>
 			<option value="535">535 - Custom CO2 Sensor</option>
+			<option value="536">536 - Wireless Oxygen Flow Meter</option>
 			<option value="537">537 - Custom Standalone Smart Vibration Sensor</option>
 			<option value="538">538 - Custom One Channel Vibration Plus</option>
 			<option value="539">539 - RS485 Modbus Wireless Converter</option>
@@ -1289,7 +1326,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -5826,6 +5863,238 @@
 						<label for="node-input-reset_all_totalizers_124"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-reset_all_totalizers_124" value="1">
 					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-536>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Boot Time</strong>
+					<p>This value represents the number of seconds to wait after applying power to the Oxygen sensor before taking a reading.<br>
+					Valid range: 1 - 100 Seconds.
+					</p>
+					<div>
+						<label for="node-input-oxygen_boot_time_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_boot_time_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_boot_time_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_boot_time_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_boot_time_536">
+					</div>
+					<p class="caption">
+						Default value: 3 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Flow Boot Time</strong>
+					<p>This value represents the number of seconds to wait after applying power to the Flow sensor before taking a reading.<br>
+					Valid range: 1 - 100 Seconds.
+					</p>
+					<div>
+						<label for="node-input-flow_boot_time_536_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_boot_time_536_active" class="ncd-config-toggle" data-target-id="node-input-flow_boot_time_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-flow_boot_time_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-flow_boot_time_536">
+					</div>
+					<p class="caption">
+						Default value: 3 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Sensors Addresses</strong>
+					<p>Set the Modbus Slave device address connected to this device</p>
+					<div>
+						<label for="node-input-oxygen_dev_addr_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_dev_addr_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_dev_addr_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_addr_1_536"><i class="icon-tag"></i>ID 1:</label>
+						<input type="text" id="node-input-oxygen_addr_1_536" class="oxygen_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-oxygen_addr_2_536"><i class="icon-tag"></i>ID 2:</label>
+						<input type="text" id="node-input-oxygen_addr_2_536" class="oxygen_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-oxygen_addr_3_536"><i class="icon-tag"></i>ID 3:</label>
+						<input type="text" id="node-input-oxygen_addr_3_536" class="oxygen_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-oxygen_addr_4_536"><i class="icon-tag"></i>ID 4:</label>
+						<input type="text" id="node-input-oxygen_addr_4_536" class="oxygen_dev_addr_536" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Flow Sensors Addresses</strong>
+					<p>Set the Modbus Slave device address connected to this device</p>
+					<div>
+						<label for="node-input-flow_dev_addr_536_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_dev_addr_536_active" class="ncd-config-toggle" data-target-id="node-input-flow_dev_addr_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-flow_addr_1_536"><i class="icon-tag"></i>ID 1:</label>
+						<input type="text" id="node-input-flow_addr_1_536" class="flow_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-flow_addr_2_536"><i class="icon-tag"></i>ID 2:</label>
+						<input type="text" id="node-input-flow_addr_2_536" class="flow_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-flow_addr_3_536"><i class="icon-tag"></i>ID 3:</label>
+						<input type="text" id="node-input-flow_addr_3_536" class="flow_dev_addr_536" placeholder="0" value="00">
+					</div>
+					<div>
+						<label for="node-input-flow_addr_4_536"><i class="icon-tag"></i>ID 4:</label>
+						<input type="text" id="node-input-flow_addr_4_536" class="flow_dev_addr_536" placeholder="0" value="00">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Check Rate</strong>
+					<div>
+						<label for="node-input-oxygen_rate_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_rate_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_rate_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_rate_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_rate_536">
+					</div>
+					<p class="caption">
+						Default value: 2 minutes.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Check Timeout</strong>
+					<div>
+						<label for="node-input-oxygen_timeout_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_timeout_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_timeout_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_timeout_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_timeout_536">
+					</div>
+					<p class="caption">
+						Default value: 5 minutes.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Max Threshold Sensor 1</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s1_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_max_threshold_s1_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s1_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s1_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_max_threshold_s1_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Max Threshold Sensor 2</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s2_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_max_threshold_s2_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s2_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s2_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_max_threshold_s2_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Max Threshold Sensor 3</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s3_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_max_threshold_s3_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s3_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s3_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_max_threshold_s3_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Max Threshold Sensor 4</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s4_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_max_threshold_s4_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s4_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_max_threshold_s4_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_max_threshold_s4_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Min Threshold Sensor 1</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s1_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_min_threshold_s1_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s1_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s1_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_min_threshold_s1_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Min Threshold Sensor 2</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s2_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_min_threshold_s2_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s2_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s2_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_min_threshold_s2_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Min Threshold Sensor 3</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s3_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_min_threshold_s3_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s3_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s3_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_min_threshold_s3_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Min Threshold Sensor 4</strong>
+					<p>Valid range: 0 - 20 mg/l</p>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s4_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_min_threshold_s4_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s4_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_min_threshold_s4_536"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-oxygen_min_threshold_s4_536">
+					</div>
+					<p class="caption">
+						Default value: 12 mg/l.
+					</p>
 				</div>
 			</div>
 		</div>

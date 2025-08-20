@@ -3165,6 +3165,50 @@ module.exports = function(RED) {
 									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
 								}
 								break;
+							case 536:
+								if(config.oxygen_boot_time_536_active){
+									promises.oxygen_boot_time_536 = node.config_gateway.config_set_oxygen_boot_time_536(mac, parseInt(config.oxygen_boot_time_536));
+								}
+								if(config.flow_boot_time_536_active){
+									promises.flow_boot_time_536 = node.config_gateway.config_set_flow_boot_time_536(mac, parseInt(config.flow_boot_time_536));
+								}
+								if(config.oxygen_dev_addr_536_active){
+									promises.oxygen_dev_addr_536 = node.config_gateway.config_set_oxygen_dev_addr_536(mac, parseInt(config.oxygen_addr_1_536), parseInt(config.oxygen_addr_2_536), parseInt(config.oxygen_addr_3_536), parseInt(config.oxygen_addr_4_536));
+								}
+								if(config.flow_dev_addr_536_active){
+									promises.flow_dev_addr_536 = node.config_gateway.config_set_flow_dev_addr_536(mac, parseInt(config.flow_addr_1_536), parseInt(config.flow_addr_2_536), parseInt(config.flow_addr_3_536), parseInt(config.flow_addr_4_536));
+								}
+								if(config.oxygen_rate_536_active){
+									promises.oxygen_rate_536 = node.config_gateway.config_set_oxygen_rate_536(mac, parseInt(config.oxygen_rate_536));
+								}
+								if(config.oxygen_timeout_536_active){
+									promises.oxygen_timeout_536 = node.config_gateway.config_set_oxygen_timeout_536(mac, parseInt(config.oxygen_timeout_536));
+								}
+								if(config.oxygen_max_threshold_s1_536_active){
+									promises.oxygen_max_threshold_s1_536 = node.config_gateway.config_set_oxygen_max_threshold_s1_536(mac, parseInt(config.oxygen_max_threshold_s1_536));
+								}
+								if(config.oxygen_max_threshold_s2_536_active){
+									promises.oxygen_max_threshold_s2_536 = node.config_gateway.config_set_oxygen_max_threshold_s2_536(mac, parseInt(config.oxygen_max_threshold_s2_536));
+								}
+								if(config.oxygen_max_threshold_s3_536_active){
+									promises.oxygen_max_threshold_s3_536 = node.config_gateway.config_set_oxygen_max_threshold_s3_536(mac, parseInt(config.oxygen_max_threshold_s3_536));
+								}
+								if(config.oxygen_max_threshold_s4_536_active){
+									promises.oxygen_max_threshold_s4_536 = node.config_gateway.config_set_oxygen_max_threshold_s4_536(mac, parseInt(config.oxygen_max_threshold_s4_536));
+								}
+								if(config.oxygen_min_threshold_s1_536_active){
+									promises.oxygen_min_threshold_s1_536 = node.config_gateway.config_set_oxygen_min_threshold_s1_536(mac, parseInt(config.oxygen_min_threshold_s1_536));
+								}
+								if(config.oxygen_min_threshold_s2_536_active){
+									promises.oxygen_min_threshold_s2_536 = node.config_gateway.config_set_oxygen_min_threshold_s2_536(mac, parseInt(config.oxygen_min_threshold_s2_536));
+								}
+								if(config.oxygen_min_threshold_s3_536_active){
+									promises.oxygen_min_threshold_s3_536 = node.config_gateway.config_set_oxygen_min_threshold_s3_536(mac, parseInt(config.oxygen_min_threshold_s3_536));
+								}
+								if(config.oxygen_min_threshold_s4_536_active){
+									promises.oxygen_min_threshold_s4_536 = node.config_gateway.config_set_oxygen_min_threshold_s4_536(mac, parseInt(config.oxygen_min_threshold_s4_536));
+								}
+								break;
 							case 537:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
