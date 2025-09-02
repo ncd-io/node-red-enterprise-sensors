@@ -2715,10 +2715,10 @@ module.exports = function(RED) {
 									promises.led_alert_mode_84 = node.config_gateway.config_set_led_alert_mode_84(mac, parseInt(config.led_alert_mode_84));
 								}
 								if(config.led_accelerometer_threshold_84_active){
-									promises.led_accelerometer_threshold_84 = node.config_gateway.config_set_led_accelerometer_threshold_84(mac, parseInt(config.led_accelerometer_threshold_84));
+									promises.led_accelerometer_threshold_114 = node.config_gateway.config_set_led_accelerometer_threshold_114(mac, parseInt(config.led_accelerometer_threshold_84));
 								}
 								if(config.led_velocity_threshold_84_active){
-									promises.led_velocity_threshold_84 = node.config_gateway.config_set_led_velocity_threshold_84(mac, parseInt(config.led_velocity_threshold_84));
+									promises.led_velocity_threshold_114 = node.config_gateway.config_set_led_velocity_threshold_114(mac, parseInt(config.led_velocity_threshold_84));
 								}
 								if(config.motion_detect_threshold_p1_110_active){
 									promises.motion_detect_threshold_p1_114 = node.config_gateway.config_set_motion_detect_threshold_p1_110(mac, parseInt(config.motion_detect_threshold_p1_110));
