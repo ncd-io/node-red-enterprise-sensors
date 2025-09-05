@@ -3348,8 +3348,8 @@
 					<div>
 						<label for="node-input-enable_filtering_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_filtering_110">
-							<option selected="selected" value="0">Enabled</option>
-							<option value="1">Disabled</option>
+							<option selected="selected" value="1">Enabled</option>
+							<option value="0">Disabled</option>
 						</select>
 					</div>
 				</div>
@@ -3684,10 +3684,12 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
+							The transmitted message will have a msg_type property of 'motion'.</p>
 						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
 						<p>Valid Input Range: 0 - 40<br>
 						A value of 0 will disable this feature.</p>
+						<p>Note: In Smart mode, a 'motion' transmission is conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
 					</div>
 					<div>
 						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>Active:</label>
@@ -3703,11 +3705,12 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p>
+						<p>Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
+							The transmitted message will have a msg_type property of 'motion'</p>
 						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
 						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.<br>
-						</p>
+						A value of 0 will disable this feature.</p>
+						<p>Note: In Smart mode, a 'motion' transmission is also conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
 					</div>
 					<div>
 						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>Active:</label>
