@@ -861,7 +861,15 @@
 			oxygen_min_threshold_s3_536_active:{value: ""},
 			oxygen_min_threshold_s3_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_min_threshold_s4_536_active:{value: ""},
-			oxygen_min_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)}
+			oxygen_min_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			clear_timers_119_active:{value:""},
+			clear_timers_119:{value:8},
+			push_notification_119_active:{value: ""},
+			push_notification_119:{value: 0},
+			enable_axis_119_active:{value: ""},
+			enable_axis_119:{value: 0},
+			raw_acc_data_119_active:{value: ""},
+			raw_acc_data_119:{value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -970,6 +978,7 @@
 					"114": "114 - Standalone Smart Vibration Sensor v4",
 					"117": "117 - Custom Vibration Sensor PPV",
 					"118": "118 - Dual Pressure and Temperature Sensor",
+					"119": "119 - Wireless Machine Run Timer Meter",
 					"120": "120 - Wireless H2S Sensor",
 					"121": "121 - Wireless Wood Moisture Sensor",
 					"122": "122 - Wireless 4-20mA Current Splitter",
@@ -1281,6 +1290,7 @@
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
 			<option value="117">117 - Custom Vibration Sensor PPV</option>
 			<option value="118">118 - Dual Pressure and Temperature Sensor</option>
+			<option value="119">119 - Wireless Machine Run Timer Meter</option>
 			<option value="120">120 - Wireless H2S Sensor</option>
 			<option value="121">121 - Wireless Wood Moisture Sensor</option>
 			<option value="122">122 - Wireless 4-20mA Current Splitter</option>
@@ -1328,7 +1338,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2653,7 +2663,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Accelerometer</strong>
 					<div>
@@ -2724,6 +2734,54 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-119>
+				<div class="form-row ncd-active-check">
+					<strong>Clear Counters</strong>
+					<p>Resets the selected Input counters and their corresponding uptime values to zero.</p>
+					<div>
+						<label for="node-input-clear_timers_119_active">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_119_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_119" value="1">
+					</div>
+					<div>
+						<label for="node-input-clear_timers_119"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-clear_timers_119">
+							<option value="16">Magnetometer</option>
+							<option value="8">Accelerometer</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Configure Enabled Axes</strong>
+					<div>
+						<label for="node-input-enable_axis_119_active">Active:</label>
+						<input type="checkbox" id="node-input-enable_axis_119_active" class="ncd-config-toggle" data-target-id="node-input-enable_axis_119" value="1">
+					</div>
+					<div>
+						<label for="node-input-enable_axis_119"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-enable_axis_119">
+							<option value="1">X Axis</option>
+							<option value="2">Y Axis</option>
+							<option value="4">Z Axis</option>
+							<option value="7">All axes</option>
+							<option value="0">Disabled All</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw Accelerometer Data</strong>
+					<div>
+						<label for="node-input-raw_acc_data_119_active">Active:</label>
+						<input type="checkbox" id="node-input-raw_acc_data_119_active" class="ncd-config-toggle" data-target-id="node-input-raw_acc_data_119" value="1">
+					</div>
+					<div>
+						<label for="node-input-raw_acc_data_119"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-raw_acc_data_119">
+							<option value="0">Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
@@ -2757,7 +2815,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -2939,7 +2997,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-123>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-119 data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
@@ -3044,7 +3102,29 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-123>
+			<div class="ncd-dependent" data-sensor-119>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p>
+						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
+						**Report type will be 'Interrupt'.<br>
+					</p>
+					<div>
+						<label for="node-input-push_notification_119_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_119_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_119" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_119"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_119">
+							<option value="0" selected>Disabled</option>
+							<option value="24">Enable All</option>
+							<option value="8">Enable on Accelerometer</option>
+							<option value="16">Enable on Magnetometer</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
@@ -3239,7 +3319,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Sample Rate</strong>
 					<p class="caption">
@@ -3262,7 +3342,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-123>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Interrupt Timeout</strong>
 					<p>Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
