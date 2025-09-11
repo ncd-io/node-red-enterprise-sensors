@@ -4,7 +4,11 @@ const sp = require('serialport');
 const Queue = require("promise-queue");
 const events = require("events");
 const fs = require('fs');
+const path = require('path');
 const home_dir = require('os').homedir
+const { isDeepStrictEqual } = require('util');
+
+
 module.exports = function(RED) {
 	var gateway_pool = {};
 	function NcdGatewayConfig(config){
@@ -19,6 +23,38 @@ module.exports = function(RED) {
 		this.sensor_list = {};
 		this._emitter = new events.EventEmitter();
 		this.on = (e,c) => this._emitter.on(e, c);
+		
+		const config_file_location = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/data/sensor_configs.json';
+		const configuration_map_location = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/data/configuration_map.json';
+		const sensor_type_map_location = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/data/sensor_type_map.json';
+
+		this.config_node_capable = [114];
+
+		// comms_timer object var added to clear the time to prevent issues with rapid redeploy
+		this.comms_timer;
+
+		// this.sensor_configs = {};
+		try {
+			this.sensor_configs = JSON.parse(fs.readFileSync(config_file_location,));
+		} catch(err){
+			this.sensor_configs = {};
+		};
+
+		try {
+			this.configuration_map = JSON.parse(fs.readFileSync(configuration_map_location,));	
+		} catch(err){
+			this.configuration_map = {};
+			console.log('Error reading configuration list');
+		};
+
+		try {
+			this.sensor_type_map = JSON.parse(fs.readFileSync(sensor_type_map_location,));	
+		} catch(err){
+			this.sensor_type_map = {};
+			console.log('Error reading sensor type map file');
+		};
+
+
 
 		if(config.comm_type == 'serial'){
 			this.key = config.port;
@@ -26,6 +62,16 @@ module.exports = function(RED) {
 		else{
 			this.key = config.ip_address+":"+config.tcp_port;
 		}
+
+		this.store_sensor_configs = function(sensor_configs){
+			fs.writeFile(config_file_location, sensor_configs, function(err){
+				if(err){
+					return err;
+				}else{
+					return true;
+				}
+			});
+		};
 
 		var node = this;
 
@@ -62,7 +108,7 @@ module.exports = function(RED) {
 
 				if(config.comm_type == 'serial'){
 					if(config.port !== ''){
-						setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
+						this.comms_timer = setTimeout(()=>{node.gateway.digi.serial.setupSerial()}, 5000);
 					}else{
 						node.warn('No Port Selected for Serial Communications.')
 					}
@@ -70,7 +116,7 @@ module.exports = function(RED) {
 					if(config.tcp_port === '' || config.ip_address === ''){
 						node.warn('TCP Socket not configured for Network Communications. Please enter a Port and IP Address.');
 					}else{
-						setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
+						this.comms_timer = setTimeout(()=>{node.gateway.digi.serial.setupClient()}, 5000);
 					}
 				}
 				node.gateway.digi.serial.on('ready', () => {
@@ -95,8 +141,54 @@ module.exports = function(RED) {
 							if(d.mode == "FLY"){
 								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request')){
 									node.request_manifest(d.mac);
-								};
-							};
+								}else if(node.config_node_capable.includes(d.type)){
+									// API CONFIGURATION NODE
+									let values = d.reported_config.machine_values;
+									if(Object.hasOwn(values, 'uptime_counter')) delete values.uptime_counter;
+									if(Object.hasOwn(values, 'tx_lifetime_counter')) delete values.tx_lifetime_counter;
+									if(Object.hasOwn(values, 'reserved')) delete values.reserved;
+				
+									// hardware_id we might remove as well, it is useful though.
+									if(!Object.hasOwn(node.sensor_configs, d.mac)){
+										node.sensor_configs[d.mac] = {};
+									}
+									if(!Object.hasOwn(node.sensor_configs[d.mac], 'reported_configs')){
+										node.sensor_configs[d.mac].reported_configs = {};
+									}
+									if(!Object.hasOwn(node.sensor_configs[d.mac], 'type')){
+										node.sensor_configs[d.mac].type = d.type;
+									}else if(node.sensor_configs[d.mac].type != d.type){
+										// TODO this node can't send messages, need to emit event and have API node listen for it
+										// node.send({topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs0"}, time: Date.now()});
+										delete node.sensor_configs[d.mac].desired_configs;
+										node.sensor_configs[d.mac].type = d.type;
+										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+									}
+									if(!isDeepStrictEqual(node.sensor_configs[d.mac].reported_configs, values)){
+										// Values are different, update the stored configs and write to file
+										node.sensor_configs[d.mac].reported_configs = values;
+										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+										// TODO this node can't send messages, need to emit event and have API node listen for it
+										node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
+									}
+									if(Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs')){
+										let required_configs = this.get_required_configs(node.sensor_configs[d.mac].desired_configs, node.sensor_configs[d.mac].reported_configs);
+										node.warn(required_configs);
+										// node.warn('Should be sending otn request')
+										// node.warn(Object.keys(required_configs).length);
+										if(Object.keys(required_configs).length !== 0){
+											var tout = setTimeout(() => {
+												node.sensor_configs[d.mac].temp_required_configs = required_configs;
+												this._send_otn_request(d);
+											}, 100);
+										}
+									}
+								}
+							}
+							if(d.mode == "OTN" && Object.hasOwn(node.sensor_configs, d.mac) && Object.hasOwn(node.sensor_configs[d.mac], 'temp_required_configs')){
+								node.warn('API CONFIGURATION IS CONFIGURING SENSORS!!!!!');
+								node.configure(d);
+							}
 						});
 						node.gateway.on('manifest_received', (manifest_data) => {
 							// read manifest length is 37. Could use the same event for both
@@ -133,22 +225,44 @@ module.exports = function(RED) {
 								});
 								for(var i in promises){
 									(function(name){
-										promises[name].then((f) => {
+										promises[name].then((res) => {
 											if(name != 'finish'){
+												// IF we receive an FON message with success
+												if(Object.hasOwn(res, 'data') && res.data[0] == 70 && res.data[1] == 79 && res.data[2] == 78 && res.result == 255){
+													manifest_data.enter_ota_fota_version = res.original.data[5];
+													manifest_data.enter_ota_success = true;
+													console.log(res);
+												}else{
+													manifest_data.enter_ota_success = false;
+												}
 												console.log(name);
-											}
-											else{
-												// enter ota mode
-												node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
-													node.start_firmware_update(manifest_data, firmware_data);
-												});
+											} else{
+												if(manifest_data.enter_ota_success){
+													// enter ota mode
+													node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
+														console.log(manifest_data);
+														if(manifest_data.enter_ota_fota_version > 16){
+															console.log('V17 PROCESS');
+															console.log(manifest_data);
+															node.start_firmware_update_v17(manifest_data, firmware_data);
+														}else if(manifest_data.enter_ota_fota_version > 12){
+															console.log('V13 PROCESS');
+															console.log(manifest_data);
+															node.start_firmware_update_v13(manifest_data, firmware_data);
+														}else{
+															console.log('OLD PROCESSS');
+															console.log(manifest_data);
+															node.start_firmware_update(manifest_data, firmware_data);
+														}
+													});
+												}
 											}
 										}).catch((err) => {
 											console.log(err);
 											// msg[name] = err;
 										});
 									})(i);
-								}
+								};
 							});
 						});
 					}));
@@ -159,6 +273,189 @@ module.exports = function(RED) {
 				});
 			}
 		};
+
+
+
+
+
+
+		this.get_required_configs = function(desired_configs, reported_configs){
+			const mismatched = {};
+			for (const key in desired_configs) {
+				if (reported_configs.hasOwnProperty(key)) {
+					if (desired_configs[key] !== reported_configs[key]) {
+						mismatched[key] = desired_configs[key];
+					};
+				};
+			};
+			return mismatched;
+		};
+
+		// TODO consider adding logic for if only 1 config to go out, skip OTN request
+		this.configure = function(sensor){
+			node.warn('Configuring Sensor');
+			node.warn(node.sensor_configs[sensor.mac].temp_required_configs);
+			// for (const key in configs) {
+			// 	node.warn(key);
+			// 	let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
+			// 	node.warn(`Configuring ${key} to ${configs[key]} for sensor ${sensor.mac}`);
+			// 	// TODO turn into promises
+			// 	node.gateway[config_obj.call](sensor.mac, configs[key]);
+			// }
+			// delete node.sensor_configs[sensor.mac].temp_required_configs;
+
+
+
+
+			return new Promise((top_fulfill, top_reject) => {
+				var success = {};
+				setTimeout(() => {
+					var tout = setTimeout(() => {
+						// TODO handle timeout and send emitters
+						node.warn({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
+						// node.status(modes.PGM_ERR);
+						// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
+					}, 60000);
+					// node.status(modes.PGM_NOW);
+					var mac = sensor.mac;
+					var promises = {};
+					var reboot = false;
+					
+					let configs = node.sensor_configs[sensor.mac].temp_required_configs;
+					for (const key in configs) {
+						// node.warn(key);
+						let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
+						// node.warn(`Configuring ${key} to ${configs[key]} for sensor ${sensor.mac}`);
+						// TODO turn into promises
+						promises[key] = node.gateway[config_obj.call](sensor.mac, configs[key]);
+					}
+
+					// These sensors listed in original_otf_devices use a different OTF code.
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					// If we changed the network ID reboot the sensor to take effect.
+					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
+					if(reboot){
+						promises.reboot_sensor = node.gateway.config_reboot_sensor(mac);
+					} else {
+						if(original_otf_devices.includes(sensor.type)){
+							promises.exit_otn_mode = node.gateway.config_exit_otn_mode(mac);
+						}else{
+							promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(mac);
+						}
+					}
+					promises.finish = new Promise((fulfill, reject) => {
+						node.config_gateway.queue.add(() => {
+							return new Promise((f, r) => {
+								clearTimeout(tout);
+								node.status(modes.READY);
+								fulfill();
+								f();
+							});
+						});
+					});
+					for(var i in promises){
+						(function(name){
+							promises[name].then((f) => {
+								if(name != 'finish'){
+									// console.log('IN PROMISE RESOLVE');
+									// console.log(f);
+									// success[name] = true;
+									if(Object.hasOwn(f, 'result')){
+										switch(f.result){
+											case 255:
+												success[name] = true;
+												break;
+											default:
+												success[name] = {
+													res: "Bad Response",
+													result: f.result,
+													sent: f.sent
+												};
+										}
+									}else{
+										success[name] = {
+											res: "no result",
+											result: null,
+											sent: f.sent
+										}
+									}
+								}
+								else{
+									// #OTF
+									// TODO turn into event emitter.
+									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
+									top_fulfill(success);
+								}
+							}).catch((err) => {
+								success[name] = err;
+							});
+						})(i);
+					}
+				}, 1000);
+			});
+		};
+
+		this._send_otn_request = function(sensor){
+			return new Promise((top_fulfill, top_reject) => {
+				var msg = {};
+				setTimeout(() => {
+					var tout = setTimeout(() => {
+						node.status(modes.PGM_ERR);
+						node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+					}, 10000);
+
+					var promises = {};
+					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
+					const original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					if(original_otf_devices.includes(sensor.type)){
+						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
+						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode(sensor.mac);
+					}else{
+						// This command is used for OTF on types not 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
+						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode_common(sensor.mac);
+					}
+
+					promises.finish = new Promise((fulfill, reject) => {
+						node.gateway.queue.add(() => {
+							return new Promise((f, r) => {
+								clearTimeout(tout);
+								// TODO emitter to set status on config nodes.
+								// node.status(modes.FLY);
+								fulfill();
+								f();
+							});
+						});
+					});
+					for(var i in promises){
+						(function(name){
+							promises[name].then((f) => {
+								if(name != 'finish') msg[name] = true;
+								else{
+									// #OTF
+									node.warn('OTN Request Finished');
+									// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+									top_fulfill(msg);
+								}
+							}).catch((err) => {
+								if(Object.hasOwn(node.sensor_configs[sensor.mac], 'temp_required_configs')){
+									delete node.sensor_configs[sensor.mac].temp_required_configs;
+								}
+								node.warn('Error entering OTN mode');
+								msg[name] = err;
+							});
+						})(i);
+					}
+				});
+			});
+		};
+
+		
+
+
+
+
+
+
 		node.check_mode = function(cb){
 			node.gateway.digi.send.at_command("ID").then((res) => {
 				var pan_id = (res.data[0] << 8) | res.data[1];
@@ -180,7 +477,6 @@ module.exports = function(RED) {
 				node._emitter.emit('mode_change', mode);
 			});
 		};
-
 		node.start_firmware_update = function(manifest_data, firmware_data){
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
@@ -244,6 +540,208 @@ module.exports = function(RED) {
 					}
 				}, 1000);
 			});
+		};
+		node.start_firmware_update_v13 = function(manifest_data, firmware_data){
+			console.log('V13');
+			return new Promise((top_fulfill, top_reject) => {
+				var success = {successes:{}, failures:{}};
+
+				let chunk_size = 128;
+				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+
+				var promises = {
+					manifest: node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1))
+				};
+				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+
+				var index = 0;
+				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+					index = node.sensor_list[manifest_data.addr].last_chunk_success;
+				}
+				while(index*chunk_size < firmware_data.manifest.image_size){
+					let offset = index*chunk_size;
+					let offset_bytes = int2Bytes(offset, 4);
+					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
+					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
+						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
+					};
+					index++;
+				}
+				console.log('Update Started');
+				console.log(Object.keys(promises).length);
+				console.log(Date.now());
+				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+				var firmware_continue = true;
+				for(var i in promises){
+					(function(name){
+						let retryCount = 0;
+						const maxRetries = 3; // Set the maximum number of retries
+
+						function attemptPromise() {
+							console.log(name);
+							promises[name].then((status_frame) => {
+								if(name == 'manifest'){
+									console.log('MANIFEST SUCCESFULLY SENT');
+									node.sensor_list[manifest_data.addr].test_check = {name: true};
+									node.sensor_list[manifest_data.addr].update_in_progress = true;
+								}
+								else if(name.includes('_check')){
+									console.log(name);
+									console.log(parseInt(name.split('_')[0]) * chunk_size);
+									let last_chunk = status_frame.data.reduce(msbLsb);
+									console.log(last_chunk);
+									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
+										console.log('ERROR DETECTED IN OTA UPDATE');
+										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
+										// node.gateway.clear_queue_except_last();
+										node.gateway.clear_queue();
+										node.resume_normal_operation();
+									} else {
+										success.successes[name] = {chunk: last_chunk};
+									}
+								}
+								else {
+									success[name] = true;
+									node.sensor_list[manifest_data.addr].test_check[name] = true;
+									node.sensor_list[manifest_data.addr].last_chunk_success = name;
+								}
+							}).catch((err) => {
+								console.log(name);
+								console.log(err);
+								if(name != 'reboot'){
+									node.gateway.clear_queue();
+									success[name] = err;
+								} else {
+									delete node.sensor_list[manifest_data.addr].last_chunk_success;
+									delete node.sensor_list[manifest_data.addr].update_request;
+									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+									top_fulfill(success);
+								}
+								console.log('Update Finished')
+								console.log(Date.now());
+								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+								node.resume_normal_operation();
+							});
+						}
+						attemptPromise(); // Start the initial attempt
+					})(i);
+				}
+			});
+		};
+		node.start_firmware_update_v17 = function(manifest_data, firmware_data){
+			console.log('V17 Update Start');
+			var start_offset = 0;
+			setTimeout(() => {
+				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+					node.gateway.firmware_read_last_chunk_segment(manifest_data.addr).then((status_frame) => {
+						console.log('Last Chunk Segment Read');
+						console.log(status_frame);
+						start_offset = status_frame.data.slice(4,8).reduce(msbLsb);
+						node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+					}).catch((err) => {
+						// TODO FOTA EMIT ERROR FOTA
+						console.log('Error reading last chunk segment');
+						node.resume_normal_operation();
+					});
+				}else{
+					node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
+				};
+			}, 1000);
+		};
+		node.queue_firmware_update_v17 = function(manifest_data, firmware_data, start_offset){
+			console.log('V17 Queue Update Start');
+			console.log('Start Offset: '+start_offset);
+			return new Promise((top_fulfill, top_reject) => {
+				var success = {successes:{}, failures:{}};
+
+				let chunk_size = 128;
+				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
+				var promises = {};
+				if(start_offset == 0){
+					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				};
+				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
+				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
+
+				// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
+				// 	index = node.sensor_list[manifest_data.addr].last_chunk_success;
+				// }
+
+				// reverse calculate index based on start_offset.
+				var index = parseInt(start_offset / chunk_size);
+				console.log('Index: '+index);
+				while(index*chunk_size < firmware_data.manifest.image_size){
+					let offset = index*chunk_size;
+					let offset_bytes = int2Bytes(offset, 4);
+					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
+					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
+					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
+						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
+					};
+					index++;
+				}
+				console.log('Update Started');
+				console.log(Object.keys(promises).length);
+				console.log(Date.now());
+				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
+				var firmware_continue = true;
+				for(var i in promises){
+					(function(name){
+						let retryCount = 0;
+						const maxRetries = 3; // Set the maximum number of retries
+
+						function attemptPromise() {
+							console.log(name);
+							promises[name].then((status_frame) => {
+								if(name == 'manifest'){
+									console.log('MANIFEST SUCCESFULLY SENT');
+									node.sensor_list[manifest_data.addr].test_check = {name: true};
+									node.sensor_list[manifest_data.addr].update_in_progress = true;
+								}
+								else if(name.includes('_check')){
+									console.log(name);
+									console.log(parseInt(name.split('_')[0]) * chunk_size);
+									let last_chunk = status_frame.data.slice(0,4).reduce(msbLsb);
+									console.log(last_chunk);
+									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
+										console.log('ERROR DETECTED IN OTA UPDATE');
+										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
+										// node.gateway.clear_queue_except_last();
+										node.gateway.clear_queue();
+										node.resume_normal_operation();
+									} else {
+										success.successes[name] = {chunk: last_chunk};
+									}
+								}
+								else {
+									success[name] = true;
+									node.sensor_list[manifest_data.addr].test_check[name] = true;
+									node.sensor_list[manifest_data.addr].last_chunk_success = name;
+								}
+							}).catch((err) => {
+								console.log(name);
+								console.log(err);
+								if(name != 'reboot'){
+									node.gateway.clear_queue();
+									success[name] = err;
+								} else {
+									delete node.sensor_list[manifest_data.addr].last_chunk_success;
+									delete node.sensor_list[manifest_data.addr].update_request;
+									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+									top_fulfill(success);
+								}
+								console.log('Update Finished')
+								console.log(Date.now());
+								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
+								node.resume_normal_operation();
+							});
+						}
+						attemptPromise(); // Start the initial attempt
+					})(i);
+				}
+			});
 		}
 		node.resume_normal_operation = function(){
 			let pan_id = parseInt(config.pan_id, 16);
@@ -262,11 +760,13 @@ module.exports = function(RED) {
 			if(typeof gateway_pool[this.key] != 'undefined'){
 				if(config.comm_type == 'serial'){
 					node.gateway.digi.serial.close();
+					clearTimeout(this.comms_timer);
 					// node.gateway.digi.serial.close(() => {
 					delete gateway_pool[this.key];
 					// });
 				}else{
 					node.gateway.digi.serial.close();
+					clearTimeout(this.comms_timer);
 					// node.gateway.digi.serial.close(() => {
 					delete gateway_pool[this.key];
 					// });
@@ -341,6 +841,18 @@ module.exports = function(RED) {
 
 		node.on('close', function(){
 			this._gateway_node.close_comms();
+			this._gateway_node._emitter.removeAllListeners('send_manifest');
+			this._gateway_node._emitter.removeAllListeners('send_firmware_stats');
+			this._gateway_node._emitter.removeAllListeners('mode_change');
+			this.gateway._emitter.removeAllListeners('ncd_error');
+			this.gateway._emitter.removeAllListeners('sensor_data');
+			this.gateway._emitter.removeAllListeners('sensor_mode');
+			this.gateway._emitter.removeAllListeners('receive_packet-unknown_device');
+			this.gateway._emitter.removeAllListeners('route_info');
+			this.gateway._emitter.removeAllListeners('link_info');
+			this.gateway._emitter.removeAllListeners('converter_response');
+			this.gateway._emitter.removeAllListeners('manifest_received');
+			console.log(this.gateway._emitter.eventNames());
 		});
 
 		node.is_config = false;
@@ -446,10 +958,13 @@ module.exports = function(RED) {
 					// 	'description': 'Query water levels in mm/cm',
 					// 	'target_parser': 'parse_water_levels'
 					// }
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
 					if(msg.payload.hasOwnProperty('meta')){
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, msg.payload.meta, msg.payload.timeout);
 					}else{
-						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command);
+						node.gateway.queue_bridge_query(msg.payload.address, msg.payload.command, null, msg.payload.timeout);
 					}
 					break;
 				case "converter_send_multiple":
@@ -474,7 +989,10 @@ module.exports = function(RED) {
 					// 		}
 					// 	}
 					// ];
-					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands);
+					if(!Object.hasOwn(msg.payload, 'timeout')){
+						msg.payload.timeout = 1500;
+					}
+					node.gateway.prepare_bridge_query(msg.payload.address, msg.payload.commands, msg.payload.timeout);
 					break;
 				case "start_luber":
 					// msg = {
@@ -582,6 +1100,32 @@ module.exports = function(RED) {
 					// 	device_type: 80,
 					// 	hardware_id: [88, 88, 88]
 					// }
+					let fw_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
+					fs.readdir(fw_dir, (err, files) => {
+						if (err) {
+							node.error('Error reading firmware directory: ' + err);
+							return;
+						}
+						
+						// Create firmware files array
+						const firmwareFiles = files
+						.filter(file => file.endsWith('.ncd'))
+						.map((file) => {
+							const stats = fs.statSync(path.join(fw_dir, file));
+							const file_info = file.split("-");
+							return {
+								file_name: file,
+								download_date: stats.mtime,
+								for_sensor_type: Number(file_info[0]),
+								for_hardware_id: file_info[1].substring(0, file_info[1].length - 4)
+							};
+						});
+						// Send firmware files list
+						node.send({
+							topic: 'check_firmware_file_response',
+							payload: firmwareFiles
+						});
+					});
 					break;
 				case "ota_firmware_update_single":
 					// msg.payload = {
@@ -604,10 +1148,10 @@ module.exports = function(RED) {
 					// }
 					// TODO unfinished
 					msg.payload.addresses.forEach((address) => {
-						if(!Object.hasOwn(node._gateway_node.sensor_list, msg.payload.address)){
+						if(!Object.hasOwn(node._gateway_node.sensor_list, address)){
 							node._gateway_node.sensor_list[address] = {};
 						};
-						if(!Object.hasOwn(node._gateway_node.sensor_list[msg.payload.address], 'update_request')){
+						if(!Object.hasOwn(node._gateway_node.sensor_list[address], 'update_request')){
 							node._gateway_node.sensor_list[address].update_request = true;
 						};
 					});
@@ -774,7 +1318,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -930,6 +1474,12 @@ module.exports = function(RED) {
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 4:
 								if(config.thermocouple_type_23_active){
@@ -1041,6 +1591,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 15:
 								if(config.sensor_boot_time_420ma_active){
@@ -1060,6 +1616,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 19:
@@ -1097,6 +1659,12 @@ module.exports = function(RED) {
 							case 21:
 								if(config.pressure_sensor_type_21_active){
 									promises.pressure_sensor_type_21 = node.config_gateway.config_set_pressure_sensor_type_21(mac, parseInt(config.pressure_sensor_type_21));
+								}
+								if(config.pressure_sensor_range_AMS5812_21_active){
+									promises.pressure_sensor_range_AMS5812_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5812_21));
+								}
+								if(config.pressure_sensor_range_AMS5915_21_active){
+									promises.pressure_sensor_range_AMS5915_21 = node.config_gateway.config_set_pressure_sensor_range_21(mac, parseInt(config.pressure_sensor_range_AMS5915_21));
 								}
 								break;
 							case 23:
@@ -1150,6 +1718,14 @@ module.exports = function(RED) {
 								}
 								var interr = parseInt(config.activ_interr_x) | parseInt(config.activ_interr_y) | parseInt(config.activ_interr_z) | parseInt(config.activ_interr_op);
 								promises.activity_interrupt = node.config_gateway.config_set_interrupt_24(mac, interr);
+								break;
+							case 26:
+								if(config.pressure_limit_26_active){
+									promises.pressure_limit_26 = node.config_gateway.config_set_pressure_limit_26(mac, parseInt(config.pressure_limit_26));
+								}
+								if(config.auto_pressure_check_26_active){
+									promises.auto_pressure_check_26 = node.config_gateway.config_set_auto_pressure_check_26(mac, parseInt(config.auto_pressure_check_26));
+								}
 								break;
 							case 28:
 								if(config.current_calibration_13_active){
@@ -1292,6 +1868,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 46:
 								if(config.motion_threshold_46_active){
@@ -1325,6 +1907,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 52:
 								if(config.sensor_boot_time_420ma_active){
@@ -1345,6 +1933,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 53:
 								if(config.scd_skip_samples_44_active){
@@ -1355,6 +1949,9 @@ module.exports = function(RED) {
 								}
 								if(config.sampling_rate_duration_active){
 									promises.sampling_rate_duration = node.config_gateway.config_set_sampling_rate_duration(mac, parseInt(config.sampling_rate_duration));
+								}
+								if(config.start_sps30_fan_cleaning_53){
+									promises.start_sps30_fan_cleaning_53 = node.config_gateway.config_set_start_sps30_fan_cleaning_53(mac);
 								}
 								break;
 							case 56:
@@ -1375,6 +1972,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 58:
@@ -1436,8 +2039,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_80_active){
+									promises.sampling_interval = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_80));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1486,8 +2089,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_80_active){
+									promises.sampling_interval = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_80));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1539,8 +2142,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_80_active){
+									promises.sampling_interval = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_80));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1583,8 +2186,8 @@ module.exports = function(RED) {
 								if(config.x_axis_101 || config.y_axis_101 || config.z_axis_101){
 									promises.axis_enabled_101 = node.config_gateway.config_set_axis_enabled_101(mac, config.x_axis_101, config.y_axis_101, config.z_axis_101);
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_101 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.sampling_interval_80_active){
+									promises.sampling_interval = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_80));
 								}
 								if(config.full_scale_range_101_active){
 									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
@@ -1648,6 +2251,32 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								break;
+							case 87:
+								if(config.ct_constant_87_active){
+									promises.ct_constant_87 = node.config_gateway.config_set_ct_constant_87(mac, parseInt(config.ct_constant_87));
+								}
+								if(config.deadband_87_active){
+									promises.deadband_87 = node.config_gateway.config_set_deadband_87(mac, parseInt(config.deadband_87));
+								}
+								if(config.sampling_frequency_87_active){
+									promises.sampling_frequency_87 = node.config_gateway.config_set_sampling_frequency_87(mac, parseInt(config.sampling_frequency_87));
+								}
+								if(config.raw_length_87_active){
+									promises.raw_length_87 = node.config_gateway.config_set_raw_length_87(mac, parseInt(config.raw_length_87));
+								}
+								if(config.stay_on_mode_539_active){
+									promises.stay_on_mode_87 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+								}
+								if(config.quality_of_service_121_active){
+									promises.quality_of_service_87 = node.config_gateway.config_set_quality_of_service_121(mac, parseInt(config.quality_of_service_121));
+								}
 								break;
 							case 88:
 								if(config.sensor_boot_time_420ma_active){
@@ -1667,6 +2296,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 89:
@@ -1688,6 +2323,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 90:
 								if(config.sensor_boot_time_420ma_active){
@@ -1707,6 +2348,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 91:
@@ -1733,6 +2380,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 96:
 								if(config.sensor_boot_time_420ma_active){
@@ -1752,6 +2405,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 97:
@@ -1841,6 +2500,35 @@ module.exports = function(RED) {
 								// }
 								// promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								break;
+							case 103:
+								if(config.output_data_rate_103_active){
+									promises.output_data_rate_103 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_103));
+								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_103 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
+								if(config.acc_threshold_103_active){
+									promises.acc_threshold_103 = node.config_gateway.config_set_acc_threshold_103(mac, parseInt(config.acc_threshold_103));
+								}
+								if(config.enable_sensor_103_active){
+									promises.enable_sensor_103 = node.config_gateway.config_set_enable_sensor_103(mac, parseInt(config.enable_sensor_103));
+								}
+								if(config.enable_hp_filter_cutoff_103_active){
+									promises.enable_hp_filter_cutoff_103 = node.config_gateway.config_set_enable_hp_filter_cutoff_103(mac, parseInt(config.enable_hp_filter_cutoff_103));
+								}
+								if(config.gyro_fsr_103_active){
+									promises.gyro_fsr_103 = node.config_gateway.config_set_gyro_fsr_103(mac, parseInt(config.gyro_fsr_103));
+								}
+								if(config.adxl_fsr_103_active){
+									promises.adxl_fsr_103 = node.config_gateway.config_set_adxl_fsr_103(mac, parseInt(config.adxl_fsr_103));
+								}
+								if(config.sampling_duration_103_active){
+									promises.sampling_duration_103 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_103));
+								}
+								if(config.set_rtc_101){
+									promises.set_rtc_103 = node.config_gateway.config_set_rtc_101(mac);
+								}
+								break;
 							case 105:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
@@ -1859,6 +2547,12 @@ module.exports = function(RED) {
 								}
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
 								}
 								break;
 							case 106:
@@ -1880,6 +2574,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 107:
 								if(config.sensor_boot_time_420ma_active){
@@ -1900,6 +2600,12 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 108:
 								if(config.accelerometer_state_108_active){
@@ -1913,6 +2619,9 @@ module.exports = function(RED) {
 								}
 								if(config.debounce_time_108_active){
 									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+								}
+								if(config.debounce_time_v10_108_active){
+									promises.debounce_time_v10_108 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_v10_108));
 								}
 								if(config.input_one_108_active){
 									promises.input_one_108 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_108));
@@ -1960,15 +2669,27 @@ module.exports = function(RED) {
 									promises.quality_of_service_108 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
 								}
 								if(config.fly_interval_108_active){
- 									promises.fly_interval_108 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
- 								}
+									promises.fly_interval_108 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
+								}
 								if(config.sample_rate_108_active){
- 									promises.sample_rate_108 = node.config_gateway.config_set_sample_rate_108(mac, parseInt(config.sample_rate_108));
- 								}
+									promises.sample_rate_108 = node.config_gateway.config_set_sample_rate_108(mac, parseInt(config.sample_rate_108));
+								}
+								if(config.interrupt_timeout_108_active){
+									promises.interrupt_timeout_108 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_108));
+								}
+								if(config.screen_control_108_active){
+									promises.screen_control_108 = node.config_gateway.config_set_screen_control_108(mac, parseInt(config.screen_control_108));
+								}
+								if(config.screen_on_time_108_active){
+									promises.screen_on_time_108 = node.config_gateway.config_set_screen_on_time_108(mac, parseInt(config.screen_on_time_108));
+								}
 								break;
 							case 110:
 								if(config.odr_p1_110_active){
 									promises.odr_p1_110 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_110 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
@@ -1990,9 +2711,6 @@ module.exports = function(RED) {
 								}
 								if(config.high_pass_filter_p1_110_active){
 									promises.high_pass_filter_p1_110 = node.config_gateway.config_set_high_pass_filter_p1_110(mac, parseInt(config.high_pass_filter_p1_110));
-								}
-								if(config.measurement_mode_80_active){
-									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
 									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
@@ -2033,10 +2751,19 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_110 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_110 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 111:
 								if(config.odr_p1_110_active){
 									promises.odr_p1_111 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_111 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_111 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
@@ -2070,9 +2797,6 @@ module.exports = function(RED) {
 								}
 								if(config.high_pass_filter_p2_110_active){
 									promises.high_pass_filter_p2_111 = node.config_gateway.config_set_high_pass_filter_p2_110(mac, parseInt(config.high_pass_filter_p2_110));
-								}
-								if(config.measurement_mode_80_active){
-									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
 									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
@@ -2119,6 +2843,12 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_111 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_111 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 112:
 								if(config.current_calibration_82_active){
@@ -2126,6 +2856,9 @@ module.exports = function(RED) {
 								}
 								if(config.odr_p1_110_active){
 									promises.odr_p1_112 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_112 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_112 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
@@ -2147,9 +2880,6 @@ module.exports = function(RED) {
 								}
 								if(config.high_pass_filter_p1_110_active){
 									promises.high_pass_filter_p1_112 = node.config_gateway.config_set_high_pass_filter_p1_110(mac, parseInt(config.high_pass_filter_p1_110));
-								}
-								if(config.measurement_mode_80_active){
-									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
 									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
@@ -2211,10 +2941,19 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_112 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_112 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 114:
 								if(config.odr_p1_110_active){
 									promises.odr_p1_114 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								}
+								if(config.enable_filtering_110_active){
+									promises.enable_filtering_114 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
 								if(config.sampling_duration_p1_110_active){
 									promises.sampling_duration_p1_114 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
@@ -2236,9 +2975,6 @@ module.exports = function(RED) {
 								}
 								if(config.high_pass_filter_p1_110_active){
 									promises.high_pass_filter_p1_114 = node.config_gateway.config_set_high_pass_filter_p1_110(mac, parseInt(config.high_pass_filter_p1_110));
-								}
-								if(config.measurement_mode_80_active){
-									promises.measurement_mode = node.config_gateway.config_set_measurement_mode_80(mac, parseInt(config.measurement_mode_80));
 								}
 								if(config.on_request_timeout_80_active){
 									promises.on_request_timeout = node.config_gateway.config_set_on_request_timeout_80(mac, parseInt(config.on_request_timeout_80));
@@ -2288,6 +3024,12 @@ module.exports = function(RED) {
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
 								}
+								if(config.motion_to_sampling_delay_110_active){
+									promises.motion_to_sampling_delay_114 = node.config_gateway.config_set_motion_to_sampling_delay_110(mac, parseInt(config.motion_to_sampling_delay_110));
+								}
+								if(config.max_num_motion_tx_delay_110_active){
+									promises.max_num_motion_tx_delay_114 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
+								}
 								break;
 							case 118:
 								if(config.pressure_sensor_fs_ch1_118_active){
@@ -2321,6 +3063,128 @@ module.exports = function(RED) {
 								}
 								if(config.alert_threshold_120_active){
 									promises.alert_threshold_120 = node.config_gateway.config_set_alert_threshold_120(mac, parseInt(config.alert_threshold_120));
+								}
+								break;
+							case 121:
+								if(config.wood_type_121_active){
+									promises.wood_type_121 = node.config_gateway.config_set_wood_type_121(mac, parseInt(config.wood_type_121));
+								}
+								if(config.quality_of_service_121_active){
+									promises.quality_of_service_121 = node.config_gateway.config_set_quality_of_service_121(mac, parseInt(config.quality_of_service_121));
+								}
+								break;
+							case 122:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma_122 = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+								if(config.low_calibration_420ma_active){
+									promises.low_calibration_420ma_122 = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								}
+								if(config.mid_calibration_420ma_active){
+									promises.mid_calibration_420ma_122 = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								}
+								if(config.high_calibration_420ma_active){
+									promises.high_calibration_420ma_122 = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.auto_check_interval_88_active){
+									promises.auto_check_interval_122 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
+								}
+								if(config.auto_check_threshold_88_active){
+									promises.auto_check_threshold_122 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								break;
+							case 123:
+								if(config.clear_timers_123_active){
+									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_123));
+								}
+								if(config.debounce_time_123_active){
+									promises.debounce_time_123 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								}
+								if(config.input_one_123_active){
+									promises.input_one_123 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
+								}
+								if(config.input_two_123_active){
+									promises.input_two_123 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_123));
+								}
+								if(config.input_three_123_active){
+									promises.input_three_123 = node.config_gateway.config_set_input_three_108(mac, parseInt(config.input_three_123));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_123 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
+								if(config.push_notification_123_active){
+									promises.push_notification_123 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_123));
+								}
+								if(config.reset_timeout_108_active){
+									promises.reset_timeout_123 = node.config_gateway.config_set_reset_timeout_108(mac, parseInt(config.reset_timeout_108));
+								}
+								if(config.reset_mode_to_disabled_108_active){
+									promises.reset_mode_123 = node.config_gateway.config_set_reset_mode_to_disabled_108(mac, parseInt(config.reset_mode_to_disabled_108));
+								}
+								if(config.rtc_108){
+									promises.rtc_123 = node.config_gateway.config_set_rtc_108(mac);
+								}
+								if(config.transmission_interval_108_active){
+									promises.transmission_interval_123 = node.config_gateway.config_set_transmission_interval_108(mac, parseInt(config.transmission_interval_108));
+								}
+								if(config.shift_one_108_active){
+									promises.shift_time1_123 = node.config_gateway.config_set_shift_one_108(mac, parseInt(config.shift_one_hours_108), parseInt(config.shift_one_minutes_108));
+								}
+								if(config.shift_two_108_active){
+									promises.shift_time2_123 = node.config_gateway.config_set_shift_two_108(mac, parseInt(config.shift_two_hours_108), parseInt(config.shift_two_minutes_108));
+								}
+								if(config.shift_three_108_active){
+									promises.shift_time3_123 = node.config_gateway.config_set_shift_three_108(mac, parseInt(config.shift_three_hours_108), parseInt(config.shift_three_minutes_108));
+								}
+								if(config.shift_four_108_active){
+									promises.shift_time4_123 = node.config_gateway.config_set_shift_four_108(mac, parseInt(config.shift_four_hours_108), parseInt(config.shift_four_minutes_108));
+								}
+								if(config.quality_of_service_108_active){
+									promises.quality_of_service_123 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								}
+								if(config.fly_interval_108_active){
+									promises.fly_interval_123 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
+								}
+								if(config.interrupt_timeout_108_active){
+									promises.interrupt_timeout_123 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_108));
+								}
+								break;
+							case 124:
+								if(config.volume_flow_unit_124_active){
+									promises.volume_flow_unit_124 = node.config_gateway.config_set_volume_flow_unit_124(mac, parseInt(config.volume_flow_unit_124));
+								}
+								if(config.total_1_flow_unit_124_active){
+									promises.total_1_flow_unit_124 = node.config_gateway.config_set_total_1_flow_unit_124(mac, parseInt(config.total_1_flow_unit_124));
+								}
+								if(config.total_2_flow_unit_124_active){
+									promises.total_2_flow_unit_124 = node.config_gateway.config_set_total_2_flow_unit_124(mac, parseInt(config.total_2_flow_unit_124));
+								}
+								if(config.total_3_flow_unit_124_active){
+									promises.total_3_flow_unit_124 = node.config_gateway.config_set_total_3_flow_unit_124(mac, parseInt(config.total_3_flow_unit_124));
+								}
+								if(config.pressure_unit_124_active){
+									promises.pressure_unit_124 = node.config_gateway.config_set_pressure_unit_124(mac, parseInt(config.pressure_unit_124));
+								}
+								if(config.total_1_op_mode_124_active){
+									promises.total_1_op_mode_124 = node.config_gateway.config_set_total_1_op_mode_124(mac, parseInt(config.total_1_op_mode_124));
+								}
+								if(config.total_2_op_mode_124_active){
+									promises.total_2_op_mode_124 = node.config_gateway.config_set_total_2_op_mode_124(mac, parseInt(config.total_2_op_mode_124));
+								}
+								if(config.total_3_op_mode_124_active){
+									promises.total_3_op_mode_124 = node.config_gateway.config_set_total_3_op_mode_124(mac, parseInt(config.total_3_op_mode_124));
+								}
+								if(config.conductivity_unit_124_active){
+									promises.conductivity_unit_124 = node.config_gateway.config_set_conductivity_unit_124(mac, parseInt(config.conductivity_unit_124));
+								}
+								if(config.reset_all_totalizers_124){
+									promises.reset_all_totalizers_124 = node.config_gateway.config_set_reset_all_totalizers_124(mac);
 								}
 								break;
 							case 180:
@@ -2433,6 +3297,12 @@ module.exports = function(RED) {
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 202:
 								if(config.sampling_interval_202_active){
@@ -2445,14 +3315,42 @@ module.exports = function(RED) {
 									promises.probe_boot_time_202 = node.config_gateway.config_set_probe_boot_time_202(mac, parseInt(config.probe_boot_time_202));
 								}
 							    break;
+							case 211:
+								if(config.oxygen_rate_211_active){
+									promises.oxygen_rate_211 = node.config_gateway.config_set_oxygen_rate_211(mac, parseInt(config.oxygen_rate_211));
+								}
+								if(config.oxygen_timeout_211_active){
+									promises.oxygen_timeout_211 = node.config_gateway.config_set_oxygen_timeout_211(mac, parseInt(config.oxygen_timeout_211));
+								}
+								if(config.oxygen_threshold_211_active){
+									promises.oxygen_threshold_211 = node.config_gateway.config_set_oxygen_threshold_211(mac, parseInt(config.oxygen_threshold_211));
+								}
+								break;
 							case 217:
- 								if(config.tare_the_scale_217){
- 									promises.tare_the_scale_217 = node.config_gateway.config_set_tare_the_scale_217(mac);
- 								}
- 								if(config.weight_calib_217_active){
- 									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
- 								}
- 								break;
+								if(config.tare_the_scale_217){
+									promises.tare_the_scale_217 = node.config_gateway.config_set_tare_the_scale_217(mac);
+								}
+								if(config.weight_calib_217_active){
+									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
+								}
+								break;
+							case 270:
+								// if(config.do_read_rate_270_active){
+								// 	promises.sensors_read_rate_270 = node.config_gateway.config_set_do_read_rate_270(mac, parseInt(config.do_read_rate_270));
+								// }
+								if(config.do_boot_time_270_active){
+									promises.do_boot_time_270 = node.config_gateway.config_set_do_boot_time_270(mac, parseInt(config.do_boot_time_270));
+								}
+								if(config.do_dev_id_270_active){
+									promises.do_dev_id_270 = node.config_gateway.config_set_do_dev_id_270(mac, parseInt(config.do_dev_id_1_270), parseInt(config.do_dev_id_2_270), parseInt(config.do_dev_id_3_270), parseInt(config.do_dev_id_4_270));
+								}
+								if(config.ec_boot_time_270_active){
+									promises.ec_boot_time_270 = node.config_gateway.config_set_ec_boot_time_270(mac, parseInt(config.ec_boot_time_270));
+								}
+								if(config.ec_dev_id_270_active){
+									promises.ec_dev_id_270 = node.config_gateway.config_set_ec_dev_id_270(mac, parseInt(config.ec_dev_id_1_270), parseInt(config.ec_dev_id_2_270), parseInt(config.ec_dev_id_3_270), parseInt(config.ec_dev_id_4_270));
+								}
+								break;
 							case 505:
 								if(config.current_calibration_c1_80_active){
 									promises.current_calibration_c1_80_active = node.config_gateway.config_set_current_calibration_individual_80(mac, parseInt(config.current_calibration_c1_80), 1);
@@ -2536,6 +3434,50 @@ module.exports = function(RED) {
 								}
 								if(config.temperature_offset_44_active){
 									promises.temperature_offset_44 = node.config_gateway.config_set_sensor_temperature_offset_44(mac, parseInt(config.temperature_offset_44));
+								}
+								break;
+							case 536:
+								if(config.oxygen_boot_time_536_active){
+									promises.oxygen_boot_time_536 = node.config_gateway.config_set_oxygen_boot_time_536(mac, parseInt(config.oxygen_boot_time_536));
+								}
+								if(config.flow_boot_time_536_active){
+									promises.flow_boot_time_536 = node.config_gateway.config_set_flow_boot_time_536(mac, parseInt(config.flow_boot_time_536));
+								}
+								if(config.oxygen_dev_addr_536_active){
+									promises.oxygen_dev_addr_536 = node.config_gateway.config_set_oxygen_dev_addr_536(mac, parseInt(config.oxygen_addr_1_536), parseInt(config.oxygen_addr_2_536), parseInt(config.oxygen_addr_3_536), parseInt(config.oxygen_addr_4_536));
+								}
+								if(config.flow_dev_addr_536_active){
+									promises.flow_dev_addr_536 = node.config_gateway.config_set_flow_dev_addr_536(mac, parseInt(config.flow_addr_1_536), parseInt(config.flow_addr_2_536), parseInt(config.flow_addr_3_536), parseInt(config.flow_addr_4_536));
+								}
+								if(config.oxygen_rate_536_active){
+									promises.oxygen_rate_536 = node.config_gateway.config_set_oxygen_rate_536(mac, parseInt(config.oxygen_rate_536));
+								}
+								if(config.oxygen_timeout_536_active){
+									promises.oxygen_timeout_536 = node.config_gateway.config_set_oxygen_timeout_536(mac, parseInt(config.oxygen_timeout_536));
+								}
+								if(config.oxygen_max_threshold_s1_536_active){
+									promises.oxygen_max_threshold_s1_536 = node.config_gateway.config_set_oxygen_max_threshold_s1_536(mac, parseInt(config.oxygen_max_threshold_s1_536));
+								}
+								if(config.oxygen_max_threshold_s2_536_active){
+									promises.oxygen_max_threshold_s2_536 = node.config_gateway.config_set_oxygen_max_threshold_s2_536(mac, parseInt(config.oxygen_max_threshold_s2_536));
+								}
+								if(config.oxygen_max_threshold_s3_536_active){
+									promises.oxygen_max_threshold_s3_536 = node.config_gateway.config_set_oxygen_max_threshold_s3_536(mac, parseInt(config.oxygen_max_threshold_s3_536));
+								}
+								if(config.oxygen_max_threshold_s4_536_active){
+									promises.oxygen_max_threshold_s4_536 = node.config_gateway.config_set_oxygen_max_threshold_s4_536(mac, parseInt(config.oxygen_max_threshold_s4_536));
+								}
+								if(config.oxygen_min_threshold_s1_536_active){
+									promises.oxygen_min_threshold_s1_536 = node.config_gateway.config_set_oxygen_min_threshold_s1_536(mac, parseInt(config.oxygen_min_threshold_s1_536));
+								}
+								if(config.oxygen_min_threshold_s2_536_active){
+									promises.oxygen_min_threshold_s2_536 = node.config_gateway.config_set_oxygen_min_threshold_s2_536(mac, parseInt(config.oxygen_min_threshold_s2_536));
+								}
+								if(config.oxygen_min_threshold_s3_536_active){
+									promises.oxygen_min_threshold_s3_536 = node.config_gateway.config_set_oxygen_min_threshold_s3_536(mac, parseInt(config.oxygen_min_threshold_s3_536));
+								}
+								if(config.oxygen_min_threshold_s4_536_active){
+									promises.oxygen_min_threshold_s4_536 = node.config_gateway.config_set_oxygen_min_threshold_s4_536(mac, parseInt(config.oxygen_min_threshold_s4_536));
 								}
 								break;
 							case 537:
@@ -2696,6 +3638,44 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								break;
+							case 541:
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+								if(config.low_calibration_420ma_active){
+									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								}
+								if(config.mid_calibration_420ma_active){
+									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								}
+								if(config.high_calibration_420ma_active){
+									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.auto_check_interval_88_active){
+									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
+								}
+								if(config.auto_check_threshold_88_active){
+									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								if(config.max_flow_541_active){
+									promises.max_flow_541 = node.config_gateway.config_set_max_flow_541(mac, parseInt(config.max_flow_541));
+								}
+								if(config.min_flow_541_active){
+									promises.min_flow_541 = node.config_gateway.config_set_min_flow_541(mac, parseInt(config.min_flow_541));
+								}
 								break;
 							case 1010:
 								if(config.stay_on_mode_539_active){
@@ -2746,7 +3726,7 @@ module.exports = function(RED) {
 						}
 					}
 					// These sensors listed in original_otf_devices use a different OTF code.
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 112, 114, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
@@ -2886,10 +3866,11 @@ module.exports = function(RED) {
 					// Added timeout to fix issue
 					if(config.sensor_type == 1010 || config.sensor_type == 1011){
 						_config(sensor, true);
+					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
+						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
+						_config(sensor, true);
 					}else{
-						var tout = setTimeout(() => {
-							_send_otn_request(sensor);
-						}, 100);
+						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
 					}
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
 					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
@@ -2911,9 +3892,12 @@ module.exports = function(RED) {
 								_config(sensor, true);
 							}, 3500);
 						}
-					}else{
+					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
+						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS with mac!!!!!'});
 						_config(sensor, true);
-					}
+					}else{
+						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
+					};
 				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 						this.gateway.fly_101_in_progress = true;
@@ -3021,9 +4005,12 @@ module.exports = function(RED) {
 									_config(sensor, true);
 								}, 3500);
 							}
-						}else{
+						} else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
+							// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
 							_config(sensor, true);
-						}
+						}else{
+							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
+						};
 
 					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
@@ -3038,7 +4025,13 @@ module.exports = function(RED) {
 							node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
 						}
 					}
-				}
+				};
+
+				// const config_node_capable = [114];
+				// node.warn(sensor);
+				// if(sensor.mode == "FLY" && config_node_capable.includes(config.sensor_type)){
+				// 	node.warn(sensor);
+				// }
 			});
 		}
 		this.on('input', (msg) => {
@@ -3059,9 +4052,10 @@ module.exports = function(RED) {
 			for(var p in pgm_events){
 				node.config_gateway._emitter.removeAllListeners(p);
 			}
+
 			node.gateway_node.close_comms();
 			if(typeof node.config_gateway_node != 'undefined'){
-				node.config_gateway_node.close_comms();
+				console.log(node.config_gateway_node.close_comms());
 			}
 		});
 	}
@@ -3160,26 +4154,15 @@ module.exports = function(RED) {
 			res.json({needs_input: false});
 		}
 	});
-	
-	
 
-
-
-
-
-
-
-	
-	function NcdAPIConfigNode(config){
+	function NcdAPIConfigurationNode(config){
 		RED.nodes.createNode(this,config);
 
 		this._gateway_node = RED.nodes.getNode(config.connection);
 
 		this._gateway_node.open_comms();
 		this.gateway = this._gateway_node.gateway;
-
-
-
+		console.log(this.gateway);
 
 		var node = this;
 
@@ -3187,7 +4170,6 @@ module.exports = function(RED) {
 			this._gateway_node.close_comms();
 		});
 
-		node.is_config = false;
 		var statuses =[
 			{fill:"green",shape:"dot",text:"Ready"},
 			{fill:"yellow",shape:"ring",text:"Configuring"},
@@ -3195,46 +4177,106 @@ module.exports = function(RED) {
 			{fill:"green",shape:"ring",text:"Connecting..."}
 		];
 
-		node.set_status = function(){
-			node.status(statuses[node._gateway_node.is_config]);
-		};
-		
+		// node.set_status = function(){
+		// 	node.status(statuses[node._gateway_node.is_config]);
+		// };
 
-		node.on('input', function(msg){
+		node.on('input', function(msg, send, done){
+			var response;
 			switch(msg.topic){
 				case 'set_desired_configs':
+					response = this.set_desired_configs(msg.payload);
+					send({topic: 'set_desired_configs_ack', payload: response, time: Date.now()});
+					// this.set_desired_configs(msg.payload).then((result) => {
+					// 	send({topic: 'set_desired_configs', payload: result, time: Date.now()});
+					// }).catch((err) => {
+					// 	send({topic: 'set_desired_configs', payload: {error: err}, time: Date.now()});
+					// });
 					break;
 				case 'get_sensor_info':
+					node.warn(msg);
+					send(msg);
+					console.log('get_sensor_info');
 					break;
 				case 'get_all_sensor_info':
+					response = this.get_all_sensor_info();
+					send({topic: 'get_all_sensor_info_ack', payload: response, time: Date.now()});
 					break;
 				case 'get_sensor_list':
+					node.warn(msg);
 					break;
-				// default:
-				// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
-				// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
-			}
-
-
-			// console.log("input triggered, topic:"+msg.topic);
-			// if(msg.topic == "transmit"){
-			// 	const byteArrayToHexString = byteArray => Array.from(msg.payload.address, byte => ('0' + (byte & 0xFF).toString(16)).slice(-2)).join('');
-			// 	node.gateway.control_send(msg.payload.address, msg.payload.data, msg.payload.options).then().catch(console.log);
-			// }
-			// if(msg.topic == "route_trace"){
-			// 	var opts = {trace:1};
-			// 	node.gateway.route_discover(msg.payload.address,opts).then().catch(console.log);
-			// }
-			// if(msg.topic == "link_test"){
-			// 	node.gateway.link_test(msg.payload.source_address,msg.payload.destination_address,msg.payload.options);
-			// }
-			// if(msg.topic == "fft_request"){
-
-			// }
-			// if(msg.topic == "fidelity_test"){
-			// }
+				case 'clear_sensor_desired_configs':
+					if(!Array.isArray(msg.payload)){
+						done('Payload must be an array of sensor addresses to clear desired configs');
+					}else{
+						this.clear_desired_configs(msg.payload);
+					}
+					send({topic: 'clear_sensor_desired_configs_ack', payload: node._gateway_node.sensor_configs, time: Date.now()});
+					break;
+				default:
+					console.log('DEFAULT');
+			};
+			done();
 		});
 		
+		this.clear_desired_configs = function(sensor_array){
+			let store_flag = false;
+			for (let addr of sensor_array){
+				addr = addr.toLowerCase();
+				if(Object.hasOwn(node._gateway_node.sensor_configs, addr) && Object.hasOwn(node._gateway_node.sensor_configs[addr], 'desired_configs')){
+					delete node._gateway_node.sensor_configs[addr].desired_configs;
+					store_flag = true;
+				}
+			};	
+			if(store_flag) node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));		
+		};
+
+		this.set_desired_configs = function(desired_configs){
+			var _requires_file_update = false;
+			for (const sensor of desired_configs){
+				// TODO validate sensor object
+				// must have sensor.addr, sensor.type, sensor.configs
+				// sensor.configs is an object with key value pairs of config name and desired value
+				if(!Object.hasOwn(sensor, 'addr') || !Object.hasOwn(sensor, 'type') || !Object.hasOwn(sensor, 'configs')){
+					// throw new Error('Invalid sensor object, must have addr, type, and configs properties');
+					return {error: 'Invalid sensor object, must have addr, type, and configs properties'};
+				};
+				sensor.addr = sensor.addr.toLowerCase();
+				if(!Object.hasOwn(node._gateway_node.sensor_configs, sensor.addr) || !Object.hasOwn(node._gateway_node.sensor_configs[sensor.addr], 'desired_configs')){
+					node._gateway_node.sensor_configs[sensor.addr] = {
+						desired_configs: {}
+					};
+				};
+				if(Object.hasOwn(node._gateway_node.sensor_configs[sensor.addr], 'type')){
+					// TODO validate that type matches
+				}else{
+					node._gateway_node.sensor_configs[sensor.addr].type = sensor.type;
+					_requires_file_update = true;
+				}
+				let new_desired_configs = {...node._gateway_node.sensor_configs[sensor.addr].desired_configs, ...sensor.configs};
+				// If the desired configs are different than what is already stored we need to update the file
+				if(!isDeepStrictEqual(node._gateway_node.sensor_configs[sensor.addr].desired_configs, new_desired_configs)){
+					console.log('Configs differ, updating desired configs');
+					_requires_file_update = true;
+				}else{
+					console.log('Configs the same, not updating desired configs');
+				};
+				node._gateway_node.sensor_configs[sensor.addr].desired_configs = {...node._gateway_node.sensor_configs[sensor.addr].desired_configs, ...sensor.configs};
+			};
+			node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));
+			return node._gateway_node.sensor_configs;
+		};
+
+		node.gateway.on('sensor_mode', (d) => {
+			if(d.mode == 'FLY'){
+				node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+			};
+			if(d.mode == 'OTN'){
+				node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+			};
+		});
+
+		// TODO may not use
 		node.gateway.on('ncd_error', (data) => {
 			node.send({
 				topic: 'ncd_error',
@@ -3243,46 +4285,36 @@ module.exports = function(RED) {
 				time: Date.now()
 			});
 		});
-		node.gateway.on('sensor_data', (d) => {
-			node.set_status();
-			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
-		});
-		node.gateway.on('sensor_mode', (d) => {
-			node.set_status();
-			node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
-		});
-		node.gateway.on('receive_packet-unknown_device',(d)=>{
-			node.set_status();
-			msg1 = {topic:'somethingTopic',payload:"something"};
-			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
-		});
-		node.gateway.on("route_info",(d)=>{
-			msg1 = {topic:"route_info",payload:d};
-			node.send(msg1);
-		});
-		node.gateway.on("link_info",(d)=>{
-			msg1 = {topic:"link_info",payload:d};
-			node.send(msg1);
-		});
-		node.gateway.on('converter_response', (d) => {
-			node.set_status();
-			d.topic = 'converter_response';
-			d.time = Date.now();
-			node.send(d);
-		});
 
-		node.set_status();
-		node._gateway_node.on('mode_change', (mode) => {
-			node.set_status();
-			if(this.gateway.modem_mac && this._gateway_node.is_config == 0 || this.gateway.modem_mac && this._gateway_node.is_config == 1){
-				node.send({topic: 'modem_mac', payload: this.gateway.modem_mac, time: Date.now()});
-			}else{
-				node.send({topic: 'error', payload: {code: 1, description: 'Wireless module did not respond'}, time: Date.now()});
-			}
-		});
-	}
+		
+		this.get_all_sensor_info = function(){
+			return node._gateway_node.sensor_configs;
+		};
+
+		// node.gateway.on('sensor_data', (d) => {
+		// 	node.set_status();
+		// 	node.send({topic: 'sensor_data', payload: d, time: Date.now()});
+		// });
+		// node.gateway.on('sensor_mode', (d) => {
+		// 	node.set_status();
+		// 	node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+		// });
+		// node.gateway.on('receive_packet-unknown_device',(d)=>{
+		// 	node.set_status();
+		// 	msg1 = {topic:'somethingTopic',payload:"something"};
+		// 	node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		// });
+		// node._gateway_node.on('mode_change', (mode) => {
+		// 	node.set_status();
+		// 	if(this.gateway.modem_mac && this._gateway_node.is_config == 0 || this.gateway.modem_mac && this._gateway_node.is_config == 1){
+		// 		node.send({topic: 'modem_mac', payload: this.gateway.modem_mac, time: Date.now()});
+		// 	}else{
+		// 		node.send({topic: 'error', payload: {code: 1, description: 'Wireless module did not respond'}, time: Date.now()});
+		// 	}
+		// });
+	};
 	// register a new node called ncd-api-config
-	RED.nodes.registerType("ncd-api-config", NcdAPIConfigNode);
+	RED.nodes.registerType("ncd-api-configuration-node", NcdAPIConfigurationNode);
 };
 function getSerialDevices(ftdi, res){
 	var busses = [];

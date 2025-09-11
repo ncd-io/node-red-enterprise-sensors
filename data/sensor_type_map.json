@@ -1,0 +1,1111 @@
+{
+    "2": {
+      "configs": {
+        "0": "debounce_time_2"
+      }
+    },
+    "3": {
+      "configs": {
+        "0": "change_enabled",
+        "1": "change_pr",
+        "2": "change_interval",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "5": {
+      "configs": {
+        "0": "amgt_accel",
+        "1": "amgt_mag",
+        "2": "amgt_gyro"
+      }
+    },
+    "6": {
+      "configs": {
+        "0": "bp_altitude",
+        "1": "bp_pressure",
+        "2": "bp_temp_prec",
+        "3": "bp_press_prec"
+      }
+    },
+    "7": {
+      "configs": {
+        "0": "impact_accel",
+        "1": "impact_data_rate",
+        "2": "impact_threshold",
+        "3": "impact_duration"
+      }
+    },
+    "10": {
+      "configs": {
+        "0": "change_enabled",
+        "1": "change_pr",
+        "2": "change_interval"
+      }
+    },
+    "13": {
+      "configs": {
+        "0": "current_calibration_13",
+        "1": "change_enabled",
+        "2": "change_pr",
+        "3": "change_interval"
+      }
+    },
+    "14": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "15": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "19": {
+      "configs": {
+        "0": "current_calibration_13",
+        "1": "current_calibration_ch2_19",
+        "2": "change_enabled",
+        "3": "change_pr",
+        "4": "change_interval",
+        "5": "change_enabled_ch2",
+        "6": "change_pr_ch2",
+        "7": "change_interval_ch2"
+      }
+    },
+    "21": {
+      "configs": {
+        "0": "pressure_sensor_type_21",
+        "1": "pressure_sensor_range_AMS5812_21",
+        "2": "pressure_sensor_range_AMS5915_21"
+      }
+    },
+    "24": {
+      "configs": {
+        "0": "impact_accel",
+        "1": "impact_data_rate",
+        "2": "impact_threshold",
+        "3": "impact_duration",
+        "4": "activ_interr_x",
+        "5": "activ_interr_y",
+        "6": "activ_interr_z",
+        "7": "activ_interr_op"
+      }
+    },
+    "25": {
+      "configs": {
+        "0": "impact_accel",
+        "1": "impact_data_rate",
+        "2": "impact_threshold",
+        "3": "impact_duration",
+        "4": "activ_interr_x",
+        "5": "activ_interr_y",
+        "6": "activ_interr_z",
+        "7": "activ_interr_op"
+      }
+    },
+    "26": {
+      "configs": {
+        "0": "pressure_limit_26",
+        "1": "auto_pressure_check_26"
+      }
+    },
+    "28": {
+      "configs": {
+        "0": "current_calibration_13",
+        "1": "current_calibration_ch2_19",
+        "2": "current_calibration_ch3_28",
+        "3": "change_enabled",
+        "4": "change_pr",
+        "5": "change_interval",
+        "6": "change_enabled_ch2",
+        "7": "change_pr_ch2",
+        "8": "change_interval_ch2",
+        "9": "change_enabled_ch3",
+        "10": "change_pr_ch3",
+        "11": "change_interval_ch3"
+      }
+    },
+    "32": {
+      "configs": {
+        "0": "node-sps_skip_samples_32",
+        "1": "change_otf_interval"
+      }
+    },
+    "33": {
+      "configs": {
+        "0": "clear_counter_33",
+        "1": "debounce_time_108",
+        "2": "input_two_33",
+        "3": "push_notification_33",
+        "4": "counter_threshold_108"
+      }
+    },
+    "35": {
+      "configs": {
+        "0": "counter_threshold_35",
+        "1": "debounce_time_2",
+        "2": "debounce_time_35"
+      }
+    },
+    "36": {
+      "configs": {
+        "0": "counter_threshold_35",
+        "1": "debounce_time_2",
+        "2": "debounce_time_35"
+      }
+    },
+    "39": {
+      "configs": {
+        "0": "rtd_type_39",
+        "1": "rtd_range_39"
+      }
+    },
+    "40": {
+      "configs": {
+        "0": "filtering",
+        "1": "data_rate",
+        "2": "time_series",
+        "3": "reading_type"
+      }
+    },
+    "44": {
+      "configs": {
+        "0": "force_calibration_co2_auto_config",
+        "1": "force_calibration_co2",
+        "2": "temperature_offset_44",
+        "3": "node-scd_skip_samples_44",
+        "4": "change_otf_interval"
+      }
+    },
+    "45": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "46": {
+      "configs": {
+        "0": "motion_threshold_46"
+      }
+    },
+    "47": {
+      "configs": {
+        "0": "roll_angle_threshold_47",
+        "1": "pitch_angle_threshold_47"
+      }
+    },
+    "48": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "52": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "53": {
+      "configs": {
+        "0": "node-scd_skip_samples_44",
+        "1": "node-sps_skip_samples_32",
+        "2": "start_sps30_fan_cleaning_53",
+        "3": "change_otf_interval"
+      }
+    },
+    "56": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "58": {
+      "configs": {
+        "0": "max_range_58",
+        "1": "calibration_58",
+        "2": "factory_reset_tank_probe_58"
+      }
+    },
+    "75": {
+      "configs": {
+        "0": "auto_check_interval_88",
+        "1": "auto_check_threshold_88"
+      }
+    },
+    "76": {
+      "configs": {
+        "0": "periodic_check_rate_76",
+        "1": "ppm_threshold_76",
+        "2": "alert_duration_76",
+        "3": "sensor_boot_time_76",
+        "4": "auto_check_interval_88",
+        "5": "auto_check_threshold_88"
+      }
+    },
+    "78": {
+      "configs": {
+        "0": "sensor_boot_time_78"
+      }
+    },
+    "79": {
+      "configs": {
+        "0": "sensor_boot_time_78"
+      }
+    },
+    "80": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_duration_101",
+        "4": "sampling_interval_80",
+        "5": "output_data_rate_101",
+        "6": "filter_80",
+        "7": "low_pass_filter_80",
+        "8": "high_pass_filter_80",
+        "9": "x_axis_101",
+        "10": "y_axis_101",
+        "11": "z_axis_101",
+        "12": "full_scale_range_101",
+        "13": "deadband_80",
+        "14": "payload_length_80",
+        "15": "set_rtc_101"
+      }
+    },
+    "81": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_interval_80",
+        "4": "output_data_rate_p1_81",
+        "5": "sampling_duration_p1_81",
+        "6": "output_data_rate_p2_81",
+        "7": "sampling_duration_p2_81",
+        "8": "filter_80",
+        "9": "low_pass_filter_80",
+        "10": "high_pass_filter_80",
+        "11": "low_pass_filter_81_p2",
+        "12": "high_pass_filter_81_p2",
+        "13": "x_axis_101",
+        "14": "y_axis_101",
+        "15": "z_axis_101",
+        "16": "full_scale_range_101",
+        "17": "deadband_80",
+        "18": "payload_length_80",
+        "19": "set_rtc_101"
+      }
+    },
+    "82": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_duration_101",
+        "4": "sampling_interval_80",
+        "5": "output_data_rate_101",
+        "6": "filter_80",
+        "7": "low_pass_filter_80",
+        "8": "high_pass_filter_80",
+        "9": "x_axis_101",
+        "10": "y_axis_101",
+        "11": "z_axis_101",
+        "12": "current_calibration_82",
+        "13": "full_scale_range_101",
+        "14": "deadband_80",
+        "15": "payload_length_80",
+        "16": "set_rtc_101"
+      }
+    },
+    "84": {
+      "configs": {
+        "0": "acceleration_interrupt_threshold_84",
+        "1": "led_alert_mode_84",
+        "2": "led_accelerometer_threshold_84",
+        "3": "led_velocity_threshold_84",
+        "4": "mode_80",
+        "5": "measurement_mode_80",
+        "6": "on_request_timeout_80",
+        "7": "sampling_duration_101",
+        "8": "sampling_interval_80",
+        "9": "output_data_rate_101",
+        "10": "filter_80",
+        "11": "low_pass_filter_80",
+        "12": "high_pass_filter_80",
+        "13": "x_axis_101",
+        "14": "y_axis_101",
+        "15": "z_axis_101",
+        "16": "full_scale_range_101",
+        "17": "deadband_80",
+        "18": "payload_length_80",
+        "19": "set_rtc_101"
+      }
+    },
+    "85": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "87": {
+      "configs": {
+        "0": "stay_on_mode_539",
+        "1": "quality_of_service_121",
+        "2": "ct_constant_87",
+        "3": "deadband_87",
+        "4": "sampling_frequency_87",
+        "5": "raw_length_87"
+      }
+    },
+    "88": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "89": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "90": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "91": {
+      "configs": {
+        "0": "sensor_boot_time_78"
+      }
+    },
+    "95": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "96": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "97": {
+      "configs": {
+        "0": "mode_97",
+        "1": "raw_length_97",
+        "2": "raw_timeout_97",
+        "3": "fly_rate_97",
+        "4": "boot_up_time_97"
+      }
+    },
+    "98": {
+      "configs": {
+        "0": "mode_97",
+        "1": "raw_length_97",
+        "2": "raw_timeout_97",
+        "3": "fly_rate_97",
+        "4": "boot_up_time_97"
+      }
+    },
+    "101": {
+      "configs": {
+        "0": "sampling_duration_101",
+        "1": "sampling_interval_101",
+        "2": "output_data_rate_101_m2",
+        "3": "full_scale_range_101_m2",
+        "4": "x_axis_101",
+        "5": "y_axis_101",
+        "6": "z_axis_101",
+        "7": "deadband_80",
+        "8": "set_rtc_101"
+      }
+    },
+    "102": {
+      "configs": {
+        "0": "sampling_duration_101",
+        "1": "sampling_interval_101",
+        "2": "output_data_rate_101",
+        "3": "set_rtc_101"
+      }
+    },
+    "103": {
+      "configs": {
+        "0": "sampling_interval_101",
+        "1": "set_rtc_101",
+        "2": "sampling_duration_103",
+        "3": "acc_threshold_103",
+        "4": "output_data_rate_103",
+        "5": "enable_sensor_103",
+        "6": "enable_hp_filter_cutoff_103",
+        "7": "gyro_fsr_103",
+        "8": "adxl_fsr_103"
+      }
+    },
+    "105": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "106": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "107": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "108": {
+      "configs": {
+        "0": "deactivate_activate_accelero_108",
+        "1": "accelerometer_state_108",
+        "2": "accelerometer_threshold_108",
+        "3": "clear_timers_108",
+        "4": "debounce_time_108",
+        "5": "debounce_time_v10_108",
+        "6": "input_one_108",
+        "7": "input_two_108",
+        "8": "input_three_108",
+        "9": "counter_threshold_108",
+        "10": "push_notification_108",
+        "11": "transmission_interval_108",
+        "12": "reset_mode_to_disabled_108",
+        "13": "reset_timeout_108",
+        "14": "shift_one_hours_108",
+        "15": "shift_one_minutes_108",
+        "16": "shift_two_hours_108",
+        "17": "shift_two_minutes_108",
+        "18": "shift_three_hours_108",
+        "19": "shift_three_minutes_108",
+        "20": "shift_four_hours_108",
+        "21": "shift_four_minutes_108",
+        "22": "quality_of_service_108",
+        "23": "rtc_108",
+        "24": "fly_interval_108",
+        "25": "sample_rate_108",
+        "26": "interrupt_timeout_108",
+        "27": "screen_on_time_108",
+        "28": "screen_control_108"
+      }
+    },
+    "110": {
+      "configs": {
+        "0": "mode_110",
+        "1": "on_request_timeout_80",
+        "2": "enable_filtering_110",
+        "3": "odr_p1_110",
+        "4": "sampling_duration_p1_110",
+        "5": "low_pass_filter_p1_110",
+        "6": "high_pass_filter_p1_110",
+        "7": "sampling_interval_110",
+        "8": "auto_raw_interval_110",
+        "9": "auto_raw_destination_110",
+        "10": "smart_threshold_110",
+        "11": "smart_interval_110",
+        "12": "motion_detect_threshold_p1_110",
+        "13": "full_scale_range_101",
+        "14": "deadband_80",
+        "15": "fly_interval_110",
+        "16": "enable_rpm_calculate_status_110",
+        "17": "set_rtc_101",
+        "18": "max_raw_sample_110",
+        "19": "clear_probe_uptimers_110",
+        "20": "motion_to_sampling_delay_110",
+        "21": "max_num_motion_tx_delay_110",
+        "22": "payload_length_80"
+      }
+    },
+    "111": {
+      "configs": {
+        "0": "mode_110",
+        "1": "on_request_timeout_80",
+        "2": "enable_filtering_110",
+        "3": "odr_p1_110",
+        "4": "odr_p2_110",
+        "5": "sampling_duration_p1_110",
+        "6": "sampling_duration_p2_110",
+        "7": "low_pass_filter_p1_110",
+        "8": "low_pass_filter_p2_110",
+        "9": "high_pass_filter_p1_110",
+        "10": "high_pass_filter_p2_110",
+        "11": "sampling_interval_110",
+        "12": "auto_raw_interval_110",
+        "13": "auto_raw_destination_110",
+        "14": "smart_threshold_110",
+        "15": "smart_threshold_p2_110",
+        "16": "smart_interval_110",
+        "17": "motion_detect_threshold_p1_110",
+        "18": "motion_detect_threshold_p2_110",
+        "19": "full_scale_range_101",
+        "20": "deadband_80",
+        "21": "fly_interval_110",
+        "22": "enable_rpm_calculate_status_110",
+        "23": "set_rtc_101",
+        "24": "max_raw_sample_110",
+        "25": "clear_probe_uptimers_110",
+        "26": "motion_to_sampling_delay_110",
+        "27": "max_num_motion_tx_delay_110",
+        "28": "payload_length_80"
+      }
+    },
+    "112": {
+      "configs": {
+        "mode": "mode_110",
+        "1": "current_calibration_82",
+        "2": "on_request_timeout_80",
+        "3": "enable_filtering_110",
+        "4": "odr_p1_110",
+        "5": "sampling_duration_p1_110",
+        "6": "low_pass_filter_p1_110",
+        "7": "high_pass_filter_p1_110",
+        "8": "sampling_interval_110",
+        "9": "auto_raw_interval_110",
+        "10": "auto_raw_destination_110",
+        "11": "smart_threshold_110",
+        "12": "smart_interval_110",
+        "13": "motion_detect_threshold_p1_110",
+        "14": "full_scale_range_101",
+        "15": "deadband_80",
+        "16": "fly_interval_110",
+        "17": "enable_rpm_calculate_status_110",
+        "18": "set_rtc_101",
+        "19": "max_raw_sample_110",
+        "20": "clear_probe_uptimers_110",
+        "21": "motion_to_sampling_delay_110",
+        "22": "max_num_motion_tx_delay_110",
+        "23": "payload_length_80",
+        "24": "thermocouple_type_112",
+        "25": "filter_thermocouple_112",
+        "26": "cold_junction_thermocouple_112",
+        "27": "sample_resolution_thermocouple_112",
+        "28": "number_of_samples_thermocouple_112",
+        "29": "measurement_type_thermocouple_112",
+        "30": "operation_mode_thermocouple_112"
+      }
+    },
+    "114": {
+      "configs": {
+        "destination_address": "destination_address",
+        "network_id": "pan_id",
+        "delay": "special_delay",
+        "node_id": "special_node_id",
+        "power_level": "power",
+        "retries": "retries",
+
+        
+        "mode": "mode_110",
+        "led_alert_mode": "led_alert_mode_84",
+        "led_accelerometer_threshold": "led_accelerometer_threshold_84",
+        "led_velocity_threshold": "led_velocity_threshold_84",
+        "on_request_timeout": "on_request_timeout_80",
+        "filter_status": "enable_filtering_110",
+        "odr": "odr_p1_110",
+        "sampling_duration": "sampling_duration_p1_110",
+        "lpf_coeff": "low_pass_filter_p1_110",
+        "hpf_coeff": "high_pass_filter_p1_110",
+        "sampling_interval": "sampling_interval_110",
+        "auto_raw_interval": "auto_raw_interval_110",
+        "auto_raw_destination_address": "auto_raw_destination_110",
+        "smart_mode_acc_threshold": "smart_threshold_110",
+        "smart_mode_skip_count": "smart_interval_110",
+        "motion_detect_threshold": "motion_detect_threshold_p1_110",
+        "fsr": "full_scale_range_101",
+        "deadband": "deadband_80",
+        "fly_interval": "fly_interval_110",
+        "rpm_compute_status": "enable_rpm_calculate_status_110",
+        "rtc": "set_rtc_101",
+        "max_tx_raw_samples": "max_raw_sample_110",
+        "clear_uptimers": "clear_probe_uptimers_110",
+        "motion_to_sampling_delay": "motion_to_sampling_delay_110",
+        "max_num_of_motion_tx_per_interval": "max_num_motion_tx_delay_110",
+        "payload_length": "payload_length_80"
+      }
+    },
+    "118": {
+      "configs": {
+        "0": "pressure_sensor_fs_ch1_118",
+        "1": "pressure_sensor_fs_ch2_118",
+        "2": "auto_check_interval_118",
+        "3": "press_auto_check_percent_118",
+        "4": "temp_auto_check_percent_118"
+      }
+    },
+    "120": {
+      "configs": {
+        "0": "stay_on_mode_539",
+        "1": "always_on_120",
+        "2": "sensor_reset_120",
+        "3": "sensor_calib_120",
+        "4": "alert_threshold_120"
+      }
+    },
+    "121": {
+      "configs": {
+        "0": "quality_of_service_121",
+        "1": "wood_type_121"
+      }
+    },
+    "122": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "123": {
+      "configs": {
+        "0": "clear_timers_123",
+        "1": "debounce_time_123",
+        "2": "input_one_123",
+        "3": "input_two_123",
+        "4": "input_three_123",
+        "5": "counter_threshold_108",
+        "6": "push_notification_123",
+        "7": "transmission_interval_108",
+        "8": "reset_mode_to_disabled_108",
+        "9": "reset_timeout_108",
+        "10": "shift_one_hours_108",
+        "11": "shift_one_minutes_108",
+        "12": "shift_two_hours_108",
+        "13": "shift_two_minutes_108",
+        "14": "shift_three_hours_108",
+        "15": "shift_three_minutes_108",
+        "16": "shift_four_hours_108",
+        "17": "shift_four_minutes_108",
+        "18": "quality_of_service_108",
+        "19": "rtc_108",
+        "20": "fly_interval_108",
+        "21": "interrupt_timeout_108"
+      }
+    },
+    "124": {
+      "configs": {
+        "0": "volume_flow_unit_124",
+        "1": "total_1_flow_unit_124",
+        "2": "total_2_flow_unit_124",
+        "3": "total_3_flow_unit_124",
+        "4": "pressure_unit_124",
+        "5": "total_1_op_mode_124",
+        "6": "total_2_op_mode_124",
+        "7": "total_3_op_mode_124",
+        "8": "conductivity_unit_124",
+        "9": "reset_all_totalizers_124"
+      }
+    },
+    "180": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_duration_101",
+        "4": "sampling_interval_101",
+        "5": "output_data_rate_101",
+        "6": "filter_80",
+        "7": "low_pass_filter_80",
+        "8": "high_pass_filter_80",
+        "9": "x_axis_101",
+        "10": "y_axis_101",
+        "11": "z_axis_101",
+        "12": "full_scale_range_101",
+        "13": "deadband_80",
+        "14": "payload_length_80",
+        "15": "set_rtc_101"
+      }
+    },
+    "181": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_interval_101",
+        "4": "output_data_rate_p1_81",
+        "5": "sampling_duration_p1_81",
+        "6": "output_data_rate_p2_81",
+        "7": "sampling_duration_p2_81",
+        "8": "filter_80",
+        "9": "low_pass_filter_80",
+        "10": "high_pass_filter_80",
+        "11": "low_pass_filter_81_p2",
+        "12": "high_pass_filter_81_p2",
+        "13": "x_axis_101",
+        "14": "y_axis_101",
+        "15": "z_axis_101",
+        "16": "full_scale_range_101",
+        "17": "deadband_80",
+        "18": "payload_length_80",
+        "19": "set_rtc_101"
+      }
+    },
+    "200": {
+      "configs": {
+        "0": "low_calibration_420ma",
+        "1": "mid_calibration_420ma",
+        "2": "high_calibration_420ma",
+        "3": "fsr_420ma",
+        "4": "always_on_420ma"
+      }
+    },
+    "202": {
+      "configs": {
+        "0": "sampling_interval_202",
+        "1": "set_rtc_202",
+        "2": "probe_boot_time_202"
+      }
+    },
+    "211": {
+      "configs": {
+        "0": "oxygen_rate_211",
+        "1": "oxygen_timeout_211",
+        "2": "oxygen_threshold_211"
+      }
+    },
+    "217": {
+      "configs": {
+        "0": "tare_the_scale_217",
+        "1": "weight_calib_217"
+      }
+    },
+    "270": {
+      "configs": {
+        "0": "do_boot_time_270",
+        "1": "do_dev_id_1_270",
+        "2": "do_dev_id_2_270",
+        "3": "do_dev_id_3_270",
+        "4": "do_dev_id_4_270",
+        "5": "ec_boot_time_270",
+        "6": "ec_dev_id_1_270",
+        "7": "ec_dev_id_2_270",
+        "8": "ec_dev_id_3_270",
+        "9": "ec_dev_id_4_270"
+      }
+    },
+    "505": {
+      "configs": {
+        "0": "current_calibration_c1_80"
+      }
+    },
+    "506": {
+      "configs": {
+        "0": "current_calibration_c1_80",
+        "1": "current_calibration_c2_80",
+        "2": "current_calibration_c3_80"
+      }
+    },
+    "519": {
+      "configs": {
+        "0": "acceleration_interrupt_threshold_84",
+        "1": "led_alert_mode_84",
+        "2": "led_accelerometer_threshold_84",
+        "3": "led_velocity_threshold_84",
+        "4": "mode_80",
+        "5": "measurement_mode_80",
+        "6": "on_request_timeout_80",
+        "7": "sampling_duration_101",
+        "8": "sampling_interval_101",
+        "9": "output_data_rate_101",
+        "10": "filter_80",
+        "11": "low_pass_filter_80",
+        "12": "high_pass_filter_80",
+        "13": "x_axis_101",
+        "14": "y_axis_101",
+        "15": "z_axis_101",
+        "16": "full_scale_range_101",
+        "17": "deadband_80",
+        "18": "payload_length_80",
+        "19": "set_rtc_101"
+      }
+    },
+    "531": {
+      "configs": {
+        "0": "mode_531"
+      }
+    },
+    "535": {
+      "configs": {
+        "0": "temperature_offset_44"
+      }
+    },
+    "536": {
+        "configs": {
+            "0": "oxygen_boot_time_536",
+            "1": "flow_boot_time_536",
+            "2": "oxygen_addr_1_536",
+            "3": "oxygen_addr_2_536",
+            "4": "oxygen_addr_3_536",
+            "5": "oxygen_addr_4_536",
+            "6": "flow_addr_1_536",
+            "7": "flow_addr_2_536",
+            "8": "flow_addr_3_536",
+            "9": "flow_addr_4_536",
+            "10": "oxygen_rate_536",
+            "11": "oxygen_timeout_536",
+            "12": "oxygen_max_threshold_s1_536",
+            "13": "oxygen_max_threshold_s2_536",
+            "14": "oxygen_max_threshold_s3_536",
+            "15": "oxygen_max_threshold_s4_536",
+            "16": "oxygen_min_threshold_s1_536",
+            "17": "oxygen_min_threshold_s2_536",
+            "18": "oxygen_min_threshold_s3_536",
+            "19": "oxygen_min_threshold_s4_536"
+        }
+    },
+    "537": {
+      "configs": {
+        "0": "acceleration_interrupt_threshold_84",
+        "1": "led_alert_mode_84",
+        "2": "led_accelerometer_threshold_84",
+        "3": "led_velocity_threshold_84",
+        "4": "mode_80",
+        "5": "measurement_mode_80",
+        "6": "on_request_timeout_80",
+        "7": "sampling_duration_101",
+        "8": "sampling_interval_101",
+        "9": "output_data_rate_101",
+        "10": "filter_80",
+        "11": "low_pass_filter_80",
+        "12": "high_pass_filter_80",
+        "13": "x_axis_101",
+        "14": "y_axis_101",
+        "15": "z_axis_101",
+        "16": "full_scale_range_101",
+        "17": "deadband_80",
+        "18": "payload_length_80",
+        "19": "set_rtc_101"
+      }
+    },
+    "538": {
+      "configs": {
+        "0": "mode_80",
+        "1": "measurement_mode_80",
+        "2": "on_request_timeout_80",
+        "3": "sampling_duration_101",
+        "4": "sampling_interval_101",
+        "5": "output_data_rate_101",
+        "6": "filter_80",
+        "7": "low_pass_filter_80",
+        "8": "high_pass_filter_80",
+        "9": "x_axis_101",
+        "10": "y_axis_101",
+        "11": "z_axis_101",
+        "12": "full_scale_range_101",
+        "13": "deadband_80",
+        "14": "payload_length_80",
+        "15": "set_rtc_101"
+      }
+    },
+    "539": {
+      "configs": {
+        "0": "stay_on_mode_539",
+        "1": "baudrate_539",
+        "2": "stop_bit_1011",
+        "3": "set_parity_1011",
+        "4": "rx_timeout_539",
+        "5": "bootup_time_539",
+        "6": "sensor_add_539",
+        "7": "sub_device_type_539",
+        "8": "number_of_read_retries_539",
+        "9": "read_parameter_539",
+        "10": "number_of_regs_to_rd_539",
+        "11": "register_value_0_539",
+        "12": "register_value_1_539",
+        "13": "register_value_2_539",
+        "14": "register_value_3_539",
+        "15": "register_value_4_539",
+        "16": "register_value_5_539",
+        "17": "register_value_6_539",
+        "18": "register_value_7_539",
+        "19": "register_value_8_539",
+        "20": "register_value_9_539",
+        "21": "register_value_10_539",
+        "22": "register_value_11_539",
+        "23": "register_value_12_539",
+        "24": "register_value_13_539",
+        "25": "register_value_14_539",
+        "26": "register_value_15_539",
+        "27": "register_value_16_539",
+        "28": "register_value_17_539",
+        "29": "register_value_18_539",
+        "30": "register_value_19_539",
+        "31": "register_value_20_539",
+        "32": "register_value_21_539",
+        "33": "register_value_22_539",
+        "34": "register_value_23_539",
+        "35": "register_value_24_539",
+        "36": "register_value_25_539",
+        "37": "register_value_26_539",
+        "38": "register_value_27_539",
+        "39": "register_value_28_539",
+        "40": "register_value_29_539",
+        "41": "register_value_30_539",
+        "42": "register_value_31_539"
+      }
+    },
+    "540": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma"
+      }
+    },
+    "541": {
+      "configs": {
+        "0": "sensor_boot_time_420ma",
+        "1": "auto_check_interval_88",
+        "2": "auto_check_threshold_88",
+        "3": "low_calibration_420ma",
+        "4": "mid_calibration_420ma",
+        "5": "high_calibration_420ma",
+        "6": "fsr_420ma",
+        "7": "always_on_420ma",
+        "8": "max_flow_541",
+        "9": "min_flow_541"
+      }
+    },
+    "1010": {
+      "configs": {
+        "0": "stay_on_mode_539",
+        "1": "baudrate_539",
+        "2": "stop_bit_1011",
+        "3": "set_parity_1011",
+        "4": "rx485_timeout_1011",
+        "5": "auto_address_timeout_1011",
+        "6": "reboot_1011"
+      }
+    },
+    "1011": {
+      "configs": {
+        "0": "stay_on_mode_539",
+        "1": "baudrate_539",
+        "2": "stop_bit_1011",
+        "3": "set_parity_1011",
+        "4": "rx485_timeout_1011",
+        "5": "auto_address_timeout_1011",
+        "6": "reboot_1011",
+        "7": "mode_1011"
+      }
+    },
+    "10000": {
+      "configs": {
+        "0": "config_sensor"
+      }
+    },
+    "10012": {
+      "configs": {
+        "0": "config_sensor"
+      }
+    }
+  }
