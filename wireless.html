@@ -978,7 +978,7 @@
 					"114": "114 - Standalone Smart Vibration Sensor v4",
 					"117": "117 - Custom Vibration Sensor PPV",
 					"118": "118 - Dual Pressure and Temperature Sensor",
-					"119": "119 - Wireless Machine Run Timer Meter",
+					"119": "119 - Wireless Machine Run Time Hour Meter",
 					"120": "120 - Wireless H2S Sensor",
 					"121": "121 - Wireless Wood Moisture Sensor",
 					"122": "122 - Wireless 4-20mA Current Splitter",
@@ -988,7 +988,7 @@
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
 					"202": "202 - Weather Station",
-					"211": "211 - D0 and Flow Sensor",
+					"211": "211 - DO and Flow Sensor",
 					"217": "217 - Wireless Weight Scale",
 					"270": "270 - Custom Salinity DO sensor",
 					"502": "502 - C_50-27",
@@ -1290,7 +1290,7 @@
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
 			<option value="117">117 - Custom Vibration Sensor PPV</option>
 			<option value="118">118 - Dual Pressure and Temperature Sensor</option>
-			<option value="119">119 - Wireless Machine Run Timer Meter</option>
+			<option value="119">119 - Wireless Machine Run Time Hour Meter</option>
 			<option value="120">120 - Wireless H2S Sensor</option>
 			<option value="121">121 - Wireless Wood Moisture Sensor</option>
 			<option value="122">122 - Wireless 4-20mA Current Splitter</option>
@@ -1300,7 +1300,7 @@
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
 			<option value="202">202 - Weather Station</option>
-			<option value="211">211 - D0 and Flow Sensor</option>
+			<option value="211">211 - DO and Flow Sensor</option>
 			<option value="217">217 - Wireless Weight Scale</option>
 			<option value="270">270 - Custom Salinity DO sensor</option>
 			<option value="502">502 - C_50-27</option>
@@ -3409,6 +3409,13 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
+					<p class="caption">
+						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
+						**Report type will be 'Threshold'.
+						<br>
+						<br>
+						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
+					</p>
 					<div>
 						<label for="node-input-counter_threshold_35_active">Active:</label>
 						<input type="checkbox" id="node-input-counter_threshold_35_active" class="ncd-config-toggle" data-target-id="node-input-counter_threshold_35" value="1">
