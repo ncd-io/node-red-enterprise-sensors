@@ -2666,6 +2666,9 @@
 			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Accelerometer</strong>
+					<p class="caption">
+						This setting toggles the accelerometer sensor on or off. Disabling it is recommended for applications that does not require accelerometer.
+					</p>
 					<div>
 						<label for="node-input-deactivate_activate_accelero_108_active">Active:</label>
 						<input type="checkbox" id="node-input-deactivate_activate_accelero_108_active" class="ncd-config-toggle" data-target-id="node-input-deactivate_activate_accelero_108" value="1">
@@ -2719,7 +2722,9 @@
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
-					<p>Resets the selected Input counters and their corresponding uptime values to zero.</p>
+					<p class="caption">
+						Resets the selected Input counters and their corresponding uptime values to zero.
+					</p>
 					<div>
 						<label for="node-input-clear_timers_108_active">Active:</label>
 						<input type="checkbox" id="node-input-clear_timers_108_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_108" value="1">
@@ -2737,7 +2742,9 @@
 			<div class="ncd-dependent" data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
-					<p>Resets the selected Input counters and their corresponding uptime values to zero.</p>
+					<p class="caption">
+						Resets the selected Input counters and their corresponding uptime values to zero.
+					</p>
 					<div>
 						<label for="node-input-clear_timers_119_active">Active:</label>
 						<input type="checkbox" id="node-input-clear_timers_119_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_119" value="1">
@@ -2752,6 +2759,9 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Configure Enabled Axes</strong>
+					<p class="caption">
+						Specify which axes (X, Y, Z) the sensor will monitor for vibration. The default setting monitors all three axes.
+					</p>
 					<div>
 						<label for="node-input-enable_axis_119_active">Active:</label>
 						<input type="checkbox" id="node-input-enable_axis_119_active" class="ncd-config-toggle" data-target-id="node-input-enable_axis_119" value="1">
@@ -2769,7 +2779,9 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Raw Accelerometer Data</strong>
-					<p>Note: Device will send 10 samples of acceleration data for each axis. This feature is only available for devices with 868MHz and 900MHz radios.</p>
+					<p class="caption">
+						Note: Device will send 10 samples of acceleration data for each axis. This feature is only available for devices with 868MHz and 900MHz radios.
+					</p>
 					<div>
 						<label for="node-input-raw_acc_data_119_active">Active:</label>
 						<input type="checkbox" id="node-input-raw_acc_data_119_active" class="ncd-config-toggle" data-target-id="node-input-raw_acc_data_119" value="1">
@@ -2786,7 +2798,9 @@
 			<div class="ncd-dependent" data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
-					<p>Resets the Digital Inputs 1, 2, and 3 counters and their corresponding uptime values to zero.</p>
+					<p class="caption">
+						Resets the Digital Inputs 1, 2, and 3 counters and their corresponding uptime values to zero.
+					</p>
 					<div>
 						<label for="node-input-clear_timers_123_active">Active:</label>
 						<input type="checkbox" id="node-input-clear_timers_123_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_123" value="1">
@@ -3106,7 +3120,7 @@
 			<div class="ncd-dependent" data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
-					<p>
+					<p class="caption">
 						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
 						**Report type will be 'Interrupt'.<br>
 					</p>
@@ -3157,7 +3171,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong> Set Reset Mode</strong>
-					<p>
+					<p class="caption">
 						This setting specifies which automatic reset option the sensor will utilize.<br>
 						Note: Works in conjunction with the "Reset Timeout" and "Set Shift Time" commands.<br><br>
 						Default value: Disabled
@@ -3292,7 +3306,9 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
-					<p>Sets the sensor's internal Real-Time Clock (RTC) to the current time.</p>
+					<p class="caption">
+						Sets the sensor's internal Real-Time Clock (RTC) to the current time.
+					</p>
 					<div>
 						<label for="node-input-rtc_108"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-rtc_108" value="1">
@@ -3300,8 +3316,10 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
-					<p>This setting dictates the interval at which the sensor will transmit the FLY message.<br> 
-						**The FLY Message is used to trigger automatic sensor configuration and firmware updates.</p>
+					<p class="caption">
+						This setting dictates the interval at which the sensor will transmit the FLY message.<br> 
+						**The FLY Message is used to trigger automatic sensor configuration and firmware updates.
+					</p>
 					<div>
 						<label for="node-input-fly_interval_108_active">Active:</label>
 						<input type="checkbox" id="node-input-fly_interval_108_active" class="ncd-config-toggle" data-target-id="node-input-fly_interval_108" value="1">
@@ -3324,6 +3342,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Sample Rate</strong>
 					<p class="caption">
+						This setting defines the number of measurements the sensor takes per second, measured in Hertz (Hz).
 						**Only applies to sensor with firmware version 8 and above.
 					</p>
 					<div>
@@ -3346,7 +3365,8 @@
 			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Interrupt Timeout</strong>
-					<p>Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
+					<p class="caption">
+						Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
 						**Only applies to sensor with firmware version 11 and above.<br><br>
 						Valid range: 0 - 65000 milliseconds.
 					</p>
