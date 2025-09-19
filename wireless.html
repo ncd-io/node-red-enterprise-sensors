@@ -869,7 +869,9 @@
 			enable_axis_119_active:{value: ""},
 			enable_axis_119:{value: 0},
 			raw_acc_data_119_active:{value: ""},
-			raw_acc_data_119:{value: 0}
+			raw_acc_data_119:{value: 0},
+			odr_p1_543_active: {value: ""},
+			odr_p1_543: {value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3465,6 +3467,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Output Data Rate</strong>
 					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
@@ -3490,6 +3494,31 @@
 							<option value="13">6400Hz</option>
 							<option value="14">12800Hz</option>
 							<option value="15">25600Hz</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-543>
+				<div class="form-row ncd-active-check">
+					<strong>Probe 1: Output Data Rate</strong>
+					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
+						In accordance with the Nyquist equation:<br>
+						<br>
+						f_max = ODR/2.56 Hz<br><br>
+						Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.
+					</p>
+					<div>
+						<label for="node-input-odr_p1_543_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-odr_p1_543_active" class="ncd-config-toggle" data-target-id="node-input-odr_p1_543" value="1">
+					</div>
+					<div>
+						<label for="node-input-odr_p1_543"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-odr_p1_543">
+							<option value="3">31.25Hz</option>
+							<option value="4">62.5Hz</option>
+							<option value="5">125Hz</option>
+							<option value="6">250Hz</option>
+							<option value="7">500Hz</option>
 						</select>
 					</div>
 				</div>

@@ -3472,8 +3472,8 @@ module.exports = function(RED) {
 								}
 								break;
 							case 543:
-								if(config.odr_p1_110_active){
-									promises.odr_p1_110 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_110));
+								if(config.odr_p1_543_active){
+									promises.odr_p1_543 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_543));
 								}
 								if(config.enable_filtering_110_active){
 									promises.enable_filtering_110 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
