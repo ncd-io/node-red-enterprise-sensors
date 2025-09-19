@@ -871,7 +871,9 @@
 			raw_acc_data_119_active:{value: ""},
 			raw_acc_data_119:{value: 0},
 			odr_p1_543_active: {value: ""},
-			odr_p1_543: {value:0}
+			odr_p1_543: {value:0},
+			full_scale_range_543_active: {value: ""},
+			full_scale_range_543: {value: 1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3865,7 +3867,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
 					<strong>Full Scale Range</strong>
 					<p>
@@ -3887,6 +3889,29 @@
 							<option value="3">+/- 16g</option>
 							<option value="4">+/- 32g</option>
 							<option value="5">+/- 64g</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-543>
+				<div class="form-row ncd-active-check">
+					<strong>Full Scale Range</strong>
+					<p>
+						Set how large of a range the device can measure acceleration in.<br><br>
+						Example: +/- 8g would mean that it would measure at most up to 8g and down to -8g.
+						<br><br>
+						**Gen4 Valid Range: ±2g to ±16g
+					</p>
+					<div>
+						<label for="node-input-full_scale_range_543_active">Active:</label>
+						<input type="checkbox" id="node-input-full_scale_range_543_active" class="ncd-config-toggle" data-target-id="node-input-full_scale_range_543" value="1">
+					</div>
+					<div>
+						<label for="node-input-full_scale_range_543"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-full_scale_range_543">
+							<option value="0">+/- 2g</option>
+							<option value="1">+/- 4g</option>
+							<option value="2">+/- 8g</option>
 						</select>
 					</div>
 				</div>
@@ -3932,6 +3957,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>RPM Calculate Status</strong>
 					<p>

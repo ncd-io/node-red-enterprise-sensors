@@ -1047,7 +1047,7 @@ module.exports = function(RED) {
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
-					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538, 543];
 					if(original_otf_devices.includes(sensor.type)){
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.config_gateway.config_enter_otn_mode(sensor.mac);
@@ -3484,8 +3484,8 @@ module.exports = function(RED) {
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
 								}
-								if(config.full_scale_range_101_active){
-									promises.full_scale_range_101 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_101));
+								if(config.full_scale_range_543_active){
+									promises.full_scale_range_543 = node.config_gateway.config_set_full_scale_range_101(mac, parseInt(config.full_scale_range_543));
 								}
 								if(config.mode_110_active){
 									promises.mode = node.config_gateway.config_set_operation_mode_80(mac, parseInt(config.mode_110));
@@ -3528,9 +3528,6 @@ module.exports = function(RED) {
 								}
 								if(config.fly_interval_110_active){
 									promises.fly_interval_110 = node.config_gateway.config_set_fly_interval_110(mac, parseInt(config.fly_interval_110));
-								}
-								if(config.enable_rpm_calculate_status_110_active){
-									promises.enable_rpm_calculate_status_110 = node.config_gateway.config_set_enable_rpm_calculate_status_110(mac, parseInt(config.enable_rpm_calculate_status_110));
 								}
 								if(config.max_raw_sample_110_active){
 									promises.max_raw_sample_110 = node.config_gateway.config_set_max_raw_sample_110(mac, parseInt(config.max_raw_sample_110));
