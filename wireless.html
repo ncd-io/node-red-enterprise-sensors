@@ -1011,6 +1011,7 @@
 					"540": "540 - Wireless Ultrasonic Flow Meter FD-Q32C",
 					"541": "541 - Custom Inline Flow Sensor",
 					"542": "542 - Custom LWGY Flow Sensor",
+					"543": "543 - Custom Seismic Vibration Sensor",
 					"1010": "1010 - RS232 Wireless Converter 1010",
 					"1011": "1011 - RS485 Wireless Converter 1011",
 					"10000": "10000 - 4-Channel Relay",
@@ -1323,6 +1324,7 @@
 			<option value="540">540 - Wireless Ultrasonic Flow Meter FD-Q32C</option>
 			<option value="541">541 - Custom Inline Flow Sensor</option>
 			<option value="542">542 - Custom LWGY Flow Sensor</option>
+			<option value="543">543 - Custom Seismic Vibration Sensor</option>
 			<option value="1010">1010 - RS232 Wireless Converter 1010</option>
 			<option value="1011">1011 - RS485 Wireless Converter 1011</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
@@ -1338,7 +1340,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1859,7 +1861,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
@@ -1971,7 +1973,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set On Request Timeout</strong>
 					<p>Set how long device will stay awake and wait for Time Domain (Raw) request from command.<br><br>
@@ -3447,7 +3449,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filtering</strong>
 					<p>Enable/Disable built-in filters</p>
@@ -3521,7 +3523,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Sampling Duration</strong>
 					<p>
@@ -3559,7 +3561,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set Low Pass Filter</strong>
 					<p>
@@ -3617,7 +3619,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set High Pass Filter</strong>
 					<p>
@@ -3675,7 +3677,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
 					<p>Set how often will the sensor transmit measurement data.<br><br>
@@ -3701,7 +3703,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
 					<p>
@@ -3776,7 +3778,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Skip Interval</strong>
 					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.<br><br>
@@ -3791,6 +3793,8 @@
 						<input type="text" id="node-input-smart_interval_110" value="1">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
@@ -3832,7 +3836,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Full Scale Range</strong>
 					<p>
@@ -3858,7 +3862,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Dead Band in mg</strong>
 					<p>
@@ -3876,7 +3880,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
 					<p>
@@ -3918,7 +3922,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
 					<p>
@@ -3930,7 +3934,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Max Raw Sample</strong>
 					<p>
@@ -3962,6 +3966,8 @@
 						<input type="checkbox" id="node-input-clear_probe_uptimers_110" value="1">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Set Motion to Sampling Delay</strong>
 					<p>
@@ -4001,7 +4007,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
+			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Payload Length</strong>
 					<p>
