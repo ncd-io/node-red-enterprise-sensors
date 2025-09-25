@@ -138,8 +138,8 @@ module.exports = function(RED) {
 						}
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
 						node.gateway.on('sensor_mode', (d) => {
-							if(d.mode == "FLY"){
-								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request')){
+							if(d.mode == "FLY" || d.mode == "OTF"){
+								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request') && d.mode == "FLY"){
 									node.request_manifest(d.mac);
 								}else if(node.config_node_capable.includes(d.type)){
 									// API CONFIGURATION NODE
@@ -147,46 +147,66 @@ module.exports = function(RED) {
 									if(Object.hasOwn(values, 'uptime_counter')) delete values.uptime_counter;
 									if(Object.hasOwn(values, 'tx_lifetime_counter')) delete values.tx_lifetime_counter;
 									if(Object.hasOwn(values, 'reserved')) delete values.reserved;
-				
+
+									let store_flag = false;
 									// hardware_id we might remove as well, it is useful though.
 									if(!Object.hasOwn(node.sensor_configs, d.mac)){
 										node.sensor_configs[d.mac] = {};
+										store_flag = true;
 									}
+									// Store hardware_id outside of reported_configs
+									if(!Object.hasOwn(node.sensor_configs[d.mac], 'hardware_id') && Object.hasOwn(values, 'hardware_id')){
+										node.sensor_configs[d.mac].hardware_id = values.hardware_id;
+										store_flag = true;
+									}
+									if(Object.hasOwn(values, 'hardware_id')) delete values.hardware_id;
+									
 									if(!Object.hasOwn(node.sensor_configs[d.mac], 'reported_configs')){
 										node.sensor_configs[d.mac].reported_configs = {};
+										store_flag = true;
 									}
+									if(!Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs')){
+										node.sensor_configs[d.mac].desired_configs = values;
+										store_flag = true;
+									}
+									
 									if(!Object.hasOwn(node.sensor_configs[d.mac], 'type')){
 										node.sensor_configs[d.mac].type = d.type;
+										store_flag = true;
 									}else if(node.sensor_configs[d.mac].type != d.type){
 										// TODO this node can't send messages, need to emit event and have API node listen for it
 										// node.send({topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs0"}, time: Date.now()});
 										delete node.sensor_configs[d.mac].desired_configs;
 										node.sensor_configs[d.mac].type = d.type;
-										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+										node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, time: Date.now()});
+										store_flag = true;
 									}
 									if(!isDeepStrictEqual(node.sensor_configs[d.mac].reported_configs, values)){
 										// Values are different, update the stored configs and write to file
 										node.sensor_configs[d.mac].reported_configs = values;
-										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 										// TODO this node can't send messages, need to emit event and have API node listen for it
-										node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
+										store_flag = true;
+										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
+										// node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
 									}
-									if(Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs')){
+
+									if(Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs') && d.mode != "OTF"){
 										let required_configs = this.get_required_configs(node.sensor_configs[d.mac].desired_configs, node.sensor_configs[d.mac].reported_configs);
-										node.warn(required_configs);
-										// node.warn('Should be sending otn request')
-										// node.warn(Object.keys(required_configs).length);
 										if(Object.keys(required_configs).length !== 0){
+											node.sensor_configs[d.mac].temp_required_configs = required_configs;
+											store_flag = true;
 											var tout = setTimeout(() => {
-												node.sensor_configs[d.mac].temp_required_configs = required_configs;
 												this._send_otn_request(d);
 											}, 100);
 										}
 									}
+									if(store_flag){
+										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
+									}
 								}
-							}
-							if(d.mode == "OTN" && Object.hasOwn(node.sensor_configs, d.mac) && Object.hasOwn(node.sensor_configs[d.mac], 'temp_required_configs')){
-								node.warn('API CONFIGURATION IS CONFIGURING SENSORS!!!!!');
+							}else if(d.mode == "OTN" && Object.hasOwn(node.sensor_configs, d.mac) && Object.hasOwn(node.sensor_configs[d.mac], 'temp_required_configs')){
 								node.configure(d);
 							}
 						});
@@ -282,9 +302,10 @@ module.exports = function(RED) {
 		this.get_required_configs = function(desired_configs, reported_configs){
 			const mismatched = {};
 			for (const key in desired_configs) {
-				if (reported_configs.hasOwnProperty(key)) {
-					if (desired_configs[key] !== reported_configs[key]) {
-						mismatched[key] = desired_configs[key];
+				if (reported_configs.hasOwnProperty(key)) {					
+					if (!isDeepStrictEqual(desired_configs[key], reported_configs[key])) {
+					// if (desired_configs[key] !== reported_configs[key]) {
+							mismatched[key] = desired_configs[key];
 					};
 				};
 			};
@@ -293,26 +314,12 @@ module.exports = function(RED) {
 
 		// TODO consider adding logic for if only 1 config to go out, skip OTN request
 		this.configure = function(sensor){
-			node.warn('Configuring Sensor');
-			node.warn(node.sensor_configs[sensor.mac].temp_required_configs);
-			// for (const key in configs) {
-			// 	node.warn(key);
-			// 	let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
-			// 	node.warn(`Configuring ${key} to ${configs[key]} for sensor ${sensor.mac}`);
-			// 	// TODO turn into promises
-			// 	node.gateway[config_obj.call](sensor.mac, configs[key]);
-			// }
-			// delete node.sensor_configs[sensor.mac].temp_required_configs;
-
-
-
-
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
 				setTimeout(() => {
 					var tout = setTimeout(() => {
 						// TODO handle timeout and send emitters
-						node.warn({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
+						node._emitter.emit('config_node_msg', {topic: 'Config Results', payload: success, addr: sensor.mac, time: Date.now()});
 						// node.status(modes.PGM_ERR);
 						// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
 					}, 60000);
@@ -323,11 +330,16 @@ module.exports = function(RED) {
 					
 					let configs = node.sensor_configs[sensor.mac].temp_required_configs;
 					for (const key in configs) {
-						// node.warn(key);
 						let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
-						// node.warn(`Configuring ${key} to ${configs[key]} for sensor ${sensor.mac}`);
-						// TODO turn into promises
-						promises[key] = node.gateway[config_obj.call](sensor.mac, configs[key]);
+						if(Object.hasOwn(config_obj, 'translate')){
+							switch(config_obj.translate){
+								case 'uint16':
+									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key], 16));
+									break;
+							}
+						}else{
+							promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
+						}
 					}
 
 					// These sensors listed in original_otf_devices use a different OTF code.
@@ -344,10 +356,10 @@ module.exports = function(RED) {
 						}
 					}
 					promises.finish = new Promise((fulfill, reject) => {
-						node.config_gateway.queue.add(() => {
+						node.gateway.queue.add(() => {
 							return new Promise((f, r) => {
 								clearTimeout(tout);
-								node.status(modes.READY);
+								// node.status(modes.READY);
 								fulfill();
 								f();
 							});
@@ -357,13 +369,11 @@ module.exports = function(RED) {
 						(function(name){
 							promises[name].then((f) => {
 								if(name != 'finish'){
-									// console.log('IN PROMISE RESOLVE');
-									// console.log(f);
-									// success[name] = true;
 									if(Object.hasOwn(f, 'result')){
 										switch(f.result){
 											case 255:
 												success[name] = true;
+												delete node.sensor_configs[mac].temp_required_configs[name];
 												break;
 											default:
 												success[name] = {
@@ -379,10 +389,15 @@ module.exports = function(RED) {
 											sent: f.sent
 										}
 									}
-								}
-								else{
+								} else{
 									// #OTF
+									// Check if sensor responded with true for each config sent, if so delete from temp_required_configs
+									// we could auto reboot sensor, but this could lead to boot cycle for bad configs/cmds
+									if(Object.keys(node.sensor_configs[mac].temp_required_configs).length === 0){
+										delete node.sensor_configs[mac].temp_required_configs;
+									}
 									// TODO turn into event emitter.
+									node._emitter.emit('config_node_msg', {topic: 'Config Results', payload: success, addr: mac, time: Date.now()});
 									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
 									top_fulfill(success);
 								}
@@ -3866,7 +3881,7 @@ module.exports = function(RED) {
 					// Added timeout to fix issue
 					if(config.sensor_type == 1010 || config.sensor_type == 1011){
 						_config(sensor, true);
-					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
+					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'api_config_override')){
 						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
 						_config(sensor, true);
 					}else{
@@ -3892,7 +3907,7 @@ module.exports = function(RED) {
 								_config(sensor, true);
 							}, 3500);
 						}
-					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
+					}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'api_config_override')){
 						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS with mac!!!!!'});
 						_config(sensor, true);
 					}else{
@@ -4205,13 +4220,22 @@ module.exports = function(RED) {
 				case 'get_sensor_list':
 					node.warn(msg);
 					break;
-				case 'clear_sensor_desired_configs':
+				case 'reset_sensor_desired_configs':
 					if(!Array.isArray(msg.payload)){
 						done('Payload must be an array of sensor addresses to clear desired configs');
 					}else{
-						this.clear_desired_configs(msg.payload);
+						this.reset_desired_configs(msg.payload);
 					}
-					send({topic: 'clear_sensor_desired_configs_ack', payload: node._gateway_node.sensor_configs, time: Date.now()});
+					send({topic: 'reset_sensor_desired_configs_ack', payload: node._gateway_node.sensor_configs, time: Date.now()});
+					break;
+				case 'sensor_config_options':
+					// TODO move logic to function
+					if(typeof msg.payload == 'number' && Object.hasOwn(node._gateway_node.sensor_type_map, msg.payload)){
+						let options = this.get_config_options(msg.payload);
+						node.warn(options);
+					}else{
+						send({topic: "config_node_error", payload:'get_config_options error: Payload must be a valid sensor type number'});
+					}
 					break;
 				default:
 					console.log('DEFAULT');
@@ -4219,21 +4243,57 @@ module.exports = function(RED) {
 			done();
 		});
 		
-		this.clear_desired_configs = function(sensor_array){
+		this.reset_desired_configs = function(sensor_array){
 			let store_flag = false;
 			for (let addr of sensor_array){
 				addr = addr.toLowerCase();
 				if(Object.hasOwn(node._gateway_node.sensor_configs, addr) && Object.hasOwn(node._gateway_node.sensor_configs[addr], 'desired_configs')){
-					delete node._gateway_node.sensor_configs[addr].desired_configs;
+					node._gateway_node.sensor_configs[addr].desired_configs = node._gateway_node.sensor_configs[addr].reported_configs;
+					delete node._gateway_node.sensor_configs[addr].api_config_override;
 					store_flag = true;
 				}
-			};	
+			};
 			if(store_flag) node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));		
+		};
+
+		this.get_config_options = function(sensor_type){
+			if(Object.hasOwn(node._gateway_node.sensor_type_map, sensor_type)){
+				const config_list = node._gateway_node.sensor_type_map[sensor_type].configs;
+				let response = {};
+				for (const key in config_list){
+					const info = node._gateway_node.configuration_map[config_list[key]];
+					response[key] = {
+						title: info.title,
+						default_value: info.default_value,
+					};
+					if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'type')){
+						response[key].value_type = info.validator.type;
+					}
+					if(Object.hasOwn(info, 'options')){
+						response[key].options = info.options;
+					}else{
+						if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'min')){
+							response[key].minimum_value = info.validator.min;
+						}
+						if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'max')){
+							response[key].maximum_value = info.validator.max;
+						}
+					}
+					// node.warn(info);
+				}
+				return response;
+			}else{
+				return 'Invalid sensor type';
+			}
 		};
 
 		this.set_desired_configs = function(desired_configs){
 			var _requires_file_update = false;
+			var response = {};
 			for (const sensor of desired_configs){
+				// Force lowercase for consistency
+				sensor.addr = sensor.addr.toLowerCase();
+
 				// TODO validate sensor object
 				// must have sensor.addr, sensor.type, sensor.configs
 				// sensor.configs is an object with key value pairs of config name and desired value
@@ -4253,37 +4313,62 @@ module.exports = function(RED) {
 					node._gateway_node.sensor_configs[sensor.addr].type = sensor.type;
 					_requires_file_update = true;
 				}
+				// force everything lowercase for consistency
+				for (const key in sensor.configs){
+					if(typeof sensor.configs[key] == 'string'){
+						sensor.configs[key] = sensor.configs[key].toLowerCase();
+					}
+				}
 				let new_desired_configs = {...node._gateway_node.sensor_configs[sensor.addr].desired_configs, ...sensor.configs};
+
+				
+
 				// If the desired configs are different than what is already stored we need to update the file
 				if(!isDeepStrictEqual(node._gateway_node.sensor_configs[sensor.addr].desired_configs, new_desired_configs)){
 					console.log('Configs differ, updating desired configs');
+					node._gateway_node.sensor_configs[sensor.addr].desired_configs = {...node._gateway_node.sensor_configs[sensor.addr].desired_configs, ...sensor.configs};
 					_requires_file_update = true;
 				}else{
 					console.log('Configs the same, not updating desired configs');
 				};
-				node._gateway_node.sensor_configs[sensor.addr].desired_configs = {...node._gateway_node.sensor_configs[sensor.addr].desired_configs, ...sensor.configs};
-			};
-			node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));
-			return node._gateway_node.sensor_configs;
+				if(!Object.hasOwn(node._gateway_node.sensor_configs[sensor.addr], 'api_config_override')){
+					node._gateway_node.sensor_configs[sensor.addr].api_config_override = true;
+					_requires_file_update = true;
+				}
+				response[sensor.addr] = node._gateway_node.sensor_configs[sensor.addr];
+			}
+			if(_requires_file_update){
+				node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));
+			}
+			return response;
+			// return node._gateway_node.sensor_configs;
 		};
 
 		node.gateway.on('sensor_mode', (d) => {
-			if(d.mode == 'FLY'){
-				node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+			if(d.mode == 'FLY' && Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
+				// node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+				// if(){
+				node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], time: Date.now()});
+				node.warn('TODO Should we output messages even if the API node is not in charge of the sensor?');
+				// };
 			};
-			if(d.mode == 'OTN'){
-				node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
-			};
+			// if(d.mode == 'OTN'){
+			// 	node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
+			// };
 		});
 
-		// TODO may not use
-		node.gateway.on('ncd_error', (data) => {
-			node.send({
-				topic: 'ncd_error',
-				data: data,
-				payload: data.error,
-				time: Date.now()
-			});
+		node._gateway_node.on('config_node_msg', (d) => {
+			node.send(d);
+		});
+		node._gateway_node.on('config_node_error', (d) => {
+			node.send(d);
+		});
+
+		node.on('close', (done) => {
+			node._gateway_node.removeAllListeners('config_node_msg');
+			node._gateway_node.removeAllListeners('config_node_error');
+			node._gateway_node.removeAllListeners('sensor_mode');
+			done();
 		});
 
 		
