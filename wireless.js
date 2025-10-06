@@ -2796,9 +2796,9 @@ module.exports = function(RED) {
 								if(config.push_notification_119_active){
 									promises.push_notification_119 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_119));
 								}
-								if(config.deactivate_activate_accelero_108_active){
-									promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
-								}
+								// if(config.deactivate_activate_accelero_108_active){
+								// 	promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
+								// }
 								if(config.reset_timeout_108_active){
 									promises.reset_timeout_108 = node.config_gateway.config_set_reset_timeout_108(mac, parseInt(config.reset_timeout_108));
 								}
