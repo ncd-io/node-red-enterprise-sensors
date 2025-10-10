@@ -873,7 +873,9 @@
 			odr_p1_543_active: {value: ""},
 			odr_p1_543: {value:0},
 			full_scale_range_543_active: {value: ""},
-			full_scale_range_543: {value: 1}
+			full_scale_range_543: {value: 1},
+			sampling_duration_p1_543_active: {value: ""},
+			sampling_duration_p1_543: {value: 18, validate: NCD_validators.number_range(1, 50)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3558,7 +3560,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Sampling Duration</strong>
 					<p>
@@ -3574,6 +3576,24 @@
 					<div>
 						<label for="node-input-sampling_duration_p1_110"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-sampling_duration_p1_110">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-543>
+				<div class="form-row ncd-active-check">
+					<strong>Probe 1: Sampling Duration</strong>
+					<p>
+						Set the amount of time in seconds which the samples are taken.<br><br>
+						Note: The sampling duration depends on the ODR.<br><br>
+						Valid range: 1 - 50 Secodns.
+					</p>
+					<div>
+						<label for="node-input-sampling_duration_p1_543_active">Active:</label>
+						<input type="checkbox" id="node-input-sampling_duration_p1_543_active" class="ncd-config-toggle" data-target-id="node-input-sampling_duration_p1_543" value="1">
+					</div>
+					<div>
+						<label for="node-input-sampling_duration_p1_543"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sampling_duration_p1_543">
 					</div>
 				</div>
 			</div>

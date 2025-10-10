@@ -3478,8 +3478,8 @@ module.exports = function(RED) {
 								if(config.enable_filtering_110_active){
 									promises.enable_filtering_110 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
-								if(config.sampling_duration_p1_110_active){
-									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
+								if(config.sampling_duration_p1_543_active){
+									promises.sampling_duration_p1_543 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_543));
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));
