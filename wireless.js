@@ -1503,6 +1503,11 @@ module.exports = function(RED) {
 									promises.change_detection_ch3 = node.config_gateway.config_set_change_detection_ch3(mac, config.change_enabled_ch3 ? 1 : 0, parseInt(config.change_pr_ch3), parseInt(config.change_interval_ch3));
 								}
 								break;
+							case 29:
+								if(config.sensor_length_29_active){
+									promises.sensor_length_29 = node.config_gateway.config_set_sensor_length_29(mac, parseInt(config.sensor_length_29));
+								}
+								break;
 							case 32:
 								if(config.sps_skip_samples_32_active){
 									promises.sps_skip_samples_32 = node.config_gateway.config_set_sps_skip_samples_32(mac, parseInt(config.sps_skip_samples_32));

@@ -875,7 +875,10 @@
 			full_scale_range_543_active: {value: ""},
 			full_scale_range_543: {value: 1},
 			sampling_duration_p1_543_active: {value: ""},
-			sampling_duration_p1_543: {value: 18, validate: NCD_validators.number_range(1, 50)}
+			sampling_duration_p1_543: {value: 18, validate: NCD_validators.number_range(1, 50)},
+
+			sensor_length_29_active: {value: ""},
+			sensor_length_29: {value:500, validate: NCD_validators.number_range(1, 10000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -6297,6 +6300,24 @@
 					</div>
 					<p class="caption">
 						Default value: 12 mg/l.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-29>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Length</strong>
+					<p>Set the Length of the Linear Displacement Sensor in Millimeters.<br>
+					Valid range: 1 - 10,000 mm</p>
+					<div>
+						<label for="node-input-sensor_length_29_active">Active:</label>
+						<input type="checkbox" id="node-input-sensor_length_29_active" class="ncd-config-toggle" data-target-id="node-input-sensor_length_29" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_length_29"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sensor_length_29">
+					</div>
+					<p class="caption">
+						Default value: 500 mm.
 					</p>
 				</div>
 			</div>
