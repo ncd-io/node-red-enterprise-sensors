@@ -3132,6 +3132,9 @@ module.exports = function(RED) {
 								if(config.weight_calib_217_active){
 									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
 								}
+								if(config.tare_value_217_active){
+									promises.tare_value_217 = node.config_gateway.config_set_tare_value_217(mac, parseInt(config.tare_value_217));
+								}
 								break;
 							case 270:
 								// if(config.do_read_rate_270_active){

@@ -701,7 +701,7 @@
 
 			tare_the_scale_217: {value:0},
 			weight_calib_217_active: {value: ""},
-			weight_calib_217: {value: 0},
+			weight_calib_217: {value: 0, validate: NCD_validators.number_range(0, 4294967295)},
 
 			sample_rate_108_active: {value: ""},
 			sample_rate_108: {value: 0},
@@ -878,7 +878,10 @@
 			sampling_duration_p1_543: {value: 18, validate: NCD_validators.number_range(1, 50)},
 
 			sensor_length_29_active: {value: ""},
-			sensor_length_29: {value:500, validate: NCD_validators.number_range(1, 10000)}
+			sensor_length_29: {value:500, validate: NCD_validators.number_range(1, 10000)},
+
+			tare_value_217_active: {value: ""},
+			tare_value_217: {value: 0, validate: NCD_validators.number_range(0, 4294967295)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5381,6 +5384,19 @@
 					<div>
 						<label for="node-input-weight_calib_217"><i class="icon-tag"></i>  Value</label>
 						<input type="text" id="node-input-weight_calib_217" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Tare Value</strong>
+					</div>
+					<div>
+						<label for="node-input-tare_value_217_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-tare_value_217_active" class="ncd-config-toggle" data-target-id="node-input-tare_value_217" value="1">
+					</div>
+					<div>
+						<label for="node-input-tare_value_217"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-tare_value_217" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>
