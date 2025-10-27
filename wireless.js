@@ -1688,6 +1688,40 @@ module.exports = function(RED) {
 									promises.start_sps30_fan_cleaning_53 = node.config_gateway.config_set_start_sps30_fan_cleaning_53(mac);
 								}
 								break;
+							case 54:
+								if(config.rtd_type_39_active){
+									promises.rtd_type_39 = node.config_gateway.config_set_rtd_type_39(mac, parseInt(config.rtd_type_39));
+								}
+								if(config.rtd_range_39_active){
+									promises.rtd_range_39 = node.config_gateway.config_set_rtd_range_39(mac, parseInt(config.rtd_range_39));
+								}
+								if(config.rtd_wire_type_ch2_54_active){
+									promises.rtd_wire_type_ch2_54 = node.config_gateway.config_set_rtd_wire_type_ch2_54(mac, parseInt(config.rtd_wire_type_ch2_54));
+								}
+								if(config.rtd_range_ch2_54_active){
+									promises.rtd_range_ch2_54 = node.config_gateway.config_set_rtd_range_ch2_54(mac, parseInt(config.rtd_range_ch2_54));
+								}
+								break;
+							case 55:
+								if(config.rtd_type_39_active){
+									promises.rtd_type_39 = node.config_gateway.config_set_rtd_type_39(mac, parseInt(config.rtd_type_39));
+								}
+								if(config.rtd_range_39_active){
+									promises.rtd_range_39 = node.config_gateway.config_set_rtd_range_39(mac, parseInt(config.rtd_range_39));
+								}
+								if(config.rtd_wire_type_ch2_54_active){
+									promises.rtd_wire_type_ch2_54 = node.config_gateway.config_set_rtd_wire_type_ch2_54(mac, parseInt(config.rtd_wire_type_ch2_54));
+								}
+								if(config.rtd_range_ch2_54_active){
+									promises.rtd_range_ch2_54 = node.config_gateway.config_set_rtd_range_ch2_54(mac, parseInt(config.rtd_range_ch2_54));
+								}
+								if(config.rtd_wire_type_ch3_55_active){
+									promises.rtd_wire_type_ch3_55 = node.config_gateway.config_set_rtd_wire_type_ch3_55(mac, parseInt(config.rtd_wire_type_ch3_55));
+								}
+								if(config.rtd_range_ch3_55_active){
+									promises.rtd_range_ch3_55 = node.config_gateway.config_set_rtd_range_ch3_55(mac, parseInt(config.rtd_range_ch3_55));
+								}
+								break;
 							case 56:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));

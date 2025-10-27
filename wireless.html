@@ -881,7 +881,16 @@
 			sensor_length_29: {value:500, validate: NCD_validators.number_range(1, 10000)},
 
 			tare_value_217_active: {value: ""},
-			tare_value_217: {value: 0, validate: NCD_validators.number_range(0, 4294967295)}
+			tare_value_217: {value: 0, validate: NCD_validators.number_range(0, 4294967295)},
+
+			rtd_wire_type_ch2_54_active: {value: ""},
+			rtd_wire_type_ch2_54: {value:1},
+			rtd_range_ch2_54_active: {value: ""},
+			rtd_range_ch2_54: {value:1},
+			rtd_wire_type_ch3_55_active: {value: ""},
+			rtd_wire_type_ch3_55: {value:1},
+			rtd_range_ch3_55_active: {value: ""},
+			rtd_range_ch3_55: {value:1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1254,7 +1263,7 @@
 			<option value="52">52 - 2 Channel 4-20mA Receiver</option>
 			<option value="53">53 - Air Quality CO2 and PM Sensor</option>
 			<option value="54">54 - 2-Channel RTD Temperature Sensor</option>
-			<option value="54">55 - 3-Channel RTD Temperature Sensor</option>
+			<option value="55">55 - 3-Channel RTD Temperature Sensor</option>
 			<option value="56">56 - 2 Channel 0-10VDC Receiver</option>
 			<option value="58">58 - Tank Level v3</option>
 			<option value="60">60 - Air Velocity and Precision Pressure & Temperature Sensor</option>
@@ -4973,7 +4982,7 @@
 					</div>
 				-->
 			</div>
-			<div class="ncd-dependent" data-sensor-39>
+			<div class="ncd-dependent" data-sensor-39 data-sensor-54 data-sensor-55>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTD Wire Type</strong>
 					<p>The wire type of RTD Sensor Probe to be connected.</p>
@@ -6335,6 +6344,72 @@
 					<p class="caption">
 						Default value: 500 mm.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-54 data-sensor-55>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTD Wire Type - Channel 2</strong>
+					<p>The wire type of RTD Sensor Probe to be connected in Channel 2.</p>
+					<div>
+						<label for="node-input-rtd_wire_type_ch2_54_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_wire_type_ch2_54_active" class="ncd-config-toggle" data-target-id="node-input-rtd_wire_type_ch2_54" value="1">
+					</div>
+					<div>
+						<label for="node-input-rtd_wire_type_ch2_54"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_wire_type_ch2_54">
+							<option selected="selected" value="0">2 Wires</option>
+							<option value="1">3 Wires</option>
+							<option value="2">4 Wires</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTD Range - Channel 2</strong>
+					<p>Type of PT Sensor Probe to be connected in Channel 2.</p>
+					<div>
+						<label for="node-input-rtd_range_ch2_54_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_range_ch2_54_active" class="ncd-config-toggle" data-target-id="node-input-rtd_range_ch2_54" value="1">
+					</div>
+					<div>
+						<label for="node-input-rtd_range_ch2_54"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_range_ch2_54">
+							<option selected="selected" value="0">PT 100</option>
+							<option value="1">PT 1000</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-55>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTD Wire Type - Channel 3</strong>
+					<p>The wire type of RTD Sensor Probe to be connected in Channel 3.</p>
+					<div>
+						<label for="node-input-rtd_wire_type_ch3_55_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_wire_type_ch3_55_active" class="ncd-config-toggle" data-target-id="node-input-rtd_wire_type_ch3_55" value="1">
+					</div>
+					<div>
+						<label for="node-input-rtd_wire_type_ch3_55"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_wire_type_ch3_55">
+							<option selected="selected" value="0">2 Wires</option>
+							<option value="1">3 Wires</option>
+							<option value="2">4 Wires</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set RTD Range - Channel 3</strong>
+					<p>Type of PT Sensor Probe to be connected in Channel 3.</p>
+					<div>
+						<label for="node-input-rtd_range_ch3_55_active">Active:</label>
+						<input type="checkbox" id="node-input-rtd_range_ch3_55_active" class="ncd-config-toggle" data-target-id="node-input-rtd_range_ch3_55" value="1">
+					</div>
+					<div>
+						<label for="node-input-rtd_range_ch3_55"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-rtd_range_ch3_55">
+							<option selected="selected" value="0">PT 100</option>
+							<option value="1">PT 1000</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
