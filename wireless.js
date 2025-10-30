@@ -2817,9 +2817,9 @@ module.exports = function(RED) {
 								}
 								break;
 							case 119:
-								if(config.accelerometer_state_108_active){
-									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
-								}
+								// if(config.accelerometer_state_108_active){
+								// 	promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								// }
 								if(config.clear_timers_119_active){
 									promises.clear_timers_119 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_119));
 								}
