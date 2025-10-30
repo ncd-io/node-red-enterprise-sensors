@@ -1503,11 +1503,6 @@ module.exports = function(RED) {
 									promises.change_detection_ch3 = node.config_gateway.config_set_change_detection_ch3(mac, config.change_enabled_ch3 ? 1 : 0, parseInt(config.change_pr_ch3), parseInt(config.change_interval_ch3));
 								}
 								break;
-							case 29:
-								if(config.sensor_length_29_active){
-									promises.sensor_length_29 = node.config_gateway.config_set_sensor_length_29(mac, parseInt(config.sensor_length_29));
-								}
-								break;
 							case 32:
 								if(config.sps_skip_samples_32_active){
 									promises.sps_skip_samples_32 = node.config_gateway.config_set_sps_skip_samples_32(mac, parseInt(config.sps_skip_samples_32));
@@ -1686,40 +1681,6 @@ module.exports = function(RED) {
 								}
 								if(config.start_sps30_fan_cleaning_53){
 									promises.start_sps30_fan_cleaning_53 = node.config_gateway.config_set_start_sps30_fan_cleaning_53(mac);
-								}
-								break;
-							case 54:
-								if(config.rtd_type_39_active){
-									promises.rtd_type_39 = node.config_gateway.config_set_rtd_type_39(mac, parseInt(config.rtd_type_39));
-								}
-								if(config.rtd_range_39_active){
-									promises.rtd_range_39 = node.config_gateway.config_set_rtd_range_39(mac, parseInt(config.rtd_range_39));
-								}
-								if(config.rtd_wire_type_ch2_54_active){
-									promises.rtd_wire_type_ch2_54 = node.config_gateway.config_set_rtd_wire_type_ch2_54(mac, parseInt(config.rtd_wire_type_ch2_54));
-								}
-								if(config.rtd_range_ch2_54_active){
-									promises.rtd_range_ch2_54 = node.config_gateway.config_set_rtd_range_ch2_54(mac, parseInt(config.rtd_range_ch2_54));
-								}
-								break;
-							case 55:
-								if(config.rtd_type_39_active){
-									promises.rtd_type_39 = node.config_gateway.config_set_rtd_type_39(mac, parseInt(config.rtd_type_39));
-								}
-								if(config.rtd_range_39_active){
-									promises.rtd_range_39 = node.config_gateway.config_set_rtd_range_39(mac, parseInt(config.rtd_range_39));
-								}
-								if(config.rtd_wire_type_ch2_54_active){
-									promises.rtd_wire_type_ch2_54 = node.config_gateway.config_set_rtd_wire_type_ch2_54(mac, parseInt(config.rtd_wire_type_ch2_54));
-								}
-								if(config.rtd_range_ch2_54_active){
-									promises.rtd_range_ch2_54 = node.config_gateway.config_set_rtd_range_ch2_54(mac, parseInt(config.rtd_range_ch2_54));
-								}
-								if(config.rtd_wire_type_ch3_55_active){
-									promises.rtd_wire_type_ch3_55 = node.config_gateway.config_set_rtd_wire_type_ch3_55(mac, parseInt(config.rtd_wire_type_ch3_55));
-								}
-								if(config.rtd_range_ch3_55_active){
-									promises.rtd_range_ch3_55 = node.config_gateway.config_set_rtd_range_ch3_55(mac, parseInt(config.rtd_range_ch3_55));
 								}
 								break;
 							case 56:
@@ -2817,9 +2778,9 @@ module.exports = function(RED) {
 								}
 								break;
 							case 119:
-								// if(config.accelerometer_state_108_active){
-								// 	promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
-								// }
+								if(config.accelerometer_state_108_active){
+									promises.accelerometer_state_108 = node.config_gateway.config_set_accelerometer_state_108(mac, parseInt(config.accelerometer_state_108));
+								}
 								if(config.clear_timers_119_active){
 									promises.clear_timers_119 = node.config_gateway.config_set_clear_timers_108(mac, parseInt(config.clear_timers_119));
 								}
@@ -2835,9 +2796,9 @@ module.exports = function(RED) {
 								if(config.push_notification_119_active){
 									promises.push_notification_119 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_119));
 								}
-								// if(config.deactivate_activate_accelero_108_active){
-								// 	promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
-								// }
+								if(config.deactivate_activate_accelero_108_active){
+									promises.deactivate_activate_accelero_108 = node.config_gateway.config_set_deactivate_activate_accelero_108(mac, parseInt(config.deactivate_activate_accelero_108));
+								}
 								if(config.reset_timeout_108_active){
 									promises.reset_timeout_108 = node.config_gateway.config_set_reset_timeout_108(mac, parseInt(config.reset_timeout_108));
 								}
@@ -3165,9 +3126,6 @@ module.exports = function(RED) {
 								}
 								if(config.weight_calib_217_active){
 									promises.weight_calib_217 = node.config_gateway.config_set_weight_calib_217(mac, parseInt(config.weight_calib_217));
-								}
-								if(config.tare_value_217_active){
-									promises.tare_value_217 = node.config_gateway.config_set_tare_value_217(mac, parseInt(config.tare_value_217));
 								}
 								break;
 							case 270:
@@ -3520,8 +3478,8 @@ module.exports = function(RED) {
 								if(config.enable_filtering_110_active){
 									promises.enable_filtering_110 = node.config_gateway.config_set_enable_filtering_110(mac, parseInt(config.enable_filtering_110));
 								}
-								if(config.sampling_duration_p1_543_active){
-									promises.sampling_duration_p1_543 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_543));
+								if(config.sampling_duration_p1_110_active){
+									promises.sampling_duration_p1_110 = node.config_gateway.config_set_sampling_duration_p1_110(mac, parseInt(config.sampling_duration_p1_110));
 								}
 								if(config.sampling_interval_110_active){
 									promises.sampling_interval_110 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_110));

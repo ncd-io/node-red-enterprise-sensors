@@ -843,9 +843,9 @@
 			flow_addr_3_536:{value:0, validate: NCD_validators.number_range(0, 255)},
 			flow_addr_4_536:{value:0, validate: NCD_validators.number_range(0, 255)},
 			oxygen_rate_536_active:{value: ""},
-			oxygen_rate_536:{value:2, validate: NCD_validators.number_range(1, 100)},
+			oxygen_rate_536:{value:2, validate: NCD_validators.number_range(0, 255)},
 			oxygen_timeout_536_active:{value: ""},
-			oxygen_timeout_536:{value:5, validate: NCD_validators.number_range(1, 10)},
+			oxygen_timeout_536:{value:5, validate: NCD_validators.number_range(0, 65000)},
 			oxygen_max_threshold_s1_536_active:{value: ""},
 			oxygen_max_threshold_s1_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_max_threshold_s2_536_active:{value: ""},
@@ -873,24 +873,7 @@
 			odr_p1_543_active: {value: ""},
 			odr_p1_543: {value:0},
 			full_scale_range_543_active: {value: ""},
-			full_scale_range_543: {value: 1},
-			sampling_duration_p1_543_active: {value: ""},
-			sampling_duration_p1_543: {value: 18, validate: NCD_validators.number_range(1, 50)},
-
-			sensor_length_29_active: {value: ""},
-			sensor_length_29: {value:500, validate: NCD_validators.number_range(1, 10000)},
-
-			tare_value_217_active: {value: ""},
-			tare_value_217: {value: 0, validate: NCD_validators.number_range(0, 4294967295)},
-
-			rtd_wire_type_ch2_54_active: {value: ""},
-			rtd_wire_type_ch2_54: {value:1},
-			rtd_range_ch2_54_active: {value: ""},
-			rtd_range_ch2_54: {value:1},
-			rtd_wire_type_ch3_55_active: {value: ""},
-			rtd_wire_type_ch3_55: {value:1},
-			rtd_range_ch3_55_active: {value: ""},
-			rtd_range_ch3_55: {value:1}
+			full_scale_range_543: {value: 1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -950,8 +933,7 @@
 					"51": "51 - 6 Channel Current Sensor",
 					"52": "52 - 2 Channel 4-20mA Receiver",
 					"53": "53 - Air Quality CO2 and PM Sensor",
-					"54": "54 - 2-Channel RTD Temperature Sensor",
-					"55": "55 - 3-Channel RTD Temperature Sensor",
+					"54": "54 - 3 Channel RTD",
 					"56": "56 - 2 Channel 0-10VDC Receiver",
 					"58": "58 - Tank Level v3",
 					"60": "60 - Air Velocity, Pressure, & Temperature Sensor",
@@ -1000,7 +982,7 @@
 					"114": "114 - Standalone Smart Vibration Sensor v4",
 					"117": "117 - Custom Vibration Sensor PPV",
 					"118": "118 - Dual Pressure and Temperature Sensor",
-					"119": "119 - Machine Runtime Hour Meter",
+					"119": "119 - Wireless Machine Run Time Hour Meter",
 					"120": "120 - Wireless H2S Sensor",
 					"121": "121 - Wireless Wood Moisture Sensor",
 					"122": "122 - Wireless 4-20mA Current Splitter",
@@ -1262,8 +1244,7 @@
 			<option value="51">51 - 6 Channel Current Sensor</option>
 			<option value="52">52 - 2 Channel 4-20mA Receiver</option>
 			<option value="53">53 - Air Quality CO2 and PM Sensor</option>
-			<option value="54">54 - 2-Channel RTD Temperature Sensor</option>
-			<option value="55">55 - 3-Channel RTD Temperature Sensor</option>
+			<option value="54">54 - 3 Channel RTD</option>
 			<option value="56">56 - 2 Channel 0-10VDC Receiver</option>
 			<option value="58">58 - Tank Level v3</option>
 			<option value="60">60 - Air Velocity and Precision Pressure & Temperature Sensor</option>
@@ -1314,7 +1295,7 @@
 			<option value="114">114 - Standalone Smart Vibration Sensor v4</option>
 			<option value="117">117 - Custom Vibration Sensor PPV</option>
 			<option value="118">118 - Dual Pressure and Temperature Sensor</option>
-			<option value="119">119 - Machine Runtime Hour Meter</option>
+			<option value="119">119 - Wireless Machine Run Time Hour Meter</option>
 			<option value="120">120 - Wireless H2S Sensor</option>
 			<option value="121">121 - Wireless Wood Moisture Sensor</option>
 			<option value="122">122 - Wireless 4-20mA Current Splitter</option>
@@ -1363,7 +1344,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2707,23 +2688,6 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Enable Accelerometer</strong>
-					<p class="caption">
-						This setting toggles the accelerometer sensor on or off. Disabling it is recommended for applications that does not require accelerometer.
-					</p>
-					<div>
-						<label for="node-input-deactivate_activate_accelero_108_active">Active:</label>
-						<input type="checkbox" id="node-input-deactivate_activate_accelero_108_active" class="ncd-config-toggle" data-target-id="node-input-deactivate_activate_accelero_108" value="1">
-					</div>
-					<div>
-						<label for="node-input-deactivate_activate_accelero_108"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-deactivate_activate_accelero_108">
-							<option value="0">Disabled</option>
-							<option value="1" selected>Enabled</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
 					<strong>Enable Accelerometer Error Reporting</strong>
 					<p class="caption">
 						Enables the sensor to report errors if the accelerometer probe becomes non-functional. These errors will be included in the sensor data.
@@ -2740,22 +2704,6 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Accelerometer Threshold</strong>
-					<p class="caption">
-						Sets the threshold in multiples of 32mg in which an uptime will be detected. A value of 1 = 32mg, a value of 2 = 64mg etc.
-					</p>
-					<div>
-						<label for="node-input-accelerometer_threshold_108_active">Active:</label>
-						<input type="checkbox" id="node-input-accelerometer_threshold_108_active" class="ncd-config-toggle" data-target-id="node-input-accelerometer_threshold_108" value="1">
-					</div>
-					<div>
-						<label for="node-input-accelerometer_threshold_108"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-accelerometer_threshold_108" placeholder="10" value="10">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer Threshold</strong>
 					<p class="caption">
@@ -2810,8 +2758,8 @@
 					<div>
 						<label for="node-input-clear_timers_119"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-clear_timers_119">
-							<option value="2">Magnetometer</option>
-							<option value="1">Accelerometer</option>
+							<option value="16">Magnetometer</option>
+							<option value="8">Accelerometer</option>
 						</select>
 					</div>
 				</div>
@@ -3190,9 +3138,9 @@
 						<label for="node-input-push_notification_119"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-push_notification_119">
 							<option value="0" selected>Disabled</option>
-							<option value="3">Enable All</option>
-							<option value="1">Enable on Accelerometer</option>
-							<option value="2">Enable on Magnetometer</option>
+							<option value="24">Enable All</option>
+							<option value="8">Enable on Accelerometer</option>
+							<option value="16">Enable on Magnetometer</option>
 						</select>
 					</div>
 				</div>
@@ -3622,24 +3570,6 @@
 					<div>
 						<label for="node-input-sampling_duration_p1_110"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-sampling_duration_p1_110">
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-543>
-				<div class="form-row ncd-active-check">
-					<strong>Probe 1: Sampling Duration</strong>
-					<p>
-						Set the amount of time in seconds which the samples are taken.<br><br>
-						Note: The sampling duration depends on the ODR.<br><br>
-						Valid range: 1 - 50 Secodns.
-					</p>
-					<div>
-						<label for="node-input-sampling_duration_p1_543_active">Active:</label>
-						<input type="checkbox" id="node-input-sampling_duration_p1_543_active" class="ncd-config-toggle" data-target-id="node-input-sampling_duration_p1_543" value="1">
-					</div>
-					<div>
-						<label for="node-input-sampling_duration_p1_543"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-sampling_duration_p1_543">
 					</div>
 				</div>
 			</div>
@@ -5013,7 +4943,7 @@
 					</div>
 				-->
 			</div>
-			<div class="ncd-dependent" data-sensor-39 data-sensor-54 data-sensor-55>
+			<div class="ncd-dependent" data-sensor-39>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTD Wire Type</strong>
 					<p>The wire type of RTD Sensor Probe to be connected.</p>
@@ -5424,19 +5354,6 @@
 					<div>
 						<label for="node-input-weight_calib_217"><i class="icon-tag"></i>  Value</label>
 						<input type="text" id="node-input-weight_calib_217" placeholder="0" value="0">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Set Tare Value</strong>
-					</div>
-					<div>
-						<label for="node-input-tare_value_217_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-tare_value_217_active" class="ncd-config-toggle" data-target-id="node-input-tare_value_217" value="1">
-					</div>
-					<div>
-						<label for="node-input-tare_value_217"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-tare_value_217" placeholder="0" value="0">
 					</div>
 				</div>
 			</div>
@@ -6357,90 +6274,6 @@
 					<p class="caption">
 						Default value: 12 mg/l.
 					</p>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-29>
-				<div class="form-row ncd-active-check">
-					<strong>Set Sensor Length</strong>
-					<p>Set the Length of the Linear Displacement Sensor in Millimeters.<br>
-					Valid range: 1 - 10,000 mm</p>
-					<div>
-						<label for="node-input-sensor_length_29_active">Active:</label>
-						<input type="checkbox" id="node-input-sensor_length_29_active" class="ncd-config-toggle" data-target-id="node-input-sensor_length_29" value="1">
-					</div>
-					<div>
-						<label for="node-input-sensor_length_29"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-sensor_length_29">
-					</div>
-					<p class="caption">
-						Default value: 500 mm.
-					</p>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-54 data-sensor-55>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTD Wire Type - Channel 2</strong>
-					<p>The wire type of RTD Sensor Probe to be connected in Channel 2.</p>
-					<div>
-						<label for="node-input-rtd_wire_type_ch2_54_active">Active:</label>
-						<input type="checkbox" id="node-input-rtd_wire_type_ch2_54_active" class="ncd-config-toggle" data-target-id="node-input-rtd_wire_type_ch2_54" value="1">
-					</div>
-					<div>
-						<label for="node-input-rtd_wire_type_ch2_54"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtd_wire_type_ch2_54">
-							<option selected="selected" value="0">2 Wires</option>
-							<option value="1">3 Wires</option>
-							<option value="2">4 Wires</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTD Range - Channel 2</strong>
-					<p>Type of PT Sensor Probe to be connected in Channel 2.</p>
-					<div>
-						<label for="node-input-rtd_range_ch2_54_active">Active:</label>
-						<input type="checkbox" id="node-input-rtd_range_ch2_54_active" class="ncd-config-toggle" data-target-id="node-input-rtd_range_ch2_54" value="1">
-					</div>
-					<div>
-						<label for="node-input-rtd_range_ch2_54"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtd_range_ch2_54">
-							<option selected="selected" value="0">PT 100</option>
-							<option value="1">PT 1000</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-55>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTD Wire Type - Channel 3</strong>
-					<p>The wire type of RTD Sensor Probe to be connected in Channel 3.</p>
-					<div>
-						<label for="node-input-rtd_wire_type_ch3_55_active">Active:</label>
-						<input type="checkbox" id="node-input-rtd_wire_type_ch3_55_active" class="ncd-config-toggle" data-target-id="node-input-rtd_wire_type_ch3_55" value="1">
-					</div>
-					<div>
-						<label for="node-input-rtd_wire_type_ch3_55"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtd_wire_type_ch3_55">
-							<option selected="selected" value="0">2 Wires</option>
-							<option value="1">3 Wires</option>
-							<option value="2">4 Wires</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set RTD Range - Channel 3</strong>
-					<p>Type of PT Sensor Probe to be connected in Channel 3.</p>
-					<div>
-						<label for="node-input-rtd_range_ch3_55_active">Active:</label>
-						<input type="checkbox" id="node-input-rtd_range_ch3_55_active" class="ncd-config-toggle" data-target-id="node-input-rtd_range_ch3_55" value="1">
-					</div>
-					<div>
-						<label for="node-input-rtd_range_ch3_55"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-rtd_range_ch3_55">
-							<option selected="selected" value="0">PT 100</option>
-							<option value="1">PT 1000</option>
-						</select>
-					</div>
 				</div>
 			</div>
 		</div>
