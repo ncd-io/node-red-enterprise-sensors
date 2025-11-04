@@ -2269,29 +2269,35 @@ module.exports = function(RED) {
 								// promises.set_rtc_101 = node.config_gateway.config_set_rtc_101(mac);
 								break;
 							case 103:
+								if(config.acc_output_data_rate_103_active){
+									promises.acc_output_data_rate_103 = node.config_gateway.config_set_acc_output_data_rate_103(mac, parseInt(config.acc_output_data_rate_103));
+								}
 								if(config.output_data_rate_103_active){
-									promises.output_data_rate_103 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_103));
+									promises.gyro_output_data_rate_103 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_103));
 								}
-								if(config.sampling_interval_101_active){
-									promises.sampling_interval_103 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								if(config.adxl_fsr_103_active){
+									promises.acc_fsr_103 = node.config_gateway.config_set_adxl_fsr_103(mac, parseInt(config.adxl_fsr_103));
 								}
-								if(config.acc_threshold_103_active){
-									promises.acc_threshold_103 = node.config_gateway.config_set_acc_threshold_103(mac, parseInt(config.acc_threshold_103));
-								}
-								if(config.enable_sensor_103_active){
-									promises.enable_sensor_103 = node.config_gateway.config_set_enable_sensor_103(mac, parseInt(config.enable_sensor_103));
+								if(config.sampling_duration_103_active){
+									promises.sampling_duration_103 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_103));
 								}
 								if(config.enable_hp_filter_cutoff_103_active){
 									promises.enable_hp_filter_cutoff_103 = node.config_gateway.config_set_enable_hp_filter_cutoff_103(mac, parseInt(config.enable_hp_filter_cutoff_103));
 								}
+								if(config.sampling_interval_101_active){
+									promises.sampling_interval_103 = node.config_gateway.config_set_sampling_interval_101(mac, parseInt(config.sampling_interval_101));
+								}
 								if(config.gyro_fsr_103_active){
 									promises.gyro_fsr_103 = node.config_gateway.config_set_gyro_fsr_103(mac, parseInt(config.gyro_fsr_103));
 								}
-								if(config.adxl_fsr_103_active){
-									promises.adxl_fsr_103 = node.config_gateway.config_set_adxl_fsr_103(mac, parseInt(config.adxl_fsr_103));
+								if(config.enable_sensor_103_active){
+									promises.enable_sensor_103 = node.config_gateway.config_set_enable_sensor_103(mac, parseInt(config.enable_sensor_103));
 								}
-								if(config.sampling_duration_103_active){
-									promises.sampling_duration_103 = node.config_gateway.config_set_sampling_duration_101(mac, parseInt(config.sampling_duration_103));
+								if(config.acc_threshold_103_active){
+									promises.acc_threshold_103 = node.config_gateway.config_set_acc_threshold_103(mac, parseInt(config.acc_threshold_103));
+								}
+								if(config.max_num_motion_103_active){
+									promises.max_num_motion_103 = node.config_gateway.config_set_max_num_motion_103(mac, parseInt(config.max_num_motion_103));
 								}
 								if(config.set_rtc_101){
 									promises.set_rtc_103 = node.config_gateway.config_set_rtc_101(mac);

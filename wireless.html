@@ -890,7 +890,12 @@
 			rtd_wire_type_ch3_55_active: {value: ""},
 			rtd_wire_type_ch3_55: {value:1},
 			rtd_range_ch3_55_active: {value: ""},
-			rtd_range_ch3_55: {value:1}
+			rtd_range_ch3_55: {value:1},
+
+			max_num_motion_103_active: {value: ""},
+			max_num_motion_103: {value: 1, validate: NCD_validators.number_range(1, 255)},
+			acc_output_data_rate_103_active: {value: ""},
+			acc_output_data_rate_103: {value: 1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5458,10 +5463,15 @@
 						<label for="node-input-sampling_duration_103"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-sampling_duration_103">
 					</div>
+					<p class="caption">
+						Default value: 20 miliseconds.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Acceleration Threshold</strong>
-					<p>Sets the threshold in multiples of 32mg. A value of 1 = 32mg, a value of 2 = 64mg etc.</p>
+					<p>Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration.<br> 
+						The transmitted message will have a msg_type property of 'motion'.<br><br>
+						Sets the threshold in multiples of 32mg. A value of 1 = 32mg, a value of 2 = 64mg etc.</p>
 					<div>
 						<label for="node-input-acc_threshold_103_active">Active:</label>
 						<input type="checkbox" id="node-input-acc_threshold_103_active" class="ncd-config-toggle" data-target-id="node-input-acc_threshold_103" value="1">
@@ -5470,9 +5480,32 @@
 						<label for="node-input-acc_threshold_103"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-acc_threshold_103">
 					</div>
+					<p class="caption">
+						Default value: 320mg.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Sample Rate</strong>
+					<strong>Set Accelerometer ODR</strong>
+					<div>
+						<label for="node-input-acc_output_data_rate_103_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-acc_output_data_rate_103_active" class="ncd-config-toggle" data-target-id="node-input-acc_output_data_rate_103" value="1">
+					</div>
+					<div>
+						<label for="node-input-acc_output_data_rate_103"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-acc_output_data_rate_103">
+							<option value="0">8000Hz</option>
+							<option value="1">4000Hz</option>
+							<option value="2">2000Hz</option>
+							<option value="3">1000Hz</option>
+							<option value="4">100Hz</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 1000Hz.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Gyroscope ODR</strong>
 					<div>
 						<label for="node-input-output_data_rate_103_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-output_data_rate_103_active" class="ncd-config-toggle" data-target-id="node-input-output_data_rate_103" value="1">
@@ -5481,11 +5514,14 @@
 						<label for="node-input-output_data_rate_103"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-output_data_rate_103">
 							<option value="0">125Hz</option>
-							<option value="1" selected>250Hz</option>
+							<option value="1">250Hz</option>
 							<option value="2">500Hz</option>
 							<option value="3">1000Hz</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 1000Hz.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Sensor</strong>
@@ -5496,11 +5532,14 @@
 					<div>
 						<label for="node-input-enable_sensor_103"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-enable_sensor_103">
+							<option value="0">Accelerometer only</option>
 							<option value="1">Gyroscope only</option>
-							<option value="2">Accelerometer only</option>
-							<option value="3"selected>All enabled</option>
+							<option value="2"selected>Both enabled</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Both enabled.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set HP Filter Cutoff</strong>
@@ -5523,6 +5562,9 @@
 							<option value="6">0.00000238</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Disabled.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Gyroscope FSR</strong>
@@ -5539,6 +5581,9 @@
 							<option value="3">3000dps</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 250 dsp.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Accelerometer FSR</strong>
@@ -5554,6 +5599,25 @@
 							<option value="2">40g</option>
 						</select>
 					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Number Motion Tx Per Interval</strong>
+					<p>
+						Set Number of times it will send data due to motion triggers.<br><br>
+						**Only applies to sensor with firmware version 2 and above.
+					</p>
+					<div>
+						<label for="node-input-max_num_motion_103_active">Active:</label>
+						<input type="checkbox" id="node-input-max_num_motion_103_active" class="ncd-config-toggle" data-target-id="node-input-max_num_motion_103" value="35">
+					</div>
+					<div>
+						<label for="node-input-max_num_motion_103"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_num_motion_103">
+					</div>
+					<p class="caption">
+						Default value: 1<br>
+						<i>Note: Setting this to a higher value will drain the battery.</i>
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-270>
