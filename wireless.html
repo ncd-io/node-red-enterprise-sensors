@@ -88,6 +88,9 @@
 	#register_list_539 > div{
 		display: none;
 	}
+	#gas_type_list_545 > div{
+		display: none;
+	}
 </style>
 
 <script type="text/x-red" data-help-name="ncd-gateway-node">
@@ -895,7 +898,27 @@
 			max_num_motion_103_active: {value: ""},
 			max_num_motion_103: {value: 1, validate: NCD_validators.number_range(1, 255)},
 			acc_output_data_rate_103_active: {value: ""},
-			acc_output_data_rate_103: {value: 1}
+			acc_output_data_rate_103: {value: 1},
+
+			temperature_unit_545_active: {value: ""},
+			temperature_unit_545: {value: 1},
+			flow_unit_545_active: {value: ""},
+			flow_unit_545: {value: 1},
+			gas_type_545_active: {value: ""},
+			gas_type_545: {value: 1},
+
+			number_of_gas_type_545_active:{value:""},
+			number_of_gas_type_545: {value: 2, validate: NCD_validators.number_range(2, 5)},
+			percentage_value_0_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
+			percentage_value_1_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
+			percentage_value_2_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
+			percentage_value_3_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
+			percentage_value_4_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
+			gas_type_0_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_1_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_2_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_3_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_4_545:{value: 0, validate: NCD_validators.number_range(0, 11)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1039,6 +1062,7 @@
 					"541": "541 - Custom Inline Flow Sensor",
 					"542": "542 - Custom LWGY Flow Sensor",
 					"543": "543 - Custom Seismic Vibration Sensor",
+					"545": "545 - Fox Thermal Flow Sensor",
 					"1010": "1010 - RS232 Wireless Converter 1010",
 					"1011": "1011 - RS485 Wireless Converter 1011",
 					"10000": "10000 - 4-Channel Relay",
@@ -1069,6 +1093,11 @@
 				let registers = $(this).val();
 				$('#register_list_539 > div:nth-child(-n+'+registers+')').show();
 				$('#register_list_539 > div:nth-last-child(-n+'+(32-registers)+')').hide();
+			});
+			$('#node-input-number_of_gas_type_545').change(function(){
+				let gas_type = $(this).val();
+				$('#gas_type_list_545 > div:nth-child(-n+'+gas_type+')').show();
+				$('#gas_type_list_545 > div:nth-last-child(-n+'+(5-gas_type)+')').hide();
 			});
 			// $('#node-input-number_of_regs_to_rd_539_active').change(function(){
 			// 	if($(this).prop('checked')){
@@ -1353,6 +1382,7 @@
 			<option value="541">541 - Custom Inline Flow Sensor</option>
 			<option value="542">542 - Custom LWGY Flow Sensor</option>
 			<option value="543">543 - Custom Seismic Vibration Sensor</option>
+			<option value="545">545 - Fox Thermal Flow Sensor</option>
 			<option value="1010">1010 - RS232 Wireless Converter 1010</option>
 			<option value="1011">1011 - RS485 Wireless Converter 1011</option>
 			<option value="10000">10000 - 4-Channel Relay</option>
@@ -1368,7 +1398,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -6473,6 +6503,220 @@
 							<option selected="selected" value="0">PT 100</option>
 							<option value="1">PT 1000</option>
 						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-545>
+				<div class="form-row ncd-active-check">
+					<strong>Set Temperature Unit</strong>
+					<div>
+						<label for="node-input-temperature_unit_545_active">Active:</label>
+						<input type="checkbox" id="node-input-temperature_unit_545_active" class="ncd-config-toggle" data-target-id="node-input-temperature_unit_545" value="1">
+					</div>
+					<div>
+						<label for="node-input-temperature_unit_545"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-temperature_unit_545">
+							<option value="0">Fahrenheit</option>
+							<option value="1">celsius</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Flow Unit</strong>
+					<div>
+						<label for="node-input-flow_unit_545_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_unit_545_active" class="ncd-config-toggle" data-target-id="node-input-flow_unit_545" value="1">
+					</div>
+					<div>
+						<label for="node-input-flow_unit_545"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-flow_unit_545">
+							<option value="0">scf_m</option>
+							<option value="1">scf_h</option>
+							<option value="2">nm3_h</option>
+							<option value="3">nm3_m</option>
+							<option value="4">kg_h</option>
+							<option value="5">kg_m</option>
+							<option value="6">kg_s</option>
+							<option value="7">lbs_h</option>
+							<option value="8">lbs_m</option>
+							<option value="9">lbs_s</option>
+							<option value="10">nlp_h</option>
+							<option value="11">nlp_m</option>
+							<option value="12">mmscf_d</option>
+							<option value="13">lbs_d</option>
+							<option value="14">slp_m</option>
+							<option value="15">nlp_s</option>
+							<option value="16">mscf_d</option>
+							<option value="17">sm3_h</option>
+							<option value="18">mt_h</option>
+							<option value="19">nm3_d</option>
+							<option value="20">mmscf_m</option>
+							<option value="21">scf_d</option>
+							<option value="22">mcf_d</option>
+							<option value="23">sm3_m</option>
+							<option value="24">sm3_d</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Gas Type</strong>
+					<div>
+						<label for="node-input-gas_type_545_active">Active:</label>
+						<input type="checkbox" id="node-input-gas_type_545_active" class="ncd-config-toggle" data-target-id="node-input-gas_type_545" value="1">
+					</div>
+					<div>
+						<label for="node-input-gas_type_545"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-gas_type_545">
+							<option value="0">Methane</option>
+							<option value="1">CO₂</option>
+							<option value="2">Nitrogen</option>
+							<option value="3">Air</option>
+							<option value="4">Natural Gas</option>
+							<option value="5">Argon</option>
+							<option value="6">Propane</option>
+							<option value="7">Helium</option>
+							<option value="8">Oxygen</option>
+							<option value="9">Butane</option>
+							<option value="10">Hydrogen</option>
+							<option value="11">Ethane</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Gas Type Mixture</strong>
+					<p class="caption">
+						Set up a mixture that can consist of anywhere from 2 up to 5 distinct gases. The total concentration of all components must sum to 100%.
+					</p>
+					<div>
+						<label for="node-input-number_of_gas_type_545_active">Active:</label>
+						<input type="checkbox" id="node-input-number_of_gas_type_545_active" class="ncd-config-toggle" data-target-id="node-input-number_of_gas_type_545" data-target-class="gas_type_mix_545" value="1">
+					</div>
+					<div>
+						<label for="node-input-number_of_gas_type_545"><i class="icon-tag"></i>Gas Type Reads:</label>
+						<select id="node-input-number_of_gas_type_545">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</div>
+					<br>
+					<div id="gas_type_list_545">
+						<div class="form-row ncd-active-check">
+							<div>
+								<label for="node-input-gas_type_0_545"><i class="icon-tag"></i>Gas Type 1:</label>
+								<select id="node-input-gas_type_0_545" class="gas_type_mix_545">
+									<option value="0">Methane</option>
+									<option value="1">CO₂</option>
+									<option value="2">Nitrogen</option>
+									<option value="3">Air</option>
+									<option value="4">Natural Gas</option>
+									<option value="5">Argon</option>
+									<option value="6">Propane</option>
+									<option value="7">Helium</option>
+									<option value="8">Oxygen</option>
+									<option value="9">Butane</option>
+									<option value="10">Hydrogen</option>
+									<option value="11">Ethane</option>
+								</select>
+							</div>
+							<div>
+								<label for="node-input-percentage_value_0_545"><i class="icon-tag"></i>Percentage 1:</label>
+								<input type="text" id="node-input-percentage_value_0_545" class="gas_type_mix_545" placeholder="50" value="10">
+							</div>
+						</div>
+						<div class="form-row ncd-active-check">
+							<div>
+								<label for="node-input-gas_type_1_545"><i class="icon-tag"></i>Gas Type 2:</label>
+								<select id="node-input-gas_type_1_545" class="gas_type_mix_545">
+									<option value="0">Methane</option>
+									<option value="1">CO₂</option>
+									<option value="2">Nitrogen</option>
+									<option value="3">Air</option>
+									<option value="4">Natural Gas</option>
+									<option value="5">Argon</option>
+									<option value="6">Propane</option>
+									<option value="7">Helium</option>
+									<option value="8">Oxygen</option>
+									<option value="9">Butane</option>
+									<option value="10">Hydrogen</option>
+									<option value="11">Ethane</option>
+								</select>
+							</div>
+							<div>
+								<label for="node-input-percentage_value_1_545"><i class="icon-tag"></i>Percentage 2:</label>
+								<input type="text" id="node-input-percentage_value_1_545" class="gas_type_mix_545" placeholder="50" value="10">
+							</div>
+						</div>
+						<div class="form-row ncd-active-check">
+							<div>
+								<label for="node-input-gas_type_2_545"><i class="icon-tag"></i>Gas Type 3:</label>
+								<select id="node-input-gas_type_2_545" class="gas_type_mix_545">
+									<option value="0">Methane</option>
+									<option value="1">CO₂</option>
+									<option value="2">Nitrogen</option>
+									<option value="3">Air</option>
+									<option value="4">Natural Gas</option>
+									<option value="5">Argon</option>
+									<option value="6">Propane</option>
+									<option value="7">Helium</option>
+									<option value="8">Oxygen</option>
+									<option value="9">Butane</option>
+									<option value="10">Hydrogen</option>
+									<option value="11">Ethane</option>
+								</select>
+							</div>
+							<div>
+								<label for="node-input-percentage_value_2_545"><i class="icon-tag"></i>Percentage 3:</label>
+								<input type="text" id="node-input-percentage_value_2_545" class="gas_type_mix_545" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row ncd-active-check">
+							<div>
+								<label for="node-input-gas_type_3_545"><i class="icon-tag"></i>Gas Type 4:</label>
+								<select id="node-input-gas_type_3_545" class="gas_type_mix_545">
+									<option value="0">Methane</option>
+									<option value="1">CO₂</option>
+									<option value="2">Nitrogen</option>
+									<option value="3">Air</option>
+									<option value="4">Natural Gas</option>
+									<option value="5">Argon</option>
+									<option value="6">Propane</option>
+									<option value="7">Helium</option>
+									<option value="8">Oxygen</option>
+									<option value="9">Butane</option>
+									<option value="10">Hydrogen</option>
+									<option value="11">Ethane</option>
+								</select>
+							</div>
+							<div>
+								<label for="node-input-percentage_value_3_545"><i class="icon-tag"></i>Percentage 4:</label>
+								<input type="text" id="node-input-percentage_value_3_545" class="gas_type_mix_545" placeholder="10" value="10">
+							</div>
+						</div>
+						<div class="form-row ncd-active-check">
+							<div>
+								<label for="node-input-gas_type_4_545"><i class="icon-tag"></i>Gas Type 5:</label>
+								<select id="node-input-gas_type_4_545" class="gas_type_mix_545">
+									<option value="0">Methane</option>
+									<option value="1">CO₂</option>
+									<option value="2">Nitrogen</option>
+									<option value="3">Air</option>
+									<option value="4">Natural Gas</option>
+									<option value="5">Argon</option>
+									<option value="6">Propane</option>
+									<option value="7">Helium</option>
+									<option value="8">Oxygen</option>
+									<option value="9">Butane</option>
+									<option value="10">Hydrogen</option>
+									<option value="11">Ethane</option>
+								</select>
+							</div>
+							<div>
+								<label for="node-input-percentage_value_4_545"><i class="icon-tag"></i>Percentage 5:</label>
+								<input type="text" id="node-input-percentage_value_4_545" class="gas_type_mix_545" placeholder="10" value="10">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

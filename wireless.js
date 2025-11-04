@@ -3587,6 +3587,26 @@ module.exports = function(RED) {
 									promises.max_num_motion_tx_delay_110 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
 								}
 								break;
+							case 545:
+								if(config.temperature_unit_545_active){
+									promises.temperature_unit_545 = node.config_gateway.config_set_temperature_unit_545(mac, parseInt(config.temperature_unit_545));
+								}
+								if(config.flow_unit_545_active){
+									promises.flow_unit_545 = node.config_gateway.config_set_flow_unit_545(mac, parseInt(config.flow_unit_545));
+								}
+								if(config.gas_type_545_active){
+									promises.gas_type_545 = node.config_gateway.config_set_gas_type_545(mac, parseInt(config.gas_type_545));
+								}
+								if(config.number_of_gas_type_545_active){
+									let gas_type_array = [];
+									let percentage_array = [];
+									for(let ind = 0; ind < config.number_of_gas_type_545; ind++){
+										gas_type_array.push(parseInt(config['gas_type_'+ind+'_545']));
+										percentage_array.push(parseInt(config['percentage_value_'+ind+'_545']));
+									}
+									promises.config_set_gas_type_mix_545 = node.config_gateway.config_set_gas_type_mix_545(mac, parseInt(config.number_of_gas_type_545), gas_type_array, percentage_array);
+								}
+								break;
 							case 1010:
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
