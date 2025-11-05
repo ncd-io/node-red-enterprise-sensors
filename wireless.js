@@ -1291,12 +1291,12 @@ module.exports = function(RED) {
 										promises.current_calibration_13 = node.config_gateway.config_set_current_calibration_13(mac, cali);
 									}
 								}
-								// if(config.current_calibration_13_dep_active){
-								// 	var cali = parseInt(config.current_calibration_13_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
-								// 	}
-								// }
+								if(config.current_calibration_13_dep_active){
+									var cali = parseInt(config.current_calibration_13_dep);
+									if(cali != 0){
+										promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+									}
+								}
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
@@ -1366,18 +1366,18 @@ module.exports = function(RED) {
 										promises.current_calibration_ch2_19 = node.config_gateway.config_set_current_calibration_ch2_19(mac, cali);
 									}
 								}
-								// if(config.current_calibration_13_dep_active){
-								// 	var cali = parseInt(config.current_calibration_13_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
-								// 	}
-								// }
-								// if(config.current_calibration_ch2_19_dep_active){
-								// 	var cali = parseInt(config.current_calibration_ch2_19_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
-								// 	}
-								// }
+								if(config.current_calibration_13_dep_active){
+									var cali = parseInt(config.current_calibration_13_dep);
+									if(cali != 0){
+										promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch2_19_dep_active){
+									var cali = parseInt(config.current_calibration_ch2_19_dep);
+									if(cali != 0){
+										promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
+									}
+								}
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
@@ -1475,24 +1475,24 @@ module.exports = function(RED) {
 										promises.current_calibration_ch3_28 = node.config_gateway.config_set_current_calibration_ch3_28(mac, cali);
 									}
 								}
-								// if(config.current_calibration_13_dep_active){
-								// 	var cali = parseInt(config.current_calibration_13_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
-								// 	}
-								// }
-								// if(config.current_calibration_ch2_19_dep_active){
-								// 	var cali = parseInt(config.current_calibration_ch2_19_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
-								// 	}
-								// }
-								// if(config.current_calibration_ch3_28_dep_active){
-								// 	var cali = parseInt(config.current_calibration_ch3_28_dep);
-								// 	if(cali != 0){
-								// 		promises.current_calibration_ch3_28_dep = node.config_gateway.config_set_current_calibration_ch3_28_dep(mac, cali);
-								// 	}
-								// }
+								if(config.current_calibration_13_dep_active){
+									var cali = parseInt(config.current_calibration_13_dep);
+									if(cali != 0){
+										promises.current_calibration_13_dep = node.config_gateway.config_set_current_calibration_13_dep(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch2_19_dep_active){
+									var cali = parseInt(config.current_calibration_ch2_19_dep);
+									if(cali != 0){
+										promises.current_calibration_ch2_19_dep = node.config_gateway.config_set_current_calibration_ch2_19_dep(mac, cali);
+									}
+								}
+								if(config.current_calibration_ch3_28_dep_active){
+									var cali = parseInt(config.current_calibration_ch3_28_dep);
+									if(cali != 0){
+										promises.current_calibration_ch3_28_dep = node.config_gateway.config_set_current_calibration_ch3_28_dep(mac, cali);
+									}
+								}
 								if(config.change_detection_t3_active){
 									promises.change_detection = node.config_gateway.config_set_change_detection(mac, config.change_enabled ? 1 : 0, parseInt(config.change_pr), parseInt(config.change_interval));
 								}
