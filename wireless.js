@@ -4228,15 +4228,15 @@ module.exports = function(RED) {
 					}
 					send({topic: 'reset_sensor_desired_configs_ack', payload: node._gateway_node.sensor_configs, time: Date.now()});
 					break;
-				case 'sensor_config_options':
-					// TODO move logic to function
-					if(typeof msg.payload == 'number' && Object.hasOwn(node._gateway_node.sensor_type_map, msg.payload)){
-						let options = this.get_config_options(msg.payload);
-						node.warn(options);
-					}else{
-						send({topic: "config_node_error", payload:'get_config_options error: Payload must be a valid sensor type number'});
-					}
-					break;
+			case 'sensor_config_options':
+				// TODO move logic to function
+				if(typeof msg.payload == 'number' && Object.hasOwn(node._gateway_node.sensor_type_map, msg.payload)){
+					let options = this.get_config_options(msg.payload);
+					send({topic: 'sensor_config_options_ack', payload: options, time: Date.now()});
+				}else{
+					send({topic: "config_node_error", payload:'get_config_options error: Payload must be a valid sensor type number'});
+				}
+				break;
 				default:
 					console.log('DEFAULT');
 			};
