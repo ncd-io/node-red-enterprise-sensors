@@ -179,7 +179,7 @@ module.exports = function(RED) {
 										delete node.sensor_configs[d.mac].desired_configs;
 										node.sensor_configs[d.mac].type = d.type;
 										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
-										node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, time: Date.now()});
+										node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, addr: d.mac, time: Date.now()});
 										store_flag = true;
 									}
 									if(!isDeepStrictEqual(node.sensor_configs[d.mac].reported_configs, values)){
@@ -3885,7 +3885,7 @@ module.exports = function(RED) {
 						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
 						_config(sensor, true);
 					}else{
-						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
+						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					}
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
 					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
@@ -3911,7 +3911,7 @@ module.exports = function(RED) {
 						// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS with mac!!!!!'});
 						_config(sensor, true);
 					}else{
-						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
+						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					};
 				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
@@ -4024,7 +4024,7 @@ module.exports = function(RED) {
 							// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
 							_config(sensor, true);
 						}else{
-							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, time: Date.now(), addr: sensor.mac});
+							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						};
 
 					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 202){
@@ -4348,7 +4348,7 @@ module.exports = function(RED) {
 			if(d.mode == 'FLY' && Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
 				// node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
 				// if(){
-				node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], time: Date.now()});
+				node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
 				node.warn('TODO Should we output messages even if the API node is not in charge of the sensor?');
 				// };
 			};
