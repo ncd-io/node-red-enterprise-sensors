@@ -282,6 +282,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p><br>• <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>• <strong>Time Domain (Raw):</strong> The Time Domain (Raw) data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Time Domain (Raw) data packet.<br>• <strong>Smart:</strong> Transmit Processed data at intervals and Time Domain (Raw) data on request, with auto Time Domain (Raw) data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br></p><p><br><i><strong>WARNING</strong>: If Mode is set to Time Domain (Raw) data or Auto Time Domain (Raw) data (in Smart Mode) it is recommended to also set the Destination Address (Auto Raw Destination Address in Smart mode) configuration to the address of your Receiver/Gateway.</i></p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 3 },
     "options": { "0": "Processed", "1": "Raw", "2": "Processed + Raw on demand", "3": "Smart" },
     "title": "Mode",
     "call": "config_set_operation_mode_80"
@@ -290,6 +291,7 @@
     "sensors": ["84", "114", "519", "537"],
     "main_caption": "<p>Choose whether the LED indicator should be based on Acceleration or Velocity</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 1 },
     "options": { "0": "Acceleration", "1": "Velocity" },
     "title": "LED Alert Mode",
     "call": "config_set_led_alert_mode_84"
@@ -298,6 +300,7 @@
     "sensors": ["84", "114", "519", "537"],
     "main_caption": "<div><p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p></div>",
     "default_value": {},
+    "validator": { "type": "integer", "min": 0, "max": 255 },
     "title": "LED Accelerometer Threshold",
     "call": "config_set_led_accelerometer_threshold_84"
   },
@@ -305,6 +308,7 @@
     "sensors": ["84", "114", "519", "537"],
     "main_caption": "<div><p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p></div>",
     "default_value": {},
+    "validator": { "type": "integer", "min": 0, "max": 255 },
     "title": "LED Velocity Threshold",
     "call": "config_set_led_velocity_threshold_84"
   },
@@ -942,6 +946,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>Enable/Disable built-in filters</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 1 },
     "options": { "0": "Enabled", "1": "Disabled" },
     "title": "Set Filtering",
     "call": "config_set_enable_filtering_110"
@@ -950,6 +955,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>In accordance with the Nyquist equation:<br><br>f_max = ODR/2.56 Hz<br><br>Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 7, "max": 15 },
     "options": { "7": "100Hz", "8": "200Hz", "9": "400Hz", "10": "800Hz", "11": "1600Hz", "12": "3200Hz", "13": "6400Hz", "14": "12800Hz", "15": "25600Hz" },
     "title": "Probe 1: Output Data Rate",
     "call": "config_set_odr_p1_110"
@@ -982,6 +988,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>This setting will set the LPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 4<br>LPF freq = 800/4 = 200Hz</p>",
     "default_value": 0,
+    "validator":{ "type": "integer", "min": 0, "max": 9 },
     "options": { "0": "4", "1": "8", "2": "16", "3": "32", "4": "64", "5": "128", "6": "256", "7": "512", "8": "1024", "9": "2048" },
     "title": "Probe 1: Set Low Pass Filter",
     "call": "config_set_low_pass_filter_p1_110"
@@ -998,6 +1005,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>This setting will set the HPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 64<br>HPF freq = 800/64 = 12.5Hz</p>",
     "default_value": 0,
+    "validator":{ "type": "integer", "min": 0, "max": 9 },
     "options": { "0": "4", "1": "8", "2": "16", "3": "32", "4": "64", "5": "128", "6": "256", "7": "512", "8": "1024", "9": "2048" },
     "title": "Probe 1: Set High Pass Filter",
     "call": "config_set_high_pass_filter_p1_110"
@@ -1082,6 +1090,7 @@
     "sensors": ["80", "81", "82", "84", "110", "111", "112", "114", "180", "181", "519", "537", "538"],
     "main_caption": "<p>Set how large of a range the device can measure acceleration in.<br><br>Example: +/- 8g would mean that it would measure at most up to 8g and down to -8g.</p>",
     "default_value": 1,
+    "validator": { "type": "integer", "min": 0, "max": 5 },
     "options": { "0": "+/- 2g", "1": "+/- 4g", "2": "+/- 8g", "3": "+/- 16g", "4": "+/- 32g", "5": "+/- 64g" },
     "title": "Full Scale Range",
     "call": "config_set_full_scale_range_101"
@@ -1098,6 +1107,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>Set the interval at which the sensor will transmit FLY packets. FLY packets are what allows Node-Red to reconfigure the sensor so this determines how often the sensor should check in for updated configurations.<br></p>",
     "default_value": 60,
+    "validator": { "type": "integer", "min": 0, "max": 1440 },
     "options": { "60": "1 Hour", "120": "2 Hours", "240": "4 Hours", "480": "8 Hours", "720": "12 Hours", "1080": "18 Hours", "1440": "24 Hours" },
     "title": "Set FLY Interval",
     "call": "config_set_fly_interval_110"
@@ -1106,6 +1116,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>Enable/Disable Revolutions Per Minute Calculate Status<br>When a measurement sample is taken you can choose to not calculate the RPM, this will shorten the measurement time and save on battery.<br></p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 1 },
     "options": { "1": "Enabled", "0": "Disabled" },
     "title": "RPM Calculate Status",
     "call": "config_set_enable_rpm_calculate_status_110"
@@ -1114,12 +1125,14 @@
     "sensors": ["80", "81", "82", "84", "101", "102", "103", "110", "111", "112", "114", "180", "181", "519", "537", "538"],
     "main_caption": "<p>Set the value for the Internal Real Time Clock.</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 1 },
     "title": "Set RTC"
   },
   "max_raw_sample_110": {
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>Set the maximum number of samples the sensor captures for Time Domain (Raw) data , by reducing the sample duration.</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 1024, "max": 8100 },
     "options": { "1024": "1024 Samples", "2048": "2048 Samples", "4096": "4096 Samples", "6400": "6400 Samples", "8100": "8100 Samples" },
     "title": "Set Max Raw Sample",
     "call": "config_set_max_raw_sample_110"
@@ -1128,6 +1141,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>This setting will zero out the uptime value.<br><br>Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.</p>",
     "default_value": 0,
+    "validator": { "type": "integer", "min": 0, "max": 1 },
     "title": "Clear Probe Uptimers"
   },
   "motion_to_sampling_delay_110": {
