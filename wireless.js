@@ -4201,21 +4201,25 @@ module.exports = function(RED) {
 			switch(msg.topic){
 				case 'set_desired_configs':
 					response = this.set_desired_configs(msg.payload);
-					send({topic: 'set_desired_configs_ack', payload: response, time: Date.now()});
-					// this.set_desired_configs(msg.payload).then((result) => {
-					// 	send({topic: 'set_desired_configs', payload: result, time: Date.now()});
-					// }).catch((err) => {
-					// 	send({topic: 'set_desired_configs', payload: {error: err}, time: Date.now()});
-					// });
+					if(Object.hasOwn(response, 'error')){
+						msg.ack = response;
+						msg.status = 500;
+					}else{
+						msg.ack = response;
+						msg.status = 200;
+					}
+					msg.time = Date.now();
+					send(msg);
 					break;
 				case 'get_sensor_info':
-					node.warn(msg);
 					send(msg);
-					console.log('get_sensor_info');
 					break;
 				case 'get_all_sensor_info':
 					response = this.get_all_sensor_info();
-					send({topic: 'get_all_sensor_info_ack', payload: response, time: Date.now()});
+					msg.ack = response;
+					msg.status = 200;
+					msg.time = Date.now();
+					send(msg);
 					break;
 				case 'get_sensor_list':
 					node.warn(msg);
@@ -4232,9 +4236,15 @@ module.exports = function(RED) {
 				// TODO move logic to function
 				if(typeof msg.payload == 'number' && Object.hasOwn(node._gateway_node.sensor_type_map, msg.payload)){
 					let options = this.get_config_options(msg.payload);
-					send({topic: 'sensor_config_options_ack', payload: options, time: Date.now()});
+					msg.ack = options;
+					msg.status = 200;
+					msg.time = Date.now();
+					send(msg);
 				}else{
-					send({topic: "config_node_error", payload:'get_config_options error: Payload must be a valid sensor type number'});
+					msg.ack = {error: 'get_config_options error: Payload must be a valid sensor type number'};
+					msg.status = 500;
+					msg.time = Date.now();
+					send(msg);
 				}
 				break;
 				default:
