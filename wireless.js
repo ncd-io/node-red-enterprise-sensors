@@ -188,7 +188,7 @@ module.exports = function(RED) {
 										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 										// TODO this node can't send messages, need to emit event and have API node listen for it
 										store_flag = true;
-										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
+										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
 										// node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
 									}
 
