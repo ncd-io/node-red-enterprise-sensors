@@ -355,10 +355,13 @@ module.exports = function(RED) {
 					let configs = node.sensor_configs[sensor.mac].temp_required_configs;
 					for (const key in configs) {
 						let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
-						if(Object.hasOwn(config_obj, 'valdiator') && Object.hasOwn(config_obj.validator, 'type')){
+						if(Object.hasOwn(config_obj, 'validator') && Object.hasOwn(config_obj.validator, 'type')){
 							switch(config_obj.validator.type){
 								case 'hexString':
 									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key], 16));
+									break;
+								default:
+									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
 									break;
 								// TODO see if we can fix it at the data level instead of here.
 								// case 'uint16':
@@ -366,6 +369,7 @@ module.exports = function(RED) {
 								// 	break;
 							}
 						}else{
+							// catchall for bad map objects
 							promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
 						}
 					}
