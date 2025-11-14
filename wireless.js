@@ -149,7 +149,7 @@ module.exports = function(RED) {
 									if(Object.hasOwn(values, 'reserved')) delete values.reserved;
 
 									let store_flag = false;
-									// hardware_id we might remove as well, it is useful though.
+									
 									if(!Object.hasOwn(node.sensor_configs, d.mac)){
 										node.sensor_configs[d.mac] = {};
 										store_flag = true;
@@ -160,33 +160,57 @@ module.exports = function(RED) {
 										store_flag = true;
 									}
 									if(Object.hasOwn(values, 'hardware_id')) delete values.hardware_id;
-									
+									// Loop through and translate and validate values.
+									// We want to allow passing in integers instead of byte arrays etc.
+									// TODO This the FLY so we don't need to validate.
+									for(let key in values){
+										if(Object.hasOwn(node.sensor_type_map, d.type) && Object.hasOwn(node.sensor_type_map[d.type], 'configs') && Object.hasOwn(node.sensor_type_map[d.type].configs, key)){
+											let map_key = node.sensor_type_map[d.type].configs[key];
+											if(Object.hasOwn(node.configuration_map, map_key) && Object.hasOwn(node.configuration_map[map_key], 'validator')){
+												if(Object.hasOwn(node.configuration_map[map_key].validator, 'type')){
+													switch(node.configuration_map[map_key].validator.type){
+														case 'uint16':
+															values[key] = values[key].reduce(msbLsb);
+															break;
+														case 'uint24':
+															values[key] = values[key].reduce(msbLsb);
+															break;
+														case 'uint32':
+															values[key] = values[key].reduce(msbLsb);
+															break;
+													}
+												}
+											}
+										}
+									}
+									// If object has no reported configs, instantiate them
 									if(!Object.hasOwn(node.sensor_configs[d.mac], 'reported_configs')){
 										node.sensor_configs[d.mac].reported_configs = {};
 										store_flag = true;
 									}
+									// If object has no desired configs, add them
 									if(!Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs')){
 										node.sensor_configs[d.mac].desired_configs = values;
 										store_flag = true;
 									}
-									
 									if(!Object.hasOwn(node.sensor_configs[d.mac], 'type')){
 										node.sensor_configs[d.mac].type = d.type;
 										store_flag = true;
 									}else if(node.sensor_configs[d.mac].type != d.type){
-										// TODO this node can't send messages, need to emit event and have API node listen for it
-										// node.send({topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs0"}, time: Date.now()});
+										// This code is only called when the type doesn't match what the sensor reports, only foreseeable if user swaps sensor modules OR preloads configs for wrong sensor type
 										delete node.sensor_configs[d.mac].desired_configs;
 										node.sensor_configs[d.mac].type = d.type;
-										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 										node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, addr: d.mac, time: Date.now()});
 										store_flag = true;
 									}
 									if(!isDeepStrictEqual(node.sensor_configs[d.mac].reported_configs, values)){
 										// Values are different, update the stored configs and write to file
 										node.sensor_configs[d.mac].reported_configs = values;
-										// node.store_sensor_configs(JSON.stringify(node.sensor_configs));
-										// TODO this node can't send messages, need to emit event and have API node listen for it
+										// If reported configs change, but the auto config does not control configs, update automatically
+										// Will duplicate setting desired configs on first run, but only once or if user clear desired_configs
+										if(!Object.hasOwn(node.sensor_configs[d.mac], 'api_config_override')){
+											node.sensor_configs[d.mac].desired_configs = values;
+										}
 										store_flag = true;
 										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
 										// node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
@@ -331,11 +355,15 @@ module.exports = function(RED) {
 					let configs = node.sensor_configs[sensor.mac].temp_required_configs;
 					for (const key in configs) {
 						let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
-						if(Object.hasOwn(config_obj, 'translate')){
-							switch(config_obj.translate){
-								case 'uint16':
+						if(Object.hasOwn(config_obj, 'valdiator') && Object.hasOwn(config_obj.validator, 'type')){
+							switch(config_obj.validator.type){
+								case 'hexString':
 									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key], 16));
 									break;
+								// TODO see if we can fix it at the data level instead of here.
+								// case 'uint16':
+								// 	promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
+								// 	break;
 							}
 						}else{
 							promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));

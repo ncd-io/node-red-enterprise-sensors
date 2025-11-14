@@ -2,10 +2,9 @@
   "destination_address": {
     "main_caption": "",
     "default_value": "0000ffff",
-    "validator": { "type": "string", "length": 8},
+    "validator": { "type": "hexString", "length": 8},
     "title": "Destination Address",
-    "call": "config_set_destination",
-    "translate": "uint16"
+    "call": "config_set_destination"
   },
   "pan_id": {
     "main_caption": "",
@@ -1041,10 +1040,9 @@
     "main_caption": "<p>Set the address where the Auto Time Domain (Raw) data will be transmitted, we recommend setting this to your gateway’s address.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
     "sub_caption": "<p class=\"caption\">Default value: 0000FFFF for Broadcast Mode<br>Example of targeted address: 41D5EC37</p>",
     "default_value": "0000FFFF",
-    "validator": { "type": "integer", "min": 0, "max": 4294967295 },
+    "validator": { "type": "hexString", "length": 8 },
     "title": "Set Auto Raw Destination Address",
-    "call": "config_set_auto_raw_destination_110",
-    "translate": "uint16"
+    "call": "config_set_auto_raw_destination_110"
   },
   "smart_threshold_110": {
     "sensors": ["110", "111", "112", "114"],
@@ -1132,7 +1130,7 @@
     "sensors": ["110", "111", "112", "114"],
     "main_caption": "<p>Set the maximum number of samples the sensor captures for Time Domain (Raw) data , by reducing the sample duration.</p>",
     "default_value": 0,
-    "validator": { "type": "integer", "min": 1024, "max": 8100 },
+    "validator": { "type": "uint16", "min": 1024, "max": 8100 },
     "options": { "1024": "1024 Samples", "2048": "2048 Samples", "4096": "4096 Samples", "6400": "6400 Samples", "8100": "8100 Samples" },
     "title": "Set Max Raw Sample",
     "call": "config_set_max_raw_sample_110"
