@@ -264,7 +264,9 @@
   },
   "58": {
     "configs": {
-      "0": "max_range_58",
+      "0": "max_range_58"
+    },
+    "disabled_configs": {
       "1": "calibration_58",
       "2": "factory_reset_tank_probe_58"
     }
@@ -690,12 +692,8 @@
   "114": {
     "configs": {
       "destination_address": "destination_address",
+      "node_id": "only_node_id",
       "network_id": "pan_id",
-      "delay": "special_delay",
-      "node_id": "special_node_id",
-      "power_level": "power",
-      "retries": "retries",
-      
       "mode": "mode_110",
       "led_alert_mode": "led_alert_mode_84",
       "led_accelerometer_threshold": "led_accelerometer_threshold_84",
@@ -737,9 +735,11 @@
     "configs": {
       "0": "stay_on_mode_539",
       "1": "always_on_120",
-      "2": "sensor_reset_120",
-      "3": "sensor_calib_120",
       "4": "alert_threshold_120"
+    },
+    "disabled_configs": {
+      "2": "sensor_reset_120",
+      "3": "sensor_calib_120"
     }
   },
   "121": {
@@ -796,7 +796,9 @@
       "5": "total_1_op_mode_124",
       "6": "total_2_op_mode_124",
       "7": "total_3_op_mode_124",
-      "8": "conductivity_unit_124",
+      "8": "conductivity_unit_124"
+    },
+    "disabled_configs": {
       "9": "reset_all_totalizers_124"
     }
   },
@@ -869,8 +871,10 @@
   },
   "217": {
     "configs": {
-      "0": "tare_the_scale_217",
       "1": "weight_calib_217"
+    },
+    "disabled_configs": {
+      "0": "tare_the_scale_217"
     }
   },
   "270": {
