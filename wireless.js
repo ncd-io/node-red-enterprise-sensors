@@ -4390,6 +4390,9 @@ module.exports = function(RED) {
 						}
 						response[key] = {...response[key], ...info.validator};
 					}
+					if(Object.hasOwn(info, 'options')){
+						response[key].options = info.options;
+					}
 					
 					// if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'type')){
 
