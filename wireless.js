@@ -4617,7 +4617,7 @@ module.exports = function(RED) {
 										// If options exist, value must be one of the options
 										// This is assuming that all configs with options are number types
 										if(Object.hasOwn(node._gateway_node.configuration_map[map_key], 'options')){
-											if(!Object.values(node._gateway_node.configuration_map[map_key].options).includes(sensor.configs[config_name])){
+											if(!Object.keys(node._gateway_node.configuration_map[map_key].options).includes(String(sensor.configs[config_name]))){
 												error_msg[sensor.addr] ||= {};
 												error_msg[sensor.addr][config_name] = {
 													type: 'error',
