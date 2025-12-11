@@ -4486,9 +4486,21 @@ module.exports = function(RED) {
 					if(Object.hasOwn(node._gateway_node.sensor_type_map, sensor.type) && Object.hasOwn(node._gateway_node.sensor_type_map[sensor.type], 'configs') && Object.hasOwn(node._gateway_node.sensor_type_map[sensor.type].configs, config_name)){
 						let map_key = node._gateway_node.sensor_type_map[sensor.type].configs[config_name];
 						if(Object.hasOwn(node._gateway_node.configuration_map, map_key) && Object.hasOwn(node._gateway_node.configuration_map[map_key], 'validator')){
-							// Console dump if generated validator
-							if(Object.hasOwn(node._gateway_node.configuration_map[map_key], 'generated')){
-								console.log(`Info: Using generated validator for ${config_name} for sensor type ${sensor.type}`);
+							// Check if config is reported by sensor
+							if(Object.hasOwn(node._gateway_node.configuration_map[map_key], 'fly_not_reported') && node._gateway_node.configuration_map[map_key].fly_not_reported.includes(sensor.type)){
+								error_msg[sensor.addr] ||= {};
+								error_msg[sensor.addr][config_name] = {
+									type: 'error',
+									message: `Configuration ${config_name} is not supported for sensor type ${sensor.type} for sensor ${sensor.addr}. This configuration is not reported by the sensor and cannot be programmatically set through the configuration node.`,
+									detail: {
+										"text": "Configuration not supported due to reported configurations",
+										"sensor_type": sensor.type,
+										"config_name": config_name,
+										"help": `Inject this message into the configuration node to get valid configuration values: {topic: 'sensor_config_options', payload: ${sensor.type}}`
+									}
+								};
+								delete sensor.configs[config_name];
+								continue;
 							}
 							if(Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'type')){
 								switch(node._gateway_node.configuration_map[map_key].validator.type){
