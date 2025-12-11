@@ -291,7 +291,6 @@ module.exports = function(RED) {
 												}else{
 													manifest_data.enter_ota_success = false;
 												}
-												console.log(name);
 											} else{
 												if(manifest_data.enter_ota_success){
 													// enter ota mode
@@ -370,12 +369,6 @@ module.exports = function(RED) {
 						if(Object.hasOwn(config_obj, 'validator') && Object.hasOwn(config_obj.validator, 'type')){
 							if(key == 'node_id' || key == 'delay'){
 								// TODO expand this logic in the future for cases where sensor doesn't report delay.
-								console.log('node_id or delay config');
-								console.log(configs);
-								console.log(config_obj);
-								console.log(Object.hasOwn(configs, 'node_id'));
-								console.log(Object.hasOwn(config_obj, 'node_id'));
-								console.log(Object.hasOwn(configs, 'node_id'));
 								if(Object.hasOwn(configs, 'node_id') && Object.hasOwn(configs, 'delay') && Object.hasOwn(config_obj, "delay") && Object.hasOwn(config_obj, "node_id")){
 									// If the sensor has and should have node id and delay (standard sensor)
 									promises['node_id_and_delay'] = node.gateway.config_node_id_and_delay(sensor.mac, parseInt(configs['node_id']), parseInt(configs['delay']));
@@ -4377,6 +4370,10 @@ module.exports = function(RED) {
 				let response = {};
 				for (const key in config_list){
 					const info = node._gateway_node.configuration_map[config_list[key]];
+					// If sensors actually reports and supports the listed config
+					if(Object.hasOwn(info, 'fly_not_reported') && info.fly_not_reported.includes(sensor_type)){
+						continue;
+					}
 					response[key] = {
 						title: info.title,
 						default_value: info.default_value,
@@ -4721,7 +4718,6 @@ module.exports = function(RED) {
 			if(d.mode == 'FLY'){
 				if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
 					node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
-					node.warn('TODO Should we output messages even if the API node is not in charge of the sensor?');	
 				}
 			}else if(d.mode == 'OTF'){
 				if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
