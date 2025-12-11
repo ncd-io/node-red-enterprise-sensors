@@ -2755,6 +2755,9 @@
       "112",
       "114"
     ],
+    "fly_not_reported": [
+      114
+    ],
     "main_caption": "<p>This setting will zero out the uptime value.<br><br>Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.</p>",
     "default_value": 0,
     "validator": {
