@@ -380,6 +380,9 @@ module.exports = function(RED) {
 							}
 							switch(config_obj.validator.type){
 								case 'hexString':
+									console.log('hex string');
+									console.log('Configuring '+key+' to '+configs[key]);
+									console.log(parseInt(configs[key], 16));
 									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key], 16));
 									break;
 								default:
@@ -916,7 +919,7 @@ module.exports = function(RED) {
 			this.gateway._emitter.removeAllListeners('link_info');
 			this.gateway._emitter.removeAllListeners('converter_response');
 			this.gateway._emitter.removeAllListeners('manifest_received');
-			console.log(this.gateway._emitter.eventNames());
+			// console.log(this.gateway._emitter.eventNames());
 		});
 
 		node.is_config = false;
@@ -4226,7 +4229,6 @@ module.exports = function(RED) {
 
 		this._gateway_node.open_comms();
 		this.gateway = this._gateway_node.gateway;
-		console.log(this.gateway);
 
 		var node = this;
 
