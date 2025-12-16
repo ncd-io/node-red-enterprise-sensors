@@ -4330,10 +4330,11 @@ module.exports = function(RED) {
 			};
 			for (let addr of sensor_array){
 				addr = addr.toLowerCase();
+				response.body[addr] = {};
 				if(Object.hasOwn(node._gateway_node.sensor_configs, addr)){
 					if(Object.hasOwn(node._gateway_node.sensor_configs[addr], 'desired_configs')){
-						response.body[addr].success = true;
 						node._gateway_node.sensor_configs[addr].desired_configs = node._gateway_node.sensor_configs[addr].reported_configs;
+						response.body[addr].success = true;
 						store_flag = true;
 					}
 					if(Object.hasOwn(node._gateway_node.sensor_configs[addr], 'api_config_override')){
@@ -4342,8 +4343,9 @@ module.exports = function(RED) {
 					}
 					// node._gateway_node.sensor_configs[addr].desired_configs = node._gateway_node.sensor_configs[addr].reported_configs;
 					// delete node._gateway_node.sensor_configs[addr].api_config_override;
-					if(Object.hasOwn(node._gateway_node.sensor_configs[addr], 'temp_required_config')){
-						delete node._gateway_node.sensor_configs[addr].temp_required_config;
+					if(Object.hasOwn(node._gateway_node.sensor_configs[addr], 'temp_required_configs')){
+						delete node._gateway_node.sensor_configs[addr].temp_required_configs;
+						store_flag = true;
 					}
 					if(response.status < 8){
 						response.status +=200;
