@@ -4234,12 +4234,14 @@ module.exports = function(RED) {
 						// Added timeout to fix issue
 						if(config.sensor_type == 1010 || config.sensor_type == 1011){
 							_config(sensor, true);
-						}else{
+						}else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'api_config_override')){
+							// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
 							var tout = setTimeout(() => {
 								_send_otn_request(sensor);
 							}, 100);
+						}else{
+							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						}
-
 					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
 						if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
 							if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
@@ -4259,10 +4261,12 @@ module.exports = function(RED) {
 									_config(sensor, true);
 								}, 3500);
 							}
-						} else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs')){
-							// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS no mac!!!!!'});
+						} else if(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac) || !Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'api_config_override')){
+							// node.send({topic: "debug", payload: 'WIRELESS DEVICE NODE IS CONFIGURING SENSORS with mac!!!!!'});
 							_config(sensor, true);
 						}else{
+							// node.warn(!Object.hasOwn(node.gateway_node.sensor_configs, sensor.mac));
+							// node.warn(!Object.hasOwn(node.gateway_node.sensor_configs[sensor.mac], 'desired_configs'));
 							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						};
 
