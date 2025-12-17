@@ -1,0 +1,5320 @@
+{
+    "destination_address": {
+      "main_caption": "",
+      "default_value": "0000ffff",
+      "validator": {
+        "type": "hexString",
+        "length": 8
+      },
+      "title": "Destination Address",
+      "call": "config_set_destination"
+    },
+    "pan_id": {
+      "main_caption": "",
+      "default_value": "7fff",
+      "validator": {
+        "type": "hexString",
+        "length": 4
+      },
+      "title": "Network ID",
+      "call": "config_set_pan_id"
+    },
+    "node_id": {
+      "main_caption": "",
+      "default_value": "0",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Node ID",
+      "call": "config_set_id_delay"
+    },
+    "delay": {
+      "main_caption": "Transmission interval or delay between transmissions in seconds.",
+      "default_value": "300",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Transmission Interval",
+      "call": "config_set_id_delay"
+    },
+    "only_node_id": {
+      "main_caption": "",
+      "default_value": "0",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Node ID",
+      "call": "config_set_only_delay"
+    },
+    "power": {
+      "main_caption": "",
+      "default_value": "4",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 4,
+        "generated": true
+      },
+      "title": "Power",
+      "options": {
+        "0": "+7 dBm (5 mW)",
+        "1": "+15 dBm (32 mW)",
+        "2": "+18 dBm (63 mW)",
+        "3": "+21 dBm (125 mW)",
+        "4": "+24 dBm (250 mW)"
+      },
+      "call": "config_set_power"
+    },
+    "retries": {
+      "main_caption": "",
+      "default_value": "10",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 10,
+        "generated": true
+      },
+      "title": "Retries",
+      "call": "config_set_retries"
+    },
+    "current_calibration_ch2_19": {
+      "sensors": [
+        "19",
+        "28"
+      ],
+      "main_caption": "<p class=\"caption\">New calibration value = ((current_read_by_meter/current_read_by_sensor)*last_stored_calibration_value)*100</p>",
+      "default_value": "60600",
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Channel 2 Current Calibration Value",
+      "call": "config_set_current_calibration_ch2_19"
+    },
+    "current_calibration_ch3_28": {
+      "sensors": [
+        "28"
+      ],
+      "main_caption": "<p class=\"caption\">New calibration value = ((current_read_by_meter/current_read_by_sensor)*last_stored_calibration_value)*100</p>",
+      "default_value": "60600",
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Channel 3 Current Calibration Value",
+      "call": "config_set_current_calibration_ch3_28"
+    },
+    "change_enabled": {
+      "sensors": [
+        "3",
+        "10",
+        "13",
+        "19",
+        "28"
+      ],
+      "main_caption": "<label for=\"change_enabled\"><i class=\"icon-tag\"></i>Enable:</label>",
+      "default_value": ""
+    },
+    "change_pr": {
+      "sensors": [
+        "3",
+        "10",
+        "13",
+        "19",
+        "28"
+      ],
+      "main_caption": "<label for=\"change_pr\"><i class=\"icon-tag\"></i>Percentage Change Threshold (0-255)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      }
+    },
+    "change_interval": {
+      "sensors": [
+        "3",
+        "10",
+        "13",
+        "19",
+        "28"
+      ],
+      "main_caption": "<label for=\"change_interval\"><i class=\"icon-tag\"></i>Percentage Change Interval (seconds)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint24",
+        "min": 0,
+        "max": 16777215,
+        "generated": true
+      }
+    },
+    "change_enabled_ch2": {
+      "sensors": [
+        "28",
+        "19"
+      ],
+      "main_caption": "<label for=\"change_enabled_ch2\"><i class=\"icon-tag\"></i>Enable:</label>",
+      "default_value": ""
+    },
+    "change_pr_ch2": {
+      "sensors": [
+        "28",
+        "19"
+      ],
+      "main_caption": "<label for=\"change_pr_ch2\"><i class=\"icon-tag\"></i>Percentage Change Threshold (0-255)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      }
+    },
+    "change_interval_ch2": {
+      "sensors": [
+        "28",
+        "19"
+      ],
+      "main_caption": "<label for=\"change_interval_ch2\"><i class=\"icon-tag\"></i>Percentage Change Interval (seconds)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint24",
+        "min": 0,
+        "max": 16777215,
+        "generated": true
+      }
+    },
+    "change_enabled_ch3": {
+      "sensors": [
+        "28"
+      ],
+      "main_caption": "<label for=\"change_enabled_ch3\"><i class=\"icon-tag\"></i>Enable:</label>",
+      "default_value": ""
+    },
+    "change_pr_ch3": {
+      "sensors": [
+        "28"
+      ],
+      "main_caption": "<label for=\"change_pr_ch3\"><i class=\"icon-tag\"></i>Percentage Change Threshold (0-255)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      }
+    },
+    "change_interval_ch3": {
+      "sensors": [
+        "28"
+      ],
+      "main_caption": "<label for=\"change_interval_ch3\"><i class=\"icon-tag\"></i>Percentage Change Interval (seconds)</label>",
+      "default_value": "0",
+      "validator": {
+        "type": "uint24",
+        "min": 0,
+        "max": 16777215,
+        "generated": true
+      }
+    },
+    "bp_altitude": {
+      "sensors": [
+        "6"
+      ],
+      "main_caption": "",
+      "default_value": "0",
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Baseline Altitude (0 - 65535 meters)",
+      "call": "config_set_bp_altitude"
+    },
+    "bp_pressure": {
+      "sensors": [
+        "6"
+      ],
+      "main_caption": "",
+      "default_value": "0",
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Baseline Pressure (0 - 14000 mbar)",
+      "call": "config_set_bp_pressure"
+    },
+    "bp_temp_prec": {
+      "sensors": [
+        "6"
+      ],
+      "main_caption": "",
+      "default_value": "0",
+      "options": {
+        "0": "0.012",
+        "2": "0.008",
+        "4": "0.005",
+        "6": "0.003",
+        "8": "0.002"
+      },
+      "title": "Temperature Precision",
+      "call": "config_set_bp_temp_precision"
+    },
+    "bp_press_prec": {
+      "sensors": [
+        "6"
+      ],
+      "main_caption": "<label for=\"bp_press_prec\"><i class=\"icon-tag\"></i> Pressure Precision</label>",
+      "default_value": "0",
+      "options": {
+        "0": "0.065",
+        "2": "0.042",
+        "4": "0.027",
+        "6": "0.018",
+        "8": "0.012"
+      },
+      "call": "config_set_bp_press_precision"
+    },
+    "amgt_accel": {
+      "sensors": [
+        "5"
+      ],
+      "main_caption": "",
+      "default_value": "0",
+      "options": {
+        "0": "±2g",
+        "1": "±4g",
+        "3": "±8g",
+        "4": "±16g"
+      },
+      "title": "Acceleration Range",
+      "call": "config_set_amgt_accel"
+    },
+    "amgt_mag": {
+      "sensors": [
+        "5"
+      ],
+      "main_caption": "<label for=\"amgt_mag\"><i class=\"icon-tag\"></i> Magnetometer Gain</label>",
+      "default_value": "0",
+      "options": {
+        "0": "±4 gauss",
+        "1": "±8 gauss",
+        "2": "±12 gauss",
+        "3": "±16 gauss"
+      },
+      "title": "Magnetometer Gain",
+      "call": "config_set_amgt_magnet"
+    },
+    "amgt_gyro": {
+      "sensors": [
+        "5"
+      ],
+      "main_caption": "<label for=\"amgt_gyro\"><i class=\"icon-tag\"></i> Gyroscope Scale</label>",
+      "default_value": "0",
+      "options": {
+        "0": "±245dps",
+        "1": "±500dps",
+        "2": "±2000dps"
+      },
+      "title": "Gyroscope Scale",
+      "call": "config_set_amgt_gyro"
+    },
+    "impact_accel": {
+      "sensors": [
+        "7",
+        "24",
+        "25"
+      ],
+      "main_caption": "<div></div>",
+      "default_value": "0",
+      "options": {
+        "0": "±2g",
+        "1": "±4g",
+        "3": "±8g",
+        "4": "±16g"
+      },
+      "title": "Acceleration Range",
+      "call": "config_set_acceleration_range_24"
+    },
+    "impact_data_rate": {
+      "sensors": [
+        "7",
+        "24",
+        "25"
+      ],
+      "main_caption": "<div></div>",
+      "default_value": "4",
+      "options": {
+        "0": "Value:",
+        "1": "1",
+        "2": "10",
+        "3": "25",
+        "4": "50",
+        "5": "100",
+        "6": "200",
+        "7": "400",
+        "8": "1600",
+        "9": "5376"
+      },
+      "title": "Data Rate",
+      "call": "config_set_data_rate_24"
+    },
+    "impact_threshold": {
+      "sensors": [
+        "7",
+        "24",
+        "25"
+      ],
+      "main_caption": "<div><p>Accepted values from 1-127.</p></div>",
+      "default_value": 25,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 127,
+        "generated": true
+      },
+      "title": "Threshold",
+      "call": "config_set_threshold_24"
+    },
+    "impact_duration": {
+      "sensors": [
+        "7",
+        "24",
+        "25"
+      ],
+      "main_caption": "<div><p>Accepted values from 1-127.</p></div>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 127,
+        "generated": true
+      },
+      "title": "Duration",
+      "call": "config_set_duration_24"
+    },
+    "activ_interr_x": {
+      "sensors": [
+        "24",
+        "25"
+      ],
+      "main_caption": "<label for=\"activ_interr_x\"><i class=\"icon-tag\"></i> Interrupt X-Axis</label>",
+      "default_value": 1,
+      "options": {
+        "1": "High",
+        "0": "Low"
+      }
+    },
+    "activ_interr_y": {
+      "sensors": [
+        "24",
+        "25"
+      ],
+      "main_caption": "<label for=\"activ_interr_y\"><i class=\"icon-tag\"></i> Interrupt Y-Axis</label>",
+      "default_value": 2,
+      "options": {
+        "2": "High",
+        "0": "Low"
+      }
+    },
+    "activ_interr_z": {
+      "sensors": [
+        "24",
+        "25"
+      ],
+      "main_caption": "<label for=\"activ_interr_z\"><i class=\"icon-tag\"></i> Interrupt Z-Axis</label>",
+      "default_value": 4,
+      "options": {
+        "4": "High",
+        "0": "Low"
+      }
+    },
+    "activ_interr_op": {
+      "sensors": [
+        "24",
+        "25"
+      ],
+      "main_caption": "<label for=\"activ_interr_op\"><i class=\"icon-tag\"></i> Interrupt Logic</label>",
+      "default_value": 8,
+      "options": {
+        "8": "And",
+        "0": "Or"
+      }
+    },
+    "filtering": {
+      "sensors": [
+        "40"
+      ],
+      "main_caption": "<label for=\"filtering\"><i class=\"icon-tag\"></i> Data Filtering</label>",
+      "default_value": 0,
+      "options": {
+        "1": "Enable",
+        "0": "Disable"
+      },
+      "title": "Data Filtering",
+      "call": "config_set_filtering"
+    },
+    "data_rate": {
+      "sensors": [
+        "40"
+      ],
+      "main_caption": "<label for=\"data_rate\"><i class=\"icon-tag\"></i> Data Rate</label>",
+      "default_value": 5,
+      "options": {
+        "5": "400 Hz",
+        "6": "800 Hz",
+        "7": "1600 Hz",
+        "12": "3200 Hz",
+        "13": "6400 Hz",
+        "14": "12800 Hz",
+        "15": "25600 Hz"
+      },
+      "title": "Data Rate",
+      "call": "config_set_data_rate"
+    },
+    "time_series": {
+      "sensors": [
+        "40"
+      ],
+      "main_caption": "<label for=\"time_series\"><i class=\"icon-tag\"></i> Time Series Data (unimplemented)</label>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Time Series Data (unimplemented)",
+      "call": "config_set_time_series"
+    },
+    "reading_type": {
+      "sensors": [
+        "40"
+      ],
+      "main_caption": "<label for=\"reading_type\"><i class=\"icon-tag\"></i> Reading Type</label>",
+      "default_value": 1,
+      "options": {
+        "1": "Acceleration",
+        "2": "Velocity"
+      },
+      "title": "Reading Type",
+      "call": "config_set_reading_type"
+    },
+    "force_calibration_co2_auto_config": {
+      "sensors": [
+        "44"
+      ],
+      "main_caption": "<label for=\"force_calibration_co2_auto_config\"><i class=\"icon-tag\"></i>Active:</label>",
+      "default_value": ""
+    },
+    "force_calibration_co2": {
+      "sensors": [
+        "44"
+      ],
+      "main_caption": "<label for=\"force_calibration_co2\"><i class=\"icon-tag\"></i>  Value</label>",
+      "default_value": 400,
+      "validator": {
+        "type": "uint16",
+        "min": 400,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Value",
+      "call": "config_set_sensor_forced_calibration"
+    },
+    "temperature_offset_44": {
+      "sensors": [
+        "44",
+        "535"
+      ],
+      "main_caption": "<div></div>",
+      "default_value": 4,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Temperature Offset",
+      "call": "config_set_sensor_temperature_offset_44"
+    },
+    "acceleration_interrupt_threshold_84": {
+      "sensors": [
+        "84",
+        "519",
+        "537"
+      ],
+      "main_caption": "<div><p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p><p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p><p>Valid Input Range: 0 - 40<br>A value of 0 will disable this feature.<br>Only applies to sensor with firmware version 24 and above.</p></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 40,
+        "generated": true
+      },
+      "title": "Set Acceleration Wake/Interrupt Threshold",
+      "call": "config_set_acceleration_interrupt_threshold_84"
+    },
+    "mode_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p><br>• <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>• <strong>Time Domain (Raw):</strong> The Time Domain (Raw) data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Time Domain (Raw) data packet.<br>• <strong>Smart:</strong> Transmit Processed data at intervals and Time Domain (Raw) data on request, with auto Time Domain (Raw) data transmission option. Option to triggers on RMS acceleration exceeding thresholds on X, Y, Z axes, with smart skip to limit sends when vibrations are low.<br></p><p><br><i><strong>WARNING</strong>: If Mode is set to Time Domain (Raw) data or Auto Time Domain (Raw) data (in Smart Mode) it is recommended to also set the Destination Address (Auto Raw Destination Address in Smart mode) configuration to the address of your Receiver/Gateway.</i></p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 3,
+        "generated": true
+      },
+      "options": {
+        "0": "Processed",
+        "1": "Raw",
+        "2": "Processed + Raw on demand",
+        "3": "Smart"
+      },
+      "title": "Mode",
+      "call": "config_set_operation_mode_80"
+    },
+    "led_alert_mode_84": {
+      "sensors": [
+        "84",
+        "519",
+        "537"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<p>Choose whether the LED indicator should be based on Acceleration or Velocity</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 1,
+        "generated": true
+      },
+      "options": {
+        "0": "Acceleration",
+        "1": "Velocity"
+      },
+      "title": "LED Alert Mode",
+      "call": "config_set_led_alert_mode_84"
+    },
+    "led_accelerometer_threshold_84": {
+      "sensors": [
+        "84",
+        "519",
+        "537"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<div><p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p></div>",
+      "default_value": {},
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "LED Accelerometer Threshold",
+      "call": "config_set_led_accelerometer_threshold_84"
+    },
+    "led_velocity_threshold_84": {
+      "sensors": [
+        "84",
+        "519",
+        "537"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<div><p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p></div>",
+      "default_value": {},
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "LED Velocity Threshold",
+      "call": "config_set_led_velocity_threshold_84"
+    },
+    "mode_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Processed",
+        "1": "Raw",
+        "2": "Processed + Raw on demand"
+      },
+      "title": "Mode",
+      "call": "config_set_operation_mode_80"
+    },
+    "measurement_mode_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Processed data, acc in mg, velocity in mm/sec and displacement in mm",
+        "1": "Processed data, acc in ms^2, velocity in inch/sec and displacement in milli"
+      },
+      "title": "Measurement Mode",
+      "call": "config_set_measurement_mode_80"
+    },
+    "on_request_timeout_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "110",
+        "111",
+        "112",
+        "114",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>Set how long device will stay awake and wait for Time Domain (Raw) request from command.<br><br>Valid range: 1-10 Seconds</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 10,
+        "generated": true
+      },
+      "title": "Set On Request Timeout",
+      "call": "config_set_on_request_timeout_80"
+    },
+    "sampling_duration_101": {
+      "sensors": [
+        "80",
+        "82",
+        "84",
+        "101",
+        "102",
+        "180",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Sampling Duration 1= 50msec, 2= 100msec",
+      "call": "config_set_sampling_duration_101"
+    },
+    "sampling_interval_101": {
+      "sensors": [
+        "101",
+        "102",
+        "103",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>Set how often will the sensor transmit measurement data.<br><br>Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.<br></p>",
+      "default_value": 1,
+      "options": {
+        "0": "5 Minutes",
+        "1": "10 Minutes",
+        "2": "15 Minutes",
+        "3": "20 Minutes",
+        "4": "30 Minutes",
+        "5": "60 Minutes",
+        "6": "120 Minutes",
+        "7": "180 Minutes"
+      },
+      "title": "Sampling Interval",
+      "call": "config_set_sampling_interval_101"
+    },
+    "sampling_interval_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84"
+      ],
+      "main_caption": "<p>Set how often will the sensor transmit measurement data.<br><br>Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.<br><b>**1 Minute option only applies to sensor with firmware version 26 and above.</b><br><br></p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 8,
+        "generated": true
+      },
+      "options": {
+        "8": "1 Minute",
+        "0": "5 Minutes",
+        "1": "10 Minutes",
+        "2": "15 Minutes",
+        "3": "20 Minutes",
+        "4": "30 Minutes",
+        "5": "60 Minutes",
+        "6": "120 Minutes",
+        "7": "180 Minutes"
+      },
+      "title": "Sampling Interval",
+      "call": "config_set_sampling_interval_101"
+    },
+    "sampling_interval_202": {
+      "sensors": [
+        "202"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "1": "5 Minutes",
+        "2": "10 Minutes",
+        "3": "15 Minutes",
+        "4": "20 Minutes",
+        "5": "30 Minutes",
+        "6": "60 Minutes",
+        "7": "120 Minutes",
+        "8": "180 Minutes"
+      },
+      "title": "Sampling Interval",
+      "call": "config_set_sampling_interval_202"
+    },
+    "set_rtc_202": {
+      "sensors": [
+        "202"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set RTC"
+    },
+    "probe_boot_time_202": {
+      "sensors": [
+        "202"
+      ],
+      "main_caption": "",
+      "default_value": 30,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Probe Boot Time",
+      "call": "config_set_probe_boot_time_202"
+    },
+    "output_data_rate_p1_81": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "7": "100Hz",
+        "8": "200Hz",
+        "9": "400Hz",
+        "10": "800Hz",
+        "11": "1600Hz",
+        "12": "3200Hz",
+        "13": "6400Hz",
+        "14": "12800Hz",
+        "15": "25600Hz"
+      },
+      "title": "Probe 1: Output Data Rate",
+      "call": "config_set_output_data_rate_101"
+    },
+    "sampling_duration_p1_81": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Probe 1: Sampling Duration 1= 50msec, 2= 100msec",
+      "call": "config_set_sampling_duration_101"
+    },
+    "output_data_rate_p2_81": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "7": "100Hz",
+        "8": "200Hz",
+        "9": "400Hz",
+        "10": "800Hz",
+        "11": "1600Hz",
+        "12": "3200Hz",
+        "13": "6400Hz",
+        "14": "12800Hz",
+        "15": "25600Hz"
+      },
+      "title": "Probe 2: Output Data Rate",
+      "call": "config_set_output_data_rate_p2_81"
+    },
+    "sampling_duration_p2_81": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Probe 2: Sampling Duration 1= 50msec, 2= 100msec",
+      "call": "config_set_sampling_duration_p2_81"
+    },
+    "output_data_rate_101": {
+      "sensors": [
+        "80",
+        "82",
+        "84",
+        "102",
+        "180",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "7": "100Hz",
+        "8": "200Hz",
+        "9": "400Hz",
+        "10": "800Hz",
+        "11": "1600Hz",
+        "12": "3200Hz",
+        "13": "6400Hz",
+        "14": "12800Hz",
+        "15": "25600Hz"
+      },
+      "title": "Output Data Rate",
+      "call": "config_set_output_data_rate_101"
+    },
+    "output_data_rate_101_m2": {
+      "sensors": [
+        "101"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "4000 SPS",
+        "1": "2000 SPS",
+        "2": "1000 SPS",
+        "3": "500  SPS",
+        "4": "250  SPS",
+        "5": "125  SPS",
+        "6": "62.5 SPS",
+        "7": "31.25 SPS",
+        "8": "15.625 SPS",
+        "9": "7.813 SPS",
+        "10": "3.906 SPS"
+      },
+      "title": "Output Data Rate",
+      "call": "config_set_output_data_rate_101"
+    },
+    "periodic_check_rate_76": {
+      "sensors": [
+        "76"
+      ],
+      "main_caption": "",
+      "default_value": 60,
+      "validator": {
+        "type": "uint16",
+        "min": 60,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Periodic Check Rate",
+      "call": "config_set_periodic_check_rate_76"
+    },
+    "ppm_threshold_76": {
+      "sensors": [
+        "76"
+      ],
+      "main_caption": "",
+      "default_value": 100,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "PPM Threshold",
+      "call": "config_set_ppm_threshold_76"
+    },
+    "alert_duration_76": {
+      "sensors": [
+        "76"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Alert Duration",
+      "call": "config_set_alert_duration_76"
+    },
+    "sensor_boot_time_76": {
+      "sensors": [
+        "76"
+      ],
+      "main_caption": "",
+      "default_value": 30,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Sensor Boot Time",
+      "call": "config_set_sensor_boot_time_76"
+    },
+    "filter_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Set Filtering",
+      "call": "config_set_filters_80"
+    },
+    "low_pass_filter_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>This setting will set the LPF freq to ODR divided by Selected Value<br>Example: ODR = 800 and Filter Coefficient = 4<br>LPF freq = 800/4 = 200Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Set Low Pass Filter Probe 1",
+      "call": "config_set_low_pass_filter_80"
+    },
+    "high_pass_filter_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>This setting will set the HPF freq to ODR divided by Selected Value<br>Example: ODR = 800 and Filter Coefficient = 64<br>HPF freq = 800/64 = 12.5Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Set High Pass Filter Probe 1",
+      "call": "config_set_high_pass_filter_80"
+    },
+    "low_pass_filter_81_p2": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "<p>This setting will set the LPF freq to ODR divided by Selected Value<br>Example: ODR = 800 and Filter Coefficient = 4<br>LPF freq = 800/4 = 200Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Set Low Pass Filter Probe 2",
+      "call": "config_set_low_pass_filter_81_p2"
+    },
+    "high_pass_filter_81_p2": {
+      "sensors": [
+        "81",
+        "181"
+      ],
+      "main_caption": "<p>This setting will set the HPF freq to ODR divided by Selected Value<br>Example: ODR = 800 and Filter Coefficient = 64<br>HPF freq = 800/64 = 12.5Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Set High Pass Filter Probe 2",
+      "call": "config_set_high_pass_filter_81_p2"
+    },
+    "full_scale_range_101_m2": {
+      "sensors": [
+        "101"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "0": "+/- 10g",
+        "1": "+/- 20g",
+        "2": "+/- 40g"
+      },
+      "title": "Full Scale Range",
+      "call": "config_set_full_scale_range_101"
+    },
+    "x_axis_101": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "101",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": "",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Configure Enabled Axes"
+    },
+    "y_axis_101": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "101",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": "",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Configure Enabled Axes"
+    },
+    "z_axis_101": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "101",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "",
+      "default_value": "",
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Configure Enabled Axes"
+    },
+    "current_calibration_82": {
+      "sensors": [
+        "82",
+        "112"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Set Current Calibration Value",
+      "call": "config_set_current_calibration_82"
+    },
+    "sensor_boot_time_420ma": {
+      "sensors": [
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "540",
+        "541"
+      ],
+      "main_caption": "<p class=\"caption\">This value represents the number of seconds to wait after applying power to the sensor before taking a reading. Only recommended for sensors powered by the Wireless Sensor's power supply.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Sensor Boot Time",
+      "call": "config_set_sensor_boot_time_420ma"
+    },
+    "auto_check_interval_88": {
+      "sensors": [
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "75",
+        "76",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "540",
+        "541"
+      ],
+      "main_caption": "<p class=\"caption\"><b>* To disable the auto check interval feature make this setting active and use a value of 0.</b></p>",
+      "default_value": 60,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Auto Check Interval",
+      "call": "config_set_auto_check_interval_88"
+    },
+    "auto_check_threshold_88": {
+      "sensors": [
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "75",
+        "76",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "540",
+        "541"
+      ],
+      "main_caption": "<p class=\"caption\"><b>This is a percent value. It will dictate a new transmission if the percentage change since last transmission exceeds the percentage set in this field.<br>Ex: Threshold set to 20% and last reading was 5. If Auto Check detects a value below 4 or above 6 a transmission will be sent.</b></p>",
+      "default_value": 20,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Auto Check Threshold",
+      "call": "config_set_auto_check_threshold_88"
+    },
+    "sensor_boot_time_78": {
+      "sensors": [
+        "78",
+        "79",
+        "91"
+      ],
+      "main_caption": "<p class=\"caption\">This value represents the number of milliseconds to wait after applying power to the sensor before taking a reading.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Sensor Boot Time",
+      "call": "config_set_sensor_boot_time_78"
+    },
+    "low_calibration_420ma": {
+      "sensors": [
+        "3",
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "200",
+        "540",
+        "541"
+      ],
+      "main_caption": "",
+      "default_value": 68805,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Low Calibration Point",
+      "call": "config_set_low_calibration_420ma"
+    },
+    "mid_calibration_420ma": {
+      "sensors": [
+        "3",
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "200",
+        "540",
+        "541"
+      ],
+      "main_caption": "",
+      "default_value": 68724,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Mid Calibration Point",
+      "call": "config_set_mid_calibration_420ma"
+    },
+    "high_calibration_420ma": {
+      "sensors": [
+        "3",
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "200",
+        "540",
+        "541"
+      ],
+      "main_caption": "",
+      "default_value": 68714,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "High Calibration Point",
+      "call": "config_set_high_calibration_420ma"
+    },
+    "fsr_420ma": {
+      "sensors": [
+        "3",
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "200",
+        "540",
+        "541"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "5": "0.256",
+        "4": "0.512",
+        "3": "1.024",
+        "2": "2.048",
+        "1": "4.096",
+        "0": "6.114"
+      },
+      "title": "Set FSR",
+      "call": "config_set_fsr_420ma"
+    },
+    "always_on_420ma": {
+      "sensors": [
+        "3",
+        "14",
+        "15",
+        "45",
+        "48",
+        "52",
+        "56",
+        "85",
+        "88",
+        "89",
+        "90",
+        "95",
+        "96",
+        "105",
+        "106",
+        "107",
+        "122",
+        "200",
+        "540",
+        "541"
+      ],
+      "main_caption": "<p>This command will keep the external power to the sensor always enabled.</p><p><strong>Note:</strong> This setting only applies to firmware version 15 or higher</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disable",
+        "1": "Enable"
+      },
+      "title": "Set Sensor Always On",
+      "call": "config_set_always_on_420ma"
+    },
+    "current_calibration_c1_80": {
+      "sensors": [
+        "505",
+        "506"
+      ],
+      "main_caption": "<p class=\"caption\">Default 200A Calibration: 178<br>Default 600A Calibration: 548</p>",
+      "default_value": 178,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 655,
+        "generated": true
+      },
+      "title": "Channel 1 Current Calibration Value",
+      "call": "config_set_current_calibration_individual_80"
+    },
+    "current_calibration_c2_80": {
+      "sensors": [
+        "506"
+      ],
+      "main_caption": "<p class=\"caption\">Default 200A Calibration: 178<br>Default 600A Calibration: 548</p>",
+      "default_value": 178,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 655,
+        "generated": true
+      },
+      "title": "Channel 2 Current Calibration Value",
+      "call": "config_set_current_calibration_individual_80"
+    },
+    "current_calibration_c3_80": {
+      "sensors": [
+        "506"
+      ],
+      "main_caption": "<p class=\"caption\">Default 200A Calibration: 178<br>Default 600A Calibration: 548</p>",
+      "default_value": 178,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 655,
+        "generated": true
+      },
+      "title": "Channel 3 Current Calibration Value",
+      "call": "config_set_current_calibration_individual_80"
+    },
+    "roll_angle_threshold_47": {
+      "sensors": [
+        "47"
+      ],
+      "main_caption": "<p class=\"caption\">This settings forces the sensor to transmit a packet when it detects a change in Roll angle at the chosen value or a multiple of the chosen value.<br>A value of 20 will force the sensor to transmit a packet at a roll angle of 20 degrees, -20 degrees, 40 degrees, -40 degrees, etc.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Roll Angle Threshold",
+      "call": "config_set_roll_threshold_47"
+    },
+    "pitch_angle_threshold_47": {
+      "sensors": [
+        "47"
+      ],
+      "main_caption": "<p class=\"caption\">This settings forces the sensor to transmit a packet when it detects a change in Pitch angle at the chosen value or a multiple of the chosen value.<br>A value of 20 will force the sensor to transmit a packet at a pitch angle of 20 degrees, -20 degrees, 40 degrees, -40 degrees, etc.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Pitch Angle Threshold",
+      "call": "config_set_pitch_threshold_47"
+    },
+    "deactivate_activate_accelero_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Enable Accelerometer",
+      "call": "config_set_deactivate_activate_accelero_108"
+    },
+    "accelerometer_state_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p class=\"caption\">Enables the sensor to report errors if the accelerometer probe becomes non-functional. These errors will be included in the sensor data.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Enable Accelerometer Error Reporting",
+      "call": "config_set_accelerometer_state_108"
+    },
+    "accelerometer_threshold_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the threshold in multiples of 32mg in which an uptime will be detected. A value of 1 = 32mg, a value of 2 = 64mg etc.</p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Accelerometer Threshold",
+      "call": "config_set_accelerometer_threshold_108"
+    },
+    "clear_counter_33": {
+      "sensors": [
+        "33"
+      ],
+      "main_caption": "<label for=\"clear_counter_33\"><i class=\"icon-tag\"></i>Clear Counter Value</label>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      }
+    },
+    "clear_timers_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Resets the selected Input counters and their corresponding uptime values to zero.</p>",
+      "default_value": 7,
+      "options": {
+        "7": "Digital in 1, 2 and 3",
+        "16": "Magnetometer",
+        "8": "Accelerometer"
+      },
+      "title": "Clear Counters",
+      "call": "config_set_clear_timers_108"
+    },
+    "clear_timers_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p>Resets the Digital Inputs 1, 2, and 3 counters and their corresponding uptime values to zero.</p>",
+      "default_value": 7,
+      "options": {
+        "7": "Enable"
+      },
+      "title": "Clear Counters",
+      "call": "config_set_clear_timers_108"
+    },
+    "debounce_time_108": {
+      "sensors": [
+        "33",
+        "108"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>Range: 0 - 255msec.<br></p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Input Debounce Time",
+      "call": "config_set_debounce_time_108"
+    },
+    "debounce_time_v10_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><b>**Only applies to sensor with firmware version 10 and above.</b><br><br>Range: 10 - 65000 msec.<br></p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint16",
+        "min": 10,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Input Debounce Time",
+      "call": "config_set_debounce_time_v10_108"
+    },
+    "input_two_33": {
+      "sensors": [
+        "33"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Contact Closure Detection",
+      "call": "config_set_input_two_108"
+    },
+    "push_notification_33": {
+      "sensors": [
+        "33"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Disable",
+        "2": "Enable"
+      },
+      "title": "Enable Push Notification",
+      "call": "config_set_push_notification_33"
+    },
+    "input_one_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Contact Closure Input:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Contact Closure Detection",
+      "call": "config_set_input_one_108"
+    },
+    "input_two_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Current Transducer Input:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Current Transducer Detection",
+      "call": "config_set_input_two_108"
+    },
+    "input_three_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Contact/Optical Input:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Wet Contact/Optical Sensor Detection",
+      "call": "config_set_input_three_108"
+    },
+    "debounce_time_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Configures the debounce time in milliseconds for all digital inputs. State changes occurring within this debounce period will be ignored.<br>Note: This setting is recommended for mechanically triggered inputs like buttons or relay/contactor outputs.<br><br>Range: 10 - 65000msec.</p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint16",
+        "min": 10,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Input Debounce Time",
+      "call": "config_set_debounce_time_v10_108"
+    },
+    "input_one_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Digital Input 1:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Digital Input 1 Detection",
+      "call": "config_set_input_one_108"
+    },
+    "input_two_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Digital Input 2:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Digital Input 2 Detection",
+      "call": "config_set_input_two_108"
+    },
+    "input_three_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p>Configures how the counter increments and how uptime is calculated for Digital Input 3:<br><br>Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Falling Edge Trigger",
+        "1": "Rising Edge Trigger"
+      },
+      "title": "Set Digital Input 3 Detection",
+      "call": "config_set_input_three_108"
+    },
+    "counter_threshold_108": {
+      "sensors": [
+        "33",
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>**Report type will be 'Threshold'.<br><br>Note: The range for this value is from 0 to 65534 and must be multiple of 100.</p>",
+      "default_value": 1000,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Counter Threshold",
+      "call": "config_set_counter_threshold_108"
+    },
+    "push_notification_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>**Report type will be 'Interrupt'.<br><br>IO1 - Digital input<br>IO2 - Current Sensor<br>IO3 - OPTO Input<br>IO4 - Accelerometer<br>IO5 - Magnetometer<br></p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disable All",
+        "31": "Enable All",
+        "1": "Enable on IO 1",
+        "2": "Enable on IO 2",
+        "4": "Enable on IO 3",
+        "8": "Enable on IO 4",
+        "16": "Enable on IO 5",
+        "3": "Enable on IO 1 and 2",
+        "5": "Enable on IO 1 and 3",
+        "9": "Enable on IO 1 and 4",
+        "17": "Enable on IO 1 and 5",
+        "7": "Enable on IO 1, 2 and 3",
+        "11": "Enable on IO 1, 2 and 4",
+        "19": "Enable on IO 1, 2 and 5",
+        "15": "Enable on IO 1, 2, 3 and 4",
+        "27": "Enable on IO 1, 2, 4 and 5",
+        "23": "Enable on IO 1, 2, 3 and 5",
+        "13": "Enable on IO 1, 3 and 4",
+        "29": "Enable on IO 1, 3, 4 and 5",
+        "21": "Enable on IO 1, 3 and 5",
+        "25": "Enable on IO 1, 4 and 5",
+        "6": "Enable on IO 2 and 3",
+        "10": "Enable on IO 2 and 4",
+        "18": "Enable on IO 2 and 5",
+        "14": "Enable on IO 2, 3 and 4",
+        "22": "Enable on IO 2, 3 and 5",
+        "26": "Enable on IO 2, 4 and 5",
+        "30": "Enable on IO 2, 3, 4, and 5",
+        "12": "Enable on IO 3 and 4",
+        "20": "Enable on IO 3 and 5",
+        "28": "Enable on IO 3, 4 and 5",
+        "24": "Enable on IO 4 and 5"
+      },
+      "title": "Enable Push Notification",
+      "call": "config_set_push_notification_108"
+    },
+    "push_notification_123": {
+      "sensors": [
+        "123"
+      ],
+      "main_caption": "<p>Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>**Report type will be 'Interrupt'.<br><br>IO1 - Digital input 1<br>IO2 - Digital input 2<br>IO3 - Digital input 3<br></p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disable All",
+        "7": "Enable All",
+        "1": "Enable on IO1",
+        "2": "Enable on IO2",
+        "4": "Enable on IO3",
+        "3": "Enable on IO1 and IO2",
+        "5": "Enable on IO1 and IO3",
+        "6": "Enable on IO2 and IO3"
+      },
+      "title": "Enable Push Notification",
+      "call": "config_set_push_notification_108"
+    },
+    "transmission_interval_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the regular interval at which the sensor wakes up and transmits its data. This interval operates independently of any interrupt-driven (Push Notifications or Resets).<br>**Report type will be 'Regular'.</p>",
+      "default_value": 2,
+      "options": {
+        "9": "5 seconds",
+        "10": "10 seconds",
+        "11": "15 seconds",
+        "12": "30 seconds",
+        "0": "1 minute",
+        "1": "5 minutes",
+        "2": "15 minutes",
+        "3": "30 minutes",
+        "4": "1 hour",
+        "5": "2 hours",
+        "6": "3 hours",
+        "7": "6 hours",
+        "8": "12 hours"
+      },
+      "title": "Data Transmission Interval",
+      "call": "config_set_transmission_interval_108"
+    },
+    "reset_mode_to_disabled_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p>This setting specifies which automatic reset option the sensor will utilize.<br>Note: Works in conjunction with the \"Reset Timeout\" and \"Set Shift Time\" commands.<br><br>Default value: Disabled</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Do not reset counters",
+        "1": "Based on Shift Ends",
+        "2": "Based on the Timeout Provided"
+      },
+      "title": " Set Reset Mode",
+      "call": "config_set_reset_mode_to_disabled_108"
+    },
+    "reset_timeout_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Defines the duration (in seconds) after which the sensor will automatically reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Valid range: 60 - 65535</p>",
+      "default_value": 60,
+      "validator": {
+        "type": "uint16",
+        "min": 60,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Reset Timeout",
+      "call": "config_set_reset_timeout_108"
+    },
+    "shift_one_hours_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 23,
+        "generated": true
+      },
+      "title": "Set Shift Time 1"
+    },
+    "shift_one_minutes_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 59,
+        "generated": true
+      },
+      "title": "Set Shift Time 1"
+    },
+    "shift_two_hours_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 23,
+        "generated": true
+      },
+      "title": "Set Shift Time 2"
+    },
+    "shift_two_minutes_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 59,
+        "generated": true
+      },
+      "title": "Set Shift Time 2"
+    },
+    "shift_three_hours_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 23,
+        "generated": true
+      },
+      "title": "Set Shift Time 3"
+    },
+    "shift_three_minutes_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 59,
+        "generated": true
+      },
+      "title": "Set Shift Time 3"
+    },
+    "shift_four_hours_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 23,
+        "generated": true
+      },
+      "title": "Set Shift Time 4"
+    },
+    "shift_four_minutes_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>**Report type will be 'Shift end'.<br><br>Format: 24-hour time (e.g., 14:00 for 2 PM).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 59,
+        "generated": true
+      },
+      "title": "Set Shift Time 4"
+    },
+    "quality_of_service_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p class=\"caption\">This setting only functions when a Destination Address is also configured into the sensor.<br>If QoS is enabled the sensor will wait for a receipt acknowledgement from the intended receiver before resuming sleep.<br>If no receipt acknowledgement is received the sensor will one more time to transmit the data.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Enable Quality of Service",
+      "call": "config_set_quality_of_service_108"
+    },
+    "fly_interval_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p>This setting dictates the interval at which the sensor will transmit the FLY message.<br> **The FLY Message is used to trigger automatic sensor configuration and firmware updates.</p>",
+      "default_value": 60,
+      "options": {
+        "60": "1 Hour",
+        "120": "2 Hours",
+        "240": "4 Hours",
+        "480": "8 Hours",
+        "720": "12 Hours",
+        "1080": "18 Hours",
+        "1440": "24 Hours"
+      },
+      "title": "Set FLY Interval",
+      "call": "config_set_fly_interval_108"
+    },
+    "sample_rate_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p class=\"caption\">**Only applies to sensor with firmware version 8 and above.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "10 Hz",
+        "1": "20 Hz",
+        "2": "50 Hz",
+        "3": "100 Hz",
+        "4": "200 Hz",
+        "5": "400 Hz"
+      },
+      "title": "Set Accelerometer Sample Rate",
+      "call": "config_set_sample_rate_108"
+    },
+    "interrupt_timeout_108": {
+      "sensors": [
+        "108",
+        "123"
+      ],
+      "main_caption": "<p>Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>**Only applies to sensor with firmware version 11 and above.<br><br>Valid range: 0 - 65000 milliseconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 0 milliseconds (Disabled)</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65000,
+        "generated": true
+      },
+      "title": "Set Interrupt Timeout",
+      "call": "config_set_interrupt_timeout_108"
+    },
+    "screen_on_time_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Set the duration, in seconds, that the screen will remain active after a sensor transmission. Once this time elapses, the screen will automatically turn off.<br><br>**Only applies to screen version</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 5 seconds.</p>",
+      "default_value": 5,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Screen On Time",
+      "call": "config_set_screen_on_time_108"
+    },
+    "screen_control_108": {
+      "sensors": [
+        "108"
+      ],
+      "main_caption": "<p>Selects the type of input or data that will be displayed on the screen.<br><br>**Only applies to screen version</p>",
+      "sub_caption": "<p class=\"caption\">Default value: IO1.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "IO1",
+        "1": "IO2",
+        "2": "IO3",
+        "3": "Accelerometer",
+        "4": "Magnetometer"
+      },
+      "title": "Set Screen Control",
+      "call": "config_set_screen_control_108"
+    },
+    "counter_threshold_35": {
+      "sensors": [
+        "35",
+        "36"
+      ],
+      "main_caption": "",
+      "default_value": 50,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Counter Threshold",
+      "call": "config_set_counter_threshold_35"
+    },
+    "enable_filtering_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Enable/Disable built-in filters</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 1,
+        "generated": true
+      },
+      "options": {
+        "0": "Enabled",
+        "1": "Disabled"
+      },
+      "title": "Set Filtering",
+      "call": "config_set_enable_filtering_110"
+    },
+    "odr_p1_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>In accordance with the Nyquist equation:<br><br>f_max = ODR/2.56 Hz<br><br>Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 7,
+        "max": 15,
+        "generated": true
+      },
+      "options": {
+        "7": "100Hz",
+        "8": "200Hz",
+        "9": "400Hz",
+        "10": "800Hz",
+        "11": "1600Hz",
+        "12": "3200Hz",
+        "13": "6400Hz",
+        "14": "12800Hz",
+        "15": "25600Hz"
+      },
+      "title": "Probe 1: Output Data Rate",
+      "call": "config_set_odr_p1_110"
+    },
+    "odr_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>In accordance with the Nyquist equation:<br><br>f_max = ODR/2.56 Hz<br><br>Note: Increasing the ODR to 25600Hz introduces significant noise in the vibration data as it allows more frequencies in the resulting data.</p>",
+      "default_value": 0,
+      "options": {
+        "7": "100Hz",
+        "8": "200Hz",
+        "9": "400Hz",
+        "10": "800Hz",
+        "11": "1600Hz",
+        "12": "3200Hz",
+        "13": "6400Hz",
+        "14": "12800Hz",
+        "15": "25600Hz"
+      },
+      "title": "Probe 2: Output Data Rate",
+      "call": "config_set_odr_p2_110"
+    },
+    "sampling_duration_p1_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set the amount of time which the samples are taken.<br><br>Note: The sampling duration depends on the ODR.<br><br>1= 50msec, 2= 100msec<br>Valid range: 1 - 100.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Probe 1: Sampling Duration",
+      "call": "config_set_sampling_duration_p1_110"
+    },
+    "sampling_duration_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<p>Set the amount of time which the samples are taken.<br><br>Note: The sampling duration depends on the ODR.<br><br>1= 50msec, 2= 100msec<br>Valid range: 1 - 100.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Probe 2: Sampling Duration",
+      "call": "config_set_sampling_duration_p2_110"
+    },
+    "low_pass_filter_p1_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>This setting will set the LPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 4<br>LPF freq = 800/4 = 200Hz</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 9,
+        "generated": true
+      },
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Probe 1: Set Low Pass Filter",
+      "call": "config_set_low_pass_filter_p1_110"
+    },
+    "low_pass_filter_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<p>This setting will set the LPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 4<br>LPF freq = 800/4 = 200Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Probe 2: Set Low Pass Filter",
+      "call": "config_set_low_pass_filter_p2_110"
+    },
+    "high_pass_filter_p1_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>This setting will set the HPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 64<br>HPF freq = 800/64 = 12.5Hz</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 9,
+        "generated": true
+      },
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Probe 1: Set High Pass Filter",
+      "call": "config_set_high_pass_filter_p1_110"
+    },
+    "high_pass_filter_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<p>This setting will set the HPF freq to ODR divided by Selected Value<br><br>Example: ODR = 800 and Filter Coefficient = 64<br>HPF freq = 800/64 = 12.5Hz</p>",
+      "default_value": 0,
+      "options": {
+        "0": "4",
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128",
+        "6": "256",
+        "7": "512",
+        "8": "1024",
+        "9": "2048"
+      },
+      "title": "Probe 2: Set High Pass Filter",
+      "call": "config_set_high_pass_filter_p2_110"
+    },
+    "sampling_interval_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set how often will the sensor transmit measurement data.<br><br>Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 8,
+        "generated": true
+      },
+      "options": {
+        "8": "1 Minute",
+        "0": "5 Minutes",
+        "1": "10 Minutes",
+        "2": "15 Minutes",
+        "3": "20 Minutes",
+        "4": "30 Minutes",
+        "5": "60 Minutes",
+        "6": "120 Minutes",
+        "7": "180 Minutes"
+      },
+      "title": "Sampling Interval",
+      "call": "config_set_sampling_interval_101"
+    },
+    "auto_raw_interval_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set the Auto Time Domain (Raw) data transmission Interval, this interval is multiplied by the sample interval to determine how often the sensor should automatically transmit Time Domain (Raw) data.<br>The Auto Raw interval is determined by the sample interval value.<br><br> Example:<br>If the Auto Raw value is set to 1 and the sample interval is set to 10 minutes, Time Domain (Raw) data will be transmitted automatically every 10 minutes.<br>If the Auto Raw value is set to 5 and the sample interval is set to 10 minutes, Time Domain (Raw) data will be transmitted automatically every 50 minutes.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
+      "sub_caption": "<p class=\"caption\"><i>Note: Auto Raw Transmission is disabled by default. Setting an interval value enables it, while setting it to 0 disables it.</i></p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Auto Raw Interval",
+      "call": "config_set_auto_raw_interval_110"
+    },
+    "auto_raw_destination_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set the address where the Auto Time Domain (Raw) data will be transmitted, we recommend setting this to your gateway’s address.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 0000FFFF for Broadcast Mode<br>Example of targeted address: 41D5EC37</p>",
+      "default_value": "0000FFFF",
+      "validator": {
+        "type": "hexString",
+        "length": 8,
+        "generated": true
+      },
+      "title": "Set Auto Raw Destination Address",
+      "call": "config_set_auto_raw_destination_110"
+    },
+    "smart_threshold_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 40
+      },
+      "title": "Probe 1: Set Smart Mode Threshold",
+      "call": "config_set_smart_threshold_110"
+    },
+    "smart_threshold_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 40
+      },
+      "title": "Probe 2: Set Smart Mode Threshold",
+      "call": "config_set_smart_threshold_p2_110"
+    },
+    "smart_interval_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Sensor will skip sending data this many times if vibration is below the smart threshold.<br><br>Note: This feature only works when the sensor is operating in Smart Mode.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Smart Mode Skip Interval",
+      "call": "config_set_smart_interval_110"
+    },
+    "motion_detect_threshold_p1_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<div><p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p><p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p><p>Valid Input Range: 0 - 40<br>A value of 0 will disable this feature.</p></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 40,
+        "generated": true
+      },
+      "title": "Probe 1: Set Acceleration Wake/Interrupt Threshold",
+      "call": "config_set_motion_detect_threshold_p1_110"
+    },
+    "motion_detect_threshold_p2_110": {
+      "sensors": [
+        "111"
+      ],
+      "main_caption": "<div><p>Set a breakpoint for sensor to wake up and broadcast readings. This is an interrupt based configuration ideal for devices with minimal workload/uptime.</p><p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p><p>Valid Input Range: 0 - 40<br>A value of 0 will disable this feature.<br></p></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 40,
+        "generated": true
+      },
+      "title": "Probe 2: Set Acceleration Wake/Interrupt Threshold",
+      "call": "config_set_motion_detect_threshold_p2_110"
+    },
+    "full_scale_range_101": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "110",
+        "111",
+        "112",
+        "114",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>Set how large of a range the device can measure acceleration in.<br><br>Example: +/- 8g would mean that it would measure at most up to 8g and down to -8g.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 5,
+        "generated": true
+      },
+      "options": {
+        "0": "+/- 2g",
+        "1": "+/- 4g",
+        "2": "+/- 8g",
+        "3": "+/- 16g",
+        "4": "+/- 32g",
+        "5": "+/- 64g"
+      },
+      "title": "Full Scale Range",
+      "call": "config_set_full_scale_range_101"
+    },
+    "deadband_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "101",
+        "110",
+        "111",
+        "112",
+        "114",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>Filters out acceleration values below the dead band threshold, treating them as noise.<br>This value determines the minimum acceleration would have to be for it to be registered as a measurement. Values below the threshold it  would be perceived as 0.<br><br>Example: A value of 10 would mean that vibrations below 10mg would be considered as 0.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Dead Band in mg",
+      "call": "config_set_deadband_80"
+    },
+    "fly_interval_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<p>Set the interval at which the sensor will transmit FLY packets. FLY packets are what allows Node-Red to reconfigure the sensor so this determines how often the sensor should check in for updated configurations.<br></p>",
+      "default_value": 60,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 1440,
+        "generated": true
+      },
+      "options": {
+        "60": "1 Hour",
+        "120": "2 Hours",
+        "240": "4 Hours",
+        "480": "8 Hours",
+        "720": "12 Hours",
+        "1080": "18 Hours",
+        "1440": "24 Hours"
+      },
+      "title": "Set FLY Interval",
+      "call": "config_set_fly_interval_110"
+    },
+    "enable_rpm_calculate_status_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Enable/Disable Revolutions Per Minute Calculate Status<br>When a measurement sample is taken you can choose to not calculate the RPM, this will shorten the measurement time and save on battery.<br></p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 1,
+        "generated": true
+      },
+      "options": {
+        "1": "Enabled",
+        "0": "Disabled"
+      },
+      "title": "RPM Calculate Status",
+      "call": "config_set_enable_rpm_calculate_status_110"
+    },
+    "set_rtc_101": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "101",
+        "102",
+        "103",
+        "110",
+        "111",
+        "112",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<p>Set the value for the Internal Real Time Clock.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 1,
+        "generated": true
+      },
+      "title": "Set RTC"
+    },
+    "max_raw_sample_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set the maximum number of samples the sensor captures for Time Domain (Raw) data , by reducing the sample duration.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 1024,
+        "max": 8100
+      },
+      "options": {
+        "1024": "1024 Samples",
+        "2048": "2048 Samples",
+        "4096": "4096 Samples",
+        "6400": "6400 Samples",
+        "8100": "8100 Samples"
+      },
+      "title": "Set Max Raw Sample",
+      "call": "config_set_max_raw_sample_110"
+    },
+    "clear_probe_uptimers_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "fly_not_reported": [
+        114
+      ],
+      "main_caption": "<p>This setting will zero out the uptime value.<br><br>Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 1,
+        "generated": true
+      },
+      "title": "Clear Probe Uptimers"
+    },
+    "motion_to_sampling_delay_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Once motion is detected, the sensor will wait for the configured duration before sampling and computing vibration data.<br>1= 50msec, 2= 100msec, 100= 5000msec (5sec)<br><br>**Only applies to sensor with firmware version 6 and above.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 100 (5000msec)</p>",
+      "default_value": 100,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Motion to Sampling Delay",
+      "call": "config_set_motion_to_sampling_delay_110"
+    },
+    "max_num_motion_tx_delay_110": {
+      "sensors": [
+        "110",
+        "111",
+        "112",
+        "114"
+      ],
+      "main_caption": "<p>Set Number of times it will send data due to motion triggers.<br><br>**Only applies to sensor with firmware version 6 and above.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 1<br><i>Note: Setting this to a higher value will drain the battery.</i></p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Max Number Motion Tx Per Interval",
+      "call": "config_set_max_num_motion_tx_delay_110"
+    },
+    "payload_length_80": {
+      "sensors": [
+        "80",
+        "81",
+        "82",
+        "84",
+        "110",
+        "111",
+        "112",
+        "114",
+        "180",
+        "181",
+        "519",
+        "537",
+        "538"
+      ],
+      "main_caption": "<p>Set the size of the data payload the sensor sends when it transmit a message.<br></p>",
+      "sub_caption": "<p class=\"caption\"><i>Note: For the 2.4GHz version you need to operate with a 55 Byte payload.</i></p>",
+      "default_value": 3,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 3,
+        "generated": true
+      },
+      "options": {
+        "0": "55 Bytes",
+        "1": "100 Bytes",
+        "2": "150 Bytes",
+        "3": "180 Bytes"
+      },
+      "title": "Payload Length",
+      "call": "config_set_payload_length_80"
+    },
+    "thermocouple_type_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Type K",
+        "16": "Type J",
+        "32": "Type T",
+        "48": "Type N",
+        "64": "Type S",
+        "80": "Type E",
+        "96": "Type B",
+        "112": "Type R"
+      },
+      "title": "Set Thermocouple Type",
+      "call": "config_set_thermocouple_type_112"
+    },
+    "filter_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>The sensor applies the selected filter level by averaging multiple temperature readings over time. A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response. A lower filter level offers quicker response but with potentially more noise in the data.<br><br>0: Filter off (No filtering applied).<br>1: Minimum filter (Light filtering, minimal impact on noise).<br>2: Slightly higher filtering than level 1.<br>3: Moderate filtering.<br>4: Mid filter (Balanced filtering for most use cases).<br>5: Stronger filtering.<br>6: Higher filtering than level 5.<br>7: Maximum filter (Strongest filtering for noisy environments).</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Level 0",
+        "1": "Level 1",
+        "2": "Level 2",
+        "3": "Level 3",
+        "4": "Level 4",
+        "5": "Level 5",
+        "6": "Level 6",
+        "7": "Level 7"
+      },
+      "title": "Set Thermocouple Filter Level",
+      "call": "config_set_filter_thermocouple_112"
+    },
+    "cold_junction_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature. The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "0.0625⁰C",
+        "128": "0.25⁰C"
+      },
+      "title": "Set Thermocouple Cold Junction Resolution",
+      "call": "config_set_cold_junction_thermocouple_112"
+    },
+    "sample_resolution_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with reduced resolution. This feature is useful to detect fast transient temperatures.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "18 Bits",
+        "32": "16 Bits",
+        "64": "14 Bits",
+        "96": "12 Bits"
+      },
+      "title": "Set Thermocouple ADC Resolution",
+      "call": "config_set_sample_resolution_thermocouple_112"
+    },
+    "number_of_samples_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter engine is applied to each temperature sample.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "1 Sample",
+        "4": "2 Samples",
+        "8": "4 Samples",
+        "12": "8 Samples",
+        "16": "16 Samples",
+        "20": "32 Samples",
+        "24": "64 Samples",
+        "28": "128 Samples"
+      },
+      "title": "Set Thermocouple Number of Samples",
+      "call": "config_set_number_of_samples_thermocouple_112"
+    },
+    "measurement_type_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Cold Junction",
+        "1": "Hot Junction",
+        "2": "Delta"
+      },
+      "title": "Set Thermocuple Measurement Type",
+      "call": "config_set_measurement_type_thermocouple_112"
+    },
+    "operation_mode_thermocouple_112": {
+      "sensors": [
+        "112"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Normal Operation",
+        "1": "Shutdown Mode",
+        "2": "Burst Mode"
+      },
+      "title": "Set Thermocouple Operation Mode",
+      "call": "config_set_operation_mode_thermocouple_112"
+    },
+    "thermocouple_type_23": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Type K",
+        "16": "Type J",
+        "32": "Type T",
+        "48": "Type N",
+        "64": "Type S",
+        "80": "Type E",
+        "96": "Type B",
+        "112": "Type R"
+      },
+      "title": "Set Thermocouple Type",
+      "call": "config_set_thermocouple_type_23"
+    },
+    "filter_thermocouple": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>The sensor applies the selected filter level by averaging multiple temperature readings over time. A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response. A lower filter level offers quicker response but with potentially more noise in the data.<br><br>0: Filter off (No filtering applied).<br>1: Minimum filter (Light filtering, minimal impact on noise).<br>2: Slightly higher filtering than level 1.<br>3: Moderate filtering.<br>4: Mid filter (Balanced filtering for most use cases).<br>5: Stronger filtering.<br>6: Higher filtering than level 5.<br>7: Maximum filter (Strongest filtering for noisy environments).</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Level 0",
+        "1": "Level 1",
+        "2": "Level 2",
+        "3": "Level 3",
+        "4": "Level 4",
+        "5": "Level 5",
+        "6": "Level 6",
+        "7": "Level 7"
+      },
+      "title": "Set Filter Level",
+      "call": "config_set_filter_thermocouple"
+    },
+    "cold_junction_thermocouple": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature. The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "0.0625⁰C",
+        "128": "0.25⁰C"
+      },
+      "title": "Set Cold Junction Resolution",
+      "call": "config_set_cold_junction_thermocouple"
+    },
+    "sample_resolution_thermocouple": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with reduced resolution. This feature is useful to detect fast transient temperatures.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "18 Bits",
+        "32": "16 Bits",
+        "64": "14 Bits",
+        "96": "12 Bits"
+      },
+      "title": "Set ADC Resolution",
+      "call": "config_set_sample_resolution_thermocouple"
+    },
+    "number_of_samples_thermocouple": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter engine is applied to each temperature sample.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "1 Sample",
+        "4": "2 Samples",
+        "8": "4 Samples",
+        "12": "8 Samples",
+        "16": "16 Samples",
+        "20": "32 Samples",
+        "24": "64 Samples",
+        "28": "128 Samples"
+      },
+      "title": "Set Number of Samples",
+      "call": "config_set_number_of_samples_thermocouple"
+    },
+    "measurement_type_thermocouple": {
+      "sensors": [
+        "4",
+        "12",
+        "23"
+      ],
+      "main_caption": "<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Cold Junction",
+        "1": "Hot Junction",
+        "2": "Delta"
+      },
+      "title": "Set Measurement Type",
+      "call": "config_set_measurement_type_thermocouple"
+    },
+    "motion_threshold_46": {
+      "sensors": [
+        "46"
+      ],
+      "main_caption": "",
+      "default_value": 100,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Motion Threshold",
+      "call": "config_set_motion_threshold_46"
+    },
+    "config_sensor": {
+      "sensors": [
+        "10000",
+        "10012"
+      ],
+      "main_caption": "",
+      "sub_caption": ""
+    },
+    "debounce_time_2": {
+      "sensors": [
+        "2"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.</p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Input Debounce Time",
+      "call": "config_set_debounce_time_2"
+    },
+    "debounce_time_35": {
+      "sensors": [
+        "35",
+        "36"
+      ],
+      "main_caption": "<p class=\"caption\">Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.</p>",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Input Debounce Time",
+      "call": "config_set_debounce_time_35"
+    },
+    "stay_on_mode_539": {
+      "sensors": [
+        "87",
+        "120",
+        "539",
+        "1010",
+        "1011"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Set Stay On Mode",
+      "call": "config_set_stay_on_mode_539"
+    },
+    "baudrate_539": {
+      "sensors": [
+        "539",
+        "1010",
+        "1011"
+      ],
+      "main_caption": "",
+      "default_value": 9600,
+      "options": {
+        "9600": "9600",
+        "19200": "19200",
+        "38400": "38400",
+        "57600": "57600",
+        "115200": "115200"
+      },
+      "title": "Set Baud Rate",
+      "call": "config_set_baudrate_539"
+    },
+    "stop_bit_1011": {
+      "sensors": [
+        "1010",
+        "1011",
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "1",
+        "1": "2"
+      },
+      "title": "Set Stop Bit",
+      "call": "config_set_stop_bit_1011"
+    },
+    "set_parity_1011": {
+      "sensors": [
+        "1010",
+        "1011",
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "None",
+        "1": "Even",
+        "2": "Odd"
+      },
+      "title": "Set Parity",
+      "call": "config_set_parity_1011"
+    },
+    "rx485_timeout_1011": {
+      "sensors": [
+        "1010",
+        "1011"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Timeout",
+      "call": "config_set_rx485_timeout_1011"
+    },
+    "auto_address_timeout_1011": {
+      "sensors": [
+        "1010",
+        "1011"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Auto Address Timeout",
+      "call": "config_set_auto_address_timeout_1011"
+    },
+    "reboot_1011": {
+      "sensors": [
+        "1010",
+        "1011"
+      ],
+      "main_caption": "<label for=\"reboot_1011\"><i class=\"icon-tag\"></i><strong>Reboot Device</strong></label>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      }
+    },
+    "mode_1011": {
+      "sensors": [
+        "1011"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Auto Encoder",
+        "1": "Transparent",
+        "2": "NCD Emulator"
+      },
+      "title": "Set Mode",
+      "call": "config_set_mode_1011"
+    },
+    "rx_timeout_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Rx Timeout",
+      "call": "config_set_rx_timeout_539"
+    },
+    "bootup_time_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Bootup Time",
+      "call": "config_set_bootup_time_539"
+    },
+    "sensor_add_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Slave ID",
+      "call": "config_set_sensor_add_539"
+    },
+    "sub_device_type_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 10,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Sub Device Type",
+      "call": "config_set_sub_device_type_539"
+    },
+    "number_of_read_retries_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<p class=\"caption\">Range: 1 to 3.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 3,
+        "generated": true
+      },
+      "title": "Set Number of Read Retries",
+      "call": "config_set_number_of_read_retries_539"
+    },
+    "read_parameter_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "",
+      "default_value": 3,
+      "options": {
+        "3": "Read Holding Register 0x03",
+        "4": "Read Input Register 0x04"
+      },
+      "title": "Set Read Parameter",
+      "call": "config_set_read_parameter_539"
+    },
+    "number_of_regs_to_rd_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<p class=\"caption\">Set the total number of registers to read on interval in the Register Reads field. Set the individual Registers to read below in the correspond Register field.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 32,
+        "generated": true
+      },
+      "options": {
+        "0": "0",
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "10",
+        "11": "11",
+        "12": "12",
+        "13": "13",
+        "14": "14",
+        "15": "15",
+        "16": "16",
+        "17": "17",
+        "18": "18",
+        "19": "19",
+        "20": "20",
+        "21": "21",
+        "22": "22",
+        "23": "23",
+        "24": "24",
+        "25": "25",
+        "26": "26",
+        "27": "27",
+        "28": "28",
+        "29": "29",
+        "30": "30",
+        "31": "31",
+        "32": "32"
+      },
+      "title": "Set Read Registers",
+      "call": "config_set_all_register_data_539"
+    },
+    "register_value_0_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_0_539\"><i class=\"icon-tag\"></i>Register 1:</label><input type=\"text\" id=\"register_value_0_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_1_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_1_539\"><i class=\"icon-tag\"></i>Register 2:</label><input type=\"text\" id=\"register_value_1_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_2_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_2_539\"><i class=\"icon-tag\"></i>Register 3:</label><input type=\"text\" id=\"register_value_2_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_3_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_3_539\"><i class=\"icon-tag\"></i>Register 4:</label><input type=\"text\" id=\"register_value_3_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_4_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_4_539\"><i class=\"icon-tag\"></i>Register 5:</label><input type=\"text\" id=\"register_value_4_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_5_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_5_539\"><i class=\"icon-tag\"></i>Register 6:</label><input type=\"text\" id=\"register_value_5_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_6_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_6_539\"><i class=\"icon-tag\"></i>Register 7:</label><input type=\"text\" id=\"register_value_6_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_7_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_7_539\"><i class=\"icon-tag\"></i>Register 8:</label><input type=\"text\" id=\"register_value_7_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_8_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_8_539\"><i class=\"icon-tag\"></i>Register 9:</label><input type=\"text\" id=\"register_value_8_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_9_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_9_539\"><i class=\"icon-tag\"></i>Register 10:</label><input type=\"text\" id=\"register_value_9_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_10_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_10_539\"><i class=\"icon-tag\"></i>Register 11:</label><input type=\"text\" id=\"register_value_10_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_11_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_11_539\"><i class=\"icon-tag\"></i>Register 12:</label><input type=\"text\" id=\"register_value_11_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_12_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_12_539\"><i class=\"icon-tag\"></i>Register 13:</label><input type=\"text\" id=\"register_value_12_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_13_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_13_539\"><i class=\"icon-tag\"></i>Register 14:</label><input type=\"text\" id=\"register_value_13_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_14_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_14_539\"><i class=\"icon-tag\"></i>Register 15:</label><input type=\"text\" id=\"register_value_14_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_15_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_15_539\"><i class=\"icon-tag\"></i>Register 16:</label><input type=\"text\" id=\"register_value_15_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_16_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_16_539\"><i class=\"icon-tag\"></i>Register 17:</label><input type=\"text\" id=\"register_value_16_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_17_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_17_539\"><i class=\"icon-tag\"></i>Register 18:</label><input type=\"text\" id=\"register_value_17_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_18_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_18_539\"><i class=\"icon-tag\"></i>Register 19:</label><input type=\"text\" id=\"register_value_18_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_19_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_19_539\"><i class=\"icon-tag\"></i>Register 20:</label><input type=\"text\" id=\"register_value_19_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_20_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_20_539\"><i class=\"icon-tag\"></i>Register 21:</label><input type=\"text\" id=\"register_value_20_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_21_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_21_539\"><i class=\"icon-tag\"></i>Register 22:</label><input type=\"text\" id=\"register_value_21_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_22_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_22_539\"><i class=\"icon-tag\"></i>Register 23:</label><input type=\"text\" id=\"register_value_22_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_23_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_23_539\"><i class=\"icon-tag\"></i>Register 24:</label><input type=\"text\" id=\"register_value_23_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_24_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_24_539\"><i class=\"icon-tag\"></i>Register 25:</label><input type=\"text\" id=\"register_value_24_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_25_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_25_539\"><i class=\"icon-tag\"></i>Register 26:</label><input type=\"text\" id=\"register_value_25_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_26_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_26_539\"><i class=\"icon-tag\"></i>Register 27:</label><input type=\"text\" id=\"register_value_26_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_27_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_27_539\"><i class=\"icon-tag\"></i>Register 28:</label><input type=\"text\" id=\"register_value_27_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_28_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_28_539\"><i class=\"icon-tag\"></i>Register 29:</label><input type=\"text\" id=\"register_value_28_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_29_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_29_539\"><i class=\"icon-tag\"></i>Register 30:</label><input type=\"text\" id=\"register_value_29_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_30_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_30_539\"><i class=\"icon-tag\"></i>Register 31:</label><input type=\"text\" id=\"register_value_30_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "register_value_31_539": {
+      "sensors": [
+        "539"
+      ],
+      "main_caption": "<div><label for=\"register_value_31_539\"><i class=\"icon-tag\"></i>Register 32:</label><input type=\"text\" id=\"register_value_31_539\" class=\"register_t539\" placeholder=\"10\" value=\"10\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      }
+    },
+    "mode_531": {
+      "sensors": [
+        "531"
+      ],
+      "main_caption": "<p>WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Processed",
+        "1": "Raw"
+      },
+      "title": "Mode",
+      "call": "config_set_operation_mode_531"
+    },
+    "max_range_58": {
+      "sensors": [
+        "58"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 16500 (mm)</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 16500,
+        "generated": true
+      },
+      "title": "Max Range",
+      "call": "config_set_max_range_58"
+    },
+    "calibration_58": {
+      "sensors": [
+        "58"
+      ],
+      "main_caption": "<div><label for=\"calibration_58\"><i class=\"icon-tag\"></i>Set Calibration:</label><input type=\"checkbox\" id=\"calibration_58\" class=\"ncd-config-toggle\" data-target-id=\"calibration_58\" value=\"1\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      }
+    },
+    "factory_reset_tank_probe_58": {
+      "sensors": [
+        "58"
+      ],
+      "main_caption": "<div><label for=\"factory_reset_tank_probe_58\"><i class=\"icon-tag\"></i>Factory Reset Tank Probe:</label><input type=\"checkbox\" id=\"factory_reset_tank_probe_58\" class=\"ncd-config-toggle\" data-target-id=\"factory_reset_tank_probe_58\" value=\"1\"></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      }
+    },
+    "node-scd_skip_samples_44": {
+      "sensors": [
+        "44",
+        "53"
+      ],
+      "main_caption": "<p>Valid Range: 1 - 10 </p>",
+      "sub_caption": "",
+      "title": "Set Skip Samples (CO2)"
+    },
+    "node-sps_skip_samples_32": {
+      "sensors": [
+        "32",
+        "53"
+      ],
+      "main_caption": "<p>Valid Range: 1 - 10 </p>",
+      "sub_caption": "",
+      "title": "Set Skip Samples (Particulate)"
+    },
+    "start_sps30_fan_cleaning_53": {
+      "sensors": [
+        "53"
+      ],
+      "main_caption": "<p>Force the sensor automatically runs the fan clean function</p>",
+      "default_value": 0,
+      "title": "Start Fan Cleaning",
+      "call": "config_set_start_sps30_fan_cleaning_53"
+    },
+    "change_otf_interval": {
+      "sensors": [
+        "32",
+        "44",
+        "53"
+      ],
+      "main_caption": "",
+      "default_value": 60,
+      "options": {
+        "60": "1 Hour",
+        "120": "2 Hours",
+        "240": "4 Hours",
+        "480": "8 Hours",
+        "720": "12 Hours",
+        "1080": "18 Hours",
+        "1440": "24 Hours"
+      },
+      "title": "Set FLY Rate"
+    },
+    "rtd_type_39": {
+      "sensors": [
+        "39"
+      ],
+      "main_caption": "<p>The wire type of RTD Sensor Probe to be connected.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "2 Wires",
+        "1": "3 Wires",
+        "2": "4 Wires"
+      },
+      "title": "Set RTD Wire Type",
+      "call": "config_set_rtd_type_39"
+    },
+    "rtd_range_39": {
+      "sensors": [
+        "39"
+      ],
+      "main_caption": "<p>Type of PT Sensor Probe to be connected.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "PT 100",
+        "1": "PT 1000"
+      },
+      "title": "Set RTD Range",
+      "call": "config_set_rtd_range_39"
+    },
+    "pressure_sensor_fs_ch1_118": {
+      "sensors": [
+        "118"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "10",
+        "1": "20",
+        "2": "100",
+        "3": "500",
+        "4": "1000",
+        "5": "5000"
+      },
+      "title": "Set Pressure Sensor FS - Channel 1",
+      "call": "config_set_pressure_sensor_fs_ch1_118"
+    },
+    "pressure_sensor_fs_ch2_118": {
+      "sensors": [
+        "118"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "10",
+        "1": "20",
+        "2": "100",
+        "3": "500",
+        "4": "1000",
+        "5": "5000"
+      },
+      "title": "Set Pressure Sensor FS - Channel 2",
+      "call": "config_set_pressure_sensor_fs_ch2_118"
+    },
+    "auto_check_interval_118": {
+      "sensors": [
+        "118"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 65000 (Seconds).</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65000,
+        "generated": true
+      },
+      "title": "Set Auto Check Interval",
+      "call": "config_set_auto_check_interval_118"
+    },
+    "press_auto_check_percent_118": {
+      "sensors": [
+        "118"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 100%</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Set Pressure Auto Check Percentage",
+      "call": "config_set_press_auto_check_percent_118"
+    },
+    "temp_auto_check_percent_118": {
+      "sensors": [
+        "118"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 100%</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Set Temperature Auto Check Percentage",
+      "call": "config_set_temp_auto_check_percent_118"
+    },
+    "mode_97": {
+      "sensors": [
+        "97",
+        "98"
+      ],
+      "main_caption": "<p> WARNING: If Mode is set to Raw it is recommended to also set the Destination Address configuration to the address of your Receiver/Gateway.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Processed",
+        "1": "Raw",
+        "2": "Processed + Raw on demand"
+      },
+      "title": "Set Mode",
+      "call": "config_set_mode_97"
+    },
+    "raw_length_97": {
+      "sensors": [
+        "97",
+        "98"
+      ],
+      "main_caption": "",
+      "default_value": 3,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 3,
+        "generated": true
+      },
+      "options": {
+        "0": "55 Bytes",
+        "1": "100 Bytes",
+        "2": "150 Bytes",
+        "3": "180 Bytes"
+      },
+      "title": "Set Raw Length",
+      "call": "config_set_raw_length_97"
+    },
+    "raw_timeout_97": {
+      "sensors": [
+        "97",
+        "98"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 10 Seconds</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 10,
+        "generated": true
+      },
+      "title": "Set Raw Timeout",
+      "call": "config_set_raw_timeout_97"
+    },
+    "fly_rate_97": {
+      "sensors": [
+        "97",
+        "98"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "3600": "1 Hour",
+        "7200": "2 Hours",
+        "14400": "4 Hours",
+        "28800": "8 Hours",
+        "43200": "12 Hours",
+        "64800": "18 Hours",
+        "86400": "24 Hours"
+      },
+      "title": "Set FLY Rate",
+      "call": "config_set_fly_rate_97"
+    },
+    "boot_up_time_97": {
+      "sensors": [
+        "97",
+        "98"
+      ],
+      "main_caption": "<p>Valid Range: 0 - 255 Seconds</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Boot Time",
+      "call": "config_set_boot_up_time_97"
+    },
+    "pressure_sensor_type_21": {
+      "sensors": [
+        "21"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "AMS5812",
+        "1": "AMS5915"
+      },
+      "title": "Set Pressure Sensor Type",
+      "call": "config_set_pressure_sensor_type_21"
+    },
+    "pressure_sensor_range_AMS5812_21": {
+      "sensors": [
+        "21"
+      ],
+      "main_caption": "<p>D: Differential/relative.<br>D-B: Bidirectional Differential.<br>A: Absolute.<br>B: Absolute (barometric).<br></p>",
+      "default_value": 0,
+      "options": {
+        "0": "Type 0000-D",
+        "1": "Type 0001-D",
+        "2": "Type 0000-D-B",
+        "3": "Type 000-1-D-B",
+        "4": "Type 0003-D",
+        "5": "Type 0008-D",
+        "6": "Type 0015-D",
+        "7": "Type 0003-D-B",
+        "8": "Type 0008-D-B",
+        "9": "Type 0015-D-B",
+        "10": "Type 0030-D",
+        "11": "Type 0050-D",
+        "12": "Type 0150-D",
+        "13": "Type 0300-D",
+        "14": "Type 0600-D",
+        "15": "Type 1000-D",
+        "16": "Type 0030-D-B",
+        "17": "Type 0050-D-B",
+        "18": "Type 0150-D-B",
+        "19": "Type 0150-B",
+        "20": "Type 0150-A",
+        "21": "Type 0300-A"
+      },
+      "title": "Set Pressure Sensor Range (for AMS5812)",
+      "call": "config_set_pressure_sensor_range_21"
+    },
+    "pressure_sensor_range_AMS5915_21": {
+      "sensors": [
+        "21"
+      ],
+      "main_caption": "<p>D: Differential/relative.<br>D-B: Bidirectional Differential.<br>A: Absolute.<br>B: Absolute (barometric).<br></p>",
+      "default_value": 0,
+      "options": {
+        "0": "Type 0005-D",
+        "1": "Type 0010_D",
+        "2": "Type 0002_D_B",
+        "3": "Type 0005_D_B",
+        "4": "Type 0010_D_B",
+        "5": "Type 0020_D",
+        "6": "Type 0035_D",
+        "7": "Type 0050_D",
+        "8": "Type 0100_D",
+        "9": "Type 0020_D_B",
+        "10": "Type 0035_D_B",
+        "11": "Type 0050_D_B",
+        "12": "Type 0100_D_B",
+        "13": "Type 0200_D",
+        "14": "Type 0350_D",
+        "15": "Type 0500_D",
+        "16": "Type 1000_D",
+        "17": "Type 2000_D",
+        "18": "Type 4000_D",
+        "19": "Type 7000_D",
+        "20": "Type 10000_D",
+        "21": "Type 0200_D_B",
+        "22": "Type 0350_D_B",
+        "23": "Type 0500_D_B",
+        "24": "Type 1000_D_B"
+      },
+      "title": "Set Pressure Sensor Range (for AMS5915)",
+      "call": "config_set_pressure_sensor_range_21"
+    },
+    "always_on_120": {
+      "sensors": [
+        "120"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Always On",
+      "call": "config_set_to_always_on_120"
+    },
+    "sensor_reset_120": {
+      "sensors": [
+        "120"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      },
+      "title": "Sensor Reset",
+      "call": "config_set_sensor_reset_120"
+    },
+    "sensor_calib_120": {
+      "sensors": [
+        "120"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      },
+      "title": "Set Sensor Calibration",
+      "call": "config_set_sensor_calib_120"
+    },
+    "alert_threshold_120": {
+      "sensors": [
+        "120"
+      ],
+      "main_caption": "<div></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 40,
+        "generated": true
+      },
+      "title": "Set Alert Threshold",
+      "call": "config_set_alert_threshold_120"
+    },
+    "quality_of_service_121": {
+      "sensors": [
+        "87",
+        "121"
+      ],
+      "main_caption": "<p class=\"caption\">This setting only functions when a Destination Address is also configured into the sensor.<br>If QoS is enabled the sensor will wait for a receipt acknowledgement from the intended receiver before resuming sleep.<br>If no receipt acknowledgement is received the sensor will one more time to transmit the data.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Enable Quality of Service",
+      "call": "config_set_quality_of_service_121"
+    },
+    "wood_type_121": {
+      "sensors": [
+        "121"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "Unknown",
+        "1": "Bald Cypress",
+        "2": "Douglas Fir",
+        "3": "Fir California Red",
+        "4": "Fir White",
+        "5": "Hemlock Eastern",
+        "6": "Hemlock Western",
+        "7": "Larch Western",
+        "8": "Pine Jack",
+        "9": "Pine Longleaf",
+        "10": "Pine Red",
+        "11": "Pine White",
+        "12": "Pine Ponderosa",
+        "13": "Pine Shortleaf",
+        "14": "Spruce Black",
+        "15": "Spruce Sitka",
+        "16": "Ash Black",
+        "17": "Ash White",
+        "18": "Aspen Bigtooth",
+        "19": "Basswood",
+        "20": "Birch",
+        "21": "Birch Paper",
+        "22": "Oak Northern Red",
+        "23": "Oak White",
+        "24": "Walnut Black"
+      },
+      "title": "Set Wood Type",
+      "call": "config_set_wood_type_121"
+    },
+    "tare_the_scale_217": {
+      "sensors": [
+        "217"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      },
+      "title": "Tare The Scale",
+      "call": "config_set_tare_the_scale_217"
+    },
+    "weight_calib_217": {
+      "sensors": [
+        "217"
+      ],
+      "main_caption": "<div></div>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Set Weight Calibration",
+      "call": "config_set_weight_calib_217"
+    },
+    "pressure_limit_26": {
+      "sensors": [
+        "26"
+      ],
+      "main_caption": "<div><p>If the pressure goes above the threshold, the sensor will start sending data every second, which will quickly drain the battery.<br><br>Valid range: 5 - 5000.</p></div>",
+      "default_value": 5,
+      "validator": {
+        "type": "uint16",
+        "min": 5,
+        "max": 5000,
+        "generated": true
+      },
+      "title": "Set Pressure Limit",
+      "call": "config_set_pressure_limit_26"
+    },
+    "auto_pressure_check_26": {
+      "sensors": [
+        "26"
+      ],
+      "main_caption": "<p>Enable or disable the auto pressure check, keep in mind it will drain the battery if enabled.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "Enabled"
+      },
+      "title": "Auto Pressure Check",
+      "call": "config_set_auto_pressure_check_26"
+    },
+    "sampling_duration_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "<p>Set the sampling duration in miliseconds<br>   Example: a value of 1 = 50msec, 2 = 100msec, 100 = 5000msec</p>",
+      "default_value": 20,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 20,
+        "generated": true
+      },
+      "title": "Set Sampling Duration",
+      "call": "config_set_sampling_duration_101"
+    },
+    "acc_threshold_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "<p>Sets the threshold in multiples of 32mg. A value of 1 = 32mg, a value of 2 = 64mg etc.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Acceleration Threshold",
+      "call": "config_set_acc_threshold_103"
+    },
+    "output_data_rate_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "0": "125Hz",
+        "1": "250Hz",
+        "2": "500Hz",
+        "3": "1000Hz"
+      },
+      "title": "Set Sample Rate",
+      "call": "config_set_output_data_rate_101"
+    },
+    "enable_sensor_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "",
+      "default_value": 3,
+      "options": {
+        "1": "Gyroscope only",
+        "2": "Accelerometer only",
+        "3": "All enabled"
+      },
+      "title": "Enable Sensor",
+      "call": "config_set_enable_sensor_103"
+    },
+    "enable_hp_filter_cutoff_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "<p>This setting will set the High Pass Filter freq to Sample Rate multiply by Selected Value<br><br>Example: Sample Rate = 125 and Filter Coefficient = 0.00247<br>HPF freq (Hz) = 125 * 0.00247</p>",
+      "default_value": 0,
+      "options": {
+        "0": "Disabled",
+        "1": "0.00247",
+        "2": "0.00062084",
+        "3": "0.00015545",
+        "4": "0.00003862",
+        "5": "0.00000954",
+        "6": "0.00000238"
+      },
+      "title": "Set HP Filter Cutoff",
+      "call": "config_set_enable_hp_filter_cutoff_103"
+    },
+    "gyro_fsr_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "250dps",
+        "1": "500dps",
+        "2": "1000dps",
+        "3": "3000dps"
+      },
+      "title": "Set Gyroscope FSR",
+      "call": "config_set_gyro_fsr_103"
+    },
+    "adxl_fsr_103": {
+      "sensors": [
+        "103"
+      ],
+      "main_caption": "",
+      "default_value": 0,
+      "options": {
+        "0": "10g",
+        "1": "20g",
+        "2": "40g"
+      },
+      "title": "Set Accelerometer FSR",
+      "call": "config_set_adxl_fsr_103"
+    },
+    "do_boot_time_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>This value represents the number of seconds to wait after applying power to the DO sensor before taking a reading.<br>Valid range: 1 - 60 Seconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 1 second.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 60,
+        "generated": true
+      },
+      "title": "Set DO Boot Time",
+      "call": "config_set_do_boot_time_270"
+    },
+    "do_dev_id_1_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set DO Device ID"
+    },
+    "do_dev_id_2_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set DO Device ID"
+    },
+    "do_dev_id_3_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set DO Device ID"
+    },
+    "do_dev_id_4_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set DO Device ID"
+    },
+    "ec_boot_time_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>This value represents the number of seconds to wait after applying power to the EC sensor before taking a reading.<br>Valid range: 1 - 60 Seconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 1 second.</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 60,
+        "generated": true
+      },
+      "title": "Set EC Boot Time",
+      "call": "config_set_ec_boot_time_270"
+    },
+    "ec_dev_id_1_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set EC Device ID"
+    },
+    "ec_dev_id_2_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set EC Device ID"
+    },
+    "ec_dev_id_3_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set EC Device ID"
+    },
+    "ec_dev_id_4_270": {
+      "sensors": [
+        "270"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set EC Device ID"
+    },
+    "oxygen_rate_211": {
+      "sensors": [
+        "211"
+      ],
+      "main_caption": "<p>Set the Oxygen Rate.<br>Valid range: 0 - 255 Minutes.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 15 minutes.</p>",
+      "default_value": 15,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Rate",
+      "call": "config_set_oxygen_rate_211"
+    },
+    "oxygen_timeout_211": {
+      "sensors": [
+        "211"
+      ],
+      "main_caption": "<p>Set the Oxygen Timeout in seconds.<br>Valid range: 0 (Disable) - 65500 Seconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 600 seconds.</p>",
+      "default_value": 600,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Timeout",
+      "call": "config_set_oxygen_timeout_211"
+    },
+    "oxygen_threshold_211": {
+      "sensors": [
+        "211"
+      ],
+      "main_caption": "<p>Set the Oxygen threshold in mg/l.<br>Valid range: 0 - 65500 mg/l.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 8 mg/l.</p>",
+      "default_value": 8,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Threshold",
+      "call": "config_set_oxygen_threshold_211"
+    },
+    "max_flow_541": {
+      "sensors": [
+        "541"
+      ],
+      "main_caption": "<p>Set the maximum flow sensor reads</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Max Flow",
+      "call": "config_set_max_flow_541"
+    },
+    "min_flow_541": {
+      "sensors": [
+        "541"
+      ],
+      "main_caption": "<p>Set the minimum flow sensor reads</p>",
+      "default_value": 1,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Min Flow",
+      "call": "config_set_min_flow_541"
+    },
+    "ct_constant_87": {
+      "sensors": [
+        "87"
+      ],
+      "main_caption": "<p>Set the current calibration value, this value will be multiply by 10.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint32",
+        "min": 0,
+        "max": 4294967295,
+        "generated": true
+      },
+      "title": "Set Current Calibration",
+      "call": "config_set_ct_constant_87"
+    },
+    "deadband_87": {
+      "sensors": [
+        "87"
+      ],
+      "main_caption": "<p>Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>This value determines the minimum current would have to be for it to be registered as a measurement. Values below the deab band it  would be perceived as 0.<br><br>Example: A value of 10 would mean that current below 10 mA would be considered as 0.</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Dead Band",
+      "call": "config_set_deadband_87"
+    },
+    "sampling_frequency_87": {
+      "sensors": [
+        "87"
+      ],
+      "main_caption": "<p>Set the sample per seconds</p>",
+      "default_value": 0,
+      "options": {
+        "0": "400 Sps",
+        "1": "800 Sps",
+        "2": "2048 Sps"
+      },
+      "title": "Set Sampling Frequency",
+      "call": "config_set_sampling_frequency_87"
+    },
+    "raw_length_87": {
+      "sensors": [
+        "87"
+      ],
+      "main_caption": "<p>Set the size of the data payload the sensor sends when it transmit a Raw message.</p>",
+      "default_value": 0,
+      "options": {
+        "0": "55 Bytes",
+        "1": "100 Bytes",
+        "2": "150 Bytes",
+        "3": "180 Bytes"
+      },
+      "title": "Set Raw Length",
+      "call": "config_set_raw_length_87"
+    },
+    "volume_flow_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "",
+      "default_value": 1,
+      "options": {
+        "0": "cm³/s",
+        "1": "cm³/min",
+        "2": "cm³/h",
+        "3": "cm³/d",
+        "4": "dm³/s",
+        "5": "dm³/min",
+        "6": "dm³/h",
+        "7": "dm³/d",
+        "8": "m³/s",
+        "9": "m³/min",
+        "10": "m³/h",
+        "11": "m³/d",
+        "12": "ml/s",
+        "13": "ml/min",
+        "14": "ml/h",
+        "15": "ml/d",
+        "16": "l/s",
+        "17": "l/min",
+        "18": "l/h",
+        "19": "l/d",
+        "20": "hl/s",
+        "21": "hl/min",
+        "22": "hl/h",
+        "23": "hl/d",
+        "24": "Ml/s",
+        "25": "Ml/min",
+        "26": "Ml/h",
+        "27": "Ml/d",
+        "32": "af/s",
+        "33": "af/min",
+        "34": "af/h",
+        "35": "af/d",
+        "36": "ft³/s",
+        "37": "ft³/min",
+        "38": "ft³/h",
+        "39": "ft³/d",
+        "40": "fl oz/s (us)",
+        "41": "fl oz/min (us)",
+        "42": "fl oz/h (us)",
+        "43": "fl oz/d (us)",
+        "44": "gal/s (us)",
+        "45": "gal/min (us)",
+        "46": "gal/h (us)",
+        "47": "gal/d (us)",
+        "48": "Mgal/s (us)",
+        "49": "Mgal/min (us)",
+        "50": "Mgal/h (us)",
+        "51": "Mgal/d (us)",
+        "52": "bbl/s (us;liq.)",
+        "53": "bbl/min (us;liq.)",
+        "54": "bbl/h (us;liq.)",
+        "55": "bbl/d (us;liq.)",
+        "56": "bbl/s (us;beer)",
+        "57": "bbl/min (us;beer)",
+        "58": "bbl/h (us;beer)",
+        "59": "bbl/d (us;beer)",
+        "60": "bbl/s (us;oil)",
+        "61": "bbl/min (us;oil)",
+        "62": "bbl/h (us;oil)",
+        "63": "bbl/d (us;oil)",
+        "64": "bbl/s (us;tank)",
+        "65": "bbl/min (us;tank)",
+        "66": "bbl/h (us;tank)",
+        "67": "bbl/d (us;tank)",
+        "68": "gal/s (imp)",
+        "69": "gal/min (imp)",
+        "70": "gal/h (imp)",
+        "71": "gal/d (imp)",
+        "72": "Mgal/s (imp)",
+        "73": "Mgal/min (imp)",
+        "74": "Mgal/h (imp)",
+        "75": "Mgal/d (imp)",
+        "76": "bbl/s (imp;beer)",
+        "77": "bbl/min (imp;beer)",
+        "78": "bbl/h (imp;beer)",
+        "79": "bbl/d (imp;beer)",
+        "80": "bbl/s (imp;oil)",
+        "81": "bbl/min (imp;oil)",
+        "82": "bbl/h (imp;oil)",
+        "83": "bbl/d (imp;oil)",
+        "88": "kgal/s (us)",
+        "89": "kgal/min (us)",
+        "90": "kgal/h (us)",
+        "91": "kgal/d (us)",
+        "92": "MMft³/s",
+        "93": "MMft³/min",
+        "94": "MMft³/h",
+        "96": "Mft³/d"
+      },
+      "title": "Set Volume Flow Unit",
+      "call": "config_set_volume_flow_unit_124"
+    },
+    "total_1_flow_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set the units for totalizers</p>",
+      "default_value": 1,
+      "options": {
+        "0": "cm³",
+        "1": "dm³",
+        "2": "m³",
+        "3": "ml",
+        "4": "l",
+        "5": "hl",
+        "6": "Ml Mega",
+        "8": "af",
+        "9": "ft³",
+        "10": "fl oz (us)",
+        "11": "gal (us)",
+        "12": "Mgal (us)",
+        "13": "bbl (us;liq.)",
+        "14": "bbl (us;beer)",
+        "15": "bbl (us;oil)",
+        "16": "bbl (us;tank)",
+        "17": "gal (imp)",
+        "18": "Mgal (imp)",
+        "19": "bbl (imp;beer)",
+        "20": "bbl (imp;oil)",
+        "22": "kgal (us)",
+        "23": "Mft³"
+      },
+      "title": "Set Totalizer 1 Flow Unit",
+      "call": "config_set_total_1_flow_unit_124"
+    },
+    "total_2_flow_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set the units for totalizers</p>",
+      "default_value": 1,
+      "options": {
+        "0": "cm³",
+        "1": "dm³",
+        "2": "m³",
+        "3": "ml",
+        "4": "l",
+        "5": "hl",
+        "6": "Ml Mega",
+        "8": "af",
+        "9": "ft³",
+        "10": "fl oz (us)",
+        "11": "gal (us)",
+        "12": "Mgal (us)",
+        "13": "bbl (us;liq.)",
+        "14": "bbl (us;beer)",
+        "15": "bbl (us;oil)",
+        "16": "bbl (us;tank)",
+        "17": "gal (imp)",
+        "18": "Mgal (imp)",
+        "19": "bbl (imp;beer)",
+        "20": "bbl (imp;oil)",
+        "22": "kgal (us)",
+        "23": "Mft³"
+      },
+      "title": "Set Totalizer 2 Flow Unit",
+      "call": "config_set_total_2_flow_unit_124"
+    },
+    "total_3_flow_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set the units for totalizers</p>",
+      "default_value": 1,
+      "options": {
+        "0": "cm³",
+        "1": "dm³",
+        "2": "m³",
+        "3": "ml",
+        "4": "l",
+        "5": "hl",
+        "6": "Ml Mega",
+        "8": "af",
+        "9": "ft³",
+        "10": "fl oz (us)",
+        "11": "gal (us)",
+        "12": "Mgal (us)",
+        "13": "bbl (us;liq.)",
+        "14": "bbl (us;beer)",
+        "15": "bbl (us;oil)",
+        "16": "bbl (us;tank)",
+        "17": "gal (imp)",
+        "18": "Mgal (imp)",
+        "19": "bbl (imp;beer)",
+        "20": "bbl (imp;oil)",
+        "22": "kgal (us)",
+        "23": "Mft³"
+      },
+      "title": "Set Totalizer 3 Flow Unit",
+      "call": "config_set_total_3_flow_unit_124"
+    },
+    "pressure_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set the Unit for Pressure</p>",
+      "default_value": 1,
+      "options": {
+        "0": "bar",
+        "1": "psi a",
+        "2": "bar g",
+        "3": "psi g",
+        "4": "Pa a",
+        "5": "kPa a",
+        "6": "MPa a",
+        "7": "Pa g",
+        "8": "kPa g",
+        "9": "MPa g"
+      },
+      "title": "Set Pressure Unit",
+      "call": "config_set_pressure_unit_124"
+    },
+    "total_1_op_mode_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set operation mode of totalizer module of sensor (1). Totalizers measure total flow in any direction.</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Net flow total",
+        "1": "Forward flow total",
+        "2": "Reverse flow total"
+      },
+      "title": "Set Totalizer 1 Operation Mode",
+      "call": "config_set_total_1_op_mode_124"
+    },
+    "total_2_op_mode_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set operation mode of totalizer module of sensor (2). Totalizers measure total flow in any direction.</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Net flow total",
+        "1": "Forward flow total",
+        "2": "Reverse flow total"
+      },
+      "title": "Set Totalizer 2 Operation Mode",
+      "call": "config_set_total_2_op_mode_124"
+    },
+    "total_3_op_mode_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set operation mode of totalizer module of sensor (3). Totalizers measure total flow in any direction.</p>",
+      "default_value": 1,
+      "options": {
+        "0": "Net flow total",
+        "1": "Forward flow total",
+        "2": "Reverse flow total"
+      },
+      "title": "Set Totalizer 3 Operation Mode",
+      "call": "config_set_total_3_op_mode_124"
+    },
+    "conductivity_unit_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Set the Unit for Conductivity</p>",
+      "default_value": 1,
+      "options": {
+        "1": "MS/m",
+        "2": "kS/m",
+        "3": "S/m",
+        "4": "S/cm",
+        "5": "mS/m",
+        "6": "mS/cm",
+        "7": "μS/m",
+        "8": "μS/cm",
+        "9": "μS/mm",
+        "10": "nS/cm"
+      },
+      "title": "Set Conductivity Unit",
+      "call": "config_set_conductivity_unit_124"
+    },
+    "reset_all_totalizers_124": {
+      "sensors": [
+        "124"
+      ],
+      "main_caption": "<p>Reset All totalizers to zero</p>",
+      "default_value": "",
+      "validator": {
+        "type": "unknown",
+        "generated": true
+      },
+      "title": "Reset All Totalizers"
+    },
+    "oxygen_boot_time_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>This value represents the number of seconds to wait after applying power to the Oxygen sensor before taking a reading.<br>Valid range: 1 - 100 Seconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 3 seconds.</p>",
+      "default_value": 3,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Set Oxygen Boot Time",
+      "call": "config_set_oxygen_boot_time_536"
+    },
+    "flow_boot_time_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>This value represents the number of seconds to wait after applying power to the Flow sensor before taking a reading.<br>Valid range: 1 - 100 Seconds.</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 3 seconds.</p>",
+      "default_value": 3,
+      "validator": {
+        "type": "uint8",
+        "min": 1,
+        "max": 100,
+        "generated": true
+      },
+      "title": "Set Flow Boot Time",
+      "call": "config_set_flow_boot_time_536"
+    },
+    "oxygen_addr_1_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Sensors Addresses"
+    },
+    "oxygen_addr_2_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Sensors Addresses"
+    },
+    "oxygen_addr_3_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Sensors Addresses"
+    },
+    "oxygen_addr_4_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Sensors Addresses"
+    },
+    "flow_addr_1_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Flow Sensors Addresses"
+    },
+    "flow_addr_2_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Flow Sensors Addresses"
+    },
+    "flow_addr_3_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Flow Sensors Addresses"
+    },
+    "flow_addr_4_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Set the Modbus Slave device address connected to this device</p>",
+      "default_value": 0,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Flow Sensors Addresses"
+    },
+    "oxygen_rate_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "",
+      "sub_caption": "<p class=\"caption\">Default value: 2 minutes.</p>",
+      "default_value": 2,
+      "validator": {
+        "type": "uint8",
+        "min": 0,
+        "max": 255,
+        "generated": true
+      },
+      "title": "Set Oxygen Check Rate",
+      "call": "config_set_oxygen_rate_536"
+    },
+    "oxygen_timeout_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "",
+      "sub_caption": "<p class=\"caption\">Default value: 5 minutes.</p>",
+      "default_value": 5,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Check Timeout",
+      "call": "config_set_oxygen_timeout_536"
+    },
+    "oxygen_max_threshold_s1_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Max Threshold Sensor 1",
+      "call": "config_set_oxygen_max_threshold_s1_536"
+    },
+    "oxygen_max_threshold_s2_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Max Threshold Sensor 2",
+      "call": "config_set_oxygen_max_threshold_s2_536"
+    },
+    "oxygen_max_threshold_s3_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Max Threshold Sensor 3",
+      "call": "config_set_oxygen_max_threshold_s3_536"
+    },
+    "oxygen_max_threshold_s4_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Max Threshold Sensor 4",
+      "call": "config_set_oxygen_max_threshold_s4_536"
+    },
+    "oxygen_min_threshold_s1_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Min Threshold Sensor 1",
+      "call": "config_set_oxygen_min_threshold_s1_536"
+    },
+    "oxygen_min_threshold_s2_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Min Threshold Sensor 2",
+      "call": "config_set_oxygen_min_threshold_s2_536"
+    },
+    "oxygen_min_threshold_s3_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Min Threshold Sensor 3",
+      "call": "config_set_oxygen_min_threshold_s3_536"
+    },
+    "oxygen_min_threshold_s4_536": {
+      "sensors": [
+        "536"
+      ],
+      "main_caption": "<p>Valid range: 0 - 20 mg/l</p>",
+      "sub_caption": "<p class=\"caption\">Default value: 12 mg/l.</p>",
+      "default_value": 12,
+      "validator": {
+        "type": "uint16",
+        "min": 0,
+        "max": 65535,
+        "generated": true
+      },
+      "title": "Set Oxygen Min Threshold Sensor 4",
+      "call": "config_set_oxygen_min_threshold_s4_536"
+    }
+  }
