@@ -1,3 +1,32 @@
+<style>
+	.ncd-active-check strong{
+		width: 100%;
+	}
+	.form-row.ncd-active-check{
+		margin: 12px 0px;
+		border: 1px solid #eee;
+		padding: 12px;
+		border-radius: 8px;
+	}
+	.form-row.ncd-active-check > div{
+		padding: 4px;
+	}
+	.form-row.ncd-active-check > div > input[type='checkbox']{
+		width: inherit;
+	}
+	.form-row .caption{
+		font-size: .95em;
+		padding-left: 1em;
+		margin-top: .25em;
+	}
+	#register_list_539 > div{
+		display: none;
+	}
+	#gas_type_list_545 > div{
+		display: none;
+	}
+</style>
+
 <script type="text/javascript">
 	RED.nodes.registerType('ncd-gateway-node',{
 		category: 'NCD',
@@ -64,35 +93,6 @@
 	</div>
 </script>
 
-<style>
-	.ncd-active-check strong{
-		width: 100%;
-	}
-	.form-row.ncd-active-check{
-		margin: 12px 0px;
-		border: 1px solid #eee;
-		padding: 12px;
-		border-radius: 8px;
-	}
-	.form-row.ncd-active-check > div{
-		padding: 4px;
-	}
-	.form-row.ncd-active-check > div > input[type='checkbox']{
-		width: inherit;
-	}
-	.form-row .caption{
-		font-size: .95em;
-		padding-left: 1em;
-		margin-top: .25em;
-	}
-	#register_list_539 > div{
-		display: none;
-	}
-	#gas_type_list_545 > div{
-		display: none;
-	}
-</style>
-
 <script type="text/x-red" data-help-name="ncd-gateway-node">
 	<h3>Gateway Node</h3>
 	<p>This node is primarily useful for debugging and configuring sensors. This node is equipped with a button on the flow that switches the modem between configuration and listening mode.</p>
@@ -131,6 +131,39 @@
 	</pre>
 </script>
 
+<script type="text/javascript">
+	RED.nodes.registerType('ncd-api-configuration-node',{
+		category: 'NCD',
+		color: '#a6bbcf',
+		icon: "serial.png",
+		paletteLabel: "API Configuration",
+		outputLabels: ["Parsed","Unknown"],
+		defaults: {
+			name: {value: ""},
+			connection: {value: "", type: "ncd-gateway-config"},
+			outputs:{value:1}
+		},
+		inputs: 1,
+		outputs: 1,
+		label: function() {
+			return this.name || "API Configuration";
+		},
+	});
+</script>
+<script type="text/x-red" data-template-name="ncd-api-configuration-node">
+	<div class="form-row">
+		<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+		<input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	<div class="form-row">
+		<label for="node-input-connection"><i class="icon-tag"></i> Serial Device</label>
+		<select id="node-input-connection"></select>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="ncd-api-configuration-node">
+	TODO PLACEHOLDER TEXT
+</script>
 
 <script type="text/javascript">
 	NCD_validators = {
@@ -525,9 +558,9 @@
 			smart_interval_110: {value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			smart_threshold_110_active:{value:""},
-			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
+			smart_threshold_110: {value: 1, validate: NCD_validators.number_range(1, 40, 10, "smart_threshold_110")},
 			smart_threshold_p2_110_active:{value:""},
-			smart_threshold_p2_110: {value: 1, validate: NCD_validators.number_range(1, 65534, 10, "smart_threshold_110")},
+			smart_threshold_p2_110: {value: 1, validate: NCD_validators.number_range(1, 40, 10, "smart_threshold_110")},
 
 			rx485_timeout_1011_active:{value:""},
 			rx485_timeout_1011:{value: 0, validate: NCD_validators.number_range(0, 255)},
