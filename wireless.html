@@ -940,18 +940,23 @@
 			gas_type_545_active: {value: ""},
 			gas_type_545: {value: 1},
 
-			number_of_gas_type_545_active:{value:""},
+			number_of_gas_type_545_active: {value:""},
 			number_of_gas_type_545: {value: 2, validate: NCD_validators.number_range(2, 5)},
 			percentage_value_0_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
 			percentage_value_1_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
 			percentage_value_2_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
 			percentage_value_3_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
 			percentage_value_4_545: {value: 20, validate: NCD_validators.number_range(1, 100)},
-			gas_type_0_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
-			gas_type_1_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
-			gas_type_2_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
-			gas_type_3_545:{value: 0, validate: NCD_validators.number_range(0, 11)},
-			gas_type_4_545:{value: 0, validate: NCD_validators.number_range(0, 11)}
+			gas_type_0_545: {value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_1_545: {value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_2_545: {value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_3_545: {value: 0, validate: NCD_validators.number_range(0, 11)},
+			gas_type_4_545: {value: 0, validate: NCD_validators.number_range(0, 11)},
+
+			screen_on_time_217_active: {value:""},
+			screen_on_time_217: {value: 5, validate: NCD_validators.number_range(0, 255)},
+			weight_unit_217_active: {value:""},
+			weight_unit_217: {value: 2}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5469,6 +5474,44 @@
 						<label for="node-input-tare_value_217"><i class="icon-tag"></i>  Value</label>
 						<input type="text" id="node-input-tare_value_217" placeholder="0" value="0">
 					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Weight Unit</strong>
+					<div>
+						<label for="node-input-weight_unit_217_active">Active:</label>
+						<input type="checkbox" id="node-input-weight_unit_217_active" class="ncd-config-toggle" data-target-id="node-input-weight_unit_217" value="1">
+					</div>
+					<div>
+						<label for="node-input-weight_unit_217"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-weight_unit_217">
+							<option value="1" selected>Kilogram (kg)</option>
+							<option value="2">Pound (lb)</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Pound (lb).
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Screen On Time</strong>
+						<p>
+							Sets the amount of time (in seconds) the screen remains powered on. The screen displays the current weight or a confirmation message once the tare process is successful.<br><br>
+							Value 0: Disables the screen (Always Off).<br>
+							Value 255: Keeps the screen enabled (Always On).
+						</p>
+					</div>
+					<div>
+						<label for="node-input-screen_on_time_217_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-screen_on_time_217_active" class="ncd-config-toggle" data-target-id="node-input-screen_on_time_217" value="1">
+					</div>
+					<div>
+						<label for="node-input-screen_on_time_217"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-screen_on_time_217" placeholder="255" value="255">
+					</div>
+					<p class="caption">
+						Default value: 5 seconds.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-26>
