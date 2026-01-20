@@ -956,7 +956,18 @@
 			screen_on_time_217_active: {value:""},
 			screen_on_time_217: {value: 5, validate: NCD_validators.number_range(0, 255)},
 			weight_unit_217_active: {value:""},
-			weight_unit_217: {value: 2}
+			weight_unit_217: {value: 2},
+
+			clean_cycle_99_active: {value:""},
+			clean_cycle_99: {value: 0, validate: NCD_validators.number_range(0, 255)},
+			wiper_rounds_number_99_active: {value:""},
+			wiper_rounds_number_99: {value: 1, validate: NCD_validators.number_range(0, 255)},
+			distance_under_strength_threshold_99_active: {value:""},
+			distance_under_strength_99: {value: 1, validate: NCD_validators.number_range(0, 65535)},
+			threshold_under_strength_99: {value: 1, validate: NCD_validators.number_range(0, 65535)},
+			clean_sensor_99_active: {value:""},
+			reset_sensor_99_active: {value:""},
+			factory_reset_sensor_99_active: {value:""}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1052,6 +1063,7 @@
 					"96": "96 - 16-Bit 1-Channel 0-48VDC Receiver",
 					"97": "97 - One channel Dynamic Ultrasound vibration Sensor",
 					"98": "98 - Two channel Dynamic Ultrasound vibration Sensor",
+					"99": "99 - Laser Sensor",
 					"101": "101 - Pro Vibration",
 					"102": "102 - Strain Gauge",
 					"103": "103 - Custom Wireless Accelerometer Sensor",
@@ -1372,6 +1384,7 @@
 			<option value="96">96 - 16-Bit 1-Channel 0-48VDC Receiver</option>
 			<option value="97">97 - One channel Dynamic Ultrasound vibration Sensor</option>
 			<option value="98">98 - Two channel Dynamic Ultrasound vibration Sensor</option>
+			<option value="99">99 - Laser Sensor</option>
 			<option value="101">101 - Pro Vibration</option>
 			<option value="102">102 - Strain Gauge</option>
 			<option value="103">103 - Custom Wireless Accelerometer Sensor</option>
@@ -1436,7 +1449,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-97 data-sensor-98 data-sensor-91 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -6790,6 +6803,81 @@
 								<input type="text" id="node-input-percentage_value_4_545" class="gas_type_mix_545" placeholder="10" value="10">
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-99>
+				<div class="form-row ncd-active-check">
+					<strong>Set Clean Cycles</strong>
+					<p>Set the number of cleaning cycles</p>
+					<div>
+						<label for="node-input-clean_cycle_99_active">Active:</label>
+						<input type="checkbox" id="node-input-clean_cycle_99_active" class="ncd-config-toggle" data-target-id="node-input-clean_cycle_99" value="1">
+					</div>
+					<div>
+						<label for="node-input-clean_cycle_99"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-clean_cycle_99">
+					</div>
+					<p class="caption">
+						Default value: 1 cycle.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Wiper Rounds Number</strong>
+					<p>Set the number of round trips of the wiper during a dust removal cycle.<br> 
+						Note: No more than 10 round trips per cycle</p>
+					<div>
+						<label for="node-input-wiper_rounds_number_99_active">Active:</label>
+						<input type="checkbox" id="node-input-wiper_rounds_number_99_active" class="ncd-config-toggle" data-target-id="node-input-wiper_rounds_number_99" value="1">
+					</div>
+					<div>
+						<label for="node-input-wiper_rounds_number_99"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-wiper_rounds_number_99">
+					</div>
+					<p class="caption">
+						Default value: 1.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Distance Under Strength Threshold</strong>
+					<p>Set the minimum signal strength required for a valid reading.<br>
+						E.g.<br>
+						Strength Threshold = 60, Distance under threshold = 4500.<br>
+						If the strength drops below 60, the sensor will automatically report a default distance of 4500cm</p>
+					<div>
+						<label for="node-input-distance_under_strength_threshold_99_active">Active:</label>
+						<input type="checkbox" id="node-input-distance_under_strength_threshold_99_active" class="ncd-config-toggle" data-target-class="distance_under_strength_threshold_99" value="1">
+					</div>
+					<div class="form-row">
+						<label for="node-input-distance_under_strength_99"><i class="icon-tag"></i>Distance (0-65535)</label>
+						<input type="text" id="node-input-distance_under_strength_99" class="distance_under_strength_threshold_99">
+					</div>
+					<div class="form-row">
+						<label for="node-input-threshold_under_strength_99"><i class="icon-tag"></i>Threshold (0-65535)</label>
+						<input type="text" id="node-input-threshold_under_strength_99" class="distance_under_strength_threshold_99">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Clean Sensor</strong>
+					<p>When enabled, this setting initiates an immediate dust removal cycle.</p>
+					<div>
+						<label for="node-input-clean_sensor_99_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clean_sensor_99_active" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Reset Sensor</strong>
+					<div>
+						<label for="node-input-reset_sensor_99_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-reset_sensor_99_active" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Factory Reset Sensor</strong>
+					<p>Restore to factory settings<p>
+					<div>
+						<label for="node-input-factory_reset_sensor_99_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-factory_reset_sensor_99_active" value="1">
 					</div>
 				</div>
 			</div>
