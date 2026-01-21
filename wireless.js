@@ -2555,6 +2555,26 @@ module.exports = function(RED) {
 								// 	promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								// }
 								break;
+							case 99:
+								if(config.clean_cycle_99_active){
+									promises.clean_cycle_99 = node.config_gateway.config_set_clean_cycle_99(mac, parseInt(config.clean_cycle_99));
+								}
+								if(config.wiper_rounds_number_99_active){
+									promises.wiper_rounds_number_99 = node.config_gateway.config_set_wiper_rounds_number_99(mac, parseInt(config.wiper_rounds_number_99));
+								}
+								if(config.distance_under_strength_threshold_99_active){
+									promises.distance_under_strength_threshold_99 = node.config_gateway.config_set_distance_under_strength_threshold_99(mac, parseInt(config.distance_under_strength_99), parseInt(config.threshold_under_strength_99));
+								}
+								if(config.clean_sensor_99_active){
+									promises.clean_sensor_99 = node.config_gateway.config_set_clean_sensor_99(mac);
+								}
+								if(config.reset_sensor_99_active){
+									promises.reset_sensor_99 = node.config_gateway.config_set_reset_sensor_99(mac);
+								}
+								if(config.factory_reset_sensor_99_active){
+									promises.factory_reset_sensor_99 = node.config_gateway.config_set_factory_reset_sensor_99(mac);
+								}
+								break;
 							case 101:
 								if(config.output_data_rate_101_m2_active){
 									promises.output_data_rate_101_m2 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101_m2));
@@ -3496,6 +3516,12 @@ module.exports = function(RED) {
 								}
 								if(config.tare_value_217_active){
 									promises.tare_value_217 = node.config_gateway.config_set_tare_value_217(mac, parseInt(config.tare_value_217));
+								}
+								if(config.screen_on_time_217_active){
+									promises.screen_on_time_217 = node.config_gateway.config_set_screen_on_time_217(mac, parseInt(config.screen_on_time_217));
+								}
+								if(config.weight_unit_217_active){
+									promises.weight_unit_217 = node.config_gateway.config_set_weight_unit_217(mac, parseInt(config.weight_unit_217));
 								}
 								break;
 							case 270:
