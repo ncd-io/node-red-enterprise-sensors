@@ -967,7 +967,10 @@
 			threshold_under_strength_99: {value: 1, validate: NCD_validators.number_range(0, 65535)},
 			clean_sensor_99_active: {value:""},
 			reset_sensor_99_active: {value:""},
-			factory_reset_sensor_99_active: {value:""}
+			factory_reset_sensor_99_active: {value:""},
+
+			calibration_factor_217_active: {value:""},
+			calibration_factor_217: {value: 135, validate: NCD_validators.number_range(0, 500000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5524,6 +5527,22 @@
 					</div>
 					<p class="caption">
 						Default value: 5 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Calibration Factor</strong>
+					</div>
+					<div>
+						<label for="node-input-calibration_factor_217_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-calibration_factor_217_active" class="ncd-config-toggle" data-target-id="node-input-calibration_factor_217" value="1">
+					</div>
+					<div>
+						<label for="node-input-calibration_factor_217"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-calibration_factor_217" placeholder="255" value="255">
+					</div>
+					<p class="caption">
+						Default value: 135.
 					</p>
 				</div>
 			</div>

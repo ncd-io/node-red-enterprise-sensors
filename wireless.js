@@ -3523,6 +3523,9 @@ module.exports = function(RED) {
 								if(config.weight_unit_217_active){
 									promises.weight_unit_217 = node.config_gateway.config_set_weight_unit_217(mac, parseInt(config.weight_unit_217));
 								}
+								if(config.calibration_factor_217_active){
+									promises.calibration_factor_217 = node.config_gateway.config_set_calibration_factor_217(mac, parseInt(config.calibration_factor_217));
+								}
 								break;
 							case 270:
 								// if(config.do_read_rate_270_active){
