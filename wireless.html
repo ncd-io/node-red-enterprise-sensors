@@ -970,7 +970,15 @@
 			factory_reset_sensor_99_active: {value:""},
 
 			calibration_factor_217_active: {value:""},
-			calibration_factor_217: {value: 135, validate: NCD_validators.number_range(0, 500000)}
+			calibration_factor_217: {value: 135, validate: NCD_validators.number_range(0, 500000)},
+
+			clear_timers_35:{value:0},
+			push_notification_35_active:{value:""},
+			push_notification_35:{value: 0},
+			interrupt_timeout_35_active:{value:""},
+			interrupt_timeout_35:{value: 0, validate: NCD_validators.number_range(0, 65535)},
+			counter_threshold_35_gen2_active:{value:""},
+			counter_threshold_35_gen2:{value: 0, validate: NCD_validators.number_range(0, 65535)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1456,7 +1464,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2927,6 +2935,51 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>Counter Threshold (Gen1)</strong>
+					<p class="caption">
+						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br><br>
+						**Applies to sensor with firmware version 9 and below (Gen1).
+						<br>
+						<br>
+						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
+					</p>
+					<div>
+						<label for="node-input-counter_threshold_35_active">Active:</label>
+						<input type="checkbox" id="node-input-counter_threshold_35_active" class="ncd-config-toggle" data-target-id="node-input-counter_threshold_35" value="1">
+					</div>
+					<div>
+						<label for="node-input-counter_threshold_35"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-counter_threshold_35" placeholder="50" value="50">
+					</div>
+					<p class="caption">
+						Default value: Disabled (0).
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-2 data-sensor-35 data-sensor-36>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time (Gen1)</strong>
+					<p class="caption">
+						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.<br><br>
+						**Applies to sensor with firmware version 9 and below (Gen1).
+					</p>
+					<div>
+						<label for="node-input-debounce_time_2_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_2_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_2" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_2"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_2" placeholder="10" value="10">
+					</div>
+				</div>
+				<hr>
+				<div class="form-row ncd-active-check">
+					<strong>**The following settings are compatible only with sensors running firmware version 10 or higher (Gen 2).</strong>
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
@@ -3069,7 +3122,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -3085,7 +3138,12 @@
 						<label for="node-input-debounce_time_123"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-debounce_time_123" placeholder="10" value="10">
 					</div>
+					<p class="caption">
+						Default value: 10 milliseconds.
+					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 1 Detection</strong>
 					<p>
@@ -3104,7 +3162,12 @@
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Falling Edge.
+					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-123>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 2 Detection</strong>
 					<p>
@@ -3123,6 +3186,9 @@
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Falling Edge.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Digital Input 3 Detection</strong>
@@ -3142,6 +3208,9 @@
 							<option value="1" selected>Rising Edge Trigger</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Falling Edge.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-119 data-sensor-123>
@@ -3162,6 +3231,9 @@
 						<label for="node-input-counter_threshold_108"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-counter_threshold_108" placeholder="1000" value="1000">
 					</div>
+					<p class="caption">
+						Default value: Disabled (0).
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-108>
@@ -3271,7 +3343,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-119>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
@@ -3305,8 +3377,7 @@
 					<strong> Set Reset Mode</strong>
 					<p class="caption">
 						This setting specifies which automatic reset option the sensor will utilize.<br>
-						Note: Works in conjunction with the "Reset Timeout" and "Set Shift Time" commands.<br><br>
-						Default value: Disabled
+						Note: Works in conjunction with the "Reset Timeout" and "Set Shift Time" commands.
 					</p>
 					<div>
 						<label for="node-input-reset_mode_to_disabled_108_active">Active:</label>
@@ -3320,6 +3391,9 @@
 							<option value="2">Based on the Timeout Provided</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Disabled.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Reset Timeout</strong>
@@ -3468,6 +3542,9 @@
 							<option value="1440">24 Hours</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 1 Hour.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-108 data-sensor-119>
@@ -3556,27 +3633,6 @@
 					<p class="caption">
 						Default value: IO1.
 					</p>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-35 data-sensor-36>
-				<hr>
-				<div class="form-row ncd-active-check">
-					<strong>Counter Threshold</strong>
-					<p class="caption">
-						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
-						**Report type will be 'Threshold'.
-						<br>
-						<br>
-						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
-					</p>
-					<div>
-						<label for="node-input-counter_threshold_35_active">Active:</label>
-						<input type="checkbox" id="node-input-counter_threshold_35_active" class="ncd-config-toggle" data-target-id="node-input-counter_threshold_35" value="1">
-					</div>
-					<div>
-						<label for="node-input-counter_threshold_35"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-counter_threshold_35" placeholder="50" value="50">
-					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-543>
@@ -4519,22 +4575,6 @@
 				<div class="form-row">
 					<button id="config_sensor">Configure Now</button>
 					<div id="config_response"></div>
-				</div>
-			</div>
-			<div class="ncd-dependent" data-sensor-2 data-sensor-35 data-sensor-36>
-				<div class="form-row ncd-active-check">
-					<strong>Set Input Debounce Time</strong>
-					<p class="caption">
-						Sets the debounce time in milliseconds on inputs. State changes to the input during this debounce time will be ignored. Generally recommended for mechanically triggered state changes such as button or relay/contactor outputs.
-					</p>
-					<div>
-						<label for="node-input-debounce_time_2_active">Active:</label>
-						<input type="checkbox" id="node-input-debounce_time_2_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_2" value="1">
-					</div>
-					<div>
-						<label for="node-input-debounce_time_2"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-debounce_time_2" placeholder="10" value="10">
-					</div>
 				</div>
 			</div>
 			<!-- <div class="ncd-dependent" data-sensor-87 data-sensor-120 data-sensor-539 data-sensor-1010 data-sensor-1011>
@@ -5607,7 +5647,7 @@
 			<div class="ncd-dependent" data-sensor-103>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sampling Duration</strong>
-					<p>Set the sampling duration in miliseconds<br>
+					<p>Set the sampling duration in milliseconds<br>
 					   Example: a value of 1 = 50msec, 2 = 100msec, 100 = 5000msec</p>
 					<div>
 						<label for="node-input-sampling_duration_103_active">Active:</label>
@@ -5618,7 +5658,7 @@
 						<input type="text" id="node-input-sampling_duration_103">
 					</div>
 					<p class="caption">
-						Default value: 20 miliseconds.
+						Default value: 20 milliseconds.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
@@ -6920,6 +6960,79 @@
 						<label for="node-input-factory_reset_sensor_99_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-factory_reset_sensor_99_active" value="1">
 					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-35>
+				<div class="form-row ncd-active-check">
+					<strong>Clear Counter</strong>
+					<p class="caption">
+						Resets the Digital Input counter and the corresponding uptime value to zero in the next sensor configuration.
+					</p>
+					<div>
+						<label for="node-input-clear_timers_35">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_35" value="1">
+					</div>
+					<p class="caption">
+						Default value: Disabled.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p>
+						Enables the sensor to immediately transmit data upon detecting a signal change on the input.
+						**Report type will be 'Interrupt'.<br><br>
+					</p>
+					<div>
+						<label for="node-input-push_notification_35_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_35_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_35" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_35"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_35">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Disabled.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Interrupt Timeout</strong>
+					<p class="caption">
+						Set the sensor to detect an initial IO (input/output) change and not transmit subsequent IO changes for a specified duration; set the duration value to control how long changes are ignored in milliseconds, set it to 0 to disable ignoring.<br><br>
+						Valid range: 0 - 65000 milliseconds.
+					</p>
+					<div>
+						<label for="node-input-interrupt_timeout_35_active">Active:</label>
+						<input type="checkbox" id="node-input-interrupt_timeout_35_active" class="ncd-config-toggle" data-target-id="node-input-interrupt_timeout_35" value="1">
+					</div>
+					<div>
+						<label for="node-input-interrupt_timeout_35"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-interrupt_timeout_35" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 0 milliseconds (Disabled)
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Counter Threshold</strong>
+					<p class="caption">
+						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
+						**Report type will be 'Threshold'.<br><br>
+						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
+					</p>
+					<div>
+						<label for="node-input-counter_threshold_35_gen2_active">Active:</label>
+						<input type="checkbox" id="node-input-counter_threshold_35_gen2_active" class="ncd-config-toggle" data-target-id="node-input-counter_threshold_35_gen2" value="1">
+					</div>
+					<div>
+						<label for="node-input-counter_threshold_35_gen2"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-counter_threshold_35_gen2" placeholder="1000" value="1000">
+					</div>
+					<p class="caption">
+						Default value: Disabled (0).
+					</p>
 				</div>
 			</div>
 		</div>

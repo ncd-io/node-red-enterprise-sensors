@@ -1862,8 +1862,59 @@ module.exports = function(RED) {
 								if(config.counter_threshold_35_active){
 									promises.config_set_counter_threshold_35 = node.config_gateway.config_set_counter_threshold_35(mac, parseInt(config.counter_threshold_35));
 								}
+								if(config.counter_threshold_35_gen2_active){
+									promises.config_set_counter_threshold_35_gen2 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_35_gen2));
+								}
 								if(config.debounce_time_2_active){
 									promises.config_set_debounce_time_35 = node.config_gateway.config_set_debounce_time_35(mac, parseInt(config.debounce_time_2));
+								}
+								if(config.debounce_time_123_active){
+									promises.debounce_time_35 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								}
+								if(config.input_one_123_active){
+									promises.input_one_35 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
+								}
+								if(config.counter_threshold_108_active){
+									promises.counter_threshold_35 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+								}
+								if(config.reset_timeout_108_active){
+									promises.reset_timeout_35 = node.config_gateway.config_set_reset_timeout_108(mac, parseInt(config.reset_timeout_108));
+								}
+								if(config.reset_mode_to_disabled_108_active){
+									promises.reset_mode_35 = node.config_gateway.config_set_reset_mode_to_disabled_108(mac, parseInt(config.reset_mode_to_disabled_108));
+								}
+								if(config.rtc_108){
+									promises.rtc_35 = node.config_gateway.config_set_rtc_108(mac);
+								}
+								if(config.transmission_interval_108_active){
+									promises.transmission_interval_35 = node.config_gateway.config_set_transmission_interval_108(mac, parseInt(config.transmission_interval_108));
+								}
+								if(config.shift_one_108_active){
+									promises.shift_time1_35 = node.config_gateway.config_set_shift_one_108(mac, parseInt(config.shift_one_hours_108), parseInt(config.shift_one_minutes_108));
+								}
+								if(config.shift_two_108_active){
+									promises.shift_time2_35 = node.config_gateway.config_set_shift_two_108(mac, parseInt(config.shift_two_hours_108), parseInt(config.shift_two_minutes_108));
+								}
+								if(config.shift_three_108_active){
+									promises.shift_time3_35 = node.config_gateway.config_set_shift_three_108(mac, parseInt(config.shift_three_hours_108), parseInt(config.shift_three_minutes_108));
+								}
+								if(config.shift_four_108_active){
+									promises.shift_time4_35 = node.config_gateway.config_set_shift_four_108(mac, parseInt(config.shift_four_hours_108), parseInt(config.shift_four_minutes_108));
+								}
+								if(config.quality_of_service_108_active){
+									promises.quality_of_service_35 = node.config_gateway.config_set_quality_of_service_108(mac, parseInt(config.quality_of_service_108));
+								}
+								if(config.fly_interval_108_active){
+									promises.fly_interval_35 = node.config_gateway.config_set_fly_interval_108(mac, parseInt(config.fly_interval_108));
+								}
+								if(config.clear_timers_35){
+									promises.clear_timers_35 = node.config_gateway.config_set_clear_timers_35(mac);
+								}
+								if(config.push_notification_35_active){
+									promises.push_notification_35 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_35));
+								}
+								if(config.interrupt_timeout_35_active){
+									promises.interrupt_timeout_35 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_35));
 								}
 								break;
 							case 36:
