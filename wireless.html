@@ -581,6 +581,9 @@
 
 			push_notification_108_active:{value: ""},
 			push_notification_108: {value: 0},
+			push_notification_33_active:{value: ""},
+			push_notification_33:{value: 0},
+			clear_counter_33:{value:0},
 			input_two_33:{value:1},
 			input_two_33_active:{value:""},
 
@@ -795,6 +798,8 @@
 
 			push_notification_123_active: {value: ""},
 			push_notification_123: {value:0},
+			clear_timers_123_active: {value: ""},
+			clear_timers_123: {value:7},
 			clear_timers_123: {value:0},
 			input_one_123_active: {value: ""},
 			input_one_123: {value:1},
@@ -2868,6 +2873,12 @@
 					</div>
 				</div>
 			</div>
+			<div class="ncd-dependent" data-sensor-33>
+				<div class="form-row ncd-active-check">
+					<label for="node-input-clear_counter_33"><i class="icon-tag"></i>Clear Counter Value</label>
+					<input type="checkbox" id="node-input-clear_counter_33" value="1">
+				</div>
+			</div>
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
@@ -2996,8 +3007,14 @@
 						Resets all the Inputs Counters and their corresponding Uptime values to zero in the next sensor configuration.
 					</p>
 					<div>
-						<label for="node-input-clear_timers_123"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-clear_timers_123" value="1">
+						<label for="node-input-clear_timers_123_active">Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_123_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_123" value="1">
+					</div>
+					<div>
+						<label for="node-input-clear_timers_123"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-clear_timers_123">
+							<option value="7" selected>Enable</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -3048,6 +3065,20 @@
 						<select id="node-input-input_two_33">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<div>
+						<label for="node-input-push_notification_33_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_33_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_33" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_33"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_33">
+							<option value="0" selected>Disable</option>
+							<option value="2">Enable</option>
 						</select>
 					</div>
 				</div>
@@ -6981,7 +7012,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35>
+			<div class="ncd-dependent" data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counter</strong>
 					<p class="caption">
@@ -6996,7 +7027,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35>
+			<div class="ncd-dependent" data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
 					<p>

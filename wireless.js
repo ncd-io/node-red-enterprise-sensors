@@ -1843,16 +1843,16 @@ module.exports = function(RED) {
 								break;
 							case 33:
 								if(config.debounce_time_108_active){
-									promises.debounce_time_33 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
+									promises.debounce_time_108 = node.config_gateway.config_set_debounce_time_108(mac, parseInt(config.debounce_time_108));
 								}
 								if(config.input_two_33_active){
-									promises.input_detection_33 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_33));
+									promises.input_two_33 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_33));
 								}
 								if(config.debounce_time_123_active){
 									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
 								}
 								if(config.counter_threshold_108_active){
-									promises.counter_threshold_33 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
+									promises.counter_threshold_108 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
 								}
 								if(config.transmission_interval_108_active){
 									promises.transmission_interval_33 = node.config_gateway.config_set_transmission_interval_108(mac, parseInt(config.transmission_interval_108));
@@ -1881,11 +1881,11 @@ module.exports = function(RED) {
 								if(config.rtc_108){
 									promises.rtc_33 = node.config_gateway.config_set_rtc_108(mac);
 								}
-								if(config.clear_timers_35){
-									promises.clear_counters_33 = node.config_gateway.config_set_clear_timers_35(mac);
+								if(config.clear_counter_33){
+									promises.clear_counter_33 = node.config_gateway.config_set_clear_counter_33(mac);
 								}
-								if(config.push_notification_35_active){
-									promises.push_notification_33 = node.config_gateway.config_set_push_notification_108(mac, parseInt(config.push_notification_35));
+								if(config.push_notification_33_active){
+									promises.push_notification_33 = node.config_gateway.config_set_push_notification_33(mac, parseInt(config.push_notification_33));
 								}
 								if(config.interrupt_timeout_35_active){
 									promises.interrupt_timeout_33 = node.config_gateway.config_set_interrupt_timeout_108(mac, parseInt(config.interrupt_timeout_35));
@@ -3372,7 +3372,7 @@ module.exports = function(RED) {
 								break;
 							case 123:
 								if(config.clear_timers_123){
-									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, 7);
+									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, clear_timers_123);
 								}
 								if(config.debounce_time_123_active){
 									promises.debounce_time_123 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
@@ -3460,7 +3460,7 @@ module.exports = function(RED) {
 								break;
 							case 125:
 								if(config.clear_timers_123){
-									promises.clear_timers_125 = node.config_gateway.config_set_clear_timers_108(mac, 7);
+									promises.clear_timers_125 = node.config_gateway.config_set_clear_timers_108(mac, clear_timers_123);
 								}
 								if(config.debounce_time_123_active){
 									promises.debounce_time_125 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
@@ -3522,7 +3522,7 @@ module.exports = function(RED) {
 								break;
 							case 126:
 								if(config.clear_timers_123){
-									promises.clear_timers_126 = node.config_gateway.config_set_clear_timers_108(mac, 7);
+									promises.clear_timers_126 = node.config_gateway.config_set_clear_timers_108(mac, clear_timers_123);
 								}
 								if(config.debounce_time_123_active){
 									promises.debounce_time_126 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
