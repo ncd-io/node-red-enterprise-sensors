@@ -581,9 +581,6 @@
 
 			push_notification_108_active:{value: ""},
 			push_notification_108: {value: 0},
-			push_notification_33_active:{value: ""},
-			push_notification_33:{value: 0},
-			clear_counter_33:{value:0},
 			input_two_33:{value:1},
 			input_two_33_active:{value:""},
 
@@ -798,8 +795,7 @@
 
 			push_notification_123_active: {value: ""},
 			push_notification_123: {value:0},
-			clear_timers_123_active: {value: ""},
-			clear_timers_123: {value:7},
+			clear_timers_123: {value:0},
 			input_one_123_active: {value: ""},
 			input_one_123: {value:1},
 			input_two_123_active: {value: ""},
@@ -978,7 +974,22 @@
 			interrupt_timeout_35_active:{value:""},
 			interrupt_timeout_35:{value: 0, validate: NCD_validators.number_range(0, 65535)},
 			counter_threshold_35_gen2_active:{value:""},
-			counter_threshold_35_gen2:{value: 0, validate: NCD_validators.number_range(0, 65535)}
+			counter_threshold_35_gen2:{value: 0, validate: NCD_validators.number_range(0, 65535)},
+
+			push_notification_125_active:{value:""},
+			push_notification_125:{value: 0},
+			probe_one_126_active:{value:""},
+			probe_one_126:{value: 0},
+			probe_two_126_active:{value:""},
+			probe_two_126:{value: 0},
+			probe_three_126_active:{value:""},
+			probe_three_126:{value: 0},
+			threshold_probe_one_126_active:{value:""},
+			threshold_probe_one_126:{value: 3, validate: NCD_validators.number_range(0, 65535)},
+			threshold_probe_two_126_active:{value:""},
+			threshold_probe_two_126:{value: 3, validate: NCD_validators.number_range(0, 65535)},
+			threshold_probe_three_126_active:{value:""},
+			threshold_probe_three_126:{value: 3, validate: NCD_validators.number_range(0, 65535)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1095,6 +1106,8 @@
 					"122": "122 - Wireless 4-20mA Current Splitter",
 					"123": "123 - 3 Channel Production Counter",
 					"124": "124 - Wireless EH Flow Sensor",
+					"125": "125 - 2 Channel OEE AC Current Production Monitor Sensor",
+					"126": "126 - 3 Channel OEE AC Current Production Monitor Sensor",
 					"128": "128 - Wireless Water Detect Sensor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
@@ -1418,6 +1431,8 @@
 			<option value="122">122 - Wireless 4-20mA Current Splitter</option>
 			<option value="123">123 - 3 Channel Production Counter</option>
 			<option value="124">124 - Wireless EH Flow Sensor</option>
+			<option value="125">125 - 2 Channel OEE AC Current Production Monitor Sensor</option>
+			<option value="126">126 - 3 Channel OEE AC Current Production Monitor Sensor</option>
 			<option value="128">128 - Wireless Water Detect Sensor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
@@ -1464,7 +1479,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2853,12 +2868,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33>
-				<div class="form-row ncd-active-check">
-					<label for="node-input-clear_counter_33"><i class="icon-tag"></i>Clear Counter Value</label>
-					<input type="checkbox" id="node-input-clear_counter_33" value="1">
-				</div>
-			</div>
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
@@ -2980,21 +2989,15 @@
 					<strong>**The following settings are compatible only with sensors running firmware version 10 or higher (Gen 2).</strong>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counters</strong>
 					<p class="caption">
-						Resets the Digital Inputs 1, 2, and 3 counters and their corresponding uptime values to zero.
+						Resets all the Inputs Counters and their corresponding Uptime values to zero in the next sensor configuration.
 					</p>
 					<div>
-						<label for="node-input-clear_timers_123_active">Active:</label>
-						<input type="checkbox" id="node-input-clear_timers_123_active" class="ncd-config-toggle" data-target-id="node-input-clear_timers_123" value="1">
-					</div>
-					<div>
-						<label for="node-input-clear_timers_123"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-clear_timers_123">
-							<option value="7" selected>Enable</option>
-						</select>
+						<label for="node-input-clear_timers_123"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-clear_timers_123" value="1">
 					</div>
 				</div>
 			</div>
@@ -3035,7 +3038,7 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-33>
 				<div class="form-row ncd-active-check">
-					<strong>Set Contact Closure Detection</strong>
+					<strong>Set Input Detection</strong>
 					<div>
 						<label for="node-input-input_two_33_active">Active:</label>
 						<input type="checkbox" id="node-input-input_two_33_active" class="ncd-config-toggle" data-target-id="node-input-input_two_33" value="1">
@@ -3045,20 +3048,6 @@
 						<select id="node-input-input_two_33">
 							<option value="0">Falling Edge Trigger</option>
 							<option value="1" selected>Rising Edge Trigger</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Enable Push Notification</strong>
-					<div>
-						<label for="node-input-push_notification_33_active">Active:</label>
-						<input type="checkbox" id="node-input-push_notification_33_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_33" value="1">
-					</div>
-					<div>
-						<label for="node-input-push_notification_33"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-push_notification_33">
-							<option value="0" selected>Disable</option>
-							<option value="2">Enable</option>
 						</select>
 					</div>
 				</div>
@@ -3122,11 +3111,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123 data-sensor-35>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-123 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
-						Configures the debounce time in milliseconds for all digital inputs. State changes occurring within this debounce period will be ignored.<br>
+						Configures the debounce time in milliseconds for all inputs. State changes occurring within this debounce period will be ignored.<br>
 						Note: This setting is recommended for mechanically triggered inputs like buttons or relay/contactor outputs.<br><br>
 						Range: 10 - 65000msec.
 					</p>
@@ -3143,11 +3132,11 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123 data-sensor-35>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-123 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
-					<strong>Set Digital Input 1 Detection</strong>
+					<strong>Set Input 1 Detection</strong>
 					<p>
-						Configures how the counter increments and how uptime is calculated for Digital Input 1:<br><br>
+						Configures how the counter increments and how uptime is calculated for Input 1:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
 					</p>
@@ -3167,11 +3156,11 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
-					<strong>Set Digital Input 2 Detection</strong>
+					<strong>Set Input 2 Detection</strong>
 					<p>
-						Configures how the counter increments and how uptime is calculated for Digital Input 2:<br><br>
+						Configures how the counter increments and how uptime is calculated for Input 2:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
 					</p>
@@ -3190,10 +3179,12 @@
 						Default value: Falling Edge.
 					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-126>
 				<div class="form-row ncd-active-check">
-					<strong>Set Digital Input 3 Detection</strong>
+					<strong>Set Input 3 Detection</strong>
 					<p>
-						Configures how the counter increments and how uptime is calculated for Digital Input 3:<br><br>
+						Configures how the counter increments and how uptime is calculated for Input 3:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
 					</p>
@@ -3213,7 +3204,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-108 data-sensor-119 data-sensor-123>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-119 data-sensor-123 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
@@ -3291,15 +3282,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
 					<p>
 						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
 						**Report type will be 'Interrupt'.<br><br>
-						IO1 - Digital input 1<br>
-						IO2 - Digital input 2<br>
-						IO3 - Digital input 3<br>
+						IO1 - Input 1<br>
+						IO2 - Input 2<br>
+						IO3 - Input 3<br>
 					</p>
 					<div>
 						<label for="node-input-push_notification_123_active">Active:</label>
@@ -3317,6 +3308,32 @@
 							<option value="3">Enable on IO1 and IO2</option>
 							<option value="5">Enable on IO1 and IO3</option>
 							<option value="6">Enable on IO2 and IO3</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-125>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p>
+						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
+						**Report type will be 'Interrupt'.<br><br>
+						IO1 - Input 1<br>
+						IO2 - Input 2<br>
+					</p>
+					<div>
+						<label for="node-input-push_notification_125_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_125_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_125" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_125"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_125">
+							<option value="0" selected>Disable All</option>
+							<!-- <option value="7">Enable All</option> -->
+							<!-- <option value="31">Enable All</option> -->
+							<option value="1">Enable on IO1</option>
+							<option value="2">Enable on IO2</option>
+							<option value="3">Enable All</option>
 						</select>
 					</div>
 				</div>
@@ -3343,7 +3360,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-119>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-125 data-sensor-126 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
@@ -3520,6 +3537,8 @@
 						<input type="checkbox" id="node-input-rtc_108" value="1">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
 					<p class="caption">
@@ -6962,11 +6981,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-35>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Counter</strong>
 					<p class="caption">
-						Resets the Digital Input counter and the corresponding uptime value to zero in the next sensor configuration.
+						Resets the Input counter and the corresponding uptime value to zero in the next sensor configuration.
 					</p>
 					<div>
 						<label for="node-input-clear_timers_35">Active:</label>
@@ -6976,6 +6995,8 @@
 						Default value: Disabled.
 					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
 					<p>
@@ -6997,6 +7018,8 @@
 						Default value: Disabled.
 					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Interrupt Timeout</strong>
 					<p class="caption">
@@ -7015,10 +7038,12 @@
 						Default value: 0 milliseconds (Disabled)
 					</p>
 				</div>
+			</div>
+			<!-- <div class="ncd-dependent" data-sensor-33 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
-						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
+						The sensor will transmit data when any counter reaches a multiple of this threshold value.<br>
 						**Report type will be 'Threshold'.<br><br>
 						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
 					</p>
@@ -7032,6 +7057,132 @@
 					</div>
 					<p class="caption">
 						Default value: Disabled (0).
+					</p>
+				</div>
+			</div> -->
+			<div class="ncd-dependent" data-sensor-33 data-sensor-125 data-sensor-126>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor One CT</strong>
+					<p>
+						Select the AC Current probe type for Input 1.
+					</p>
+					<div>
+						<label for="node-input-probe_one_126_active">Active:</label>
+						<input type="checkbox" id="node-input-probe_one_126_active" class="ncd-config-toggle" data-target-id="node-input-probe_one_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-probe_one_126"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-probe_one_126">
+							<option value="0" selected>100A</option>
+							<option value="1">200A</option>
+							<option value="2">600A</option>
+							<option value="3">1000A</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 100A.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set AC Current Threshold One</strong>
+					<p class="caption">
+						The sensor increments the cycle counter and calculates uptime once the measured AC Current exceeds this threshold.<br>
+						Note: This range depends on the selected AC Current probe type.
+					</p>
+					<div>
+						<label for="node-input-threshold_probe_one_126_active">Active:</label>
+						<input type="checkbox" id="node-input-threshold_probe_one_126_active" class="ncd-config-toggle" data-target-id="node-input-threshold_probe_one_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-threshold_probe_one_126"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-threshold_probe_one_126" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 3A.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-125 data-sensor-126>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Two CT</strong>
+					<p>
+						Select the AC Current probe type for Input 2.
+					</p>
+					<div>
+						<label for="node-input-probe_two_126_active">Active:</label>
+						<input type="checkbox" id="node-input-probe_two_126_active" class="ncd-config-toggle" data-target-id="node-input-probe_two_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-probe_two_126"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-probe_two_126">
+							<option value="0" selected>100A</option>
+							<option value="1">200A</option>
+							<option value="2">600A</option>
+							<option value="3">1000A</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 100A.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set AC Current Threshold Two</strong>
+					<p class="caption">
+						The sensor increments the cycle counter and calculates uptime once the measured AC Current exceeds this threshold.<br>
+						Note: This range depends on the selected AC Current probe type.
+					</p>
+					<div>
+						<label for="node-input-threshold_probe_two_126_active">Active:</label>
+						<input type="checkbox" id="node-input-threshold_probe_two_126_active" class="ncd-config-toggle" data-target-id="node-input-threshold_probe_two_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-threshold_probe_two_126"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-threshold_probe_two_126" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 3A.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-126>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sensor Three CT</strong>
+					<p>
+						Select the AC Current probe type for Input 3.
+					</p>
+					<div>
+						<label for="node-input-probe_three_126_active">Active:</label>
+						<input type="checkbox" id="node-input-probe_three_126_active" class="ncd-config-toggle" data-target-id="node-input-probe_three_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-probe_three_126"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-probe_three_126">
+							<option value="0" selected>100A</option>
+							<option value="1">200A</option>
+							<option value="2">600A</option>
+							<option value="3">1000A</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 100A.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set AC Current Threshold Three</strong>
+					<p class="caption">
+						The sensor increments the cycle counter and calculates uptime once the measured AC Current exceeds this threshold.<br>
+						Note: This range depends on the selected AC Current probe type.
+					</p>
+					<div>
+						<label for="node-input-threshold_probe_three_126_active">Active:</label>
+						<input type="checkbox" id="node-input-threshold_probe_three_126_active" class="ncd-config-toggle" data-target-id="node-input-threshold_probe_three_126" value="1">
+					</div>
+					<div>
+						<label for="node-input-threshold_probe_three_126"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-threshold_probe_three_126" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 3A.
 					</p>
 				</div>
 			</div>
