@@ -2541,6 +2541,11 @@ module.exports = function(RED) {
 									promises.sensor_boot_time_78 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
 								}
 								break;
+							case 93:
+								if(config.sensor_boot_time_78_active){
+									promises.sensor_boot_time_93 = node.config_gateway.config_set_sensor_boot_time_78(mac, parseInt(config.sensor_boot_time_78));
+								}
+								break;
 							case 95:
 								if(config.sensor_boot_time_420ma_active){
 									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
