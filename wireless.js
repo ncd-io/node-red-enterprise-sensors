@@ -28,8 +28,6 @@ module.exports = function(RED) {
 		const configuration_map_location = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/data/configuration_map.json';
 		const sensor_type_map_location = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/data/sensor_type_map.json';
 
-		this.config_node_capable = [114];
-
 		// comms_timer object var added to clear the time to prevent issues with rapid redeploy
 		this.comms_timer;
 
@@ -135,113 +133,145 @@ module.exports = function(RED) {
 							});
 						}
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
-						node.gateway.on('sensor_mode', (d) => {
-							if(d.mode == "FLY" || d.mode == "OTF"){
-								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request') && d.mode == "FLY"){
-									node.request_manifest(d.mac);
-								}else if(node.config_node_capable.includes(d.type)){
+						node.gateway.on('sync', (d) => {
+							// console.log('Sync Received in Config Node');
+							// console.log(d);
+							const addr = d.payload.address;
+							const sensor_type = d.payload.sensor_type;
+							const type = d.payload.type;
+							if(d.payload.type == 'sync_check_in' || d.payload.type == 'sync_end' || d.payload.type == 'manual_sync_check_in'){
+								if(Object.hasOwn(node.sensor_list, addr) && Object.hasOwn(node.sensor_list[addr], 'update_request')){
+									node.request_manifest(addr);
+								}else if(Object.hasOwn(this.gateway.sensor_libs, sensor_type)){
 									// API CONFIGURATION NODE
-									let values = d.reported_config.machine_values;
-									if(Object.hasOwn(values, 'uptime_counter')) delete values.uptime_counter;
-									if(Object.hasOwn(values, 'tx_lifetime_counter')) delete values.tx_lifetime_counter;
-									if(Object.hasOwn(values, 'reserved')) delete values.reserved;
-
+									// let values = d.reported_config.machine_values;
+									const config_map = this.gateway.sensor_libs[sensor_type].get_config_map(d.payload.firmware_version);
 									let store_flag = false;
 									
-									if(!Object.hasOwn(node.sensor_configs, d.mac)){
-										node.sensor_configs[d.mac] = {};
+
+									if(!Object.hasOwn(node.sensor_configs, addr)){
+										node.sensor_configs[addr] = {};
 										store_flag = true;
 									}
+
+									// delete so we don't have to consider it for storage
+									// TODO re-add, but remove from storage consideration for mapping
+									// if(Object.hasOwn(d.payload, 'tx_lifetime_counter')){
+									// 	delete d.payload.tx_lifetime_counter;
+									// }
+
 									// Store hardware_id outside of reported_configs
-									if(!Object.hasOwn(node.sensor_configs[d.mac], 'hardware_id') && Object.hasOwn(values, 'hardware_id')){
-										node.sensor_configs[d.mac].hardware_id = values.hardware_id;
-										store_flag = true;
-									}
-									if(Object.hasOwn(values, 'hardware_id')) delete values.hardware_id;
+									// if(!Object.hasOwn(node.sensor_configs[addr], 'hardware_id') && Object.hasOwn(d.payload, 'hardware_id')){
+									// 	node.sensor_configs[addr].hardware_id = d.payload.hardware_id;
+									// 	delete d.payload.hardware_id;
+									// 	store_flag = true;
+									// }
+
+									// Store core_version outside of reported_configs
+									// if(Object.hasOwn(d.payload, 'core_version')){
+									// 	node.sensor_configs[addr].core_version = d.payload.core_version;
+									// 	store_flag = true;
+									// }
+
 									// Loop through and translate and validate values.
 									// We want to allow passing in integers instead of byte arrays etc.
 									// This the FLY so we don't need to validate.
-									values.network_id = config.pan_id;
-									if(Object.hasOwn(d, 'nodeId')){
-										values.node_id = d.nodeId;
-									}
-									for(let key in values){
-										if(Object.hasOwn(node.sensor_type_map, d.type) && Object.hasOwn(node.sensor_type_map[d.type], 'configs') && Object.hasOwn(node.sensor_type_map[d.type].configs, key)){
-											let map_key = node.sensor_type_map[d.type].configs[key];
-											if(Object.hasOwn(node.configuration_map, map_key) && Object.hasOwn(node.configuration_map[map_key], 'validator')){
-												if(Object.hasOwn(node.configuration_map[map_key].validator, 'type')){
-													switch(node.configuration_map[map_key].validator.type){
-														// case 'uint8':
-														// 	console.log(key);
-														// 	console.log(values[key]);
-														// 	values[key] = values[key].reduce(msbLsb);
-														// 	break;
-														case 'uint16':
-															values[key] = values[key].reduce(msbLsb);
-															break;
-														case 'uint24':
-															values[key] = values[key].reduce(msbLsb);
-															break;
-														case 'uint32':
-															values[key] = values[key].reduce(msbLsb);
-															break;
-														case 'hexString':
-															values[key] = values[key].toLowerCase();
-															break;
+									// values.network_id = config.pan_id;
+									// if(Object.hasOwn(d, 'node_id')){
+									// 	values.node_id = d.nodeId;
+									// }
+									for(let key in d.payload){
+										if(Object.hasOwn(config_map, key)){
+											if(!Object.hasOwn(config_map[key], 'write_index')){
+												// TODO
+												if(!Object.hasOwn(node.sensor_configs[addr], key) || Object.hasOwn(node.sensor_configs[addr], key) && node.sensor_configs[addr][key] != d.payload[key]){
+													console.log('Config '+key+' is read only, moving from payload');
+													node.sensor_configs[addr][key] = d.payload[key];
+													if(key !== 'tx_lifetime_counter'){
+														store_flag = true;
 													}
 												}
+												delete d.payload[key];
 											}
+										}else{
+											console.log('Not in config map, deleting key: '+key);
+											delete d.payload[key];
 										}
 									}
 									// If object has no reported configs, instantiate them
-									if(!Object.hasOwn(node.sensor_configs[d.mac], 'reported_configs')){
-										node.sensor_configs[d.mac].reported_configs = {};
+									if(!Object.hasOwn(node.sensor_configs[addr], 'reported_configs')){
+										// node.sensor_configs[d.mac].reported_configs = {};
+										node.sensor_configs[addr].reported_configs = d.payload;
 										store_flag = true;
 									}
 									// If object has no desired configs, add them
-									if(!Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs')){
-										node.sensor_configs[d.mac].desired_configs = values;
+									if(!Object.hasOwn(node.sensor_configs[addr], 'desired_configs')){
+										node.sensor_configs[addr].desired_configs = d.payload;
 										store_flag = true;
 									}
-									if(!Object.hasOwn(node.sensor_configs[d.mac], 'type')){
-										node.sensor_configs[d.mac].type = d.type;
-										store_flag = true;
-									}else if(node.sensor_configs[d.mac].type != d.type){
-										// This code is only called when the type doesn't match what the sensor reports, only foreseeable if user swaps sensor modules OR preloads configs for wrong sensor type
-										delete node.sensor_configs[d.mac].desired_configs;
-										node.sensor_configs[d.mac].type = d.type;
-										node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, addr: d.mac, time: Date.now()});
-										store_flag = true;
-									}
-									if(!isDeepStrictEqual(node.sensor_configs[d.mac].reported_configs, values)){
+
+									// We're setting sensor_type above, so we can remove this.
+									// if(!Object.hasOwn(node.sensor_configs[addr], 'type')){
+									// 	node.sensor_configs[addr].type = d.type;
+									// 	store_flag = true;
+									// }else if(node.sensor_configs[d.mac].type != d.type){
+									// 	// This code is only called when the type doesn't match what the sensor reports, only foreseeable if user swaps sensor modules OR preloads configs for wrong sensor type
+									// 	delete node.sensor_configs[d.mac].desired_configs;
+									// 	node.sensor_configs[d.mac].type = d.type;
+									// 	node._emitter.emit('config_node_error', {topic: 'sensor_type_error', payload: {'error': "Sensor type used for desired configs does not match sensor type reported by sensor. Deleting desired configs"}, addr: d.mac, time: Date.now()});
+									// 	store_flag = true;
+									// }
+
+
+									if(!isDeepStrictEqual(node.sensor_configs[addr].reported_configs, d.payload)){
 										// Values are different, update the stored configs and write to file
-										node.sensor_configs[d.mac].reported_configs = values;
+										node.sensor_configs[addr].reported_configs = d.payload;
 										// If reported configs change, but the auto config does not control configs, update automatically
 										// Will duplicate setting desired configs on first run, but only once or if user clear desired_configs
-										if(!Object.hasOwn(node.sensor_configs[d.mac], 'api_config_override')){
-											node.sensor_configs[d.mac].desired_configs = values;
+										if(!Object.hasOwn(node.sensor_configs[addr], 'api_config_override')){
+											node.sensor_configs[addr].desired_configs = d.payload;
 										}
 										store_flag = true;
-										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
+										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[addr], address: addr, time: Date.now()});
 										// node.send({topic: 'sensor_configs_update', payload: node.sensor_configs[d.mac], time: Date.now()});
 									}
 
-									if(Object.hasOwn(node.sensor_configs[d.mac], 'desired_configs') && d.mode != "OTF"){
-										let required_configs = this.get_required_configs(node.sensor_configs[d.mac].desired_configs, node.sensor_configs[d.mac].reported_configs);
-										if(Object.keys(required_configs).length !== 0){
-											node.sensor_configs[d.mac].temp_required_configs = required_configs;
+									if(type == 'sync_check_in'){
+										// TODO add backwards compatibility
+										if(!config.disable_fly_compatibility){
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: d.payload});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: d.payload});
+										}
+										if(Object.hasOwn(node.sensor_configs[addr], 'desired_configs') && Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !isDeepStrictEqual(node.sensor_configs[addr].reported_configs, node.sensor_configs[addr].desired_configs)){
 											store_flag = true;
 											var tout = setTimeout(() => {
-												this._send_otn_request(d);
+												this.sync_init(addr, sensor_type);
 											}, 100);
+										}
+									}else if(type == 'manual_sync_check_in'){
+										node.configure(addr, sensor_type);
+									}else if(type == 'sync_end'){
+										console.log('Sync Process Finished for sensor '+addr);
+										console.log(!config.disable_fly_compatibility);
+										if(!config.disable_fly_compatibility){
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: d.payload});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: d.payload});	
 										}
 									}
 									if(store_flag){
 										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 									}
 								}
-							}else if(d.mode == "OTN" && Object.hasOwn(node.sensor_configs, d.mac) && Object.hasOwn(node.sensor_configs[d.mac], 'temp_required_configs')){
-								node.configure(d);
+							}else if(type == 'sync_init'){
+								console.log('!!!! Sync Init Received');
+								console.log(!config.disable_fly_compatibility);
+								if(!config.disable_fly_compatibility){
+									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
+									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
+								}
+								if(node.sensor_configs[addr] && node.sensor_configs[addr].api_config_override){
+									node.configure(addr, sensor_type);
+								}
 							}
 						});
 						node.gateway.on('manifest_received', (manifest_data) => {
@@ -327,6 +357,61 @@ module.exports = function(RED) {
 			}
 		};
 
+		this.sync_init = function(addr, type){
+			console.log('!!!! Sync Init for sensor '+addr);
+			return new Promise((top_fulfill, top_reject) => {
+				var msg = {};
+				setTimeout(() => {
+					var tout = setTimeout(() => {
+						// switch to emitter for this
+						// node.status(modes.PGM_ERR);
+						// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+						console.log('OTN Request Timed Out');
+					}, 10000);
+
+					var promises = {};
+					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
+					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538, 543];
+					if(original_otf_devices.includes(type)){
+						console.log('!!!! Entering OTN mode with original command');
+						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
+						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode(addr);
+					}else{
+						console.log('!!!! Entering OTN mode with other command');
+						// This command is used for OTF on types not 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
+						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode_common(addr);
+					}
+					promises.finish = new Promise((fulfill, reject) => {
+						node.gateway.queue.add(() => {
+							return new Promise((f, r) => {
+								clearTimeout(tout);
+								// node.status(modes.FLY);
+								fulfill();
+								f();
+							});
+						});
+					});
+					for(var i in promises){
+						(function(name){
+							promises[name].then((f) => {
+								console.log('-=-=-=-=-=-=-=-==-=-=-=-=promise result');
+								console.log(name);
+								
+								if(name != 'finish') msg[name] = true;
+								else{
+									// #OTF
+									node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+									top_fulfill(msg);
+								}
+							}).catch((err) => {
+								msg[name] = err;
+							});
+						})(i);
+					}
+				});
+			});
+		};
+
 		this.get_required_configs = function(desired_configs, reported_configs){
 			const mismatched = {};
 			for (const key in desired_configs) {
@@ -340,8 +425,20 @@ module.exports = function(RED) {
 			return mismatched;
 		};
 
-		// TODO consider adding logic for if only 1 config to go out, skip OTN request
-		this.configure = function(sensor){
+		this.sync_check_reboot = function(addr){
+			if(node.sensor_configs[addr].reported_configs.network_id != node.sensor_configs[addr].desired_configs.network_id){
+				return true;
+			}else{
+				return false;
+			}
+		};
+
+		this.configure = function(addr, type){
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
+			console.log('!!!!!!!!!!.configure!!!!!!!!!!');
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
+			console.log(addr);
+			console.log(type);
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
 				setTimeout(() => {
@@ -352,50 +449,23 @@ module.exports = function(RED) {
 						// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: sensor.mac});
 					}, 60000);
 					// node.status(modes.PGM_NOW);
-					var mac = sensor.mac;
+					var mac = addr;
 					var promises = {};
-					var reboot = false;
-					
-					let configs = node.sensor_configs[sensor.mac].temp_required_configs;
-					for (const key in configs) {
-						let config_obj = node.configuration_map[node.sensor_type_map[sensor.type].configs[key]];
-						if(Object.hasOwn(config_obj, 'validator') && Object.hasOwn(config_obj.validator, 'type')){
-							if(key == 'node_id' || key == 'delay'){
-								// TODO expand this logic in the future for cases where sensor doesn't report delay.
-								if(Object.hasOwn(configs, 'node_id') && Object.hasOwn(configs, 'delay') && Object.hasOwn(config_obj, "delay") && Object.hasOwn(config_obj, "node_id")){
-									// If the sensor has and should have node id and delay (standard sensor)
-									promises['node_id_and_delay'] = node.gateway.config_node_id_and_delay(sensor.mac, parseInt(configs['node_id']), parseInt(configs['delay']));
-								}else if(Object.hasOwn(configs, 'node_id') && Object.hasOwn(config_obj, "node_id") && !Object.hasOwn(config_obj, "delay")){
-									// If the sensor has and should have node id but should not have delay  (special sensor)
-									// We will ignore delay setting in this case and set it to 0
-									promises['node_id_and_delay'] = node.gateway.config_node_id_and_delay(sensor.mac, parseInt(configs['node_id']), 0);
-								}
-							}
-							switch(config_obj.validator.type){
-								case 'hexString':
-									console.log('Configuring hexString '+key+' to '+configs[key] + ' eval as '+parseInt(configs[key], 16));
-									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key], 16));
-									break;
-								default:
-									promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
-									break;
-							}
-						}else{
-							promises[key] = node.gateway[config_obj.call](sensor.mac, parseInt(configs[key]));
-						}
-					}
+					var reboot = this.sync_check_reboot(addr);
+										
+					promises.sync_command = node.gateway.send_sync_configs(addr, node.sensor_configs[addr]);
 
 					// These sensors listed in original_otf_devices use a different OTF code.
 					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 					// If we changed the network ID reboot the sensor to take effect.
 					// TODO if we add the encryption key command to node-red we need to reboot for it as well.
 					if(reboot){
-						promises.reboot_sensor = node.gateway.config_reboot_sensor(mac);
+						promises.reboot_sensor = node.gateway.config_reboot_sensor(addr);
 					} else {
-						if(original_otf_devices.includes(sensor.type)){
-							promises.exit_otn_mode = node.gateway.config_exit_otn_mode(mac);
+						if(original_otf_devices.includes(type)){
+							promises.exit_otn_mode = node.gateway.config_exit_otn_mode(addr);
 						}else{
-							promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(mac);
+							promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(addr);
 						}
 					}
 					promises.finish = new Promise((fulfill, reject) => {
@@ -416,7 +486,6 @@ module.exports = function(RED) {
 										switch(f.result){
 											case 255:
 												success[name] = true;
-												delete node.sensor_configs[mac].temp_required_configs[name];
 												break;
 											default:
 												success[name] = {
@@ -1278,6 +1347,28 @@ module.exports = function(RED) {
 			node.set_status();
 			node.send({topic: 'sensor_data', payload: d, time: Date.now()});
 		});
+		node.gateway.on('sync', (d) => {
+			switch (d.payload.type){
+				case 'sync_check_in':
+					node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+				case 'sync_init':
+					node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+			}
+		});
 		node.gateway.on('sensor_mode', (d) => {
 			node.set_status();
 			node.send({topic: 'sensor_mode', payload: d, time: Date.now()});
@@ -1344,6 +1435,8 @@ module.exports = function(RED) {
 			// OTN: {fill:"yellow",shape:"ring",text:"OTN Received, OTF Configuration Initiated"},
 			// OFF: {fill:"green",shape:"dot",text:"OFF Recieved, OTF Configuration Completed"}
 			FLY: {fill:"yellow",shape:"ring",text:"FLY"},
+			INI: {fill:"yellow",shape:"ring",text:"Sync-Init"},
+			END: {fill:"yellow",shape:"ring",text:"Sync-End"},
 			OTN: {fill:"yellow",shape:"ring",text:"OTN Received, Config Entered"},
 			OTF: {fill:"green",shape:"dot",text:"OTF Received, Config Complete"},
 			UPTHWRN: {fill:"yellow",shape:"ring",text:"Threshold is low"}
@@ -4360,6 +4453,77 @@ module.exports = function(RED) {
 					});
 				}
 			});
+			this.pgm_on('sync-'+config.addr, (data) => {
+				// node.warn('Wireless Device Node Syncing Sensor: ' + config.addr);
+				// node.warn(data);
+				let message = {
+					topic: 'sync',
+					type: data.payload.type,
+					...data,
+					time: Date.now()
+				};
+				switch(data.payload.type){
+					case 'sync_check_in':
+						if(config.auto_config && config.on_the_fly_enable){
+							if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+								this.gateway_node.sync_init(data);
+								message.sync_init = true;
+							}
+						}
+						break;
+					case 'sync_init':
+						// Disabled for now, enable for wireless device configs
+
+						// this.config_gateway.send_sync_configs(data.payload.addr, data.payload.sensor_type);
+						// setTimeout(() => {
+						// 	let msg = {};
+						// 	var tout = setTimeout(() => {
+						// 		// switch to emitter for this
+						// 		// node.status(modes.PGM_ERR);
+						// 		// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+						// 		console.log('OTN Request Timed Out');
+						// 	}, 10000);
+		
+						// 	var promises = {};
+						// 	promises.send_sync_configs = this.config_gateway.send_sync_configs(data.payload.address, data.payload.sensor_type, config);
+						// 	promises.finish = new Promise((fulfill, reject) => {
+						// 		node.config_gateway.queue.add(() => {
+						// 			return new Promise((f, r) => {
+						// 				clearTimeout(tout);
+						// 				node.status(modes.FLY);
+						// 				fulfill();
+						// 				f();
+						// 			});
+						// 		});
+						// 	});
+						// 	for(var i in promises){
+						// 		(function(name){
+						// 			promises[name].then((f) => {
+						// 				if(name != 'finish') msg[name] = true;
+						// 				else{
+						// 					node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
+						// 					top_fulfill(msg);
+						// 				}
+						// 			}).catch((err) => {
+						// 				msg[name] = err;
+						// 			});
+						// 		})(i);
+						// 	}
+						// });
+						break;
+					case 'sync_acknowledgment':
+						// node.warn('Sync Acknowledgement Received');
+						// node.warn(data);
+						break;
+					case 'sync_acknowledgment_error':
+						// node.warn('Sync Acknowledgement Error Received');
+						// node.warn(data);
+						break;
+					default:
+						console.log('Unrecognized sync packet');
+				}
+				node.send(message);
+			});
 			this.pgm_on('sensor_mode-'+config.addr, (sensor) => {
 				if(sensor.mode in modes){
 					node.status(modes[sensor.mode]);
@@ -4741,15 +4905,17 @@ module.exports = function(RED) {
 					break;
 				case 'sensor_config_options':
 					msg.request = msg.payload;
-					// TODO move logic to function
-					if(typeof msg.payload == 'number' && Object.hasOwn(node._gateway_node.sensor_type_map, msg.payload)){
-						let options = this.get_config_options(msg.payload);
+					console.log(typeof msg.payload == 'object');
+					console.log(Object.hasOwn(msg.payload, 'sensor_type'));
+					console.log(Object.hasOwn(this.gateway.sensor_libs, msg.payload.sensor_type));
+					if(typeof msg.payload == 'object' && Object.hasOwn(msg.payload, 'sensor_type') && Object.hasOwn(this.gateway.sensor_libs, msg.payload.sensor_type)){
+						let options = this.get_config_options(msg.payload.sensor_type, msg.payload.firmware_version);
 						msg.payload = options;
 						msg.status = 200;
 						msg.time = Date.now();
 						send(msg);
 					}else{
-						msg.payload = {error: 'get_config_options error: Payload must be a valid sensor type number'};
+						msg.payload = {error: 'get_config_options error: msg.payload must be object with sensor_type property corresponding to a valid sensor type number. e.g. {sensor_type: 114}. Optionally pass in firmware_version property to get options for specific firmware version e.g. {sensor_type: 114, firmware_version: 2}.'};
 						msg.status = 500;
 						msg.time = Date.now();
 						send(msg);
@@ -4810,48 +4976,36 @@ module.exports = function(RED) {
 			return response;
 		};
 
-		this.get_config_options = function(sensor_type){
-			if(Object.hasOwn(node._gateway_node.sensor_type_map, sensor_type)){
-				const config_list = node._gateway_node.sensor_type_map[sensor_type].configs;
+		this.get_config_options = function(sensor_type, firmware_version = 1){
+			if(Object.hasOwn(this.gateway.sensor_libs, sensor_type)){
+				const config_list = this.gateway.sensor_libs[sensor_type].get_config_map(firmware_version);
 				let response = {};
 				for (const key in config_list){
-					const info = node._gateway_node.configuration_map[config_list[key]];
+					const info = config_list[key];
 					// If sensors actually reports and supports the listed config
-					if(Object.hasOwn(info, 'fly_not_reported') && info.fly_not_reported.includes(sensor_type)){
-						continue;
-					}
-					response[key] = {
-						title: info.title,
-						default_value: info.default_value,
-					};
-					if(Object.hasOwn(info, 'main_caption')){
-						response[key].description = info.main_caption;
-					}
-					if(Object.hasOwn(info, 'validator')){
-						if(Object.hasOwn(info.validator, 'generated')){
-							delete info.validator.generated;
+					console.log(key);
+					console.log(info);
+					if(Object.hasOwn(info, 'write_index') && !Object.hasOwn(info, 'read_only')){
+						response[key] = {
+							title: info.descriptions.title,
+							default_value: info.default_value,
+						};
+						if(Object.hasOwn(info.descriptions, 'main_caption')){
+							response[key].description = info.descriptions.main_caption;
 						}
-						response[key] = {...response[key], ...info.validator};
+						if(Object.hasOwn(info.descriptions, 'sub_caption')){
+							response[key].description = info.descriptions.main_caption;
+						}
+						if(Object.hasOwn(info, 'validator')){
+							if(Object.hasOwn(info.validator, 'generated')){
+								delete info.validator.generated;
+							}
+							response[key] = {...response[key], ...info.validator};
+						}
+						if(Object.hasOwn(info, 'options')){
+							response[key].options = info.options;
+						}
 					}
-					if(Object.hasOwn(info, 'options')){
-						response[key].options = info.options;
-					}
-					
-					// if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'type')){
-
-					// 	response[key].value_type = info.validator.type;
-					// }
-					// if(Object.hasOwn(info, 'options')){
-					// 	response[key].options = info.options;
-					// }else{
-					// 	if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'min')){
-					// 		response[key].minimum_value = info.validator.min;
-					// 	}
-					// 	if(Object.hasOwn(info, 'validator') && Object.hasOwn(info.validator, 'max')){
-					// 		response[key].maximum_value = info.validator.max;
-					// 	}
-					// }
-					// node.warn(info);
 				}
 				return response;
 			}else{
@@ -4864,12 +5018,96 @@ module.exports = function(RED) {
 			var response = {};
 			let error_msg = {};
 			let warning_msg = {};
+
 			if(desired_configs == null || typeof desired_configs == 'undefined'){
 				return {error: 'msg.payload is required. It must be an array of sensor configuration objects. Each object in the array must have addr, type, and configs properties i.e. [{addr: "sensor_mac_address", type: sensor_type_number, configs: {config_name: desired_value}}]'};
 			}else if(!Array.isArray(desired_configs) || desired_configs.length == 0){
 				return {error: 'msg.payload must be an array of sensor configuration objects. Each object in the array must have addr, type, and configs properties i.e. [{addr: "sensor_mac_address", type: sensor_type_number, configs: {config_name: desired_value}}]'};
 			}
+			
+			const build_error = (sensor, key, detail) => {
+				return {
+					type: 'error',
+					message: `${detail.text} for ${key} on sensor ${sensor.addr}.`,
+					detail: {
+						config_name: key,
+						...detail // Merges everything: received, help, expected, etc.
+					}
+				};
+			};
+			
+			const build_warning = (sensor, key, detail) => {
+				return {
+					type: 'warning',
+					message: `${detail.text} for ${key} on sensor ${sensor.addr}.`,
+					detail: {
+						config_name: key,
+						...detail,
+						help: detail.help || "This warning does not prevent the configuration from going through."
+					}
+				};
+			};
+
+			const validation_methods = {
+				// HEX: Strict, no colons allowed
+				hex: (val, validator, configName, sensor) => {
+					const strVal = String(val);
+					if (!/^[0-9a-f]+$/i.test(strVal)) {
+						return { error: this.build_error(sensor, configName, val, "Invalid hex string", "Hex string should only contain 0-9 and a-f.") };
+					}
+					if (validator.length && strVal.length !== validator.length) {
+						return { error: this.build_error(sensor, configName, val, "Invalid length for hex string", `Expected ${validator.length}, got ${strVal.length}`) };
+					}
+					
+					const result = { value: strVal.toLowerCase() };
+					if (!validator.length) {
+						result.warning = this.build_warning(sensor, configName, "Missing length validator", "hexString");
+					}
+					return result;
+				},
+			
+				// MAC: Flexible, strips colons first
+				mac: (val, validator, configName, sensor) => {
+					const clean = String(val).replace(/:/g, '');
+					if (!/^[0-9a-f]+$/i.test(clean)) {
+						return { error: this.build_error(sensor, configName, val, "Invalid MAC format", "MAC string should only contain 0-9, a-f, and colons.") };
+					}
+					if (validator.length && clean.length !== validator.length) {
+						return { error: this.build_error(sensor, configName, clean, "Invalid length for MAC", `Expected ${validator.length}, got ${clean.length}`) };
+					}
+					return { value: clean.toLowerCase() };
+				},
+			
+				// NUMBERS: uint8, uint16be, uint32be
+				number: (val, validator, configName, sensor, options) => {
+					const num = parseInt(val);
+					if (isNaN(num)) {
+						return { error: this.build_error(sensor, configName, val, "Integer value expected", "Ensure the value is a valid number.") };
+					}
+			
+					// Check Min/Max
+					if (validator.min !== undefined && num < validator.min) {
+						return { error: this.build_error(sensor, configName, num, "Value below minimum", `Min allowed: ${validator.min}`) };
+					}
+					if (validator.max !== undefined && num > validator.max) {
+						return { error: this.build_error(sensor, configName, num, "Value above maximum", `Max allowed: ${validator.max}`) };
+					}
+			
+					// Check Options
+					if (options && !Object.keys(options).includes(String(num))) {
+						return { error: this.build_error(sensor, configName, num, "Invalid option", `Valid options: ${JSON.stringify(options)}`) };
+					}
+			
+					const result = { value: num };
+					if (validator.min === undefined || validator.max === undefined) {
+						result.warning = this.build_warning(sensor, configName, "Missing min/max validator", "number");
+					}
+					return result;
+				}
+			};
+
 			for (const sensor of desired_configs){
+				
 				// TODO validate sensor object
 				// must have sensor.addr, sensor.type, sensor.configs
 				// sensor.configs is an object with key value pairs of config name and desired value
@@ -4902,6 +5140,21 @@ module.exports = function(RED) {
 					// error_msg[sensor.addr].syntax_error = 'Invalid sensor object in array. Each object in the array must have addr, type, and configs properties i.e. [{addr: "sensor_mac_address", type: sensor_type_number, configs: {config_name: desired_value}}]';
 					continue;
 				}
+				if(!Object.hasOwn(node.gateway.sensor_libs, sensor.type)){
+					error_msg.syntax_error ||= {};
+					error_msg.syntax_error = {
+						type: 'error',
+						message: `Invalid sensor type ${sensor.type} for sensor ${sensor.addr}. See detail.valid_sensor in this message for a list of valid sensors.`,
+						detail: {
+							"text": "Invlalid sensor type",
+							"received": sensor.type,
+							"help": "The following properties are required for each sensor: addr, type, configs i.e. [{addr: 'sensor_mac_address', type: sensor_type_number, configs: {config_name: desired_value}}]",
+							"valid_sensors": Object.keys(node.gateway.sensor_libs)
+						}
+					};
+					continue;
+				}
+
 				// Force lowercase for consistency
 				sensor.addr = sensor.addr.toLowerCase();
 				// force configs values lowercase for consistency
@@ -4926,31 +5179,23 @@ module.exports = function(RED) {
 					node._gateway_node.sensor_configs[sensor.addr].type = sensor.type;
 					_requires_file_update = true;
 				}
+				
+				const config_map = node.gateway.sensor_libs[sensor.type].get_config_map();
+
 				// Validate configs
 				for (const config_name in sensor.configs){
 					// Check config is valid for sensor type
-					if(Object.hasOwn(node._gateway_node.sensor_type_map, sensor.type) && Object.hasOwn(node._gateway_node.sensor_type_map[sensor.type], 'configs') && Object.hasOwn(node._gateway_node.sensor_type_map[sensor.type].configs, config_name)){
-						let map_key = node._gateway_node.sensor_type_map[sensor.type].configs[config_name];
-						if(Object.hasOwn(node._gateway_node.configuration_map, map_key) && Object.hasOwn(node._gateway_node.configuration_map[map_key], 'validator')){
-							// Check if config is reported by sensor
-							if(Object.hasOwn(node._gateway_node.configuration_map[map_key], 'fly_not_reported') && node._gateway_node.configuration_map[map_key].fly_not_reported.includes(sensor.type)){
-								error_msg[sensor.addr] ||= {};
-								error_msg[sensor.addr][config_name] = {
-									type: 'error',
-									message: `Configuration ${config_name} is not supported for sensor type ${sensor.type} for sensor ${sensor.addr}. This configuration is not reported by the sensor and cannot be programmatically set through the configuration node.`,
-									detail: {
-										"text": "Configuration not supported due to reported configurations",
-										"sensor_type": sensor.type,
-										"config_name": config_name,
-										"help": `Inject this message into the configuration node to get valid configuration values: {topic: 'sensor_config_options', payload: ${sensor.type}}`
-									}
-								};
-								delete sensor.configs[config_name];
-								continue;
-							}
-							if(Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'type')){
-								switch(node._gateway_node.configuration_map[map_key].validator.type){
-									case 'hexString':
+					console.log(config_name);
+					if(Object.hasOwn(config_map, config_name)){
+						let map_key = config_map[config_name];
+						console.log('map_key-----------------');
+						console.log(map_key);
+						if(Object.hasOwn(map_key, 'validator')){
+							if(Object.hasOwn(map_key.validator, 'type')){
+
+								// TODO replace with validation_methods object approach for cleaner code
+								switch(map_key.validator.type){
+									case 'hex':
 										// Remove colons from string
 										sensor.configs[config_name] = sensor.configs[config_name].replace(/:/g, '');
 
@@ -4971,7 +5216,7 @@ module.exports = function(RED) {
 											continue;
 										}
 										// Invalid length error
-										if(Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'length') && sensor.configs[config_name].length != node._gateway_node.configuration_map[map_key].validator.length){
+										if(Object.hasOwn(map_key.validator, 'length') && sensor.configs[config_name].length != map_key.validator.length){
 											error_msg[sensor.addr] ||= {};
 											error_msg[sensor.addr][config_name] = {
 												type: 'error',
@@ -4987,7 +5232,57 @@ module.exports = function(RED) {
 											continue;
 										}
 										// Warning for missing length validator
-										if (!Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'length')) {
+										if (!Object.hasOwn(map_key.validator, 'length')) {
+											warning_msg[sensor.addr] ||= {};
+											warning_msg[sensor.addr][config_name] = {
+												type: 'warning',
+												message: `No length validator defined for hex string ${config_name} for sensor ${sensor.addr}.`,
+												detail: {
+													"text": "Missing length validator",
+													"type": "hexString",
+													"help": "This warning does not prevent the configuration from going through."
+												}
+											};
+										}
+										break;
+									case 'mac':
+										// Remove colons from string
+										sensor.configs[config_name] = sensor.configs[config_name].replace(/:/g, '');
+
+										// Invalid hex string error
+										if (!/^[0-9a-f]+$/.test(sensor.configs[config_name])) {
+											error_msg[sensor.addr] ||= {};
+											error_msg[sensor.addr][config_name] = {
+												type: 'error',
+												message: `Invalid hex string for configuration ${config_name} for sensor ${sensor.addr}. Received value: ${sensor.configs[config_name]}`,
+												detail: {
+													"text": "Invalid hex string",
+													"regex_validator": "/^[0-9a-f]+$/",
+													"received": sensor.configs[config_name],
+													"help": "Hex string should only contain characters 0-9 and a-f. Colons are removed during validation."
+												}
+											};
+											delete sensor.configs[config_name];
+											continue;
+										}
+										// Invalid length error
+										if(Object.hasOwn(map_key.validator, 'length') && sensor.configs[config_name].length != map_key.validator.length){
+											error_msg[sensor.addr] ||= {};
+											error_msg[sensor.addr][config_name] = {
+												type: 'error',
+												message: `Invalid length for configuration Hex String ${config_name} for sensor ${sensor.addr}. Expected length: ${node._gateway_node.configuration_map[map_key].validator.length}, Received length: ${sensor.configs[config_name].length}`,
+												detail: {
+													"text": "Invalid length for hex string",
+													"expected_length": node._gateway_node.configuration_map[map_key].validator.length,
+													"received_length": sensor.configs[config_name].length,
+													"help": "Add leading or trailing zeros to meet length requirement."
+												}
+											};
+											delete sensor.configs[config_name];
+											continue;
+										}
+										// Warning for missing length validator
+										if (!Object.hasOwn(map_key.validator, 'length')) {
 											warning_msg[sensor.addr] ||= {};
 											warning_msg[sensor.addr][config_name] = {
 												type: 'warning',
@@ -5022,14 +5317,14 @@ module.exports = function(RED) {
 											continue;
 										}
 										// Value below minimum error
-										if(Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'min') && sensor.configs[config_name] < node._gateway_node.configuration_map[map_key].validator.min){
+										if(Object.hasOwn(map_key.validator, 'min') && sensor.configs[config_name] < map_key.validator.min){
 											error_msg[sensor.addr] ||= {};
 											error_msg[sensor.addr][config_name] = {
 												type: 'error',
 												message: `Invalid value for configuration ${config_name} for sensor ${sensor.addr}. Value ${sensor.configs[config_name]} is less than minimum allowed value of ${node._gateway_node.configuration_map[map_key].validator.min}`,
 												detail: {
 													"text": "Value below minimum", 
-													"min_allowed": node._gateway_node.configuration_map[map_key].validator.min,
+													"min_allowed": map_key.validator.min,
 													"received": sensor.configs[config_name],
 													"help": `Inject this message into the configuration node to get valid configuration values: {topic: 'sensor_config_options', payload: ${sensor.type}}`
 												}
@@ -5039,14 +5334,14 @@ module.exports = function(RED) {
 											// return {error: `Invalid value for configuration ${config_name} for sensor ${sensor.addr}. Value ${sensor.configs[config_name]} is less than minimum allowed value of ${node.configuration_map[map_key].validator.min}`};
 										}
 										// Value above maximum error
-										if(Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'max') && sensor.configs[config_name] > node._gateway_node.configuration_map[map_key].validator.max){
+										if(Object.hasOwn(map_key.validator, 'max') && sensor.configs[config_name] > map_key.validator.max){
 											error_msg[sensor.addr] ||= {};
 											error_msg[sensor.addr][config_name] = {
 												type: 'error',
 												message: `Invalid value for configuration ${config_name} for sensor ${sensor.addr}. Value ${sensor.configs[config_name]} is greater than maximum allowed value of ${node._gateway_node.configuration_map[map_key].validator.max}`,
 												detail: {
 													"text": "Value above maximum", 
-													"max_allowed": node._gateway_node.configuration_map[map_key].validator.max, 
+													"max_allowed": map_key.validator.max, 
 													"received": sensor.configs[config_name],
 													"help": `Inject this message into the configuration node to get valid configuration values: {topic: 'sensor_config_options', payload: ${sensor.type}}`
 												}
@@ -5056,7 +5351,7 @@ module.exports = function(RED) {
 											// return {error: `Invalid value for configuration ${config_name} for sensor ${sensor.addr}. Value ${sensor.configs[config_name]} is greater than maximum allowed value of ${node.configuration_map[map_key].validator.max}`};
 										}
 										// Warning for missing min/max validators
-										if(!Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'min') || !Object.hasOwn(node._gateway_node.configuration_map[map_key].validator, 'max')){
+										if(!Object.hasOwn(map_key.validator, 'min') || !Object.hasOwn(map_key.validator, 'max')){
 											warning_msg[sensor.addr] ||= {};
 											warning_msg[sensor.addr][config_name] = {
 												type: 'warning',
@@ -5071,15 +5366,15 @@ module.exports = function(RED) {
 										}
 										// If options exist, value must be one of the options
 										// This is assuming that all configs with options are number types
-										if(Object.hasOwn(node._gateway_node.configuration_map[map_key], 'options')){
-											if(!Object.keys(node._gateway_node.configuration_map[map_key].options).includes(String(sensor.configs[config_name]))){
+										if(Object.hasOwn(map_key, 'options')){
+											if(!Object.keys(map_key.options).includes(String(sensor.configs[config_name]))){
 												error_msg[sensor.addr] ||= {};
 												error_msg[sensor.addr][config_name] = {
 													type: 'error',
 													message: `Invalid option for configuration ${config_name} for sensor ${sensor.addr}. Received value: ${sensor.configs[config_name]}`,
 													detail: {
 														"text": "Invalid option",
-														"valid_options": node._gateway_node.configuration_map[map_key].options,
+														"valid_options": map_key.options,
 														"received": sensor.configs[config_name],
 														"help": `Inject this message into the configuration node to get valid configuration values: {topic: 'sensor_config_options', payload: ${sensor.type}}`
 													}
@@ -5172,18 +5467,67 @@ module.exports = function(RED) {
 			return response;
 		};
 
-		node.gateway.on('sensor_mode', (d) => {
-			if(d.mode == 'FLY'){
-				if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
-					node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
-				}
-			}else if(d.mode == 'OTF'){
-				if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
-					node.send({topic: 'post_update_sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
-				}
+		// node.gateway.on('sensor_mode', (d) => {
+		// 	if(d.mode == 'FLY'){
+		// 		if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
+		// 			node.send({topic: 'sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
+		// 		}
+		// 	}else if(d.mode == 'OTF'){
+		// 		if(Object.hasOwn(node._gateway_node.sensor_configs, d.mac) && Object.hasOwn(node._gateway_node.sensor_configs[d.mac], 'api_config_override')){
+		// 			node.send({topic: 'post_update_sensor_report', payload: node._gateway_node.sensor_configs[d.mac], addr: d.mac, time: Date.now()});
+		// 		}
+		// 	}
+		// });
+
+		node.gateway.on('sync', (d) => {
+			switch (d.payload.type){
+				case 'sync_check_in':
+					// node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+				case 'sync_init':
+					// node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+				case 'sync_end':
+					// node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+				case 'manual_sync_check_in':
+					// node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
+				case 'sync_acknowledgment':
+					// node.set_status();
+					node.send({
+						'topic': 'sync',
+						'type': d.payload.type,
+						...d,
+						'time': Date.now()
+					});
+					break;
 			}
 		});
-
 		node._gateway_node.on('config_node_msg', (d) => {
 			node.send(d);
 		});
@@ -5195,13 +5539,14 @@ module.exports = function(RED) {
 			node._gateway_node.removeAllListeners('config_node_msg');
 			node._gateway_node.removeAllListeners('config_node_error');
 			node._gateway_node.removeAllListeners('sensor_mode');
+			node._gateway_node.removeAllListeners('sync');
 			done();
 		});
-
 		
 		this.get_all_sensor_info = function(){
 			return node._gateway_node.sensor_configs;
 		};
+
 		this.get_sensor_array_info = function(sensor_array){
 			let response = {
 				status: 0,
