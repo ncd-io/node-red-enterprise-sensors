@@ -993,7 +993,10 @@
 			threshold_probe_two_126_active:{value:""},
 			threshold_probe_two_126:{value: 3, validate: NCD_validators.number_range(0, 65535)},
 			threshold_probe_three_126_active:{value:""},
-			threshold_probe_three_126:{value: 3, validate: NCD_validators.number_range(0, 65535)}
+			threshold_probe_three_126:{value: 3, validate: NCD_validators.number_range(0, 65535)},
+
+			send_raw_on_motion_only_103_active:{value:""},
+			send_raw_on_motion_only_103:{value: 0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -5869,6 +5872,23 @@
 					<p class="caption">
 						Default value: 1<br>
 						<i>Note: Setting this to a higher value will drain the battery.</i>
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Raw On Motion Only</strong>
+					<div>
+						<label for="node-input-send_raw_on_motion_only_103_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-send_raw_on_motion_only_103_active" class="ncd-config-toggle" data-target-id="node-input-send_raw_on_motion_only_103" value="1">
+					</div>
+					<div>
+						<label for="node-input-send_raw_on_motion_only_103"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-send_raw_on_motion_only_103">
+							<option value="1">Enabled</option>
+							<option value="0">disabled</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Disabled.
 					</p>
 				</div>
 			</div>

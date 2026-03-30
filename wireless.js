@@ -2832,6 +2832,9 @@ module.exports = function(RED) {
 								if(config.set_rtc_101){
 									promises.set_rtc_103 = node.config_gateway.config_set_rtc_101(mac);
 								}
+								if(config.send_raw_on_motion_only_103_active){
+									promises.send_raw_on_motion_only_103 = node.config_gateway.config_set_send_raw_on_motion_only_103(mac, parseInt(config.send_raw_on_motion_only_103));
+								}
 								break;
 							case 105:
 								if(config.sensor_boot_time_420ma_active){
@@ -4548,10 +4551,10 @@ module.exports = function(RED) {
 						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					}
 				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
+					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 103 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
-							node.warn('Starting RTC Timer' + Date.now());
+							node.warn('Starting RTC Timer ' + Date.now());
 							node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
 							var broadcast_tout = setTimeout(() => {
 								node.warn('Sending RTC Broadcast ' + Date.now());
@@ -4573,10 +4576,10 @@ module.exports = function(RED) {
 					}else{
 						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					};
-				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
+				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 103 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 						this.gateway.fly_101_in_progress = true;
-						node.warn('Starting RTC Timer' + Date.now());
+						node.warn('Starting RTC Timer ' + Date.now());
 						node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
 						var broadcast_tout = setTimeout(() => {
 							node.warn('Sending RTC Broadcast ' + Date.now());
@@ -4664,7 +4667,7 @@ module.exports = function(RED) {
 							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						}
 					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
-						if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 202){
+						if(config.sensor_type == 101 || config.sensor_type == 102  || config.sensor_type == 103|| config.sensor_type == 202){
 							if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 								this.gateway.fly_101_in_progress = true;
 								node.warn('Starting RTC Timer' + Date.now());
@@ -4691,10 +4694,10 @@ module.exports = function(RED) {
 							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						};
 
-					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 202){
+					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 103 || sensor.mode == "FLY" &&  config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
-							node.warn('Starting RTC Timer' + Date.now());
+							node.warn('Starting RTC Timer ' + Date.now());
 							node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
 							var broadcast_tout = setTimeout(() => {
 								node.warn('Sending RTC Broadcast ' + Date.now());
