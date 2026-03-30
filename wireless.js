@@ -247,7 +247,7 @@ module.exports = function(RED) {
 
 									if(type == 'sync_check_in'){
 										// TODO add backwards compatibility
-										if(!config.disable_fly_compatibility){
+										if(config.enable_fly_compatibility){
 											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
 											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
 										}
@@ -261,8 +261,8 @@ module.exports = function(RED) {
 										node.configure(addr, sensor_type);
 									}else if(type == 'sync_end'){
 										console.log('Sync Process Finished for sensor '+addr);
-										console.log(!config.disable_fly_compatibility);
-										if(!config.disable_fly_compatibility){
+										console.log(config.enable_fly_compatibility);
+										if(config.enable_fly_compatibility){
 											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});
 											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});	
 										}
@@ -273,8 +273,8 @@ module.exports = function(RED) {
 								}
 							}else if(type == 'sync_init'){
 								console.log('!!!! Sync Init Received');
-								console.log(!config.disable_fly_compatibility);
-								if(!config.disable_fly_compatibility){
+								console.log(config.enable_fly_compatibility);
+								if(config.enable_fly_compatibility){
 									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
 									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
 								}
