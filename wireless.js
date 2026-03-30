@@ -136,16 +136,17 @@ module.exports = function(RED) {
 						node.gateway.on('sync', (d) => {
 							// console.log('Sync Received in Config Node');
 							// console.log(d);
-							const addr = d.payload.address;
-							const sensor_type = d.payload.sensor_type;
-							const type = d.payload.type;
-							if(d.payload.type == 'sync_check_in' || d.payload.type == 'sync_end' || d.payload.type == 'manual_sync_check_in'){
+							const payload = structuredClone(d.payload);
+							const addr = payload.address;
+							const sensor_type = payload.sensor_type;
+							const type = payload.type;
+							if(payload.type == 'sync_check_in' || payload.type == 'sync_end' || payload.type == 'manual_sync_check_in'){
 								if(Object.hasOwn(node.sensor_list, addr) && Object.hasOwn(node.sensor_list[addr], 'update_request')){
 									node.request_manifest(addr);
 								}else if(Object.hasOwn(this.gateway.sensor_libs, sensor_type)){
 									// API CONFIGURATION NODE
 									// let values = d.reported_config.machine_values;
-									const config_map = this.gateway.sensor_libs[sensor_type].get_config_map(d.payload.firmware_version);
+									const config_map = this.gateway.sensor_libs[sensor_type].get_config_map(payload.firmware_version);
 									let store_flag = false;
 									
 
@@ -180,33 +181,33 @@ module.exports = function(RED) {
 									// if(Object.hasOwn(d, 'node_id')){
 									// 	values.node_id = d.nodeId;
 									// }
-									for(let key in d.payload){
+									for(let key in payload){
 										if(Object.hasOwn(config_map, key)){
 											if(!Object.hasOwn(config_map[key], 'write_index')){
 												// TODO
-												if(!Object.hasOwn(node.sensor_configs[addr], key) || Object.hasOwn(node.sensor_configs[addr], key) && node.sensor_configs[addr][key] != d.payload[key]){
+												if(!Object.hasOwn(node.sensor_configs[addr], key) || Object.hasOwn(node.sensor_configs[addr], key) && node.sensor_configs[addr][key] != payload[key]){
 													console.log('Config '+key+' is read only, moving from payload');
-													node.sensor_configs[addr][key] = d.payload[key];
+													node.sensor_configs[addr][key] = payload[key];
 													if(key !== 'tx_lifetime_counter'){
 														store_flag = true;
 													}
 												}
-												delete d.payload[key];
+												delete payload[key];
 											}
 										}else{
 											console.log('Not in config map, deleting key: '+key);
-											delete d.payload[key];
+											delete payload[key];
 										}
 									}
 									// If object has no reported configs, instantiate them
 									if(!Object.hasOwn(node.sensor_configs[addr], 'reported_configs')){
 										// node.sensor_configs[d.mac].reported_configs = {};
-										node.sensor_configs[addr].reported_configs = d.payload;
+										node.sensor_configs[addr].reported_configs = payload;
 										store_flag = true;
 									}
 									// If object has no desired configs, add them
 									if(!Object.hasOwn(node.sensor_configs[addr], 'desired_configs')){
-										node.sensor_configs[addr].desired_configs = d.payload;
+										node.sensor_configs[addr].desired_configs = payload;
 										store_flag = true;
 									}
 
@@ -223,13 +224,13 @@ module.exports = function(RED) {
 									// }
 
 
-									if(!isDeepStrictEqual(node.sensor_configs[addr].reported_configs, d.payload)){
+									if(!isDeepStrictEqual(node.sensor_configs[addr].reported_configs, payload)){
 										// Values are different, update the stored configs and write to file
-										node.sensor_configs[addr].reported_configs = d.payload;
+										node.sensor_configs[addr].reported_configs = payload;
 										// If reported configs change, but the auto config does not control configs, update automatically
 										// Will duplicate setting desired configs on first run, but only once or if user clear desired_configs
 										if(!Object.hasOwn(node.sensor_configs[addr], 'api_config_override')){
-											node.sensor_configs[addr].desired_configs = d.payload;
+											node.sensor_configs[addr].desired_configs = payload;
 										}
 										store_flag = true;
 										node._emitter.emit('config_node_msg', {topic: 'sensor_configs_update', payload: node.sensor_configs[addr], address: addr, time: Date.now()});
@@ -239,8 +240,8 @@ module.exports = function(RED) {
 									if(type == 'sync_check_in'){
 										// TODO add backwards compatibility
 										if(!config.disable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: d.payload});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: d.payload});
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
 										}
 										if(Object.hasOwn(node.sensor_configs[addr], 'desired_configs') && Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !isDeepStrictEqual(node.sensor_configs[addr].reported_configs, node.sensor_configs[addr].desired_configs)){
 											store_flag = true;
@@ -254,8 +255,8 @@ module.exports = function(RED) {
 										console.log('Sync Process Finished for sensor '+addr);
 										console.log(!config.disable_fly_compatibility);
 										if(!config.disable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: d.payload});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: d.payload});	
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});	
 										}
 									}
 									if(store_flag){
@@ -437,8 +438,6 @@ module.exports = function(RED) {
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
 			console.log('!!!!!!!!!!.configure!!!!!!!!!!');
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-			console.log(addr);
-			console.log(type);
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
 				setTimeout(() => {
@@ -452,7 +451,7 @@ module.exports = function(RED) {
 					var mac = addr;
 					var promises = {};
 					var reboot = this.sync_check_reboot(addr);
-										
+
 					promises.sync_command = node.gateway.send_sync_configs(addr, node.sensor_configs[addr]);
 
 					// These sensors listed in original_otf_devices use a different OTF code.
@@ -4457,6 +4456,8 @@ module.exports = function(RED) {
 				}
 			});
 			this.pgm_on('sync-'+config.addr, (data) => {
+				console.log('Sync Packet Received from DEVICE NODE');
+				console.log(data);
 				// node.warn('Wireless Device Node Syncing Sensor: ' + config.addr);
 				// node.warn(data);
 				let message = {
@@ -4465,54 +4466,67 @@ module.exports = function(RED) {
 					...data,
 					time: Date.now()
 				};
-				switch(data.payload.type){
+				
+				switch(data.type){
 					case 'sync_check_in':
+						console.log('Sync Check In Received from DEVICE NODE');
 						if(config.auto_config && config.on_the_fly_enable){
 							if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
-								this.gateway_node.sync_init(data);
+								this.gateway_node.sync_init(data.payload.address, data.payload.sensor_type);
 								message.sync_init = true;
 							}
 						}
 						break;
 					case 'sync_init':
+						console.log('Sync INIT Received from DEVICE NODE');
 						// Disabled for now, enable for wireless device configs
 
-						// this.config_gateway.send_sync_configs(data.payload.addr, data.payload.sensor_type);
-						// setTimeout(() => {
-						// 	let msg = {};
-						// 	var tout = setTimeout(() => {
-						// 		// switch to emitter for this
-						// 		// node.status(modes.PGM_ERR);
-						// 		// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
-						// 		console.log('OTN Request Timed Out');
-						// 	}, 10000);
-		
-						// 	var promises = {};
-						// 	promises.send_sync_configs = this.config_gateway.send_sync_configs(data.payload.address, data.payload.sensor_type, config);
-						// 	promises.finish = new Promise((fulfill, reject) => {
-						// 		node.config_gateway.queue.add(() => {
-						// 			return new Promise((f, r) => {
-						// 				clearTimeout(tout);
-						// 				node.status(modes.FLY);
-						// 				fulfill();
-						// 				f();
-						// 			});
-						// 		});
-						// 	});
-						// 	for(var i in promises){
-						// 		(function(name){
-						// 			promises[name].then((f) => {
-						// 				if(name != 'finish') msg[name] = true;
-						// 				else{
-						// 					node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
-						// 					top_fulfill(msg);
-						// 				}
-						// 			}).catch((err) => {
-						// 				msg[name] = err;
-						// 			});
-						// 		})(i);
-						// 	}
-						// });
+						// this.config_gateway.send_sync_configs(data, config);
+						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+							setTimeout(() => {
+								let msg = {};
+								var tout = setTimeout(() => {
+									// switch to emitter for this
+									// node.status(modes.PGM_ERR);
+									// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+									console.log('OTN Request Timed Out');
+								}, 10000);
+
+								var promises = {};
+								promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, config, node.gateway_node.sensor_configs[data.payload.address]);
+
+								let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+								if(original_otf_devices.includes(data.payload.sensor_type)){
+									promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.address);
+								}else{
+									promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.address);
+								}
+
+								promises.finish = new Promise((fulfill, reject) => {
+									node.config_gateway.queue.add(() => {
+										return new Promise((f, r) => {
+											clearTimeout(tout);
+											node.status(modes.FLY);
+											fulfill();
+											f();
+										});
+									});
+								});
+								for(var i in promises){
+									(function(name){
+										promises[name].then((f) => {
+											if(name != 'finish') msg[name] = true;
+											else{
+												node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
+												top_fulfill(msg);
+											}
+										}).catch((err) => {
+											msg[name] = err;
+										});
+									})(i);
+								}
+							});
+						}
 						break;
 					case 'sync_acknowledgment':
 						// node.warn('Sync Acknowledgement Received');
@@ -4522,7 +4536,12 @@ module.exports = function(RED) {
 						// node.warn('Sync Acknowledgement Error Received');
 						// node.warn(data);
 						break;
+					case 'sync_end':
+						console.log('Sync End Received from DEVICE NODE');
+						break;
 					default:
+						console.log('Default in device node sync');
+						console.log(data.type);
 						console.log('Unrecognized sync packet');
 				}
 				node.send(message);

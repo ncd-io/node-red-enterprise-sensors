@@ -7317,7 +7317,7 @@
 			baudRate: {value: 115200, validate:RED.validators.number()},
 			pan_id: {value: '7FFF', validate: NCD_validators.number_range(0, 0x7FFF, 16)},
 			rssi: {value: ""},
-			disable_fly_compatibility: {value: ""}
+			enable_fly_compatibility: {value: ""}
 		},
 		label: function(){
 			if(this.name) return this.name;
@@ -7459,9 +7459,9 @@
 		<input type="checkbox" id="node-config-input-rssi" value="1">
 	</div>
 	<div class="form-row">
-		<label for="node-config-input-disable_fly_compatibility"><i class="icon-tag"></i> Disable Fly Compatibility</label>
-		<input type="checkbox" id="node-config-input-disable_fly_compatibility" value="1">
-		<p>When active, this settings prevents sensors that send the Sync messages from also sending the older FLY messages.</p>
-		<p><strong>WARNING:</strong> Enabling this setting will prevent compatibility with any NCD sensors released before 2024, and may cause issues with some older firmware versions. Please ensure that your devices are compatible before enabling.</p>
+		<label for="node-config-input-enable_fly_compatibility"><i class="icon-tag"></i> Enable Fly Compatibility</label>
+		<input type="checkbox" id="node-config-input-enable_fly_compatibility" value="1">
+		<p>When active, this settings allows sensors that send the Sync messages to also send the older FLY messages.</p>
+		<p>It is only recommended to enable this setting if you have existing flows that rely on the older FLY message format such as for dynamic configuration. It is recommended to utilize the new API Configuration Node instead.</p>
 	</div>
 </script>
