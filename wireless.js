@@ -132,6 +132,14 @@ module.exports = function(RED) {
 								node.gateway.digi.serial.reconnect();
 							});
 						}
+						// Listen for FLY messages to run FOTA updates on older FLY messages
+						node.gateway.on('sensor_mode', (d) => {
+							if(d.mode == "FLY"){
+								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request') && d.mode == "FLY"){
+									node.request_manifest(d.mac);
+								}
+							};
+						});
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
 						node.gateway.on('sync', (d) => {
 							// console.log('Sync Received in Config Node');
