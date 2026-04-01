@@ -4526,7 +4526,6 @@ module.exports = function(RED) {
 											if(name != 'finish') msg[name] = true;
 											else{
 												node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
-												top_fulfill(msg);
 											}
 										}).catch((err) => {
 											msg[name] = err;
