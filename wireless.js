@@ -144,7 +144,8 @@ module.exports = function(RED) {
 						node.gateway.on('sync', (d) => {
 							// console.log('Sync Received in Config Node');
 							// console.log(d);
-							const payload = structuredClone(d.payload);
+							// const payload = structuredClone(d.payload);
+							const payload = JSON.parse(JSON.stringify(d.payload));
 							const addr = payload.address;
 							const sensor_type = payload.sensor_type;
 							const type = payload.type;
