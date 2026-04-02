@@ -518,7 +518,7 @@ module.exports = function(RED) {
 									// TODO turn into event emitter.
 									node._emitter.emit('config_node_msg', {topic: 'Config Results', payload: success, addr: mac, time: Date.now()});
 									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: mac});
-									top_fulfill(success);
+									// top_fulfill(success);
 								}
 							}).catch((err) => {
 								success[name] = err;
@@ -4480,60 +4480,114 @@ module.exports = function(RED) {
 						console.log('Sync Check In Received from DEVICE NODE');
 						if(config.auto_config && config.on_the_fly_enable){
 							if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
-								this.gateway_node.sync_init(data.payload.address, data.payload.sensor_type);
-								message.sync_init = true;
+								const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
+
+								let update_flag = false;
+								for(let key in html_map){
+									if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
+										console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
+										console.log('Value is different, updating config for ' + key);
+										update_flag = true;
+										break;
+									}
+								}
+								if(update_flag){
+									promises = {};
+									console.log('!!!!!!!!!!!!!!!!!!SENDING SYNC CONFIGS!!!!!!!!!!!!!!!!!!');
+									setTimeout(() => {
+										let msg = {};
+										var tout = setTimeout(() => {
+											// switch to emitter for this
+											// node.status(modes.PGM_ERR);
+											// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
+											console.log('OTN Request Timed Out');
+										}, 10000);
+										console.log('!!!!!!!!!!!!!!!!!!SENDING SYNC CONFIGS!!!!!!!!!!!!!!!!!!');
+										promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
+		
+										// let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+										// if(original_otf_devices.includes(data.payload.sensor_type)){
+										// 	promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.address);
+										// }else{
+										// 	promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.address);
+										// }
+		
+										promises.finish = new Promise((fulfill, reject) => {
+											node.config_gateway.queue.add(() => {
+												return new Promise((f, r) => {
+													clearTimeout(tout);
+													node.status(modes.FLY);
+													fulfill();
+													f();
+												});
+											});
+										});
+										for(var i in promises){
+											(function(name){
+												promises[name].then((f) => {
+													// if(name == 'send_sync_configs'){
+													// 	if(Object.hasOwn(f, 'result')){
+													// 		switch(f.result){
+													// 			case 255:
+													// 				msg[name] = true;
+													// 				break;
+													// 			default:
+													// 				msg[name] = {
+													// 					res: "Bad Response",
+													// 					result: f.result,
+													// 					sent: f.sent
+													// 				};
+													// 		}
+													// 	}else{
+													// 		msg[name] = {
+													// 			res: "no result",
+													// 			result: null,
+													// 			sent: f.sent
+													// 		}
+													// 	}
+													// }
+													if(name != 'finish'){
+														msg[name] = true;
+													}
+													else{
+														node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
+														// top_fulfill(msg);
+													}
+												}).catch((err) => {
+													msg[name] = err;
+												});
+											})(i);
+										}
+									});
+									// this.gateway_node.sync_init(data.payload.address, data.payload.sensor_type);
+									// message.sync_init = true;
+								}else{
+									console.log('No Config Differences Detected, Skipping Sync Configs');
+								}
 							}
 						}
 						break;
 					case 'sync_init':
 						console.log('Sync INIT Received from DEVICE NODE');
-						// Disabled for now, enable for wireless device configs
+						// if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+						// 	const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
+						// 	var promises = {};
 
-						// this.config_gateway.send_sync_configs(data, config);
-						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
-							setTimeout(() => {
-								let msg = {};
-								var tout = setTimeout(() => {
-									// switch to emitter for this
-									// node.status(modes.PGM_ERR);
-									// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
-									console.log('OTN Request Timed Out');
-								}, 10000);
-
-								var promises = {};
-								promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, config, node.gateway_node.sensor_configs[data.payload.address]);
-
-								let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
-								if(original_otf_devices.includes(data.payload.sensor_type)){
-									promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.address);
-								}else{
-									promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.address);
-								}
-
-								promises.finish = new Promise((fulfill, reject) => {
-									node.config_gateway.queue.add(() => {
-										return new Promise((f, r) => {
-											clearTimeout(tout);
-											node.status(modes.FLY);
-											fulfill();
-											f();
-										});
-									});
-								});
-								for(var i in promises){
-									(function(name){
-										promises[name].then((f) => {
-											if(name != 'finish') msg[name] = true;
-											else{
-												node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
-											}
-										}).catch((err) => {
-											msg[name] = err;
-										});
-									})(i);
-								}
-							});
-						}
+						// 	let update_flag = false;
+						// 	for(let key in html_map){
+						// 		if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
+						// 			console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
+						// 			console.log('Value is different, updating config for ' + key);
+						// 			update_flag = true;
+						// 			break;
+						// 		}
+						// 	}
+						// 	if(update_flag){
+								
+						// 	}else{
+						// 		console.log('No Config Differences Detected, Skipping Sync Configs');
+						// 	}
+						// }
 						break;
 					case 'sync_acknowledgment':
 						// node.warn('Sync Acknowledgement Received');
