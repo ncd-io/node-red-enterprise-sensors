@@ -4537,24 +4537,16 @@ module.exports = function(RED) {
 							}
 							if(update_flag){
 								promises = {};
-								console.log('!!!!!!!!!!!!!!!!!!SENDING SYNC CONFIGS!!!!!!!!!!!!!!!!!!');
 								setTimeout(() => {
-									let msg = {};
+									let msg = {
+										values: {},
+										pass: {},
+										status: 'Configuring'
+									};
 									var tout = setTimeout(() => {
-										// switch to emitter for this
-										// node.status(modes.PGM_ERR);
-										// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
 										console.log('OTN Request Timed Out');
 									}, 10000);
-									console.log('!!!!!!!!!!!!!!!!!!SENDING SYNC CONFIGS!!!!!!!!!!!!!!!!!!');
 									promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
-	
-									// let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
-									// if(original_otf_devices.includes(data.payload.sensor_type)){
-									// 	promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.address);
-									// }else{
-									// 	promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.address);
-									// }
 	
 									promises.finish = new Promise((fulfill, reject) => {
 										node.config_gateway.queue.add(() => {
@@ -4569,29 +4561,23 @@ module.exports = function(RED) {
 									for(var i in promises){
 										(function(name){
 											promises[name].then((f) => {
-												// if(name == 'send_sync_configs'){
-												// 	if(Object.hasOwn(f, 'result')){
-												// 		switch(f.result){
-												// 			case 255:
-												// 				msg[name] = true;
-												// 				break;
-												// 			default:
-												// 				msg[name] = {
-												// 					res: "Bad Response",
-												// 					result: f.result,
-												// 					sent: f.sent
-												// 				};
-												// 		}
-												// 	}else{
-												// 		msg[name] = {
-												// 			res: "no result",
-												// 			result: null,
-												// 			sent: f.sent
-												// 		}
-												// 	}
-												// }
 												if(name != 'finish'){
-													msg[name] = true;
+													let fail_flag = false;
+													for(const key in html_map){
+														if(Object.hasOwn(f.payload, key) && f.payload[key] == html_map[key].html_value){
+															msg.pass[key] = true;
+															msg.values[key] = f.payload[key];
+														}else{
+															msg.pass[key] = false;
+															msg.values[key] = f.payload[key];
+															fail_flag = true;
+														}
+													}
+													if(fail_flag){
+														msg.status = 'Error';
+													}else{
+														msg.status = 'Success';
+													}
 												}
 												else{
 													node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
@@ -4603,10 +4589,9 @@ module.exports = function(RED) {
 										})(i);
 									}
 								});
-								// this.gateway_node.sync_init(data.payload.address, data.payload.sensor_type);
-								// message.sync_init = true;
 							}else{
 								console.log('No Config Differences Detected, Skipping Sync Configs');
+								node.send({topic: 'sync', type: 'sync_response', payload: {info: "Reported configurations match desired configurations. Skipping Sync."}, time: Date.now()});
 							}
 						}
 					}
