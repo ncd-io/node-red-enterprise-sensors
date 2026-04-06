@@ -4522,7 +4522,7 @@ module.exports = function(RED) {
 						console.log('Unrecognized sync packet');
 				}
 				if(data.type == 'sync_check_in' || data.type == 'manual_sync_check_in'){
-					if(config.auto_config && config.on_the_fly_enable){
+					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
 							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
 
