@@ -1,6 +1,6 @@
 {
     "name": "@ncd-io/node-red-enterprise-sensors",
-    "version": "1.6.4",
+    "version": "2.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -23,6 +23,9 @@
         {
             "name": "Trey Felton"
         },
+		{
+			"name": "Eduardo Martinez"
+		},
         {
             "name": "Anil Bhaskar"
         },
