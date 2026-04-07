@@ -195,7 +195,7 @@ module.exports = function(RED) {
 											if(!Object.hasOwn(config_map[key], 'write_index')){
 												// TODO
 												if(!Object.hasOwn(node.sensor_configs[addr], key) || Object.hasOwn(node.sensor_configs[addr], key) && node.sensor_configs[addr][key] != payload[key]){
-													console.log('Config '+key+' is read only, moving from payload');
+													// console.log('Config '+key+' is read only, moving from payload');
 													node.sensor_configs[addr][key] = payload[key];
 													if(key !== 'tx_lifetime_counter'){
 														store_flag = true;
@@ -204,7 +204,7 @@ module.exports = function(RED) {
 												delete payload[key];
 											}
 										}else{
-											console.log('Not in config map, deleting key: '+key);
+											// console.log('Not in config map, deleting key: '+key);
 											delete payload[key];
 										}
 									}
@@ -263,8 +263,6 @@ module.exports = function(RED) {
 											node.configure(addr, sensor_type);
 										}
 									}else if(type == 'sync_end'){
-										console.log('Sync Process Finished for sensor '+addr);
-										console.log(config.enable_fly_compatibility);
 										if(config.enable_fly_compatibility){
 											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});
 											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});	
@@ -275,8 +273,6 @@ module.exports = function(RED) {
 									}
 								}
 							}else if(type == 'sync_init'){
-								console.log('!!!! Sync Init Received');
-								console.log(config.enable_fly_compatibility);
 								if(config.enable_fly_compatibility){
 									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
 									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
@@ -370,7 +366,7 @@ module.exports = function(RED) {
 		};
 
 		this.sync_init = function(addr, type){
-			console.log('!!!! Sync Init for sensor '+addr);
+			// console.log('!!!! Sync Init for sensor '+addr);
 			return new Promise((top_fulfill, top_reject) => {
 				var msg = {};
 				setTimeout(() => {
@@ -378,18 +374,18 @@ module.exports = function(RED) {
 						// switch to emitter for this
 						// node.status(modes.PGM_ERR);
 						// node.send({topic: 'OTN Request Results', payload: msg, time: Date.now()});
-						console.log('OTN Request Timed Out');
+						console.log('Sync Request Timed Out');
 					}, 10000);
 
 					var promises = {};
 					    // This command is used for OTF on types 53, 80,81,82,83,84, 101, 102, 110, 111, 518, 519
 					let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538, 543];
 					if(original_otf_devices.includes(type)){
-						console.log('!!!! Entering OTN mode with original command');
+						console.log('!!!! Entering Sync mode with original command');
 						// This command is used for OTF on types 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode(addr);
 					}else{
-						console.log('!!!! Entering OTN mode with other command');
+						console.log('!!!! Entering Sync mode with other command');
 						// This command is used for OTF on types not 53, 80, 81, 82, 83, 84, 101, 102, 110, 111, 518, 519
 						promises.config_enter_otn_mode = node.gateway.config_enter_otn_mode_common(addr);
 					}
@@ -406,9 +402,6 @@ module.exports = function(RED) {
 					for(var i in promises){
 						(function(name){
 							promises[name].then((f) => {
-								console.log('-=-=-=-=-=-=-=-==-=-=-=-=promise result');
-								console.log(name);
-								
 								if(name != 'finish') msg[name] = true;
 								else{
 									// #OTF
@@ -446,9 +439,6 @@ module.exports = function(RED) {
 		};
 
 		this.configure = function(addr, type){
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
-			console.log('!!!!!!!!!!.configure!!!!!!!!!!');
-			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
 			return new Promise((top_fulfill, top_reject) => {
 				var success = {};
 				setTimeout(() => {
@@ -982,6 +972,7 @@ module.exports = function(RED) {
 			this.gateway._emitter.removeAllListeners('link_info');
 			this.gateway._emitter.removeAllListeners('converter_response');
 			this.gateway._emitter.removeAllListeners('manifest_received');
+			this.gateway._emitter.removeAllListeners('sync');
 			// console.log(this.gateway._emitter.eventNames());
 		});
 
@@ -4367,8 +4358,6 @@ module.exports = function(RED) {
 						(function(name){
 							promises[name].then((f) => {
 								if(name != 'finish'){
-									// console.log('IN PROMISE RESOLVE');
-									// console.log(f);
 									// success[name] = true;
 									if(Object.hasOwn(f, 'result')){
 										switch(f.result){
@@ -4467,10 +4456,6 @@ module.exports = function(RED) {
 				}
 			});
 			this.pgm_on('sync-'+config.addr, (data) => {
-				console.log('Sync Packet Received from DEVICE NODE');
-				console.log(data);
-				// node.warn('Wireless Device Node Syncing Sensor: ' + config.addr);
-				// node.warn(data);
 				let message = {
 					topic: 'sync',
 					type: data.payload.type,
@@ -4478,49 +4463,21 @@ module.exports = function(RED) {
 					time: Date.now()
 				};
 				
-				switch(data.type){
-					case 'sync_check_in':
-						console.log('Sync Check In Received from DEVICE NODE');
-						
-						break;
-					case 'sync_init':
-						console.log('Sync INIT Received from DEVICE NODE');
-						// if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
-						// 	const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
-						// 	var promises = {};
-
-						// 	let update_flag = false;
-						// 	for(let key in html_map){
-						// 		if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
-						// 			console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
-						// 			console.log('Value is different, updating config for ' + key);
-						// 			update_flag = true;
-						// 			break;
-						// 		}
-						// 	}
-						// 	if(update_flag){
-								
-						// 	}else{
-						// 		console.log('No Config Differences Detected, Skipping Sync Configs');
-						// 	}
-						// }
-						break;
-					case 'sync_acknowledgment':
-						// node.warn('Sync Acknowledgement Received');
-						// node.warn(data);
-						break;
-					case 'sync_acknowledgment_error':
-						// node.warn('Sync Acknowledgement Error Received');
-						// node.warn(data);
-						break;
-					case 'sync_end':
-						console.log('Sync End Received from DEVICE NODE');
-						break;
-					default:
-						console.log('Default in device node sync');
-						console.log(data.type);
-						console.log('Unrecognized sync packet');
-				}
+				// switch(data.type){
+				// 	case 'sync_check_in':						
+				// 		break;
+				// 	case 'sync_init':
+				// 		break;
+				// 	case 'sync_acknowledgment':
+				// 		break;
+				// 	case 'sync_acknowledgment_error':
+				// 		break;
+				// 	case 'sync_end':
+				// 		break;
+				// 	default:
+				// 		console.log('Default in device node sync');
+				// 		console.log(data.type);
+				// }
 				if(data.type == 'sync_check_in' || data.type == 'manual_sync_check_in'){
 					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
@@ -4529,8 +4486,8 @@ module.exports = function(RED) {
 							let update_flag = false;
 							for(let key in html_map){
 								if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
-									console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
-									console.log('Value is different, updating config for ' + key);
+									// console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
+									// console.log('Value is different, updating config for ' + key);
 									update_flag = true;
 									break;
 								}
@@ -4544,10 +4501,10 @@ module.exports = function(RED) {
 										status: 'Configuring'
 									};
 									var tout = setTimeout(() => {
-										console.log('OTN Request Timed Out');
-									}, 10000);
+										console.log('Sync Request Timed Out');
+									}, 20000);
 									promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
-	
+
 									promises.finish = new Promise((fulfill, reject) => {
 										node.config_gateway.queue.add(() => {
 											return new Promise((f, r) => {
@@ -4590,7 +4547,7 @@ module.exports = function(RED) {
 									}
 								});
 							}else{
-								console.log('No Config Differences Detected, Skipping Sync Configs');
+								// console.log('No Config Differences Detected, Skipping Sync Configs');
 								node.send({topic: 'sync', type: 'sync_response', payload: {info: "Reported configurations match desired configurations. Skipping Sync."}, time: Date.now()});
 							}
 						}
@@ -4979,9 +4936,9 @@ module.exports = function(RED) {
 					break;
 				case 'sensor_config_options':
 					msg.request = msg.payload;
-					console.log(typeof msg.payload == 'object');
-					console.log(Object.hasOwn(msg.payload, 'sensor_type'));
-					console.log(Object.hasOwn(this.gateway.sensor_libs, msg.payload.sensor_type));
+					// console.log(typeof msg.payload == 'object');
+					// console.log(Object.hasOwn(msg.payload, 'sensor_type'));
+					// console.log(Object.hasOwn(this.gateway.sensor_libs, msg.payload.sensor_type));
 					if(typeof msg.payload == 'object' && Object.hasOwn(msg.payload, 'sensor_type') && Object.hasOwn(this.gateway.sensor_libs, msg.payload.sensor_type)){
 						let options = this.get_config_options(msg.payload.sensor_type, msg.payload.firmware_version);
 						msg.payload = options;
@@ -5057,8 +5014,8 @@ module.exports = function(RED) {
 				for (const key in config_list){
 					const info = config_list[key];
 					// If sensors actually reports and supports the listed config
-					console.log(key);
-					console.log(info);
+					// console.log(key);
+					// console.log(info);
 					if(Object.hasOwn(info, 'write_index') && !Object.hasOwn(info, 'read_only')){
 						response[key] = {
 							title: info.descriptions.title,
@@ -5259,11 +5216,8 @@ module.exports = function(RED) {
 				// Validate configs
 				for (const config_name in sensor.configs){
 					// Check config is valid for sensor type
-					console.log(config_name);
 					if(Object.hasOwn(config_map, config_name)){
 						let map_key = config_map[config_name];
-						console.log('map_key-----------------');
-						console.log(map_key);
 						if(Object.hasOwn(map_key, 'validator')){
 							if(Object.hasOwn(map_key.validator, 'type')){
 
@@ -5530,11 +5484,11 @@ module.exports = function(RED) {
 			if(_requires_file_update){
 				node._gateway_node.store_sensor_configs(JSON.stringify(node._gateway_node.sensor_configs));
 			}
-			console.log(Object.keys(warning_msg).length);
+			// console.log(Object.keys(warning_msg).length);
 			if(Object.keys(warning_msg).length){
 				response.warnings = warning_msg;
 			}
-			console.log(Object.keys(error_msg).length);
+			// console.log(Object.keys(error_msg).length);
 			if(Object.keys(error_msg).length){
 				response.errors = error_msg;
 			}
