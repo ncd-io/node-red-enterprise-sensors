@@ -134,7 +134,7 @@ module.exports = function(RED) {
 						}
 						// Listen for FLY messages to run FOTA updates on older FLY messages
 						node.gateway.on('sensor_mode', (d) => {
-							if(d.mode == "FLY"){
+							if(d.mode == "FLY" && !Object.hasOwn(d, 'sync')){
 								if(Object.hasOwn(node.sensor_list, d.mac) && Object.hasOwn(node.sensor_list[d.mac], 'update_request') && d.mode == "FLY"){
 									node.request_manifest(d.mac);
 								}
@@ -249,8 +249,8 @@ module.exports = function(RED) {
 									if(type == 'sync_check_in'){
 										// TODO add backwards compatibility
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload});
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
 										}
 										if(Object.hasOwn(node.sensor_configs[addr], 'desired_configs') && Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !isDeepStrictEqual(node.sensor_configs[addr].reported_configs, node.sensor_configs[addr].desired_configs)){
 											store_flag = true;
@@ -264,8 +264,8 @@ module.exports = function(RED) {
 										}
 									}else if(type == 'sync_end'){
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload});	
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});	
 										}
 									}
 									if(store_flag){
@@ -274,8 +274,8 @@ module.exports = function(RED) {
 								}
 							}else if(type == 'sync_init'){
 								if(config.enable_fly_compatibility){
-									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
-									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload});
+									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
+									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
 								}
 								if(node.sensor_configs[addr] && node.sensor_configs[addr].api_config_override){
 									node.configure(addr, sensor_type);
@@ -4564,7 +4564,7 @@ module.exports = function(RED) {
 				}
 				if(config.auto_config && sensor.mode == "PGM"){
 					_config(sensor);
-				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "FLY"){
+				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync')){
 					// _send_otn_request(sensor);
 					// Sensors having issues seeing OTN request sent too quickly
 					// Added timeout to fix issue
@@ -4578,7 +4578,7 @@ module.exports = function(RED) {
 					}else{
 						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					}
-				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
+				}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN" && !Object.hasOwn(sensor, 'sync')){
 					if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 103 || config.sensor_type == 202){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
@@ -4604,7 +4604,7 @@ module.exports = function(RED) {
 					}else{
 						node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 					};
-				} else if(config.sensor_type == 101 && sensor.mode == "FLY" || config.sensor_type == 102 && sensor.mode == "FLY" || config.sensor_type == 103 && sensor.mode == "FLY" || config.sensor_type == 202 && sensor.mode == "FLY"){
+				} else if(config.sensor_type == 101 && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync') || config.sensor_type == 102 && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync') || config.sensor_type == 103 && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync') || config.sensor_type == 202 && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync')){
 					if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 						this.gateway.fly_101_in_progress = true;
 						node.warn('Starting RTC Timer ' + Date.now());
@@ -4680,7 +4680,7 @@ module.exports = function(RED) {
 					}
 					if(config.auto_config && sensor.mode == 'PGM'){
 						_config(sensor);
-					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "FLY"){
+					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "FLY" && !Object.hasOwn(sensor, 'sync')){
 						// _send_otn_request(sensor);
 						// Sensors having issues seeing OTN request sent too quickly
 						// Added timeout to fix issue
@@ -4694,7 +4694,7 @@ module.exports = function(RED) {
 						}else{
 							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						}
-					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN"){
+					}else if(config.auto_config && config.on_the_fly_enable && sensor.mode == "OTN" && !Object.hasOwn(sensor, 'sync')){
 						if(config.sensor_type == 101 || config.sensor_type == 102  || config.sensor_type == 103|| config.sensor_type == 202){
 							if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 								this.gateway.fly_101_in_progress = true;
@@ -4722,7 +4722,7 @@ module.exports = function(RED) {
 							node.send({topic: 'warning', payload: {'warning': 'Wireless Device Node configurations overridden by API Configuration'}, addr: sensor.mac, time: Date.now()});
 						};
 
-					}else if(sensor.mode == "FLY" && config.sensor_type == 101 || sensor.mode == "FLY" &&  config.sensor_type == 102 || sensor.mode == "FLY" &&  config.sensor_type == 103 || sensor.mode == "FLY" &&  config.sensor_type == 202){
+					}else if(sensor.mode == "FLY" && config.sensor_type == 101 && !Object.hasOwn(sensor, 'sync') || sensor.mode == "FLY" &&  config.sensor_type == 102 && !Object.hasOwn(sensor, 'sync') || sensor.mode == "FLY" &&  config.sensor_type == 103 && !Object.hasOwn(sensor, 'sync') || sensor.mode == "FLY" &&  config.sensor_type == 202 && !Object.hasOwn(sensor, 'sync')){
 						if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 							this.gateway.fly_101_in_progress = true;
 							node.warn('Starting RTC Timer ' + Date.now());
