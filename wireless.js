@@ -4555,7 +4555,7 @@ module.exports = function(RED) {
 									var broadcast_tout = setTimeout(() => {
 										node.warn('Sending RTC Broadcast ' + Date.now());
 										_broadcast_rtc(data);
-									}, 1250);
+									}, 2000);
 								}else{
 									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
 								}
