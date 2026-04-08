@@ -4554,10 +4554,10 @@ module.exports = function(RED) {
 									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
 									var broadcast_tout = setTimeout(() => {
 										node.warn('Sending RTC Broadcast ' + Date.now());
-										_broadcast_rtc(sensor);
+										_broadcast_rtc(data);
 									}, 1250);
 								}else{
-									node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
+									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
 								}
 							} else{
 								// console.log('No Config Differences Detected, Skipping Sync Configs');
