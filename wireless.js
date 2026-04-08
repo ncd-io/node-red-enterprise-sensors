@@ -4551,11 +4551,11 @@ module.exports = function(RED) {
 								if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
 									this.gateway.fly_101_in_progress = true;
 									node.warn('Starting RTC Timer ' + Date.now());
-									node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
+									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
 									var broadcast_tout = setTimeout(() => {
 										node.warn('Sending RTC Broadcast ' + Date.now());
 										_broadcast_rtc(sensor);
-									}, 2000);
+									}, 1250);
 								}else{
 									node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
 								}
