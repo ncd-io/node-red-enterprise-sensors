@@ -4546,7 +4546,20 @@ module.exports = function(RED) {
 										})(i);
 									}
 								});
-							}else{
+							} else if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 103 || config.sensor_type == 202){
+								// type 101, 102, 103, 202 sensors broadcast handling. Requires setting RTC every checkin although we can skip it if there are configs
+								if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
+									this.gateway.fly_101_in_progress = true;
+									node.warn('Starting RTC Timer ' + Date.now());
+									node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
+									var broadcast_tout = setTimeout(() => {
+										node.warn('Sending RTC Broadcast ' + Date.now());
+										_broadcast_rtc(sensor);
+									}, 2000);
+								}else{
+									node.warn('Sensor checked in for RTC: ' + sensor.mac + ' at ' + Date.now());
+								}
+							} else{
 								// console.log('No Config Differences Detected, Skipping Sync Configs');
 								node.send({topic: 'sync', type: 'sync_response', payload: {info: "Reported configurations match desired configurations. Skipping Sync."}, time: Date.now()});
 							}
