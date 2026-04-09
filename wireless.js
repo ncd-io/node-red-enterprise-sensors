@@ -3693,6 +3693,17 @@ module.exports = function(RED) {
 									promises.threshold_probe_three_126 = node.config_gateway.config_set_probe_three_current_threshold_126(mac, parseInt(config.threshold_probe_three_126));
 								}
 								break;
+							case 128:
+								if(config.adc_threshold_128_active){
+									promises.adc_threshold_128 = node.config_gateway.config_set_adc_threshold_128(mac, parseInt(config.adc_threshold_128));
+								}
+								if(config.auto_check_interval_128_active){
+									promises.auto_check_interval_128 = node.config_gateway.config_set_auto_check_interval_128(mac, parseInt(config.auto_check_interval_128));
+								}
+								if(config.auto_calibration_128){
+									promises.auto_calibration_128 = node.config_gateway.config_set_auto_calibration_128(mac);
+								}
+								break;
 							case 180:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
