@@ -7,6 +7,8 @@ const fs = require('fs');
 const path = require('path');
 const home_dir = require('os').homedir;
 const { isDeepStrictEqual } = require('util');
+// We're using v8 to handle deep cloning of objects with buffer data.
+const v8 = require('v8');
 
 
 module.exports = function(RED) {
@@ -142,14 +144,20 @@ module.exports = function(RED) {
 						});
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
 						node.gateway.on('sync', (d) => {
-							// console.log('Sync Received in Config Node');
-							// console.log(d);
-							// const payload = structuredClone(d.payload);
-							const payload = JSON.parse(JSON.stringify(d.payload));
-							const addr = payload.address;
-							const sensor_type = payload.sensor_type;
-							const type = payload.type;
-							if(payload.type == 'sync_check_in' || payload.type == 'sync_end' || payload.type == 'manual_sync_check_in'){
+							if(d.type == 'sync_check_in' || d.type == 'sync_end' || d.type == 'manual_sync_check_in'){
+								// TODO replace with deepclone once we update node version on Gateway.
+								const cloned_payload = v8.deserialize(v8.serialize(d.payload));
+								// const payload = structuredClone(d.payload);
+								const {
+									machine_values: { sensor_type, ...actual_values},
+									human_readable,
+									address: addr,
+									type,
+									...remaining
+								} = cloned_payload;
+
+								const payload = { ...remaining, ...actual_values, sensor_type };
+
 								if(Object.hasOwn(node.sensor_list, addr) && Object.hasOwn(node.sensor_list[addr], 'update_request')){
 									node.request_manifest(addr);
 								}else if(Object.hasOwn(this.gateway.sensor_libs, sensor_type)){
@@ -158,6 +166,31 @@ module.exports = function(RED) {
 									const config_map = this.gateway.sensor_libs[sensor_type].get_config_map(payload.firmware_version);
 									let store_flag = false;
 									
+									let fly_payload = null;
+
+									if(config.enable_fly_compatibility){
+										fly_payload = {
+											...human_readable,
+											'machine_values': {...actual_values}
+										};
+										for (const [new_key, conf] of Object.entries(config_map)) {
+											if (conf.old_fly_id) {
+												const old_key = conf.old_fly_id;
+												// Make sure a small slipup in the config map doesn't cause issues with the payload
+												if(old_key !== new_key){
+													if (Object.hasOwn(fly_payload, new_key)) {
+														fly_payload[old_key] = fly_payload[new_key];
+														delete fly_payload[new_key];
+													}
+													// Alias the machine value (inside machine_values)
+													if (Object.hasOwn(fly_payload.machine_values, new_key)) {
+														fly_payload.machine_values[old_key] = fly_payload.machine_values[new_key];
+														delete fly_payload.machine_values[new_key];
+													}
+												}
+											}
+										};
+									}
 
 									if(!Object.hasOwn(node.sensor_configs, addr)){
 										node.sensor_configs[addr] = {};
@@ -249,13 +282,14 @@ module.exports = function(RED) {
 									if(type == 'sync_check_in'){
 										// TODO add backwards compatibility
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
 										}
 										if(Object.hasOwn(node.sensor_configs[addr], 'desired_configs') && Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !isDeepStrictEqual(node.sensor_configs[addr].reported_configs, node.sensor_configs[addr].desired_configs)){
 											store_flag = true;
 											var tout = setTimeout(() => {
-												this.sync_init(addr, sensor_type);
+												node.configure(d.address, d.payload.sensor_type);
+												// this.sync_init(addr, sensor_type);
 											}, 100);
 										}
 									}else if(type == 'manual_sync_check_in'){
@@ -264,22 +298,26 @@ module.exports = function(RED) {
 										}
 									}else if(type == 'sync_end'){
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});	
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: fly_payload, sync: true});	
 										}
 									}
 									if(store_flag){
 										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 									}
 								}
-							}else if(type == 'sync_init'){
+							}else if(d.type == 'sync_init'){
 								if(config.enable_fly_compatibility){
-									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
-									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
+									const fly_payload = {
+										...d.payload.human_readable,
+										'machines_values': d.payload.machine_values
+									}
+									this.gateway._emitter.emit('sensor_mode', {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
+									this.gateway._emitter.emit('sensor_mode-'+d.address, {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
 								}
-								if(node.sensor_configs[addr] && node.sensor_configs[addr].api_config_override){
-									node.configure(addr, sensor_type);
-								}
+								// if(node.sensor_configs[d.address] && node.sensor_configs[d.address].api_config_override){
+								// 	node.configure(d.address, d.payload.sensor_type);
+								// }
 							}
 						});
 						node.gateway.on('manifest_received', (manifest_data) => {
@@ -1421,6 +1459,10 @@ module.exports = function(RED) {
 			this.config_gateway = this.config_gateway_node.gateway;
 			dedicated_config = true;
 		}
+		this.config_sync_listener;
+
+
+
 		// this.queue = new Queue(1);
 		var node = this;
 		var modes = {
@@ -4494,6 +4536,8 @@ module.exports = function(RED) {
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
 							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
 
+							console.log(html_map);
+
 							let update_flag = false;
 							for(let key in html_map){
 								if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
@@ -4532,9 +4576,9 @@ module.exports = function(RED) {
 												if(name != 'finish'){
 													let fail_flag = false;
 													for(const key in html_map){
-														if(Object.hasOwn(f.payload, key) && f.payload[key] == html_map[key].html_value){
+														if(Object.hasOwn(f.payload.machine_values, key) && f.payload.machine_values[key] == html_map[key].html_value){
 															msg.pass[key] = true;
-															msg.values[key] = f.payload[key];
+															msg.values[key] = f.payload.human_readable[key];
 														}else{
 															msg.pass[key] = false;
 															msg.values[key] = f.payload[key];
