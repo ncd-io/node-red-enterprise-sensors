@@ -308,10 +308,6 @@ module.exports = function(RED) {
 								}
 							}else if(d.type == 'sync_init'){
 								if(config.enable_fly_compatibility){
-									const fly_payload = {
-										...d.payload.human_readable,
-										'machines_values': d.payload.machine_values
-									}
 									this.gateway._emitter.emit('sensor_mode', {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
 									this.gateway._emitter.emit('sensor_mode-'+d.address, {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
 								}
