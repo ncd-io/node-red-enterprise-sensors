@@ -144,7 +144,7 @@ module.exports = function(RED) {
 						});
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
 						node.gateway.on('sync', (d) => {
-							if(d.type == 'sync_check_in' || d.type == 'sync_end' || d.type == 'manual_sync_check_in'){
+							if(d.type == 'sync_check_in' || d.type == 'sync_end' || d.type == 'manual_sync_check_in' || d.type == 'sync_acknowledgment'){
 								// TODO replace with deepclone once we update node version on Gateway.
 								const cloned_payload = v8.deserialize(v8.serialize(d.payload));
 								// const payload = structuredClone(d.payload);
@@ -4446,69 +4446,15 @@ module.exports = function(RED) {
 			});
 		}
 		node._sensor_config = _config;
-		if(config.addr){
-			config.addr = config.addr.toLowerCase();
+		let sync_topic = '';
+		if(Object.hasOwn(config, 'addr') && config.addr != ''){
+			sync_topic = 'sync-'+config.addr;
+		}else{
+			sync_topic = 'sync';
+		}
 
-			RED.nodes.getNode(config.connection).sensor_pool.push(config.addr);
-			this.gtw_on('sensor_data-'+config.addr, (data) => {
-				node.status(modes.RUN);
-				data.modem_mac = this.gateway.modem_mac;
-				node.send({
-					topic: 'sensor_data',
-					data: data,
-					payload: data.sensor_data,
-					time: Date.now()
-				});
-			});
-			this.gtw_on('converter_response-'+config.addr, (data) => {
-				node.status(modes.RUN);
-				data.modem_mac = this.gateway.modem_mac;
-				data.topic = 'converter_response';
-				data.time = Date.now();
-				node.send(data);
-			});
-			this.gtw_on('set_destination_address'+config.addr, (d) => {
-				if(config.auto_config){
-					node.warn('Setting destination address');
-					return new Promise((top_fulfill, top_reject) => {
-						var msg = {};
-						setTimeout(() => {
-							var tout = setTimeout(() => {
-								node.status(modes.PGM_ERR);
-								node.send({topic: 'FLY Set Destination Address', payload: msg, time: Date.now()});
-							}, 10000);
-
-							var promises = {};
-
-							promises.config_dest_address_fly = node.config_gateway.config_set_destination(d, parseInt(config.destination, 16));
-
-							promises.finish = new Promise((fulfill, reject) => {
-								node.config_gateway.queue.add(() => {
-									return new Promise((f, r) => {
-										clearTimeout(tout);
-										fulfill();
-										f();
-									});
-								});
-							});
-							for(var i in promises){
-								(function(name){
-									promises[name].then((f) => {
-										if(name != 'finish') msg[name] = true;
-										else{
-											node.send({topic: 'FLY Set Destination Address', payload: msg, time: Date.now()});
-											top_fulfill(msg);
-										}
-									}).catch((err) => {
-										msg[name] = err;
-									});
-								})(i);
-							}
-						});
-					});
-				}
-			});
-			this.pgm_on('sync-'+config.addr, (data) => {
+		this.pgm_on(sync_topic, (data) => {
+			if(data.sensor_type == config.sensor_type){
 				let message = {
 					topic: 'sync',
 					type: data.payload.type,
@@ -4592,7 +4538,18 @@ module.exports = function(RED) {
 													}
 												}
 												else{
-													node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
+													node.send({
+														topic: 'sync',
+														type: 'sync_response',
+														address: data.address,
+														sensor_type: data.sensor_type,
+														payload: {
+															address: data.address,
+															sensor_type: data.sensor_type,
+															...msg
+														},
+														time: Date.now()
+													});
 													// top_fulfill(msg);
 												}
 											}).catch((err) => {
@@ -4616,13 +4573,88 @@ module.exports = function(RED) {
 								}
 							} else{
 								// console.log('No Config Differences Detected, Skipping Sync Configs');
-								node.send({topic: 'sync', type: 'sync_response', payload: {info: "Reported configurations match desired configurations. Skipping Sync."}, time: Date.now()});
+								node.send({
+									topic: 'sync',
+									type: 'sync_response',
+									address: data.address,
+									sensor_type: data.sensor_type,
+									payload: {
+										address: data.address,
+										sensor_type: data.sensor_type,
+										info: "Reported configurations match desired configurations. Skipping Sync."
+									},
+									time: Date.now()
+								});
 							}
 						}
 					}
 				}
 				node.send(message);
+			}
+		});
+		if(config.addr){
+			config.addr = config.addr.toLowerCase();
+
+			RED.nodes.getNode(config.connection).sensor_pool.push(config.addr);
+			this.gtw_on('sensor_data-'+config.addr, (data) => {
+				node.status(modes.RUN);
+				data.modem_mac = this.gateway.modem_mac;
+				node.send({
+					topic: 'sensor_data',
+					data: data,
+					payload: data.sensor_data,
+					time: Date.now()
+				});
 			});
+			this.gtw_on('converter_response-'+config.addr, (data) => {
+				node.status(modes.RUN);
+				data.modem_mac = this.gateway.modem_mac;
+				data.topic = 'converter_response';
+				data.time = Date.now();
+				node.send(data);
+			});
+			this.gtw_on('set_destination_address'+config.addr, (d) => {
+				if(config.auto_config){
+					node.warn('Setting destination address');
+					return new Promise((top_fulfill, top_reject) => {
+						var msg = {};
+						setTimeout(() => {
+							var tout = setTimeout(() => {
+								node.status(modes.PGM_ERR);
+								node.send({topic: 'FLY Set Destination Address', payload: msg, time: Date.now()});
+							}, 10000);
+
+							var promises = {};
+
+							promises.config_dest_address_fly = node.config_gateway.config_set_destination(d, parseInt(config.destination, 16));
+
+							promises.finish = new Promise((fulfill, reject) => {
+								node.config_gateway.queue.add(() => {
+									return new Promise((f, r) => {
+										clearTimeout(tout);
+										fulfill();
+										f();
+									});
+								});
+							});
+							for(var i in promises){
+								(function(name){
+									promises[name].then((f) => {
+										if(name != 'finish') msg[name] = true;
+										else{
+											node.send({topic: 'FLY Set Destination Address', payload: msg, time: Date.now()});
+											top_fulfill(msg);
+										}
+									}).catch((err) => {
+										msg[name] = err;
+									});
+								})(i);
+							}
+						});
+					});
+				}
+			});
+			
 			this.pgm_on('sensor_mode-'+config.addr, (sensor) => {
 				if(sensor.mode in modes){
 					node.status(modes[sensor.mode]);
