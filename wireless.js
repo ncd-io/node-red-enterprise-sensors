@@ -7,6 +7,8 @@ const fs = require('fs');
 const path = require('path');
 const home_dir = require('os').homedir;
 const { isDeepStrictEqual } = require('util');
+// We're using v8 to handle deep cloning of objects with buffer data.
+const v8 = require('v8');
 
 
 module.exports = function(RED) {
@@ -142,14 +144,20 @@ module.exports = function(RED) {
 						});
 						// Event listener to make sure this only triggers once no matter how many gateway nodes there are
 						node.gateway.on('sync', (d) => {
-							// console.log('Sync Received in Config Node');
-							// console.log(d);
-							// const payload = structuredClone(d.payload);
-							const payload = JSON.parse(JSON.stringify(d.payload));
-							const addr = payload.address;
-							const sensor_type = payload.sensor_type;
-							const type = payload.type;
-							if(payload.type == 'sync_check_in' || payload.type == 'sync_end' || payload.type == 'manual_sync_check_in'){
+							if(d.type == 'sync_check_in' || d.type == 'sync_end' || d.type == 'manual_sync_check_in' || d.type == 'sync_acknowledgment'){
+								// TODO replace with deepclone once we update node version on Gateway.
+								const cloned_payload = v8.deserialize(v8.serialize(d.payload));
+								// const payload = structuredClone(d.payload);
+								const {
+									machine_values: { sensor_type, ...actual_values},
+									human_readable,
+									address: addr,
+									type,
+									...remaining
+								} = cloned_payload;
+
+								const payload = { ...remaining, ...actual_values, sensor_type };
+
 								if(Object.hasOwn(node.sensor_list, addr) && Object.hasOwn(node.sensor_list[addr], 'update_request')){
 									node.request_manifest(addr);
 								}else if(Object.hasOwn(this.gateway.sensor_libs, sensor_type)){
@@ -158,6 +166,31 @@ module.exports = function(RED) {
 									const config_map = this.gateway.sensor_libs[sensor_type].get_config_map(payload.firmware_version);
 									let store_flag = false;
 									
+									let fly_payload = null;
+
+									if(config.enable_fly_compatibility){
+										fly_payload = {
+											...human_readable,
+											'machine_values': {...actual_values}
+										};
+										for (const [new_key, conf] of Object.entries(config_map)) {
+											if (conf.old_fly_id) {
+												const old_key = conf.old_fly_id;
+												// Make sure a small slipup in the config map doesn't cause issues with the payload
+												if(old_key !== new_key){
+													if (Object.hasOwn(fly_payload, new_key)) {
+														fly_payload[old_key] = fly_payload[new_key];
+														delete fly_payload[new_key];
+													}
+													// Alias the machine value (inside machine_values)
+													if (Object.hasOwn(fly_payload.machine_values, new_key)) {
+														fly_payload.machine_values[old_key] = fly_payload.machine_values[new_key];
+														delete fly_payload.machine_values[new_key];
+													}
+												}
+											}
+										};
+									}
 
 									if(!Object.hasOwn(node.sensor_configs, addr)){
 										node.sensor_configs[addr] = {};
@@ -249,13 +282,14 @@ module.exports = function(RED) {
 									if(type == 'sync_check_in'){
 										// TODO add backwards compatibility
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'FLY', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
 										}
 										if(Object.hasOwn(node.sensor_configs[addr], 'desired_configs') && Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !isDeepStrictEqual(node.sensor_configs[addr].reported_configs, node.sensor_configs[addr].desired_configs)){
 											store_flag = true;
 											var tout = setTimeout(() => {
-												this.sync_init(addr, sensor_type);
+												node.configure(d.address, d.payload.sensor_type);
+												// this.sync_init(addr, sensor_type);
 											}, 100);
 										}
 									}else if(type == 'manual_sync_check_in'){
@@ -264,22 +298,22 @@ module.exports = function(RED) {
 										}
 									}else if(type == 'sync_end'){
 										if(config.enable_fly_compatibility){
-											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});
-											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: payload, sync: true});	
+											this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: fly_payload, sync: true});
+											this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: payload.node_id, mode: 'OTF', lastHeard: Date.now(), reported_config: fly_payload, sync: true});	
 										}
 									}
 									if(store_flag){
 										node.store_sensor_configs(JSON.stringify(node.sensor_configs));
 									}
 								}
-							}else if(type == 'sync_init'){
+							}else if(d.type == 'sync_init'){
 								if(config.enable_fly_compatibility){
-									this.gateway._emitter.emit('sensor_mode', {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
-									this.gateway._emitter.emit('sensor_mode-'+addr, {mac: addr, type: sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), reported_config: d.payload, sync: true});
+									this.gateway._emitter.emit('sensor_mode', {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
+									this.gateway._emitter.emit('sensor_mode-'+d.address, {mac: d.address, type: d.payload.sensor_type, nodeId: d.payload.node_id, mode: 'OTN', lastHeard: Date.now(), sync: true});
 								}
-								if(node.sensor_configs[addr] && node.sensor_configs[addr].api_config_override){
-									node.configure(addr, sensor_type);
-								}
+								// if(node.sensor_configs[d.address] && node.sensor_configs[d.address].api_config_override){
+								// 	node.configure(d.address, d.payload.sensor_type);
+								// }
 							}
 						});
 						node.gateway.on('manifest_received', (manifest_data) => {
@@ -1421,6 +1455,10 @@ module.exports = function(RED) {
 			this.config_gateway = this.config_gateway_node.gateway;
 			dedicated_config = true;
 		}
+		this.config_sync_listener;
+
+
+
 		// this.queue = new Queue(1);
 		var node = this;
 		var modes = {
@@ -3693,6 +3731,17 @@ module.exports = function(RED) {
 									promises.threshold_probe_three_126 = node.config_gateway.config_set_probe_three_current_threshold_126(mac, parseInt(config.threshold_probe_three_126));
 								}
 								break;
+							case 128:
+								if(config.adc_threshold_128_active){
+									promises.adc_threshold_128 = node.config_gateway.config_set_adc_threshold_128(mac, parseInt(config.adc_threshold_128));
+								}
+								if(config.auto_check_interval_128_active){
+									promises.auto_check_interval_128 = node.config_gateway.config_set_auto_check_interval_128(mac, parseInt(config.auto_check_interval_128));
+								}
+								if(config.auto_calibration_128){
+									promises.auto_calibration_128 = node.config_gateway.config_set_auto_calibration_128(mac);
+								}
+								break;
 							case 180:
 								if(config.output_data_rate_101_active){
 									promises.output_data_rate_101 = node.config_gateway.config_set_output_data_rate_101(mac, parseInt(config.output_data_rate_101));
@@ -4393,6 +4442,152 @@ module.exports = function(RED) {
 			});
 		}
 		node._sensor_config = _config;
+		let sync_topic = '';
+		if(Object.hasOwn(config, 'addr') && config.addr != ''){
+			sync_topic = 'sync-'+config.addr;
+		}else{
+			sync_topic = 'sync';
+		}
+
+		this.pgm_on(sync_topic, (data) => {
+			if(data.sensor_type == config.sensor_type){
+				let message = {
+					topic: 'sync',
+					type: data.payload.type,
+					...data,
+					time: Date.now()
+				};
+				
+				// switch(data.type){
+				// 	case 'sync_check_in':						
+				// 		break;
+				// 	case 'sync_init':
+				// 		break;
+				// 	case 'sync_acknowledgment':
+				// 		break;
+				// 	case 'sync_acknowledgment_error':
+				// 		break;
+				// 	case 'sync_end':
+				// 		break;
+				// 	default:
+				// 		console.log('Default in device node sync');
+				// 		console.log(data.type);
+				// }
+				if(data.type == 'sync_check_in' || data.type == 'manual_sync_check_in'){
+					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
+						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
+
+							console.log(html_map);
+
+							let update_flag = false;
+							for(let key in html_map){
+								if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
+									// console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
+									// console.log('Value is different, updating config for ' + key);
+									update_flag = true;
+									break;
+								}
+							}
+							if(update_flag){
+								promises = {};
+								setTimeout(() => {
+									let msg = {
+										values: {},
+										pass: {},
+										status: 'Configuring'
+									};
+									var tout = setTimeout(() => {
+										console.log('Sync Request Timed Out');
+									}, 20000);
+									promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
+
+									promises.finish = new Promise((fulfill, reject) => {
+										node.config_gateway.queue.add(() => {
+											return new Promise((f, r) => {
+												clearTimeout(tout);
+												node.status(modes.FLY);
+												fulfill();
+												f();
+											});
+										});
+									});
+									for(var i in promises){
+										(function(name){
+											promises[name].then((f) => {
+												if(name != 'finish'){
+													let fail_flag = false;
+													for(const key in html_map){
+														if(Object.hasOwn(f.payload.machine_values, key) && f.payload.machine_values[key] == html_map[key].html_value){
+															msg.pass[key] = true;
+															msg.values[key] = f.payload.human_readable[key];
+														}else{
+															msg.pass[key] = false;
+															msg.values[key] = f.payload[key];
+															fail_flag = true;
+														}
+													}
+													if(fail_flag){
+														msg.status = 'Error';
+													}else{
+														msg.status = 'Success';
+													}
+												}
+												else{
+													node.send({
+														topic: 'sync',
+														type: 'sync_response',
+														address: data.address,
+														sensor_type: data.sensor_type,
+														payload: {
+															address: data.address,
+															sensor_type: data.sensor_type,
+															...msg
+														},
+														time: Date.now()
+													});
+													// top_fulfill(msg);
+												}
+											}).catch((err) => {
+												msg[name] = err;
+											});
+										})(i);
+									}
+								});
+							} else if(config.sensor_type == 101 || config.sensor_type == 102 || config.sensor_type == 103 || config.sensor_type == 202){
+								// type 101, 102, 103, 202 sensors broadcast handling. Requires setting RTC every checkin although we can skip it if there are configs
+								if(this.gateway.hasOwnProperty('fly_101_in_progress') && this.gateway.fly_101_in_progress == false || !this.gateway.hasOwnProperty('fly_101_in_progress')){
+									this.gateway.fly_101_in_progress = true;
+									node.warn('Starting RTC Timer ' + Date.now());
+									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
+									var broadcast_tout = setTimeout(() => {
+										node.warn('Sending RTC Broadcast ' + Date.now());
+										_broadcast_rtc(data);
+									}, 2000);
+								}else{
+									node.warn('Sensor checked in for RTC: ' + data.payload.address + ' at ' + Date.now());
+								}
+							} else{
+								// console.log('No Config Differences Detected, Skipping Sync Configs');
+								node.send({
+									topic: 'sync',
+									type: 'sync_response',
+									address: data.address,
+									sensor_type: data.sensor_type,
+									payload: {
+										address: data.address,
+										sensor_type: data.sensor_type,
+										info: "Reported configurations match desired configurations. Skipping Sync."
+									},
+									time: Date.now()
+								});
+							}
+						}
+					}
+				}
+				node.send(message);
+			}
+		});
 		if(config.addr){
 			config.addr = config.addr.toLowerCase();
 
@@ -4455,106 +4650,7 @@ module.exports = function(RED) {
 					});
 				}
 			});
-			this.pgm_on('sync-'+config.addr, (data) => {
-				let message = {
-					topic: 'sync',
-					type: data.payload.type,
-					...data,
-					time: Date.now()
-				};
-				
-				// switch(data.type){
-				// 	case 'sync_check_in':						
-				// 		break;
-				// 	case 'sync_init':
-				// 		break;
-				// 	case 'sync_acknowledgment':
-				// 		break;
-				// 	case 'sync_acknowledgment_error':
-				// 		break;
-				// 	case 'sync_end':
-				// 		break;
-				// 	default:
-				// 		console.log('Default in device node sync');
-				// 		console.log(data.type);
-				// }
-				if(data.type == 'sync_check_in' || data.type == 'manual_sync_check_in'){
-					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
-						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
-							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
-
-							let update_flag = false;
-							for(let key in html_map){
-								if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
-									// console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
-									// console.log('Value is different, updating config for ' + key);
-									update_flag = true;
-									break;
-								}
-							}
-							if(update_flag){
-								promises = {};
-								setTimeout(() => {
-									let msg = {
-										values: {},
-										pass: {},
-										status: 'Configuring'
-									};
-									var tout = setTimeout(() => {
-										console.log('Sync Request Timed Out');
-									}, 20000);
-									promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
-
-									promises.finish = new Promise((fulfill, reject) => {
-										node.config_gateway.queue.add(() => {
-											return new Promise((f, r) => {
-												clearTimeout(tout);
-												node.status(modes.FLY);
-												fulfill();
-												f();
-											});
-										});
-									});
-									for(var i in promises){
-										(function(name){
-											promises[name].then((f) => {
-												if(name != 'finish'){
-													let fail_flag = false;
-													for(const key in html_map){
-														if(Object.hasOwn(f.payload, key) && f.payload[key] == html_map[key].html_value){
-															msg.pass[key] = true;
-															msg.values[key] = f.payload[key];
-														}else{
-															msg.pass[key] = false;
-															msg.values[key] = f.payload[key];
-															fail_flag = true;
-														}
-													}
-													if(fail_flag){
-														msg.status = 'Error';
-													}else{
-														msg.status = 'Success';
-													}
-												}
-												else{
-													node.send({topic: 'sync', type: 'sync_response', payload: msg, time: Date.now()});
-													// top_fulfill(msg);
-												}
-											}).catch((err) => {
-												msg[name] = err;
-											});
-										})(i);
-									}
-								});
-							}else{
-								// console.log('No Config Differences Detected, Skipping Sync Configs');
-								node.send({topic: 'sync', type: 'sync_response', payload: {info: "Reported configurations match desired configurations. Skipping Sync."}, time: Date.now()});
-							}
-						}
-					}
-				}
-				node.send(message);
-			});
+			
 			this.pgm_on('sensor_mode-'+config.addr, (sensor) => {
 				if(sensor.mode in modes){
 					node.status(modes[sensor.mode]);

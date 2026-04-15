@@ -996,7 +996,13 @@
 			threshold_probe_three_126:{value: 3, validate: NCD_validators.number_range(0, 65535)},
 
 			send_raw_on_motion_only_103_active:{value:""},
-			send_raw_on_motion_only_103:{value: 0}
+			send_raw_on_motion_only_103:{value: 0},
+
+			adc_threshold_128_active:{value:""},
+			adc_threshold_128:{value: 3, validate: NCD_validators.number_range(0, 65535)},
+			auto_check_interval_128_active:{value:""},
+			auto_check_interval_128:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			auto_calibration_128:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3863,6 +3869,7 @@
 					<div>
 						<label for="node-input-low_pass_filter_p1_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-low_pass_filter_p1_110">
+							<option value="10">2</option>
 							<option value="0">4</option>
 							<option value="1">8</option>
 							<option value="2">16</option>
@@ -3892,6 +3899,7 @@
 					<div>
 						<label for="node-input-low_pass_filter_p2_110"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-low_pass_filter_p2_110">
+							<option value="10">2</option>
 							<option value="0">4</option>
 							<option value="1">8</option>
 							<option value="2">16</option>
@@ -7240,6 +7248,47 @@
 					<p class="caption">
 						Default value: 3A.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-128>
+				<div class="form-row ncd-active-check">
+					<strong>Set ADC Threshold</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-adc_threshold_128_active">Active:</label>
+						<input type="checkbox" id="node-input-adc_threshold_128_active" class="ncd-config-toggle" data-target-id="node-input-adc_threshold_128" value="1">
+					</div>
+					<div>
+						<label for="node-input-adc_threshold_128"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-adc_threshold_128" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 900.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set AutoCheck Interval</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_128_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_128_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_128" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_128"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_128" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 30 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Calibration</strong>
+					<div>
+						<label for="node-input-auto_calibration_128"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-auto_calibration_128" value="1">
+					</div>
 				</div>
 			</div>
 		</div>
