@@ -4319,6 +4319,13 @@ module.exports = function(RED) {
 								if(config.flow_unit_545_active){
 									promises.flow_unit_545 = node.config_gateway.config_set_flow_unit_545(mac, parseInt(config.flow_unit_545));
 								}
+								if(config.reset_total_545_active){
+									promises.reset_total_545 = node.config_gateway.config_set_reset_total_545(mac);
+								}
+								if(config.cal_validation_545_active){
+									promises.cal_validation_545 = node.config_gateway.config_set_cal_validation_545(mac);
+								}
+								
 								if(config.gas_type_545_active){
 									promises.gas_type_545 = node.config_gateway.config_set_gas_type_545(mac, parseInt(config.gas_type_545));
 								}

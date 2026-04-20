@@ -1002,7 +1002,10 @@
 			adc_threshold_128:{value: 3, validate: NCD_validators.number_range(0, 65535)},
 			auto_check_interval_128_active:{value:""},
 			auto_check_interval_128:{value: 0, validate: NCD_validators.number_range(0, 255)},
-			auto_calibration_128:{value:0}
+			auto_calibration_128:{value:0},
+
+			reset_total_545_active:{value:""},
+			cal_validation_545_active:{value:""}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -6767,7 +6770,7 @@
 						<label for="node-input-temperature_unit_545"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-temperature_unit_545">
 							<option value="0">Fahrenheit</option>
-							<option value="1">celsius</option>
+							<option value="1">Celsius</option>
 						</select>
 					</div>
 				</div>
@@ -6806,6 +6809,20 @@
 							<option value="23">sm3_m</option>
 							<option value="24">sm3_d</option>
 						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Reset Total Flow</strong>
+					<div>
+						<label for="node-input-reset_total_545_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-reset_total_545_active" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Calibration Validation</strong>
+					<div>
+						<label for="node-input-cal_validation_545_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-cal_validation_545_active" value="1">
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
