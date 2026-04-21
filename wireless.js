@@ -4341,22 +4341,25 @@ module.exports = function(RED) {
 								break;
 							case 1010:
 								if(config.stay_on_mode_539_active){
-									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+									promises.stay_on_mode_1010 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
 								if(config.baudrate_539_active){
-									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+									promises.baudrate_1010 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
-								if(config.rx_timeout_539_active){
-									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								if(config.rx485_timeout_1011_active){
+									promises.rx485_timeout_1010 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
+								}
+								if(config.auto_address_timeout_1011_active){
+									promises.auto_address_timeout_1010 = node.config_gateway.config_set_auto_address_timeout_1011(mac, parseInt(config.auto_address_timeout_1011));
 								}
 								if(config.stop_bit_1011_active){
-									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+									promises.stop_bit_1010 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
 								}
 								if(config.set_parity_1011_active){
-									promises.set_parity_1011 = node.config_gateway.config_set_set_parity_1011(mac, parseInt(config.set_parity_1011));
+									promises.set_parity_1010 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
 								}
 								if(config.reboot_1011){
-									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
+									promises.reboot_1010 = node.config_gateway.config_set_reboot_1011(mac);
 								}
 								break;
 							case 1011:
