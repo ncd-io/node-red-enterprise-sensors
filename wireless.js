@@ -2649,12 +2649,12 @@ module.exports = function(RED) {
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
 								}
-								if(config.mid_calibration_420ma_active){
-									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
-								}
-								if(config.high_calibration_420ma_active){
-									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
-								}
+								// if(config.mid_calibration_420ma_active){
+								// 	promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								// }
+								// if(config.high_calibration_420ma_active){
+								// 	promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								// }
 								if(config.auto_check_interval_88_active){
 									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
 								}
