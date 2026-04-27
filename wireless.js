@@ -1743,6 +1743,12 @@ module.exports = function(RED) {
 								if(config.measurement_type_thermocouple_active){
 									promises.measurement_type_thermocouple_12 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
+								if(config.boot_time_4_active){
+									promises.boot_time_4 = node.config_gateway.config_set_boot_time_4(mac, parseInt(config.boot_time_4));
+								}
+								if(config.operation_mode_4_active){
+									promises.operation_mode_4 = node.config_gateway.config_set_operation_mode_4(mac, parseInt(config.operation_mode_4));
+								}
 								break;
 							case 13:
 								if(config.current_calibration_13_active){
