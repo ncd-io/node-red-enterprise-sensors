@@ -1002,7 +1002,15 @@
 			adc_threshold_128:{value: 3, validate: NCD_validators.number_range(0, 65535)},
 			auto_check_interval_128_active:{value:""},
 			auto_check_interval_128:{value: 0, validate: NCD_validators.number_range(0, 255)},
-			auto_calibration_128:{value:0}
+			auto_calibration_128:{value:0},
+
+			reset_total_545_active:{value:""},
+			cal_validation_545_active:{value:""},
+
+			boot_time_4_active:{value:""},
+			boot_time_4:{value: 0, validate: NCD_validators.number_range(0, 65535)},
+			operation_mode_4_active:{value:""},
+			operation_mode_4:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1494,7 +1502,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2611,7 +2619,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-540 data-sensor-541>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Sensor Boot Time</strong>
 					<p class="caption">
@@ -2678,7 +2686,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-200 data-sensor-540 data-sensor-541>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-200 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Low Calibration Point</strong>
 					<div>
@@ -2690,6 +2698,8 @@
 						<input type="text" id="node-input-low_calibration_420ma" placeholder="68805" value="68805">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-200 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Mid Calibration Point</strong>
 					<div>
@@ -2712,6 +2722,8 @@
 						<input type="text" id="node-input-high_calibration_420ma" placeholder="68714" value="68714">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-200 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Set FSR</strong>
 					<div>
@@ -4496,8 +4508,32 @@
 			<div class="ncd-dependent" data-sensor-4 data-sensor-12 data-sensor-23>
 				<hr>
 				<div class="form-row ncd-active-check">
+					<strong>Set Operation Mode</strong>
+					<p class="caption">
+						This setting is for the internal temperature chip.<br>
+						• <strong>Shutdown:</strong> One of the low power modes. When this mode is enabled, sensor consumes less current than normal operation.<br>
+						• <strong>Brust:</strong> One of the low power modes. In this mode, the sensor measures a specific number of temperature samples and then it goes to shutdown mode. The number of samples is set by the "Number of Samples" configuration.<br>
+						• <strong>Normal:</strong> Normal sensor operation (Not low power).<br>
+					</p>
+					<div>
+						<label for="node-input-operation_mode_4_active">Active:</label>
+						<input type="checkbox" id="node-input-operation_mode_4_active" class="ncd-config-toggle" data-target-id="node-input-operation_mode_4" value="1">
+					</div>
+					<div>
+						<label for="node-input-operation_mode_4"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-operation_mode_4">
+							<option selected="selected" value="0">Normal</option>
+							<option value="1">Shutdown</option>
+							<option value="2">Burst</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Normal.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
 					<strong>Set Thermocouple Type</strong>
-					<p>Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>
+					<p class="caption">Set the type of thermocouple being used, this device supports eight thermocouple types (e.g., K, J, T, N, S, E, B, R).</p>
 					<div>
 						<label for="node-input-thermocouple_type_23_active">Active:</label>
 						<input type="checkbox" id="node-input-thermocouple_type_23_active" class="ncd-config-toggle" data-target-id="node-input-thermocouple_type_23" value="1">
@@ -4515,10 +4551,13 @@
 							<option value="112">Type R</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Type K.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filter Level</strong>
-					<p>The sensor applies the selected filter level by averaging multiple temperature readings over time.
+					<p class="caption">The sensor applies the selected filter level by averaging multiple temperature readings over time.
 						A higher filter level smooths out rapid fluctuations (noise) in the measurements, resulting in more stable data but with a slower response.
 						A lower filter level offers quicker response but with potentially more noise in the data.<br>
 						<br>
@@ -4537,7 +4576,7 @@
 					<div>
 						<label for="node-input-filter_thermocouple"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-filter_thermocouple">
-							<option selected="selected" value="0">Level 0</option>
+							<option selected="selected" value="0">Filter Disabled</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>
 							<option value="3">Level 3</option>
@@ -4547,10 +4586,13 @@
 							<option value="7">Level 7</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Filter Disabled.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Cold Junction Resolution</strong>
-					<p>The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature.
+					<p class="caption">The internal chip integrates an ambient temperature sensor which can be used to measure the thermocouple cold-junction temperature.
 						The temperature resolution is user-selectable to 0.0625°C or 0.25°C resolutions and setting the resolution determines the temperature update rate.</p>
 					<div>
 						<label for="node-input-cold_junction_thermocouple_active">Active:</label>
@@ -4563,10 +4605,13 @@
 							<option value="128">0.25⁰C</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 0.0625⁰C.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set ADC Resolution</strong>
-					<p>The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with
+					<p class="caption">The ADC measurement resolution is selectable, which enables the user to choose faster conversion times with
 						reduced resolution. This feature is useful to detect fast transient temperatures.</p>
 					<div>
 						<label for="node-input-sample_resolution_thermocouple_active">Active:</label>
@@ -4581,10 +4626,13 @@
 							<option value="96">12 Bits</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 18 Bit.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Number of Samples</strong>
-					<p>Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter
+					<p class="caption">Specifies how many temperature samples are taken per measurement, in addition, if the filter option is enabled, then the filter
 						engine is applied to each temperature sample.</p>
 					<div>
 						<label for="node-input-number_of_samples_thermocouple_active">Active:</label>
@@ -4603,10 +4651,13 @@
 							<option value="28">128 Samples</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 1 Sample.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Measurement Type</strong>
-					<p>Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>
+					<p class="caption">Configures the sensor to measure either the hot-junction temperature, cold-junction temperature, or the differential between them.</p>
 					<div>
 						<label for="node-input-measurement_type_thermocouple_active">Active:</label>
 						<input type="checkbox" id="node-input-measurement_type_thermocouple_active" class="ncd-config-toggle" data-target-id="node-input-measurement_type_thermocouple" value="1">
@@ -4619,6 +4670,26 @@
 							<option value="2">Delta</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Hot Junction.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Boot Time</strong>
+					<p class="caption">
+						Sets the time (in milliseconds) taken for sensor to be ready for use after it's powered on.
+					</p>
+					<div>
+						<label for="node-input-boot_time_4_active">Active:</label>
+						<input type="checkbox" id="node-input-boot_time_4_active" class="ncd-config-toggle" data-target-id="node-input-boot_time_4" value="1">
+					</div>
+					<div>
+						<label for="node-input-boot_time_4"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-boot_time_4" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 1500 milliseconds.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-46>
@@ -6767,7 +6838,7 @@
 						<label for="node-input-temperature_unit_545"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-temperature_unit_545">
 							<option value="0">Fahrenheit</option>
-							<option value="1">celsius</option>
+							<option value="1">Celsius</option>
 						</select>
 					</div>
 				</div>
@@ -6806,6 +6877,20 @@
 							<option value="23">sm3_m</option>
 							<option value="24">sm3_d</option>
 						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Reset Total Flow</strong>
+					<div>
+						<label for="node-input-reset_total_545_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-reset_total_545_active" value="1">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Calibration Validation</strong>
+					<div>
+						<label for="node-input-cal_validation_545_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-cal_validation_545_active" value="1">
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">

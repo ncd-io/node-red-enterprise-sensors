@@ -1683,6 +1683,12 @@ module.exports = function(RED) {
 								if(config.measurement_type_thermocouple_active){
 									promises.measurement_type_thermocouple_4 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
 								}
+								if(config.boot_time_4_active){
+									promises.boot_time_4 = node.config_gateway.config_set_boot_time_4(mac, parseInt(config.boot_time_4));
+								}
+								if(config.operation_mode_4_active){
+									promises.operation_mode_4 = node.config_gateway.config_set_operation_mode_4(mac, parseInt(config.operation_mode_4));
+								}
 								break;
 							case 5:
 								promises.acceleration_range = node.config_gateway.config_set_amgt_accel(mac, parseInt(config.amgt_accel));
@@ -1736,6 +1742,12 @@ module.exports = function(RED) {
 								}
 								if(config.measurement_type_thermocouple_active){
 									promises.measurement_type_thermocouple_12 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
+								}
+								if(config.boot_time_4_active){
+									promises.boot_time_4 = node.config_gateway.config_set_boot_time_4(mac, parseInt(config.boot_time_4));
+								}
+								if(config.operation_mode_4_active){
+									promises.operation_mode_4 = node.config_gateway.config_set_operation_mode_4(mac, parseInt(config.operation_mode_4));
 								}
 								break;
 							case 13:
@@ -1868,6 +1880,12 @@ module.exports = function(RED) {
 								}
 								if(config.measurement_type_thermocouple_active){
 									promises.measurement_type_thermocouple_23 = node.config_gateway.config_set_measurement_type_thermocouple(mac, parseInt(config.measurement_type_thermocouple));
+								}
+								if(config.boot_time_4_active){
+									promises.boot_time_4 = node.config_gateway.config_set_boot_time_4(mac, parseInt(config.boot_time_4));
+								}
+								if(config.operation_mode_4_active){
+									promises.operation_mode_4 = node.config_gateway.config_set_operation_mode_4(mac, parseInt(config.operation_mode_4));
 								}
 								break;
 							case 24:
@@ -2310,6 +2328,24 @@ module.exports = function(RED) {
 								if(config.auto_check_threshold_88_active){
 									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
 								}
+								if(config.sensor_boot_time_420ma_active){
+									promises.sensor_boot_time_420ma = node.config_gateway.config_set_sensor_boot_time_420ma(mac, parseInt(config.sensor_boot_time_420ma));
+								}
+								if(config.low_calibration_420ma_active){
+									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
+								}
+								if(config.mid_calibration_420ma_active){
+									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								}
+								if(config.high_calibration_420ma_active){
+									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								}
+								if(config.fsr_420ma_active){
+									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
+								}
+								if(config.always_on_420ma_active){
+									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
 								break;
 							case 76:
 								if(config.periodic_check_rate_76_active){
@@ -2649,12 +2685,12 @@ module.exports = function(RED) {
 								if(config.low_calibration_420ma_active){
 									promises.low_calibration_420ma = node.config_gateway.config_set_low_calibration_420ma(mac, parseInt(config.low_calibration_420ma));
 								}
-								if(config.mid_calibration_420ma_active){
-									promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
-								}
-								if(config.high_calibration_420ma_active){
-									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
-								}
+								// if(config.mid_calibration_420ma_active){
+								// 	promises.mid_calibration_420ma = node.config_gateway.config_set_mid_calibration_420ma(mac, parseInt(config.mid_calibration_420ma));
+								// }
+								// if(config.high_calibration_420ma_active){
+								// 	promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
+								// }
 								if(config.auto_check_interval_88_active){
 									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
 								}
@@ -4319,6 +4355,13 @@ module.exports = function(RED) {
 								if(config.flow_unit_545_active){
 									promises.flow_unit_545 = node.config_gateway.config_set_flow_unit_545(mac, parseInt(config.flow_unit_545));
 								}
+								if(config.reset_total_545_active){
+									promises.reset_total_545 = node.config_gateway.config_set_reset_total_545(mac);
+								}
+								if(config.cal_validation_545_active){
+									promises.cal_validation_545 = node.config_gateway.config_set_cal_validation_545(mac);
+								}
+								
 								if(config.gas_type_545_active){
 									promises.gas_type_545 = node.config_gateway.config_set_gas_type_545(mac, parseInt(config.gas_type_545));
 								}
@@ -4334,22 +4377,25 @@ module.exports = function(RED) {
 								break;
 							case 1010:
 								if(config.stay_on_mode_539_active){
-									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
+									promises.stay_on_mode_1010 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
 								if(config.baudrate_539_active){
-									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+									promises.baudrate_1010 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
-								if(config.rx_timeout_539_active){
-									promises.rx_timeout_539 = node.config_gateway.config_set_rx_timeout_539(mac, parseInt(config.rx_timeout_539));
+								if(config.rx485_timeout_1011_active){
+									promises.rx485_timeout_1010 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
+								}
+								if(config.auto_address_timeout_1011_active){
+									promises.auto_address_timeout_1010 = node.config_gateway.config_set_auto_address_timeout_1011(mac, parseInt(config.auto_address_timeout_1011));
 								}
 								if(config.stop_bit_1011_active){
-									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+									promises.stop_bit_1010 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
 								}
 								if(config.set_parity_1011_active){
-									promises.set_parity_1011 = node.config_gateway.config_set_set_parity_1011(mac, parseInt(config.set_parity_1011));
+									promises.set_parity_1010 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
 								}
 								if(config.reboot_1011){
-									promises.reboot_1011 = node.config_gateway.config_set_reboot_1011(mac);
+									promises.reboot_1010 = node.config_gateway.config_set_reboot_1011(mac);
 								}
 								break;
 							case 1011:
