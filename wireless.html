@@ -376,7 +376,7 @@
 			set_rtc_101:{value:0},
 			set_rtc_202:{value:0},
 
-			current_calibration_82:{Value:0},
+			current_calibration_82:{Value:8700, validate: NCD_validators.number_range(0, 4294967295)},
 			current_calibration_82_active:{Value:""},
 
 			current_calibration_c1_80:{value:178, validate: NCD_validators.number_range(0, 655)},
@@ -2616,6 +2616,9 @@
 						<label for="node-input-current_calibration_82"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-current_calibration_82">
 					</div>
+					<p class="caption">
+						Default value: 8700<br>
+					</p>
 				</div>
 			</div>
 
@@ -4406,7 +4409,7 @@
 					<div>
 						<label for="node-input-filter_thermocouple_112"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-filter_thermocouple_112">
-							<option selected="selected" value="0">Level 0</option>
+							<option selected="selected" value="0">Disabled</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>
 							<option value="3">Level 3</option>
