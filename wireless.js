@@ -2924,17 +2924,20 @@ module.exports = function(RED) {
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
-								if(config.auto_check_interval_88_active){
-									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
-								}
-								if(config.auto_check_threshold_88_active){
-									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
-								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								if(config.always_on_420ma_active){
 									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								if(config.lube_on_time_1_105_active){
+									promises.lube_on_time_1_105 = node.config_gateway.config_set_lube_on_time_1_105(mac, parseInt(config.lube_on_time_1_105));
+								}
+								if(config.faulty_level_105_active){
+									promises.faulty_level_105 = node.config_gateway.config_set_faulty_level_105(mac, parseInt(config.faulty_level_105));
+								}
+								if(config.friction_level_105_active){
+									promises.friction_level_105 = node.config_gateway.config_set_friction_level_105(mac, parseInt(config.friction_level_105));
 								}
 								break;
 							case 106:
@@ -2950,17 +2953,23 @@ module.exports = function(RED) {
 								if(config.high_calibration_420ma_active){
 									promises.high_calibration_420ma = node.config_gateway.config_set_high_calibration_420ma(mac, parseInt(config.high_calibration_420ma));
 								}
-								if(config.auto_check_interval_88_active){
-									promises.auto_check_interval_88 = node.config_gateway.config_set_auto_check_interval_88(mac, parseInt(config.auto_check_interval_88));
-								}
-								if(config.auto_check_threshold_88_active){
-									promises.auto_check_threshold_88 = node.config_gateway.config_set_auto_check_threshold_88(mac, parseInt(config.auto_check_threshold_88));
-								}
 								if(config.fsr_420ma_active){
 									promises.fsr_420ma = node.config_gateway.config_set_fsr_420ma(mac, parseInt(config.fsr_420ma));
 								}
 								if(config.always_on_420ma_active){
 									promises.always_on_420ma = node.config_gateway.config_set_always_on_420ma(mac, parseInt(config.always_on_420ma));
+								}
+								if(config.lube_on_time_1_105_active){
+									promises.lube_on_time_1_105 = node.config_gateway.config_set_lube_on_time_1_105(mac, parseInt(config.lube_on_time_1_105));
+								}
+								if(config.lube_on_time_2_105_active){
+									promises.lube_on_time_2_105 = node.config_gateway.config_set_lube_on_time_2_105(mac, parseInt(config.lube_on_time_2_105));
+								}
+								if(config.faulty_level_105_active){
+									promises.faulty_level_105 = node.config_gateway.config_set_faulty_level_105(mac, parseInt(config.faulty_level_105));
+								}
+								if(config.friction_level_105_active){
+									promises.friction_level_105 = node.config_gateway.config_set_friction_level_105(mac, parseInt(config.friction_level_105));
 								}
 								break;
 							case 107:

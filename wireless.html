@@ -1010,7 +1010,16 @@
 			boot_time_4_active:{value:""},
 			boot_time_4:{value: 0, validate: NCD_validators.number_range(0, 65535)},
 			operation_mode_4_active:{value:""},
-			operation_mode_4:{value:0}
+			operation_mode_4:{value:0},
+
+			lube_on_time_1_105_active:{value:""},
+			lube_on_time_1_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			lube_on_time_2_105_active:{value:""},
+			lube_on_time_2_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			faulty_level_105_active:{value:""},
+			faulty_level_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			friction_level_105_active:{value:""},
+			friction_level_105:{value: 0, validate: NCD_validators.number_range(0, 255)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2640,7 +2649,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-76 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-122 data-sensor-540 data-sensor-541>
+			<div class="ncd-dependent" data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-76 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-107 data-sensor-122 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Auto Check Interval</strong>
 					<p class="caption">
@@ -2760,6 +2769,83 @@
 							<option value="1">Enable</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Disabled.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-105 data-sensor-106>
+				<div class="form-row ncd-active-check">
+					<strong>Set Lube On Time 1</strong>
+					<p class="caption">
+						This value sets the time (seconds) at which dispenser will keep lubing.
+					</p>
+					<div>
+						<label for="node-input-lube_on_time_1_105_active">Active:</label>
+						<input type="checkbox" id="node-input-lube_on_time_1_105_active" class="ncd-config-toggle" data-target-id="node-input-lube_on_time_1_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-lube_on_time_1_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-lube_on_time_1_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 10 seconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-106>
+				<div class="form-row ncd-active-check">
+					<strong>Set Lube On Time 2</strong>
+					<p class="caption">
+						This value sets the time (seconds) at which dispenser will keep lubing (probe 2).
+					</p>
+					<div>
+						<label for="node-input-lube_on_time_2_105_active">Active:</label>
+						<input type="checkbox" id="node-input-lube_on_time_2_105_active" class="ncd-config-toggle" data-target-id="node-input-lube_on_time_2_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-lube_on_time_2_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-lube_on_time_2_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 10 seconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-105 data-sensor-106>
+				<div class="form-row ncd-active-check">
+					<strong>Set Faulty Noise Level</strong>
+					<p class="caption">
+						The critical threshold (dB) where the machine is considered damaged. Lubrication will not help at this stage, so it is disabled.
+					</p>
+					<div>
+						<label for="node-input-faulty_level_105_active">Active:</label>
+						<input type="checkbox" id="node-input-faulty_level_105_active" class="ncd-config-toggle" data-target-id="node-input-faulty_level_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-faulty_level_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-faulty_level_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 45dB.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Friction Noise Level</strong>
+					<p class="caption">
+						Sets the threshold (dB) where friction is detected. Lubrication is allowed at this stage.
+					</p>
+					<div>
+						<label for="node-input-friction_level_105_active">Active:</label>
+						<input type="checkbox" id="node-input-friction_level_105_active" class="ncd-config-toggle" data-target-id="node-input-friction_level_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-friction_level_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-friction_level_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 35 dB.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-505 data-sensor-506>
