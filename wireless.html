@@ -195,6 +195,19 @@
 					return int >= l && int <= h;
 				}
 			}
+			if(property_name === 'current_calibration_82'){
+				return function(v){
+					var int = parseInt(v, base);
+					if(this.current_calibration_82 == 0){
+						console.log('ERROR: Invalid property detect. Setting current_calibration_82 to default value');
+						$("#node-input-current_calibration_82").val(1);
+						return true;
+					} else if(v == undefined){
+						return true;
+					}
+					return int >= l && int <= h;
+				}
+			}
 			if(base == 'decimal'){
 				return function(v){
 					var n = parseFloat(v);
@@ -376,8 +389,8 @@
 			set_rtc_101:{value:0},
 			set_rtc_202:{value:0},
 
-			current_calibration_82:{Value:8700, validate: NCD_validators.number_range(0, 4294967295)},
-			current_calibration_82_active:{Value:""},
+			current_calibration_82:{value:8700, validate: NCD_validators.number_range(0, 4294967295)},
+			current_calibration_82_active:{value:""},
 
 			current_calibration_c1_80:{value:178, validate: NCD_validators.number_range(0, 655)},
 			current_calibration_c1_80_active:{value:""},
