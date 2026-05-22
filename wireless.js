@@ -3425,6 +3425,11 @@ module.exports = function(RED) {
 									promises.max_num_motion_tx_delay_114 = node.config_gateway.config_set_max_num_motion_tx_delay_110(mac, parseInt(config.max_num_motion_tx_delay_110));
 								}
 								break;
+							case 115:
+								if(config.vibration_mode_115_active){
+									promises.vibration_mode_115 = node.config_gateway.config_set_vibration_mode_115(mac, parseInt(config.vibration_mode_115));
+								}
+								break;
 							case 118:
 								if(config.pressure_sensor_fs_ch1_118_active){
 									promises.pressure_sensor_fs_ch1_118 = node.config_gateway.config_set_pressure_sensor_fs_ch1_118(mac, parseInt(config.pressure_sensor_fs_ch1_118));
