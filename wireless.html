@@ -1037,7 +1037,14 @@
 			friction_level_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			vibration_mode_115_active:{value:""},
-			vibration_mode_115:{value:0}
+			vibration_mode_115:{value:0},
+
+			baud_rate_536_active:{value:""},
+			baud_rate_536:{value:0},
+			parity_bits_536_active:{value:""},
+			parity_bits_536:{value:0},
+			stop_bits_536_active:{value:""},
+			stop_bits_536:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -6764,7 +6771,7 @@
 						<input type="text" id="node-input-flow_addr_4_536" class="flow_dev_addr_536" placeholder="0" value="00">
 					</div>
 				</div>
-				<div class="form-row ncd-active-check">
+				<!-- <div class="form-row ncd-active-check">
 					<strong>Set Oxygen Check Rate</strong>
 					<div>
 						<label for="node-input-oxygen_rate_536_active">Active:</label>
@@ -6791,7 +6798,7 @@
 					<p class="caption">
 						Default value: 5 minutes.
 					</p>
-				</div>
+				</div> -->
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Max Threshold Sensor 1</strong>
 					<p>Valid range: 0 - 20 mg/l</p>
@@ -6864,7 +6871,7 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s1_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 10 mg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
@@ -6879,7 +6886,7 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s2_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 10 mg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
@@ -6894,7 +6901,7 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s3_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 10 mg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
@@ -6909,8 +6916,56 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s4_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 10 mg/l.
 					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Baud Rate</strong>
+					<div>
+						<label for="node-input-baud_rate_536_active">Active:</label>
+						<input type="checkbox" id="node-input-baud_rate_536_active" class="ncd-config-toggle" data-target-id="node-input-baud_rate_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-baud_rate_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baud_rate_536">
+							<option selected="selected" value="0">9600</option>
+							<option value="1">19200</option>
+							<option value="2">38400</option>
+							<option value="3">57600</option>
+							<option value="4">115200</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Parity Bits</strong>
+					<div>
+						<label for="node-input-parity_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-parity_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-parity_bits_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-parity_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-parity_bits_536">
+							<option selected="selected" value="0">none</option>
+							<option value="1">odd</option>
+							<option value="2">Even</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Stop Bits</strong>
+					<div>
+						<label for="node-input-stop_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-stop_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-stop_bits_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-stop_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stop_bits_536">
+							<option selected="selected" value="0">Half bits</option>
+							<option value="1">1 bit</option>
+							<option value="2">1.5 bits</option>
+							<option value="3">2 bits</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-29>
