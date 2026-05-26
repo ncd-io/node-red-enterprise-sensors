@@ -1039,12 +1039,18 @@
 			vibration_mode_115_active:{value:""},
 			vibration_mode_115:{value:0},
 
-			baud_rate_536_active:{value:""},
-			baud_rate_536:{value:0},
-			parity_bits_536_active:{value:""},
-			parity_bits_536:{value:0},
-			stop_bits_536_active:{value:""},
-			stop_bits_536:{value:0}
+			flow_sensor_baud_rate_536_active:{value:""},
+			flow_sensor_baud_rate_536:{value:0},
+			oxygen_sensor_baud_rate_536_active:{value:""},
+			oxygen_sensor_baud_rate_536:{value:0},
+			flow_sensor_parity_bits_536_active:{value:""},
+			flow_sensor_parity_bits_536:{value:0},
+			oxygen_sensor_parity_bits_536_active:{value:""},
+			oxygen_sensor_parity_bits_536:{value:0},
+			flow_sensor_stop_bits_536_active:{value:""},
+			flow_sensor_stop_bits_536:{value:0},
+			oxygen_sensor_stop_bits_536_active:{value:""},
+			oxygen_sensor_stop_bits_536:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -6920,14 +6926,14 @@
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Baud Rate</strong>
+					<strong>Set Flow Sensor Baud Rate</strong>
 					<div>
-						<label for="node-input-baud_rate_536_active">Active:</label>
-						<input type="checkbox" id="node-input-baud_rate_536_active" class="ncd-config-toggle" data-target-id="node-input-baud_rate_536" value="1">
+						<label for="node-input-flow_sensor_baud_rate_536_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_sensor_baud_rate_536_active" class="ncd-config-toggle" data-target-id="node-input-flow_sensor_baud_rate_536" value="1">
 					</div>
 					<div>
-						<label for="node-input-baud_rate_536"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-baud_rate_536">
+						<label for="node-input-flow_sensor_baud_rate_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-flow_sensor_baud_rate_536">
 							<option selected="selected" value="0">9600</option>
 							<option value="1">19200</option>
 							<option value="2">38400</option>
@@ -6937,14 +6943,14 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Parity Bits</strong>
+					<strong>Set Flow Sensor Parity Bits</strong>
 					<div>
-						<label for="node-input-parity_bits_536_active">Active:</label>
-						<input type="checkbox" id="node-input-parity_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-parity_bits_536" value="1">
+						<label for="node-input-flow_sensor_parity_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_sensor_parity_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-flow_sensor_parity_bits_536" value="1">
 					</div>
 					<div>
-						<label for="node-input-parity_bits_536"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-parity_bits_536">
+						<label for="node-input-flow_sensor_parity_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-flow_sensor_parity_bits_536">
 							<option selected="selected" value="0">none</option>
 							<option value="1">odd</option>
 							<option value="2">Even</option>
@@ -6952,14 +6958,62 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Stop Bits</strong>
+					<strong>Set Flow Sensor Stop Bits</strong>
 					<div>
-						<label for="node-input-stop_bits_536_active">Active:</label>
-						<input type="checkbox" id="node-input-stop_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-stop_bits_536" value="1">
+						<label for="node-input-flow_sensor_stop_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-flow_sensor_stop_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-flow_sensor_stop_bits_536" value="1">
 					</div>
 					<div>
-						<label for="node-input-stop_bits_536"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-stop_bits_536">
+						<label for="node-input-flow_sensor_stop_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-flow_sensor_stop_bits_536">
+							<option selected="selected" value="0">Half bits</option>
+							<option value="1">1 bit</option>
+							<option value="2">1.5 bits</option>
+							<option value="3">2 bits</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Sensor Baud Rate</strong>
+					<div>
+						<label for="node-input-oxygen_sensor_baud_rate_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_sensor_baud_rate_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_sensor_baud_rate_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_sensor_baud_rate_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-oxygen_sensor_baud_rate_536">
+							<option selected="selected" value="0">9600</option>
+							<option value="1">19200</option>
+							<option value="2">38400</option>
+							<option value="3">57600</option>
+							<option value="4">115200</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Sensor Parity Bits</strong>
+					<div>
+						<label for="node-input-oxygen_sensor_parity_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_sensor_parity_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_sensor_parity_bits_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_sensor_parity_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-oxygen_sensor_parity_bits_536">
+							<option selected="selected" value="0">none</option>
+							<option value="1">odd</option>
+							<option value="2">Even</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Oxygen Sensor Stop Bits</strong>
+					<div>
+						<label for="node-input-oxygen_sensor_stop_bits_536_active">Active:</label>
+						<input type="checkbox" id="node-input-oxygen_sensor_stop_bits_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_sensor_stop_bits_536" value="1">
+					</div>
+					<div>
+						<label for="node-input-oxygen_sensor_stop_bits_536"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-oxygen_sensor_stop_bits_536">
 							<option selected="selected" value="0">Half bits</option>
 							<option value="1">1 bit</option>
 							<option value="2">1.5 bits</option>

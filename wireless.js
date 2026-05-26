@@ -4099,14 +4099,23 @@ module.exports = function(RED) {
 								if(config.oxygen_min_threshold_s4_536_active){
 									promises.oxygen_min_threshold_s4_536 = node.config_gateway.config_set_oxygen_min_threshold_s4_536(mac, parseInt(config.oxygen_min_threshold_s4_536));
 								}
-								if(config.baud_rate_536_active){
-									promises.baud_rate_536 = node.config_gateway.config_set_baud_rate_536(mac, parseInt(config.baud_rate_536));
+								if(config.flow_sensor_baud_rate_536_active){
+									promises.flow_sensor_baud_rate_536 = node.config_gateway.config_set_flow_sensor_baud_rate_536(mac, parseInt(config.flow_sensor_baud_rate_536));
 								}
-								if(config.parity_bits_536_active){
-									promises.parity_bits_536 = node.config_gateway.config_set_parity_bits_536(mac, parseInt(config.parity_bits_536));
+								if(config.oxygen_sensor_baud_rate_536_active){
+									promises.oxygen_sensor_baud_rate_536 = node.config_gateway.config_set_oxygen_sensor_baud_rate_536(mac, parseInt(config.oxygen_sensor_baud_rate_536));
 								}
-								if(config.stop_bits_536_active){
-									promises.stop_bits_536 = node.config_gateway.config_set_stop_bits_536(mac, parseInt(config.stop_bits_536));
+								if(config.flow_sensor_parity_bits_536_active){
+									promises.flow_sensor_parity_bits_536 = node.config_gateway.config_set_flow_sensor_parity_bits_536(mac, parseInt(config.flow_sensor_parity_bits_536));
+								}
+								if(config.oxygen_sensor_parity_bits_536_active){
+									promises.oxygen_sensor_parity_bits_536 = node.config_gateway.config_set_oxygen_sensor_parity_bits_536(mac, parseInt(config.oxygen_sensor_parity_bits_536));
+								}
+								if(config.flow_sensor_stop_bits_536_active){
+									promises.flow_sensor_stop_bits_536 = node.config_gateway.config_set_flow_sensor_stop_bits_536(mac, parseInt(config.flow_sensor_stop_bits_536));
+								}
+								if(config.oxygen_sensor_stop_bits_536_active){
+									promises.oxygen_sensor_stop_bits_536 = node.config_gateway.config_set_oxygen_sensor_stop_bits_536(mac, parseInt(config.oxygen_sensor_stop_bits_536));
 								}
 								break;
 							case 537:
