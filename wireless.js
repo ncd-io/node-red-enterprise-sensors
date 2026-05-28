@@ -3429,6 +3429,9 @@ module.exports = function(RED) {
 								if(config.vibration_mode_115_active){
 									promises.vibration_mode_115 = node.config_gateway.config_set_vibration_mode_115(mac, parseInt(config.vibration_mode_115));
 								}
+								if(config.offset_mode_115_active){
+									promises.offset_mode_115 = node.config_gateway.config_set_offset_mode_115(mac, parseInt(config.offset_mode_115));
+								}
 								break;
 							case 118:
 								if(config.pressure_sensor_fs_ch1_118_active){

@@ -1038,6 +1038,8 @@
 
 			vibration_mode_115_active:{value:""},
 			vibration_mode_115:{value:0},
+			offset_mode_115_active:{value:""},
+			offset_mode_115:{value:0},
 
 			flow_sensor_baud_rate_536_active:{value:""},
 			flow_sensor_baud_rate_536:{value: 9600},
@@ -7674,6 +7676,25 @@
 					</div>
 					<p class="caption">
 						Default value: Basic Mode.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Offset Mode</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-offset_mode_115_active">Active:</label>
+						<input type="checkbox" id="node-input-offset_mode_115_active" class="ncd-config-toggle" data-target-id="node-input-offset_mode_115" value="1">
+					</div>
+					<div>
+						<label for="node-input-offset_mode_115"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-offset_mode_115">
+							<option value="0" selected>Disabled</option>
+							<option value="1">Enabled</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Disabled.
 					</p>
 				</div>
 			</div>
