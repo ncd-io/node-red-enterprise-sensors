@@ -898,21 +898,21 @@
 			oxygen_timeout_536_active:{value: ""},
 			oxygen_timeout_536:{value:5, validate: NCD_validators.number_range(1, 10)},
 			oxygen_max_threshold_s1_536_active:{value: ""},
-			oxygen_max_threshold_s1_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s1_536:{value:1200, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_max_threshold_s2_536_active:{value: ""},
-			oxygen_max_threshold_s2_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s2_536:{value:1200, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_max_threshold_s3_536_active:{value: ""},
-			oxygen_max_threshold_s3_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s3_536:{value:1200, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_max_threshold_s4_536_active:{value: ""},
-			oxygen_max_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_max_threshold_s4_536:{value:1200, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_min_threshold_s1_536_active:{value: ""},
-			oxygen_min_threshold_s1_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s1_536:{value:1000, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_min_threshold_s2_536_active:{value: ""},
-			oxygen_min_threshold_s2_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s2_536:{value:1000, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_min_threshold_s3_536_active:{value: ""},
-			oxygen_min_threshold_s3_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s3_536:{value:1000, validate: NCD_validators.number_range(0, 2000)},
 			oxygen_min_threshold_s4_536_active:{value: ""},
-			oxygen_min_threshold_s4_536:{value:12, validate: NCD_validators.number_range(0, 2000)},
+			oxygen_min_threshold_s4_536:{value:1000, validate: NCD_validators.number_range(0, 2000)},
 			clear_timers_119_active:{value:""},
 			clear_timers_119:{value:8},
 			push_notification_119_active:{value: ""},
@@ -6809,7 +6809,7 @@
 				</div> -->
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Max Threshold Sensor 1</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_max_threshold_s1_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_max_threshold_s1_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s1_536" value="1">
@@ -6819,12 +6819,12 @@
 						<input type="text" id="node-input-oxygen_max_threshold_s1_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 1200 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Max Threshold Sensor 2</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_max_threshold_s2_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_max_threshold_s2_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s2_536" value="1">
@@ -6834,12 +6834,12 @@
 						<input type="text" id="node-input-oxygen_max_threshold_s2_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 1200 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Max Threshold Sensor 3</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_max_threshold_s3_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_max_threshold_s3_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s3_536" value="1">
@@ -6849,12 +6849,12 @@
 						<input type="text" id="node-input-oxygen_max_threshold_s3_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 1200 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Max Threshold Sensor 4</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_max_threshold_s4_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_max_threshold_s4_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_max_threshold_s4_536" value="1">
@@ -6864,12 +6864,12 @@
 						<input type="text" id="node-input-oxygen_max_threshold_s4_536">
 					</div>
 					<p class="caption">
-						Default value: 12 mg/l.
+						Default value: 1200 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Min Threshold Sensor 1</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_min_threshold_s1_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_min_threshold_s1_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s1_536" value="1">
@@ -6879,12 +6879,12 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s1_536">
 					</div>
 					<p class="caption">
-						Default value: 10 mg/l.
+						Default value: 1000 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Min Threshold Sensor 2</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_min_threshold_s2_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_min_threshold_s2_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s2_536" value="1">
@@ -6894,12 +6894,12 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s2_536">
 					</div>
 					<p class="caption">
-						Default value: 10 mg/l.
+						Default value: 1000 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Min Threshold Sensor 3</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_min_threshold_s3_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_min_threshold_s3_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s3_536" value="1">
@@ -6909,12 +6909,12 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s3_536">
 					</div>
 					<p class="caption">
-						Default value: 10 mg/l.
+						Default value: 1000 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Oxygen Min Threshold Sensor 4</strong>
-					<p>Valid range: 0 - 20 mg/l</p>
+					<p>Valid range: 0 - 2000 dg/l</p>
 					<div>
 						<label for="node-input-oxygen_min_threshold_s4_536_active">Active:</label>
 						<input type="checkbox" id="node-input-oxygen_min_threshold_s4_536_active" class="ncd-config-toggle" data-target-id="node-input-oxygen_min_threshold_s4_536" value="1">
@@ -6924,7 +6924,7 @@
 						<input type="text" id="node-input-oxygen_min_threshold_s4_536">
 					</div>
 					<p class="caption">
-						Default value: 10 mg/l.
+						Default value: 1000 dg/l.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
