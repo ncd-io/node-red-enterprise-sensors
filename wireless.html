@@ -434,10 +434,10 @@
 			high_pass_filter_81_p2_active: {value:""},
 			high_pass_filter_81_p2: {value:0},
 
-			roll_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
-			roll_angle_threshold_47_active:{value:""},
-			pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
-			pitch_angle_threshold_47_active:{value:""},
+			// roll_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
+			// roll_angle_threshold_47_active:{value:""},
+			// pitch_angle_threshold_47:{value:0, validate: NCD_validators.number_range(0, 255)},
+			// pitch_angle_threshold_47_active:{value:""},
 
 			accelerometer_state_108:{value:0},
 			accelerometer_state_108_active:{value:""},
@@ -1052,7 +1052,14 @@
 			flow_sensor_stop_bits_536_active:{value:""},
 			flow_sensor_stop_bits_536:{value:0},
 			oxygen_sensor_stop_bits_536_active:{value:""},
-			oxygen_sensor_stop_bits_536:{value:0}
+			oxygen_sensor_stop_bits_536:{value:0},
+
+			tilt_mode_47_active:{value:""},
+			tilt_mode_47:{value: 2, validate: NCD_validators.number_range(0, 2)},
+			tilt_angle_47_active:{value:""},
+			tilt_angle_47:{value: 10, validate: NCD_validators.number_range(5, 90)},
+			tilt_timer_47_active:{value:""},
+			tilt_timer_47:{value: 30, validate: NCD_validators.number_range(0, 255)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1555,7 +1562,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-128 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -2946,34 +2953,61 @@
 
 			<div class="ncd-dependent" data-sensor-47>
 				<div class="form-row ncd-active-check">
-					<strong>Roll Angle Threshold</strong>
+					<strong>Set Tilt Angle Threshold</strong>
 					<p class="caption">
-						This settings forces the sensor to transmit a packet when it detects a change in Roll angle at the chosen value or a multiple of the chosen value.<br>
-						A value of 20 will force the sensor to transmit a packet at a roll angle of 20 degrees, -20 degrees, 40 degrees, -40 degrees, etc.
+						Sets the tilt angle thresholds for both roll and pitch axes.
 					</p>
 					<div>
-						<label for="node-input-roll_angle_threshold_47_active">Active:</label>
-						<input type="checkbox" id="node-input-roll_angle_threshold_47_active" class="ncd-config-toggle" data-target-id="node-input-roll_angle_threshold_47" value="1">
+						<label for="node-input-tilt_angle_47_active">Active:</label>
+						<input type="checkbox" id="node-input-tilt_angle_47_active" class="ncd-config-toggle" data-target-id="node-input-tilt_angle_47" value="1">
 					</div>
 					<div>
-						<label for="node-input-roll_angle_threshold_47"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-roll_angle_threshold_47" placeholder="10" value="10">
+						<label for="node-input-tilt_angle_47"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-tilt_angle_47" placeholder="10" value="10">
 					</div>
+					<p class="caption">
+						Default value: 10.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Pitch Angle Threshold</strong>
+					<strong>Set Tilt Threshold Mode</strong>
 					<p class="caption">
-						This settings forces the sensor to transmit a packet when it detects a change in Pitch angle at the chosen value or a multiple of the chosen value.<br>
-						A value of 20 will force the sensor to transmit a packet at a pitch angle of 20 degrees, -20 degrees, 40 degrees, -40 degrees, etc.
+						Configures how the sensor triggers data transmissions based on tilt changes:<br><br>
+						<strong>Absolute:</strong> Sensor transmits a data packet when it detects a change exceeding single aboulte angle(pitch or roll), and user defined transmission intervals<br>
+						<strong>Incremental:</strong> The sensor transmits a data packet when it detects a change exceeding the threshold, or whenever the angle reaches a multiple of that threshold value. For example, if the threshold is set to 20, the sensor will force a transmission at roll or pitch angles of 20°, -20°, 40°, -40°, etc.<br>
+						Note: This mode requires the Auto Check Timer to be active. This will also send packets at user defined transmission intervals.<br>
+						<strong>Normal:</strong> The sensor transmits a data packet only at user defined transmission intervals. This is lowest power mode<br>
 					</p>
 					<div>
-						<label for="node-input-pitch_angle_threshold_47_active">Active:</label>
-						<input type="checkbox" id="node-input-pitch_angle_threshold_47_active" class="ncd-config-toggle" data-target-id="node-input-pitch_angle_threshold_47" value="1">
+						<label for="node-input-tilt_mode_47_active">Active:</label>
+						<input type="checkbox" id="node-input-tilt_mode_47_active" class="ncd-config-toggle" data-target-id="node-input-tilt_mode_47" value="1">
 					</div>
 					<div>
-						<label for="node-input-pitch_angle_threshold_47"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-pitch_angle_threshold_47" placeholder="10" value="10">
+						<label for="node-input-tilt_mode_47"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-tilt_mode_47" placeholder="10" value="10">
 					</div>
+					<p class="caption">
+						Default value: Normal.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Check Timer</strong>
+					<p class="caption">
+						Defines the polling interval (in seconds) for the sensor when operating in Incremental mode only.<br>
+						The timer continuously checks the angle at the configured interval to determine if the device has reached a multiple of the user-defined threshold. 
+						If the current position falls within these multiples, the device transmits a data packet immediately, bypassing the standard periodic transmission interval.
+					</p>
+					<div>
+						<label for="node-input-tilt_timer_47_active">Active:</label>
+						<input type="checkbox" id="node-input-tilt_timer_47_active" class="ncd-config-toggle" data-target-id="node-input-tilt_timer_47" value="1">
+					</div>
+					<div>
+						<label for="node-input-tilt_timer_47"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-tilt_timer_47" placeholder="10" value="10">
+					</div>
+					<p class="caption">
+						Default value: 30 seconds.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-108>

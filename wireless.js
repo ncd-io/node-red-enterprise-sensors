@@ -2180,11 +2180,20 @@ module.exports = function(RED) {
 								}
 								break;
 							case 47:
-								if(config.roll_angle_threshold_47_active){
-									promises.roll_angle_threshold_47 = node.config_gateway.config_set_roll_threshold_47(mac, parseInt(config.roll_angle_threshold_47));
+								// if(config.roll_angle_threshold_47_active){
+								// 	promises.roll_angle_threshold_47 = node.config_gateway.config_set_roll_threshold_47(mac, parseInt(config.roll_angle_threshold_47));
+								// }
+								// if(config.pitch_angle_threshold_47_active){
+								// 	promises.pitch_angle_threshold_47 = node.config_gateway.config_set_pitch_threshold_47(mac, parseInt(config.pitch_angle_threshold_47));
+								// }
+								if(config.tilt_mode_47_active){
+									promises.tilt_mode_47 = node.config_gateway.config_set_tilt_mode_47(mac, parseInt(config.tilt_mode_47));
 								}
-								if(config.pitch_angle_threshold_47_active){
-									promises.pitch_angle_threshold_47 = node.config_gateway.config_set_pitch_threshold_47(mac, parseInt(config.pitch_angle_threshold_47));
+								if(config.tilt_angle_47_active){
+									promises.tilt_angle_47 = node.config_gateway.config_set_tilt_angle_47(mac, parseInt(config.tilt_angle_47));
+								}
+								if(config.tilt_timer_47_active){
+									promises.tilt_timer_47 = node.config_gateway.config_set_tilt_timer_47(mac, parseInt(config.tilt_timer_47));
 								}
 								break;
 							case 48:
