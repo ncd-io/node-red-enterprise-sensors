@@ -4577,10 +4577,14 @@ module.exports = function(RED) {
 							console.log(html_map);
 
 							let update_flag = false;
+							let reboot = false;
 							for(let key in html_map){
 								if(html_map[key].html_value != node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]){
 									// console.log('Comparing ' + html_map[key].html_value + ' to ' + node.gateway_node.sensor_configs[data.payload.address].reported_configs[key]);
 									// console.log('Value is different, updating config for ' + key);
+									if(key == 'network_id'){
+										reboot = true;
+									}
 									update_flag = true;
 									break;
 								}
@@ -4598,6 +4602,16 @@ module.exports = function(RED) {
 									}, 20000);
 									promises.send_sync_configs = this.config_gateway.send_sync_config_wireless_node(data, html_map, node.gateway_node.sensor_configs[data.payload.address]);
 
+									let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+									if(reboot){
+										promises.reboot_sensor = node.gateway.config_reboot_sensor(data.payload.address);
+									} else {
+										if(original_otf_devices.includes(data.payload.sensor_type)){
+											promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.payload.address);
+										}else{
+											promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.payload.address);
+										}
+									}
 									promises.finish = new Promise((fulfill, reject) => {
 										node.config_gateway.queue.add(() => {
 											return new Promise((f, r) => {
