@@ -1059,7 +1059,10 @@
 			tilt_angle_47_active:{value:""},
 			tilt_angle_47:{value: 10, validate: NCD_validators.number_range(5, 90)},
 			tilt_timer_47_active:{value:""},
-			tilt_timer_47:{value: 30, validate: NCD_validators.number_range(0, 255)}
+			tilt_timer_47:{value: 30, validate: NCD_validators.number_range(0, 255)},
+
+			stop_bit_539_active:{value:""},
+			stop_bit_539:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4905,16 +4908,16 @@
 					<div>
 						<label for="node-input-baudrate_539"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-baudrate_539">
-							<option selected="selected" value="9600">9600</option>
-							<option value="19200">19200</option>
-							<option value="38400">38400</option>
-							<option value="57600">57600</option>
-							<option value="115200">115200</option>
+							<option value="0">4800</option>
+							<option selected="selected" value="1">9600</option>
+							<option value="2">19200</option>
+							<option value="3">38400</option>
+							<option value="4">115200</option>
 						</select>
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011 data-sensor-539>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
 				<div class="form-row ncd-active-check">
 					<strong>Set Stop Bit</strong>
 					<div>
@@ -4929,6 +4932,26 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
+				<div class="form-row ncd-active-check">
+					<strong>Set Stop Bit</strong>
+					<div>
+						<label for="node-input-stop_bit_539_active">Active:</label>
+						<input type="checkbox" id="node-input-stop_bit_539_active" class="ncd-config-toggle" data-target-id="node-input-stop_bit_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-stop_bit_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-stop_bit_539">
+							<option selected="selected" value="0">Half bit</option>
+							<option value="1">1 bit</option>
+							<option value="2">1.5 bit</option>
+							<option value="3">2 bit</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011 data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set Parity</strong>
 					<div>

@@ -4237,8 +4237,8 @@ module.exports = function(RED) {
 								if(config.baudrate_539_active){
 									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
-								if(config.stop_bit_1011_active){
-									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								if(config.stop_bit_539_active){
+									promises.stop_bit_539 = node.config_gateway.config_set_stop_bit_539(mac, parseInt(config.stop_bit_539));
 								}
 								if(config.set_parity_1011_active){
 									promises.set_parity_1011 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
