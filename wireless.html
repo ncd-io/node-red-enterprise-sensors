@@ -500,16 +500,16 @@
 			baudrate_539:{value: 9600},
 
 			rx_timeout_539_active:{value:""},
-			rx_timeout_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+			rx_timeout_539:{value: 2000, validate: NCD_validators.number_range(1, 65535)},
 
 			bootup_time_539_active:{value:""},
-			bootup_time_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+			bootup_time_539:{value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			sensor_add_539_active:{value:""},
-			sensor_add_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+			sensor_add_539:{value: 1, validate: NCD_validators.number_range(0, 255)},
 
 			sub_device_type_539_active:{value:""},
-			sub_device_type_539:{value: 10, validate: NCD_validators.number_range(0, 255)},
+			sub_device_type_539:{value: 0, validate: NCD_validators.number_range(0, 255)},
 
 			number_of_regs_to_rd_539_active:{value:""},
 			number_of_regs_to_rd_539:{value: 1, validate: NCD_validators.number_range(0, 32)},
@@ -1062,7 +1062,7 @@
 			tilt_timer_47:{value: 30, validate: NCD_validators.number_range(0, 255)},
 
 			stop_bit_539_active:{value:""},
-			stop_bit_539:{value:0}
+			stop_bit_539:{value:1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4898,7 +4898,26 @@
 					</div>
 				</div>
 			</div> -->
-			<div class="ncd-dependent" data-sensor-539 data-sensor-1010 data-sensor-1011>
+			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
+				<div class="form-row ncd-active-check">
+					<strong>Set Baud Rate</strong>
+					<div>
+						<label for="node-input-baudrate_539_active">Active:</label>
+						<input type="checkbox" id="node-input-baudrate_539_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_539" value="1">
+					</div>
+					<div>
+						<label for="node-input-baudrate_539"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baudrate_539">
+							<option selected="selected" value="9600">9600</option>
+							<option value="19200">19200</option>
+							<option value="38400">38400</option>
+							<option value="57600">57600</option>
+							<option value="115200">115200</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set Baud Rate</strong>
 					<div>
@@ -4915,6 +4934,9 @@
 							<option value="4">115200</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 9600.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
@@ -4949,6 +4971,9 @@
 							<option value="3">2 bit</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 1 bit.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011 data-sensor-539>
@@ -4966,10 +4991,13 @@
 							<option value="2">Odd</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: None.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-1010 data-sensor-1011>
-                <div class="form-row ncd-active-check">
+				<div class="form-row ncd-active-check">
 					<strong>Set Timeout</strong>
 					<div>
 						<label for="node-input-rx485_timeout_1011_active">Active:</label>
@@ -5016,51 +5044,76 @@
 			<div class="ncd-dependent" data-sensor-539>
 				<div class="form-row ncd-active-check">
 					<strong>Set RS485 Rx Timeout</strong>
+					<p class="caption">
+						Sets the maximum time (in milliseconds) that the device will wait to receive a response from the RS485 field device via the serial port after it sends command.
+					</p>
 					<div>
 						<label for="node-input-rx_timeout_539_active">Active:</label>
 						<input type="checkbox" id="node-input-rx_timeout_539_active" class="ncd-config-toggle" data-target-id="node-input-rx_timeout_539" value="1">
 					</div>
 					<div>
 						<label for="node-input-rx_timeout_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-rx_timeout_539" placeholder="10" value="10">
+						<input type="text" id="node-input-rx_timeout_539" placeholder="2000" value="2000">
 					</div>
+					<p class="caption">
+						Default value: 2000 milliseconds.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Bootup Time</strong>
+					<p class="caption">
+						Sets the delay interval (in seconds) that the NCD transmitter waits after powering on the connected Modbus device before issuing the first command. This delay ensures the external Modbus device has sufficient time to complete its internal initialization sequence before the transmitter begins polling.
+					</p>
 					<div>
 						<label for="node-input-bootup_time_539_active">Active:</label>
 						<input type="checkbox" id="node-input-bootup_time_539_active" class="ncd-config-toggle" data-target-id="node-input-bootup_time_539" value="1">
 					</div>
 					<div>
 						<label for="node-input-bootup_time_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-bootup_time_539" placeholder="10" value="10">
+						<input type="text" id="node-input-bootup_time_539" placeholder="0" value="0">
 					</div>
+					<p class="caption">
+						Default value: 0 (Disabled).
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Slave ID</strong>
+					<p class="caption">
+						Configures the unique Slave Modbus device address (Slave ID) for the transmitter.
+					</p>
 					<div>
 						<label for="node-input-sensor_add_539_active">Active:</label>
 						<input type="checkbox" id="node-input-sensor_add_539_active" class="ncd-config-toggle" data-target-id="node-input-sensor_add_539" value="1">
 					</div>
 					<div>
 						<label for="node-input-sensor_add_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-sensor_add_539" placeholder="10" value="10">
+						<input type="text" id="node-input-sensor_add_539" placeholder="1" value="1">
 					</div>
+					<p class="caption">
+						Default value: 1.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sub Device Type</strong>
+					<p class="caption">
+						A user-defined byte used to identify the specific type of Modbus RTU device connected. This parameter is essential for correctly decoding incoming messages and distinguishing between different devices on the network.
+					</p>
 					<div>
 						<label for="node-input-sub_device_type_539_active">Active:</label>
 						<input type="checkbox" id="node-input-sub_device_type_539_active" class="ncd-config-toggle" data-target-id="node-input-sub_device_type_539" value="1">
 					</div>
 					<div>
 						<label for="node-input-sub_device_type_539"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-sub_device_type_539" placeholder="10" value="10">
+						<input type="text" id="node-input-sub_device_type_539" placeholder="0" value="0">
 					</div>
+					<p class="caption">
+						Default value: 0.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Number of Read Retries</strong>
 					<p class="caption">
+						Sets the maximum number of attempts the device will make to perform a Modbus RTU register query.<br>
 						Range: 1 to 3.
 					</p>
 					<div>
@@ -5071,9 +5124,15 @@
 						<label for="node-input-number_of_read_retries_539"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-number_of_read_retries_539" placeholder="1" value="1">
 					</div>
+					<p class="caption">
+						Default value: 0.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Read Parameter</strong>
+					<p class="caption">
+						Sets the Modbus Function Code.
+					</p>
 					<div>
 						<label for="node-input-read_parameter_539_active">Active:</label>
 						<input type="checkbox" id="node-input-read_parameter_539_active" class="ncd-config-toggle" data-target-id="node-input-read_parameter_539" value="1">
@@ -5085,6 +5144,9 @@
 							<option value="4">Read Input Register 0x04</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: Read Holding Register.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Read Registers</strong>
