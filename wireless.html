@@ -1067,7 +1067,10 @@
 			tilt_timer_47:{value: 30, validate: NCD_validators.number_range(0, 255)},
 
 			stop_bit_539_active:{value:""},
-			stop_bit_539:{value:1}
+			stop_bit_539:{value:1},
+
+			ultrasound_max_raw_sample_127_active:{value:""},
+			ultrasound_max_raw_sample_127:{value:0}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4470,6 +4473,29 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-127>
+				<div class="form-row ncd-active-check">
+					<strong>Set Ultrasound Max Raw Sample</strong>
+					<p>
+						Set the maximum number of samples the ultrasound sensor captures for Raw data , by reducing the sample duration.
+					</p>
+					<div>
+						<label for="node-input-ultrasound_max_raw_sample_127_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-ultrasound_max_raw_sample_127_active" class="ncd-config-toggle" data-target-id="node-input-ultrasound_max_raw_sample_127" value="1">
+					</div>
+					<div>
+						<label for="node-input-ultrasound_max_raw_sample_127"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-ultrasound_max_raw_sample_127">
+							<option selected="selected" value="0">2048 Samples</option>
+							<option value="1">4096 Samples</option>
+							<option value="2">8192 Samples</option>
+							<option value="3">16384 Samples</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
 					<p>
