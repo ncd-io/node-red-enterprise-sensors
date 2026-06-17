@@ -2114,7 +2114,7 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Mode</strong>
-					<p><br>
+					<p class="caption"><br>
 						• <strong>Processed:</strong> FFT is performed by the sensor and the measurement data is transmitted in condensed form (both time and frequency parameters).<br>
 						• <strong>Time Domain (Raw):</strong> The Time Domain (Raw) data is gathered and transmitted and it is up to the client to perform the FFT if needed. This is a very large data packet.<br>
 						• <strong>Processed + Raw on demand:</strong> Transmit Processed data at intervals, with the option to request a Time Domain (Raw) data packet.<br>
@@ -2143,7 +2143,7 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>LED Alert Mode</strong>
-					<p>Choose whether the LED indicator should be based on Acceleration or Velocity</p>
+					<p class="caption">Choose whether the LED indicator should be based on Acceleration or Velocity</p>
 					<div>
 						<label for="node-input-led_alert_mode_84_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-led_alert_mode_84_active" class="ncd-config-toggle" data-target-id="node-input-led_alert_mode_84" value="1">
@@ -2161,7 +2161,7 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>LED Accelerometer Threshold</strong>
-						<p>Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p>
+						<p class="caption">Set the minimum acceleration value to make LED indicator red.<br>This will be an integer value that increments the threshold by 50mg. A value of 1 means turn the LED red if acceleration is above 50mg, 2 means 100mg, etc.<br>**Only applies if LED Alert Mode is set to Acceleration.</p>
 					</div>
 					<div>
 						<label for="node-input-led_accelerometer_threshold_84_active"><i class="icon-tag"></i>Active:</label>
@@ -2175,7 +2175,7 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>LED Velocity Threshold</strong>
-						<p>Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p>
+						<p class="caption">Set the minimum velocity value to make LED indicator red.<br>This will be an integer value that increments the threshold by 2mm/second. A value of 1 means turn the LED red if velocity is above 2mm/sec, 2 means 4mm/second, etc.<br>**Only applies if LED Alert Mode is set to Velocity.</p>
 					</div>
 					<div>
 						<label for="node-input-led_velocity_threshold_84_active"><i class="icon-tag"></i>Active:</label>
@@ -2225,7 +2225,7 @@
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set On Request Timeout</strong>
-					<p>Set how long device will stay awake and wait for Time Domain (Raw) request from command.<br><br>
+					<p class="caption">Set how long device will stay awake and wait for Time Domain (Raw) request from command.<br><br>
 						Valid range: 1-10 Seconds
 					</p>
 					<div>
@@ -3898,7 +3898,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Filtering</strong>
-					<p>Enable/Disable built-in filters</p>
+					<p class="caption">Enable/Disable built-in filters</p>
 					<div>
 						<label for="node-input-enable_filtering_110_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-enable_filtering_110_active" class="ncd-config-toggle" data-target-id="node-input-enable_filtering_110" value="1">
@@ -3915,7 +3915,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Output Data Rate</strong>
-					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
+					<p class="caption">This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
 						In accordance with the Nyquist equation:<br>
 						<br>
 						f_max = ODR/2.56 Hz<br><br>
@@ -3970,7 +3970,7 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Output Data Rate</strong>
-					<p>This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
+					<p class="caption">This would determine how many samples the output data has, which is directly related to the highest frequency components that can be measured.<br>
 						In accordance with the Nyquist equation:<br>
 						<br>
 						f_max = ODR/2.56 Hz<br><br>
@@ -3999,7 +3999,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Sampling Duration</strong>
-					<p>
+					<p class="caption">
 						Set the amount of time which the samples are taken.<br><br>
 						Note: The sampling duration depends on the ODR.<br><br>
 						1= 50msec, 2= 100msec<br>
@@ -4036,7 +4036,7 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Sampling Duration</strong>
-					<p>
+					<p class="caption">
 						Set the amount of time which the samples are taken.<br><br>
 						Note: The sampling duration depends on the ODR.<br><br>
 						1= 50msec, 2= 100msec<br>
@@ -4055,7 +4055,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set Low Pass Filter</strong>
-					<p>
+					<p class="caption">
 						This setting will set the LPF freq to ODR divided by Selected Value<br><br>
 						Example: ODR = 800 and Filter Coefficient = 4<br>
 						LPF freq = 800/4 = 200Hz
@@ -4085,7 +4085,7 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Set Low Pass Filter</strong>
-					<p>
+					<p class="caption">
 						This setting will set the LPF freq to ODR divided by Selected Value<br><br>
 						Example: ODR = 800 and Filter Coefficient = 4<br>
 						LPF freq = 800/4 = 200Hz
@@ -4115,7 +4115,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set High Pass Filter</strong>
-					<p>
+					<p class="caption">
 						This setting will set the HPF freq to ODR divided by Selected Value<br><br>
 						Example: ODR = 800 and Filter Coefficient = 64<br>
 						HPF freq = 800/64 = 12.5Hz
@@ -4144,7 +4144,7 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Set High Pass Filter</strong>
-					<p>
+					<p class="caption">
 						This setting will set the HPF freq to ODR divided by Selected Value<br><br>
 						Example: ODR = 800 and Filter Coefficient = 64<br>
 						HPF freq = 800/64 = 12.5Hz
@@ -4173,7 +4173,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Sampling Interval</strong>
-					<p>Set how often will the sensor transmit measurement data.<br><br>
+					<p class="caption">Set how often will the sensor transmit measurement data.<br><br>
 					Note: For this sensor, this value functions as the sampling interval rather than a traditional delay.
 					</p>
 					<div>
@@ -4199,7 +4199,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Interval</strong>
-					<p>
+					<p class="caption">
 						Set the Auto Time Domain (Raw) data transmission Interval, this interval is multiplied by the sample interval to determine how often the sensor should automatically transmit Time Domain (Raw) data.<br>
 						The Auto Raw interval is determined by the sample interval value.<br><br> 
 						Example:<br>
@@ -4223,7 +4223,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Raw Destination Address</strong>
-					<p>
+					<p class="caption">
 						Set the address where the Auto Time Domain (Raw) data will be transmitted, we recommend setting this to your gateway’s address.<br><br>
 						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
@@ -4242,7 +4242,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 1: Set Smart Mode Threshold</strong>
-					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
+					<p class="caption">If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
 						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
@@ -4258,7 +4258,7 @@
 			<div class="ncd-dependent" data-sensor-111>
 				<div class="form-row ncd-active-check">
 					<strong>Probe 2: Set Smart Mode Threshold</strong>
-					<p>If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
+					<p class="caption">If RMS acceleration is above this in any axis, it will send data. This will be an integer value that increments the interrupt threshold by 50 mg. A value of 1 means to wake the sensor if acceleration is above 50 mg, 2 means 100 mg, etc.<br><br>
 						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
@@ -4274,7 +4274,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Smart Mode Skip Interval</strong>
-					<p>Sensor will skip sending data this many times if vibration is below the smart threshold.<br><br>
+					<p class="caption">Sensor will skip sending data this many times if vibration is below the smart threshold.<br><br>
 						Note: This feature only works when the sensor is operating in Smart Mode.
 					</p>
 					<div>
@@ -4291,12 +4291,12 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Probe 1: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
-							The transmitted message will have a msg_type property of 'motion'.</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.</p>
-						<p>Note: In Smart mode, a 'motion' transmission is conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
+						<p class="caption">Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
+						The transmitted message will have a msg_type property of 'motion'.<br><br>
+						This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.<br><br>
+						Valid Input Range: 0 - 40<br>
+						A value of 0 will disable this feature.<br><br>
+						Note: In Smart mode, a 'motion' transmission is conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
 					</div>
 					<div>
 						<label for="node-input-motion_detect_threshold_p1_110_active"><i class="icon-tag"></i>Active:</label>
@@ -4312,12 +4312,12 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Probe 2: Set Acceleration Wake/Interrupt Threshold</strong>
-						<p>Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
-							The transmitted message will have a msg_type property of 'motion'</p>
-						<p>This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.</p>
-						<p>Valid Input Range: 0 - 40<br>
-						A value of 0 will disable this feature.</p>
-						<p>Note: In Smart mode, a 'motion' transmission is also conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
+						<p class="caption">Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration, making it ideal for devices with minimal workload or uptime.
+						The transmitted message will have a msg_type property of 'motion'.<br><br>
+						This will be an integer value that increments the interrupt threshold by 50mg. A value of 1 wakes the sensor if acceleration is above 50mg, 2 means 100mg, etc.<br><br>
+						Valid Input Range: 0 - 40<br>
+						A value of 0 will disable this feature.<br><br>
+						Note: In Smart mode, a 'motion' transmission is conditioned by the Smart Mode Threshold and Smart Skip Interval.</p>
 					</div>
 					<div>
 						<label for="node-input-motion_detect_threshold_p2_110_active"><i class="icon-tag"></i>Active:</label>
@@ -4332,7 +4332,7 @@
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538>
 				<div class="form-row ncd-active-check">
 					<strong>Full Scale Range</strong>
-					<p>
+					<p class="caption">
 						Set how large of a range the device can measure acceleration in.<br><br>
 						Example: +/- 8g would mean that it would measure at most up to 8g and down to -8g.
 						<br><br>
@@ -4381,7 +4381,7 @@
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Dead Band in mg</strong>
-					<p>
+					<p class="caption">
 						Filters out acceleration values below the dead band threshold, treating them as noise.<br>
 						This value determines the minimum acceleration would have to be for it to be registered as a measurement. Values below the threshold it  would be perceived as 0.<br><br>
 						Example: A value of 10 would mean that vibrations below 10mg would be considered as 0.
@@ -4399,7 +4399,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Interval</strong>
-					<p>
+					<p class="caption">
 						Set the interval at which the sensor will transmit FLY packets. FLY packets are what allows Node-Red to reconfigure the sensor so this determines how often the sensor should check in for updated configurations.<br>
 					</p>
 					<div>
@@ -4423,7 +4423,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127>
 				<div class="form-row ncd-active-check">
 					<strong>RPM Calculate Status</strong>
-					<p>
+					<p class="caption">
 						Enable/Disable Revolutions Per Minute Calculate Status<br>
 						When a measurement sample is taken you can choose to not calculate the RPM, this will shorten the measurement time and save on battery.<br>
 					</p>
@@ -4443,7 +4443,7 @@
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTC</strong>
-					<p>
+					<p class="caption">
 						Set the value for the Internal Real Time Clock.
 					</p>
 					<div>
@@ -4455,7 +4455,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Set Max Raw Sample</strong>
-					<p>
+					<p class="caption">
 						Set the maximum number of samples the sensor captures for Time Domain (Raw) data , by reducing the sample duration.
 					</p>
 					<div>
@@ -4477,7 +4477,7 @@
 			<div class="ncd-dependent" data-sensor-127>
 				<div class="form-row ncd-active-check">
 					<strong>Set Ultrasound Max Raw Sample</strong>
-					<p>
+					<p class="caption">
 						Set the maximum number of samples the ultrasound sensor captures for Raw data , by reducing the sample duration.
 					</p>
 					<div>
@@ -4498,7 +4498,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Clear Probe Uptimers</strong>
-					<p>
+					<p class="caption">
 						This setting will zero out the uptime value.<br><br>
 						Note: When the measured vibration is above a threshold value we can deduct that the machine is on and start a counter to measure the uptime.
 					</p>
@@ -4511,7 +4511,7 @@
 			<div class="ncd-dependent" data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127>
 				<div class="form-row ncd-active-check">
 					<strong>Set Motion to Sampling Delay</strong>
-					<p>
+					<p class="caption">
 						Once motion is detected, the sensor will wait for the configured duration before sampling and computing vibration data.<br>
 						1= 50msec, 2= 100msec, 100= 5000msec (5sec)<br><br>
 						**Only applies to sensor with firmware version 6 and above.
@@ -4530,7 +4530,7 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Max Number Motion Tx Per Interval</strong>
-					<p>
+					<p class="caption">
 						Set Number of times it will send data due to motion triggers.<br><br>
 						**Only applies to sensor with firmware version 6 and above.
 					</p>
@@ -4551,7 +4551,7 @@
 			<div class="ncd-dependent" data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-127 data-sensor-180 data-sensor-181 data-sensor-519 data-sensor-537 data-sensor-538 data-sensor-543>
 				<div class="form-row ncd-active-check">
 					<strong>Payload Length</strong>
-					<p>
+					<p class="caption">
 						Set the size of the data payload the sensor sends when it transmit a message.<br>
 					</p>
 					<div>
