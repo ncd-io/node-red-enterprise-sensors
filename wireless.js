@@ -1007,6 +1007,7 @@ module.exports = function(RED) {
 			this.gateway._emitter.removeAllListeners('converter_response');
 			this.gateway._emitter.removeAllListeners('manifest_received');
 			this.gateway._emitter.removeAllListeners('sync');
+			this.gateway._emitter.removeAllListeners('assert_rsn');
 			// console.log(this.gateway._emitter.eventNames());
 		});
 
@@ -1412,6 +1413,10 @@ module.exports = function(RED) {
 			node.set_status();
 			msg1 = {topic:'somethingTopic',payload:"something"};
 			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		});
+		node.gateway.on('assertion_reason',(d)=>{
+			node.set_status();
+			node.send({topic: 'assert_rsn', payload:d, time: Date.now()});
 		});
 		node.gateway.on("route_info",(d)=>{
 			msg1 = {topic:"route_info",payload:d};
@@ -5773,6 +5778,7 @@ module.exports = function(RED) {
 			node._gateway_node.removeAllListeners('config_node_msg');
 			node._gateway_node.removeAllListeners('config_node_error');
 			node._gateway_node.removeAllListeners('sensor_mode');
+			node._gateway_node.removeAllListeners('assert_rsn');
 			node._gateway_node.removeAllListeners('sync');
 			done();
 		});
