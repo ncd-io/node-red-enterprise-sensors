@@ -497,7 +497,7 @@
 			stay_on_mode_539: {value:0},
 
 			baudrate_539_active:{value:""},
-			baudrate_539:{value: 9600},
+			baudrate_539:{value: 1},
 
 			rx_timeout_539_active:{value:""},
 			rx_timeout_539:{value: 2000, validate: NCD_validators.number_range(1, 65535)},
@@ -1070,7 +1070,10 @@
 			stop_bit_539:{value:1},
 
 			ultrasound_max_raw_sample_127_active:{value:""},
-			ultrasound_max_raw_sample_127:{value:0}
+			ultrasound_max_raw_sample_127:{value:0},
+
+			baudrate_1010_active:{value:""},
+			baudrate_1010:{value: 9600}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -4941,12 +4944,12 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Baud Rate</strong>
 					<div>
-						<label for="node-input-baudrate_539_active">Active:</label>
-						<input type="checkbox" id="node-input-baudrate_539_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_539" value="1">
+						<label for="node-input-baudrate_1010_active">Active:</label>
+						<input type="checkbox" id="node-input-baudrate_1010_active" class="ncd-config-toggle" data-target-id="node-input-baudrate_1010" value="1">
 					</div>
 					<div>
-						<label for="node-input-baudrate_539"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-baudrate_539">
+						<label for="node-input-baudrate_1010"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-baudrate_1010">
 							<option selected="selected" value="9600">9600</option>
 							<option value="19200">19200</option>
 							<option value="38400">38400</option>
