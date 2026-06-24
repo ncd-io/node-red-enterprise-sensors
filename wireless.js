@@ -4458,7 +4458,7 @@ module.exports = function(RED) {
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
 								if(config.baudrate_1010_active){
-									promises.baudrate_1010 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_1010));
+									promises.baudrate_1011 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_1010));
 								}
 								if(config.rx485_timeout_1011_active){
 									promises.rx485_timeout_1011 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
