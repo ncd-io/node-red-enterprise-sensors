@@ -843,13 +843,23 @@
 			min_flow_541: {value:1, validate: NCD_validators.number_range(0, 255)},
 
 			ct_constant_87_active: {value:""},
-			ct_constant_87: {value:0, validate: NCD_validators.number_range(0, 4294967295)},
+			ct_constant_87: {value:950, validate: NCD_validators.number_range(0, 4294967295)},
 			deadband_87_active: {value:""},
-			deadband_87: {value:0, validate: NCD_validators.number_range(0, 65000)},
+			deadband_87: {value:0, validate: NCD_validators.number_range(0, 65535)},
 			sampling_frequency_87_active: {value:""},
 			sampling_frequency_87: {value:0},
 			raw_length_87_active: {value:""},
 			raw_length_87: {value:0},
+			sync_interval_87_active: {value:""},
+			sync_interval_87:{value:3600, validate: NCD_validators.number_range(0, 65535)},
+			sync_timeout_87_active: {value:""},
+			sync_timeout_87:{value:2, validate: NCD_validators.number_range(0, 255)},
+			auto_check_percent_87_active: {value:""},
+			auto_check_percent_87:{value:10, validate: NCD_validators.number_range(0, 100)},
+			auto_check_interval_87_active: {value:""},
+			auto_check_interval_87:{value:0, validate: NCD_validators.number_range(0, 65535)},
+			boot_up_87_active: {value:""},
+			boot_up_87:{value:6, validate: NCD_validators.number_range(2, 20)},
 
 			sampling_interval_80_active:{value: ""},
 			sampling_interval_80: {value: 1, validate: NCD_validators.number_range(0, 8)},
@@ -5943,7 +5953,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-87 data-sensor-121>
+			<div class="ncd-dependent" data-sensor-121>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Quality of Service</strong>
 					<p class="caption">
@@ -6492,34 +6502,8 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-87>
 				<div class="form-row ncd-active-check">
-					<strong>Set Current Calibration</strong>
-					<p>Set the current calibration value, this value will be multiply by 10.</p>
-					<div>
-						<label for="node-input-ct_constant_87_active">Active:</label>
-						<input type="checkbox" id="node-input-ct_constant_87_active" class="ncd-config-toggle" data-target-id="node-input-ct_constant_87" value="1">
-					</div>
-					<div>
-						<label for="node-input-ct_constant_87"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-ct_constant_87">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Dead Band</strong>
-					<p>Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
-						This value determines the minimum current would have to be for it to be registered as a measurement. Values below the deab band it  would be perceived as 0.<br><br>
-						Example: A value of 10 would mean that current below 10 mA would be considered as 0.
-					<div>
-						<label for="node-input-deadband_87_active">Active:</label>
-						<input type="checkbox" id="node-input-deadband_87_active" class="ncd-config-toggle" data-target-id="node-input-deadband_87" value="1">
-					</div>
-					<div>
-						<label for="node-input-deadband_87"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-deadband_87">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
 					<strong>Set Sampling Frequency</strong>
-					<p>Set the sample per seconds</p>
+					<p class="caption">Determines the data acquisition speed, defined as the number of samples taken per second (Hz) during an AC current measurement cycle. Higher rates provide more granular data for accurate peak and RMS calculations.</p>
 					<div>
 						<label for="node-input-sampling_frequency_87_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-sampling_frequency_87_active" class="ncd-config-toggle" data-target-id="node-input-sampling_frequency_87" value="1">
@@ -6527,15 +6511,19 @@
 					<div>
 						<label for="node-input-sampling_frequency_87"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-sampling_frequency_87">
-							<option value="0" selected>400 Sps</option>
-							<option value="1">800 Sps</option>
-							<option value="2">2048 Sps</option>
+							<option value="0" selected>400Hz</option>
+							<option value="1">800Hz</option>
+							<option value="2">2048Hz</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 400Hz.
+					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Raw Length</strong>
-					<p>Set the size of the data payload the sensor sends when it transmit a Raw message.</p>
+					<strong>Set Time Domain Length</strong>
+					<p class="caption">Defines the maximum payload size (in bytes) for a single Time-Domain data transmission.
+						<br> Note: For the 2.4GHz version you need to operate with a 55 Byte payload.</p>
 					<div>
 						<label for="node-input-raw_length_87_active"><i class="icon-tag"></i>Active:</label>
 						<input type="checkbox" id="node-input-raw_length_87_active" class="ncd-config-toggle" data-target-id="node-input-raw_length_87" value="1">
@@ -6549,6 +6537,127 @@
 							<option value="3">180 Bytes</option>
 						</select>
 					</div>
+					<p class="caption">
+						Default value: 180 Bytes.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Current Calibration</strong>
+					<p class="caption">Specifies the internal multiplier used to calibrate the AC current readings. Adjust this constant to fine-tune the sensor's accuracy against a known, verified baseline measurement.</p>
+					<div>
+						<label for="node-input-ct_constant_87_active">Active:</label>
+						<input type="checkbox" id="node-input-ct_constant_87_active" class="ncd-config-toggle" data-target-id="node-input-ct_constant_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-ct_constant_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ct_constant_87">
+					</div>
+					<p class="caption">
+						Default value: 950.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band</strong>
+					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
+						Establishes a baseline noise filter. Any AC current reading below this threshold (in mA) is ignored and reported as 0<br><br>
+						Example: A value of 10 would mean that current below 10 mA would be considered as 0.
+					</p>
+					<div>
+						<label for="node-input-deadband_87_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_87_active" class="ncd-config-toggle" data-target-id="node-input-deadband_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-deadband_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_87">
+					</div>
+					<p class="caption">
+						Default value: 1.5% of CT Probe range.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sync Interval</strong>
+					<p class="caption">
+						Sets the interval (in seconds) for the sensor to broadcast a sync report. During this transmission, the device reports its current settings and temporarily enters into configuration sync mode to accept new settings.
+					</p>
+					<div>
+						<label for="node-input-sync_interval_87_active">Active:</label>
+						<input type="checkbox" id="node-input-sync_interval_87_active" class="ncd-config-toggle" data-target-id="node-input-sync_interval_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-sync_interval_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sync_interval_87">
+					</div>
+					<p class="caption">
+						Default value: 3600 (1 hour).
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Sync Timeout</strong>
+					<p class="caption">
+						Determines how long (in seconds) the configuration mode remains open following a sync transmission. If no new configuration command is received within this timeframe, the device resumes normal operation.
+					</p>
+					<div>
+						<label for="node-input-sync_timeout_87_active">Active:</label>
+						<input type="checkbox" id="node-input-sync_timeout_87_active" class="ncd-config-toggle" data-target-id="node-input-sync_timeout_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-sync_timeout_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-sync_timeout_87">
+					</div>
+					<p class="caption">
+						Default value: 2 seconds.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Check Percentage</strong>
+					<p class="caption">
+						Sets the sensitivity for event-based reporting. The sensor will trigger an immediate push transmission if the difference between the live AC current reading and the last transmitted reading meets or exceeds this percentage threshold.
+					</p>
+					<div>
+						<label for="node-input-auto_check_percent_87_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_percent_87_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_percent_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_percent_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_percent_87">
+					</div>
+					<p class="caption">
+						Default value: 10.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Auto Check Interval</strong>
+					<p class="caption">
+						Defines how frequently (in seconds) the sensor wakes up specifically to compare the live AC current against your configured Auto Check Percentage. If the current meets the percentage change criteria, it triggers an immediate data transmission, overriding the standard reporting schedule.
+					</p>
+					<div>
+						<label for="node-input-auto_check_interval_87_active">Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_87_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-auto_check_interval_87">
+					</div>
+					<p class="caption">
+						Default value: 0 (Disabled).
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Boot Up Time</strong>
+					<p class="caption">
+						Specifies the hardware stabilization delay (in seconds). This is the required pause between the sensor waking from sleep mode and initiating its first AC current measurement to ensure stable readings.
+					</p>
+					<div>
+						<label for="node-input-boot_up_time_87_active">Active:</label>
+						<input type="checkbox" id="node-input-boot_up_time_87_active" class="ncd-config-toggle" data-target-id="node-input-boot_up_time_87" value="1">
+					</div>
+					<div>
+						<label for="node-input-boot_up_time_87"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-boot_up_time_87">
+					</div>
+					<p class="caption">
+						Default value: 6 seconds.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-124>
