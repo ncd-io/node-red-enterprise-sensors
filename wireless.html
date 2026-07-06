@@ -1083,7 +1083,17 @@
 			ultrasound_max_raw_sample_127:{value:0},
 
 			baudrate_1010_active:{value:""},
-			baudrate_1010:{value: 9600}
+			baudrate_1010:{value: 9600},
+
+			motion_mode_24_active:{value:""},
+			motion_mode_24:{value:0},
+			enable_axes_24_active:{value:""},
+			enable_axis_x_24:{value:1},
+			enable_axis_y_24:{value:1},
+			enable_axis_z_24:{value:1},
+			max_tx_per_interval_24_active:{value:""},
+			max_tx_per_interval:{value: 10, validate: NCD_validators.number_range(0, 10000)}
+
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1590,7 +1600,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -1924,7 +1934,147 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Acceleration Range</strong>
+						<strong>Data Rate</strong>
+						<p class="caption">This would determine how many samples the output data has.</p>
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_data_rate_active" class="ncd-config-toggle" data-target-id="node-input-impact_data_rate" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate"><i class="icon-tag"></i>Value</label>
+						<select id="node-input-impact_data_rate">
+							<!-- <option selected="selected" value="0">Value:</option> -->
+							<option value="1">1Hz</option>
+							<option value="2">10Hz</option>
+							<option value="3">25Hz</option>
+							<option value="4">50Hz</option>
+							<option value="5">100Hz</option>
+							<option value="6">200Hz</option>
+							<option value="7">400Hz</option>
+							<option value="8">1600Hz</option>
+							<option value="9">5376Hz</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 50Hz.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-24>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Trigger Logic</strong>
+						<p class="caption">
+							**Only applies to sensor with firmware version 6 and above.<br><br>
+							This setting determins how the sensor handles the X, Y, and Z axes to trigger an immediate sensor data transmission (motion). It allows you to choose whether a single axis or a combination of axes must cross your safety threshold before sending a Motion message.<br><br>
+							OR Mode (Any Axis): The sensor sends an alert if any single axis crosses the defined threshold.<br>
+							AND Mode (All Selected Axes): The sensor sends an alert only if all enabled axes cross the threshold at the exact same time.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-motion_mode_24_active">Active:</label>
+						<input type="checkbox" id="node-input-motion_mode_24_active" class="ncd-config-toggle" data-target-id="node-input-motion_mode_24" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_mode_24"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-motion_mode_24">
+							<option selected="selected" value="0">OR Mode</option>
+							<option value="1">AND Mode</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: OR Mode.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Enable Axes</strong>
+						<p class="caption">
+							**Only applies to sensor with firmware version 6 and above.<br><br>
+						</p>
+					</div>
+					<div>
+						<label for="node-input-enable_axes_24_active">Active:</label>
+						<input type="checkbox" id="node-input-enable_axes_24_active" class="ncd-config-toggle" data-target-class="node-input-enable_axes_24" value="1">
+					</div>
+					<div>
+						<label for="node-input-enable_axis_x_24"><i class="icon-tag"></i>X-Axis:</label>
+						<select id="node-input-enable_axis_x_24" class="enable_axes_24">
+							<option value="0">Disabled</option>
+							<option selected="selected" value="1">Enabled</option>
+						</select>
+					</div>
+					<div>
+						<label for="node-input-enable_axis_y_24"><i class="icon-tag"></i>Y-Axis:</label>
+						<select id="node-input-enable_axis_y_24" class="enable_axes_24">
+							<option value="0">Disabled</option>
+							<option selected="selected" value="1">Enabled</option>
+						</select>
+					</div>
+					<div>
+						<label for="node-input-enable_axis_y_24"><i class="icon-tag"></i>Z-Axis:</label>
+						<select id="node-input-enable_axis_y_24" class="enable_axes_24">
+							<option value="0">Disabled</option>
+							<option selected="selected" value="1">Enabled</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div div class="ncd-dependent" data-sensor-7 data-sensor-24 data-sensor-25>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Threshold</strong>
+						<p class="caption">
+							Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration.
+							Device with firmware 6 and above, the transmitted message will have a msg_type property of 'motion'.<br>
+							The real-world force (measured in mg) depends on the Full Scale Range you selected. Think of the threshold number as "steps," where the size of each step changes based on your range.<br><br>
+							Calculation: Target mg / Step Size = Input Value<br><br>
+							Quick Reference:<br>
+							At ±2g FSR: Target mg / 16mg<br>
+							At ±4g FSR: Target mg / 32mg<br>
+							At ±8g FSR: Target mg / 62mg<br>
+							At ±16g FSR: Target mg / 186mg<br><br>
+							Example: For a 400mg threshold at ±2g, enter 25 because 400 ÷ 16 = 25.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_threshold_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_threshold_active" class="ncd-config-toggle" data-target-id="node-input-impact_threshold" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_threshold"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-impact_threshold">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Duration</strong>
+						<p class="caption">
+							Sets the minimum amount of time that motion/impact must continuously persist before triggering an alert. This filters out single, brief vibrations or random background noise from causing false alarms.<br>
+							The real-world time (measured in milliseconds) depends on your sensor's configured Output Data Rate (ODR). Think of the input value as a number of "steps," where the time duration of each step changes based on your data rate.<br><br>
+							Calculation: Input Value = (Target ms x ODR) / 1000<br>
+							Example: For a 2.5 ms duration at 400 Hz ODR, enter 1 because (2.5 x 400) / 1000 = 1.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_duration_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_duration_active" class="ncd-config-toggle" data-target-id="node-input-impact_duration" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_duration"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-impact_duration" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 1 (2.5 milliseconds).
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Full Scale Range</strong>
+						<p class-"caption">Set how large of a range the device can measure acceleration in.<br>
+							Example: ±8g would mean that it would measure at most up to 8g and down to -8g.
+						</p>
 					</div>
 					<div>
 						<label for="node-input-impact_accel_active">Active:</label>
@@ -1935,92 +2085,64 @@
 						<select id="node-input-impact_accel">
 							<option selected="selected" value="0">±2g</option>
 							<option value="1">±4g</option>
-							<option value="3">±8g</option>
-							<option value="4">±16g</option>
+							<option value="2">±8g</option>
+							<option value="3">±16g</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Data Rate</strong>
+						<strong>Set Max Motion Tx Per Interval</strong>
+						<p class="caption">
+							**Only applies to sensor with firmware version 6 and above.<br><br>
+							Set Number of times device will transmit a motion data message due to motion triggers per interval.<br>
+							Valid Range: 1-10000
+						</p>
 					</div>
 					<div>
-						<label for="node-input-impact_data_rate_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_data_rate_active" class="ncd-config-toggle" data-target-id="node-input-impact_data_rate" value="1">
+						<label for="node-input-max_tx_per_interval_24_active">Active:</label>
+						<input type="checkbox" id="node-input-max_tx_per_interval_24_active" class="ncd-config-toggle" data-target-id="node-input-max_tx_per_interval_24" value="1">
 					</div>
 					<div>
-						<label for="node-input-impact_data_rate"><i class="icon-tag"></i> Data Rate</label>
-						<select id="node-input-impact_data_rate">
-							<option selected="selected" value="0">Value:</option>
-							<option value="1">1</option>
-							<option value="2">10</option>
-							<option value="3">25</option>
-							<option value="4">50</option>
-							<option value="5">100</option>
-							<option value="6">200</option>
-							<option value="7">400</option>
-							<option value="8">1600</option>
-							<option value="9">5376</option>
-						</select>
+						<label for="node-input-max_tx_per_interval_24"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_tx_per_interval_24" placeholder="1" value="1">
 					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Threshold</strong>
-						<p>Accepted values from 1-127.</p>
-					</div>
-					<div>
-						<label for="node-input-impact_threshold_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_threshold_active" class="ncd-config-toggle" data-target-id="node-input-impact_threshold" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_threshold"><i class="icon-tag"></i>Value:</label>
-						<input id="node-input-impact_threshold">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Duration</strong>
-						<p>Accepted values from 1-127.</p>
-					</div>
-					<div>
-						<label for="node-input-impact_duration_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_duration_active" class="ncd-config-toggle" data-target-id="node-input-impact_duration" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_duration"><i class="icon-tag"></i>Value:</label>
-						<input id="node-input-impact_duration">
-					</div>
+					<p class="caption">
+						Default value: 10.
+					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-24 data-sensor-25>
-				<div class="form-row">
-					<label for="node-input-activ_interr_x"><i class="icon-tag"></i> Interrupt X-Axis</label>
-					<select id="node-input-activ_interr_x">
-						<option value="1">High</option>
-						<option value="0">Low</option>
-					</select>
-				</div>
-				<div class="form-row">
-					<label for="node-input-activ_interr_y"><i class="icon-tag"></i> Interrupt Y-Axis</label>
-					<select id="node-input-activ_interr_y">
-						<option value="2">High</option>
-						<option value="0">Low</option>
-					</select>
-				</div>
-				<div class="form-row">
-					<label for="node-input-activ_interr_z"><i class="icon-tag"></i> Interrupt Z-Axis</label>
-					<select id="node-input-activ_interr_z">
-						<option value="4">High</option>
-						<option value="0">Low</option>
-					</select>
-				</div>
-				<div class="form-row">
-					<label for="node-input-activ_interr_op"><i class="icon-tag"></i> Interrupt Logic</label>
-					<select id="node-input-activ_interr_op">
-						<option value="8">And</option>
-						<option value="0">Or</option>
-					</select>
+				<div class="form-row ncd-active-check">
+					<p>IMPORTANT! Follow only applies to sensor with firmware version 5 and below.</p>
+					<div class="form-row">
+						<label for="node-input-activ_interr_op"><i class="icon-tag"></i> Interrupt Logic</label>
+						<select id="node-input-activ_interr_op">
+							<option value="8">And</option>
+							<option value="0">Or</option>
+						</select>
+					</div>
+					<div class="form-row">
+						<label for="node-input-activ_interr_x"><i class="icon-tag"></i> Interrupt X-Axis</label>
+						<select id="node-input-activ_interr_x">
+							<option value="1">High</option>
+							<option value="0">Low</option>
+						</select>
+					</div>
+					<div class="form-row">
+						<label for="node-input-activ_interr_y"><i class="icon-tag"></i> Interrupt Y-Axis</label>
+						<select id="node-input-activ_interr_y">
+							<option value="2">High</option>
+							<option value="0">Low</option>
+						</select>
+					</div>
+					<div class="form-row">
+						<label for="node-input-activ_interr_z"><i class="icon-tag"></i> Interrupt Z-Axis</label>
+						<select id="node-input-activ_interr_z">
+							<option value="4">High</option>
+							<option value="0">Low</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-40>
