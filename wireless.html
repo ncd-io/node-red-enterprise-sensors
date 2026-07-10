@@ -1944,57 +1944,6 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Data Rate</strong>
-						<p class="caption">This would determine how many samples the output data has.</p>
-					</div>
-					<div>
-						<label for="node-input-impact_data_rate_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_data_rate_active" class="ncd-config-toggle" data-target-id="node-input-impact_data_rate" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_data_rate"><i class="icon-tag"></i>Value</label>
-						<select id="node-input-impact_data_rate">
-							<!-- <option selected="selected" value="0">Value:</option> -->
-							<option value="1">1Hz</option>
-							<option value="2">10Hz</option>
-							<option value="3">25Hz</option>
-							<option value="4">50Hz</option>
-							<option selected="selected" value="5">100Hz</option>
-							<option value="6">200Hz</option>
-							<option value="7">400Hz</option>
-							<option value="8">1600Hz</option>
-							<option value="9">5376Hz</option>
-						</select>
-					</div>
-					<p class="caption">
-						Default value: 100Hz.
-					</p>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Set Full Scale Range</strong>
-						<p class-"caption">Set how large of a range the device can measure acceleration in.<br>
-						</p>
-					</div>
-					<div>
-						<label for="node-input-impact_accel_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_accel_active" class="ncd-config-toggle" data-target-id="node-input-impact_accel" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_accel"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-impact_accel">
-							<option selected="selected" value="0">±2g</option>
-							<option value="1">±4g</option>
-							<option value="2">±8g</option>
-							<option value="3">±16g</option>
-						</select>
-					</div>
-					<p class="caption">
-						Default value: ±2g.
-					</p>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
 						<strong>Set Motion Threshold</strong>
 						<p class="caption">
 							Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration.<br><br>
@@ -2059,6 +2008,61 @@
 						Default value: 5.
 					</p>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-7 data-sensor-24 data-sensor-25>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Data Rate</strong>
+						<p class="caption">This would determine how many samples the output data has.</p>
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_data_rate_active" class="ncd-config-toggle" data-target-id="node-input-impact_data_rate" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_data_rate"><i class="icon-tag"></i>Value</label>
+						<select id="node-input-impact_data_rate">
+							<!-- <option selected="selected" value="0">Value:</option> -->
+							<option value="1">1Hz</option>
+							<option value="2">10Hz</option>
+							<option value="3">25Hz</option>
+							<option value="4">50Hz</option>
+							<option selected="selected" value="5">100Hz</option>
+							<option value="6">200Hz</option>
+							<option value="7">400Hz</option>
+							<option value="8">1600Hz</option>
+							<option value="9">5376Hz</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 100Hz.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Full Scale Range</strong>
+						<p class-"caption">Set how large of a range the device can measure acceleration in.<br>
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_accel_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_accel_active" class="ncd-config-toggle" data-target-id="node-input-impact_accel" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_accel"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-impact_accel">
+							<option selected="selected" value="0">±2g</option>
+							<option value="1">±4g</option>
+							<option value="2">±8g</option>
+							<option value="3">±16g</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: ±2g.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-24>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Set Enable Axes</strong>
