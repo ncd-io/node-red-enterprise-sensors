@@ -302,11 +302,11 @@
 			impact_accel_active: {value: ""},
 			impact_accel: {value: "0"},
 			impact_data_rate_active: {value: ""},
-			impact_data_rate: {value: "4"},
+			impact_data_rate: {value: "5"},
 			impact_threshold_active: {value: ""},
-			impact_threshold: {value: 25, validate: NCD_validators.number_range(1, 127)},
+			impact_threshold: {value: 800},
 			impact_duration_active: {value: ""},
-			impact_duration: {value: 1, validate: NCD_validators.number_range(1, 127)},
+			impact_duration: {value: 20},
 
 			activ_interr_x: {value: 1, validate: RED.validators.number()},
 			activ_interr_y: {value: 2, validate: RED.validators.number()},
@@ -1100,7 +1100,7 @@
 			enable_axis_y_24:{value:1},
 			enable_axis_z_24:{value:1},
 			max_tx_per_interval_24_active:{value:""},
-			max_tx_per_interval:{value: 10, validate: NCD_validators.number_range(0, 10000)}
+			max_tx_per_interval_24:{value: 5, validate: NCD_validators.number_range(1, 30)}
 
 		},
 		inputs: 0,
@@ -1959,7 +1959,7 @@
 							<option value="2">10Hz</option>
 							<option value="3">25Hz</option>
 							<option value="4">50Hz</option>
-							<option value="5">100Hz</option>
+							<option selected="selected" value="5">100Hz</option>
 							<option value="6">200Hz</option>
 							<option value="7">400Hz</option>
 							<option value="8">1600Hz</option>
@@ -1967,41 +1967,103 @@
 						</select>
 					</div>
 					<p class="caption">
-						Default value: 50Hz.
+						Default value: 100Hz.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Full Scale Range</strong>
+						<p class-"caption">Set how large of a range the device can measure acceleration in.<br>
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_accel_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_accel_active" class="ncd-config-toggle" data-target-id="node-input-impact_accel" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_accel"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-impact_accel">
+							<option selected="selected" value="0">±2g</option>
+							<option value="1">±4g</option>
+							<option value="2">±8g</option>
+							<option value="3">±16g</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: ±2g.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Threshold</strong>
+						<p class="caption">
+							Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration.<br><br>
+							For Gen4 Devices:<br>
+							• The transmitted message will have a msg_type property of 'motion'.<br>
+							• Valid range: 0-23622mg.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_threshold_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_threshold_active" class="ncd-config-toggle" data-target-id="node-input-impact_threshold" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_threshold"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-impact_threshold">
+					</div>
+					<p class="caption">
+						Default value: 800mg.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Duration</strong>
+						<p class="caption">
+							Sets the minimum amount of time in milliseconds that motion/impact must continuously persist before triggering an alert. This filters out single, brief vibrations or random background noise from causing false alarms.<br><br>
+							For Gen4 Devices:<br>
+							• Valid range: 0-65535 msec.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-impact_duration_active">Active:</label>
+						<input type="checkbox" id="node-input-impact_duration_active" class="ncd-config-toggle" data-target-id="node-input-impact_duration" value="1">
+					</div>
+					<div>
+						<label for="node-input-impact_duration"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-impact_duration" placeholder="1" value="1">
+					</div>
+					<p class="caption">
+						Default value: 20 milliseconds.
 					</p>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-24>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Set Motion Trigger Logic</strong>
+						<strong>Set Max Motion Tx Per Interval</strong>
 						<p class="caption">
-							**Only applies to sensor with firmware version 6 and above.<br><br>
-							This setting determins how the sensor handles the X, Y, and Z axes to trigger an immediate sensor data transmission (motion). It allows you to choose whether a single axis or a combination of axes must cross your safety threshold before sending a Motion message.<br><br>
-							OR Mode (Any Axis): The sensor sends an alert if any single axis crosses the defined threshold.<br>
-							AND Mode (All Selected Axes): The sensor sends an alert only if all enabled axes cross the threshold at the exact same time.
+							**Only applies to Gen4 Devices.<br><br>
+							Set Number of times device will transmit a motion data message due to motion triggers per interval.<br>
+							Valid Range: 1-30
 						</p>
 					</div>
 					<div>
-						<label for="node-input-motion_mode_24_active">Active:</label>
-						<input type="checkbox" id="node-input-motion_mode_24_active" class="ncd-config-toggle" data-target-id="node-input-motion_mode_24" value="1">
+						<label for="node-input-max_tx_per_interval_24_active">Active:</label>
+						<input type="checkbox" id="node-input-max_tx_per_interval_24_active" class="ncd-config-toggle" data-target-id="node-input-max_tx_per_interval_24" value="1">
 					</div>
 					<div>
-						<label for="node-input-motion_mode_24"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-motion_mode_24">
-							<option selected="selected" value="0">OR Mode</option>
-							<option value="1">AND Mode</option>
-						</select>
+						<label for="node-input-max_tx_per_interval_24"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_tx_per_interval_24" placeholder="1" value="1">
 					</div>
 					<p class="caption">
-						Default value: OR Mode.
+						Default value: 5.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Set Enable Axes</strong>
 						<p class="caption">
-							**Only applies to sensor with firmware version 6 and above.<br><br>
+							**Only applies to Gen4 Devices.<br>
 						</p>
 					</div>
 					<div>
@@ -2023,102 +2085,39 @@
 						</select>
 					</div>
 					<div>
-						<label for="node-input-enable_axis_y_24"><i class="icon-tag"></i>Z-Axis:</label>
-						<select id="node-input-enable_axis_y_24" class="enable_axes_24">
+						<label for="node-input-enable_axis_z_24"><i class="icon-tag"></i>Z-Axis:</label>
+						<select id="node-input-enable_axis_z_24" class="enable_axes_24">
 							<option value="0">Disabled</option>
 							<option selected="selected" value="1">Enabled</option>
 						</select>
 					</div>
-				</div>
-			</div>
-			<div div class="ncd-dependent" data-sensor-7 data-sensor-24 data-sensor-25>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Set Motion Threshold</strong>
-						<p class="caption">
-							Set a motion detection threshold for the sensor to trigger a data transmission. This is an interrupt-based configuration.
-							Device with firmware 6 and above, the transmitted message will have a msg_type property of 'motion'.<br>
-							The real-world force (measured in mg) depends on the Full Scale Range you selected. Think of the threshold number as "steps," where the size of each step changes based on your range.<br><br>
-							Calculation: Target mg / Step Size = Input Value<br><br>
-							Quick Reference:<br>
-							At ±2g FSR: Target mg / 16mg<br>
-							At ±4g FSR: Target mg / 32mg<br>
-							At ±8g FSR: Target mg / 62mg<br>
-							At ±16g FSR: Target mg / 186mg<br><br>
-							Example: For a 400mg threshold at ±2g, enter 25 because 400 ÷ 16 = 25.
-						</p>
-					</div>
-					<div>
-						<label for="node-input-impact_threshold_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_threshold_active" class="ncd-config-toggle" data-target-id="node-input-impact_threshold" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_threshold"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-impact_threshold">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Set Motion Duration</strong>
-						<p class="caption">
-							Sets the minimum amount of time that motion/impact must continuously persist before triggering an alert. This filters out single, brief vibrations or random background noise from causing false alarms.<br>
-							The real-world time (measured in milliseconds) depends on your sensor's configured Output Data Rate (ODR). Think of the input value as a number of "steps," where the time duration of each step changes based on your data rate.<br><br>
-							Calculation: Input Value = (Target ms x ODR) / 1000<br>
-							Example: For a 2.5 ms duration at 400 Hz ODR, enter 1 because (2.5 x 400) / 1000 = 1.
-						</p>
-					</div>
-					<div>
-						<label for="node-input-impact_duration_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_duration_active" class="ncd-config-toggle" data-target-id="node-input-impact_duration" value="1">
-					</div>
-					<div>
-						<label for="node-input-impact_duration"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-impact_duration" placeholder="1" value="1">
-					</div>
 					<p class="caption">
-						Default value: 1 (2.5 milliseconds).
+						Default value: All Enabled.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Set Full Scale Range</strong>
-						<p class-"caption">Set how large of a range the device can measure acceleration in.<br>
-							Example: ±8g would mean that it would measure at most up to 8g and down to -8g.
+						<strong>Set Motion Trigger Logic</strong>
+						<p class="caption">
+							**Only applies to Gen4 Devices.<br><br>
+							This setting determins how the sensor handles the X, Y, and Z axes to trigger an immediate sensor data transmission (motion). It allows you to choose whether a single axis or a combination of axes must cross your safety threshold before sending a Motion message.<br><br>
+							OR Mode (Any Axis): The sensor sends an alert if any single axis crosses the defined threshold.<br>
+							AND Mode (All Selected Axes): The sensor sends an alert only if all enabled axes cross the threshold at the exact same time.
 						</p>
 					</div>
 					<div>
-						<label for="node-input-impact_accel_active">Active:</label>
-						<input type="checkbox" id="node-input-impact_accel_active" class="ncd-config-toggle" data-target-id="node-input-impact_accel" value="1">
+						<label for="node-input-motion_mode_24_active">Active:</label>
+						<input type="checkbox" id="node-input-motion_mode_24_active" class="ncd-config-toggle" data-target-id="node-input-motion_mode_24" value="1">
 					</div>
 					<div>
-						<label for="node-input-impact_accel"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-impact_accel">
-							<option selected="selected" value="0">±2g</option>
-							<option value="1">±4g</option>
-							<option value="2">±8g</option>
-							<option value="3">±16g</option>
+						<label for="node-input-motion_mode_24"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-motion_mode_24">
+							<option selected="selected" value="0">OR Mode</option>
+							<option value="1">AND Mode</option>
 						</select>
 					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
-						<strong>Set Max Motion Tx Per Interval</strong>
-						<p class="caption">
-							**Only applies to sensor with firmware version 6 and above.<br><br>
-							Set Number of times device will transmit a motion data message due to motion triggers per interval.<br>
-							Valid Range: 1-10000
-						</p>
-					</div>
-					<div>
-						<label for="node-input-max_tx_per_interval_24_active">Active:</label>
-						<input type="checkbox" id="node-input-max_tx_per_interval_24_active" class="ncd-config-toggle" data-target-id="node-input-max_tx_per_interval_24" value="1">
-					</div>
-					<div>
-						<label for="node-input-max_tx_per_interval_24"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-max_tx_per_interval_24" placeholder="1" value="1">
-					</div>
 					<p class="caption">
-						Default value: 10.
+						Default value: OR Mode.
 					</p>
 				</div>
 			</div>
