@@ -304,7 +304,7 @@
 			impact_data_rate_active: {value: ""},
 			impact_data_rate: {value: "5"},
 			impact_threshold_active: {value: ""},
-			impact_threshold: {value: 800},
+			impact_threshold: {value: 200},
 			impact_duration_active: {value: ""},
 			impact_duration: {value: 20},
 
@@ -1100,7 +1100,7 @@
 			enable_axis_y_24:{value:1},
 			enable_axis_z_24:{value:1},
 			max_tx_per_interval_24_active:{value:""},
-			max_tx_per_interval_24:{value: 5, validate: NCD_validators.number_range(1, 30)}
+			max_tx_per_interval_24:{value: 1, validate: NCD_validators.number_range(1, 30)}
 
 		},
 		inputs: 0,
@@ -1961,7 +1961,7 @@
 						<input type="text" id="node-input-impact_threshold">
 					</div>
 					<p class="caption">
-						Default value: 800mg.
+						Default value: 200mg.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
@@ -2005,7 +2005,7 @@
 						<input type="text" id="node-input-max_tx_per_interval_24" placeholder="1" value="1">
 					</div>
 					<p class="caption">
-						Default value: 5.
+						Default value: 1.
 					</p>
 				</div>
 			</div>
