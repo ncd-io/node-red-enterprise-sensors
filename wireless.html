@@ -1100,7 +1100,20 @@
 			enable_axis_y_24:{value:1},
 			enable_axis_z_24:{value:1},
 			max_tx_per_interval_24_active:{value:""},
-			max_tx_per_interval_24:{value: 1, validate: NCD_validators.number_range(1, 30)}
+			max_tx_per_interval_24:{value: 1, validate: NCD_validators.number_range(1, 30)},
+
+			ct_constant_ch4_51_active: {value:""},
+			ct_constant_ch4_51: {value:950, validate: NCD_validators.number_range(0, 4294967295)},
+			ct_constant_ch5_51_active: {value:""},
+			ct_constant_ch5_51: {value:950, validate: NCD_validators.number_range(0, 4294967295)},
+			ct_constant_ch6_51_active: {value:""},
+			ct_constant_ch6_51: {value:950, validate: NCD_validators.number_range(0, 4294967295)},
+			deadband_ch4_51_active: {value:""},
+			deadband_ch4_51: {value:0, validate: NCD_validators.number_range(0, 65535)},
+			deadband_ch5_51_active: {value:""},
+			deadband_ch5_51: {value:0, validate: NCD_validators.number_range(0, 65535)},
+			deadband_ch6_51_active: {value:""},
+			deadband_ch6_51: {value:0, validate: NCD_validators.number_range(0, 65535)}
 
 		},
 		inputs: 0,
@@ -1610,7 +1623,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -6635,7 +6648,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-86 data-sensor-87>
+			<div class="ncd-dependent" data-sensor-51 data-sensor-86 data-sensor-87>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sampling Frequency</strong>
 					<p class="caption">Determines the data acquisition speed, defined as the number of samples taken per second (Hz) during an AC current measurement cycle. Higher rates provide more granular data for accurate peak and RMS calculations.</p>
@@ -6692,7 +6705,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-86>
+			<div class="ncd-dependent" data-sensor-51 data-sensor-86>
 				<div class="form-row ncd-active-check">
 					<strong>Set Current Calibration Channel 2</strong>
 					<p class="caption">Specifies the internal multiplier used to calibrate the AC current readings for channel 2. Adjust this constant to fine-tune the sensor's accuracy against a known, verified baseline measurement.</p>
@@ -6724,7 +6737,54 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-86 data-sensor-87>
+			<div class="ncd-dependent" data-sensor-51>
+				<div class="form-row ncd-active-check">
+					<strong>Set Current Calibration Channel 4</strong>
+					<p class="caption">Specifies the internal multiplier used to calibrate the AC current readings for channel 4. Adjust this constant to fine-tune the sensor's accuracy against a known, verified baseline measurement.</p>
+					<div>
+						<label for="node-input-ct_constant_ch4_51_active">Active:</label>
+						<input type="checkbox" id="node-input-ct_constant_ch4_51_active" class="ncd-config-toggle" data-target-id="node-input-ct_constant_ch4_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-ct_constant_ch4_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ct_constant_ch4_51">
+					</div>
+					<p class="caption">
+						Default value: 950.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Current Calibration Channel 5</strong>
+					<p class="caption">Specifies the internal multiplier used to calibrate the AC current readings for channel 5. Adjust this constant to fine-tune the sensor's accuracy against a known, verified baseline measurement.</p>
+					<div>
+						<label for="node-input-ct_constant_ch5_51_active">Active:</label>
+						<input type="checkbox" id="node-input-ct_constant_ch5_51_active" class="ncd-config-toggle" data-target-id="node-input-ct_constant_ch5_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-ct_constant_ch5_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ct_constant_ch5_51">
+					</div>
+					<p class="caption">
+						Default value: 950.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Current Calibration Channel 6</strong>
+					<p class="caption">Specifies the internal multiplier used to calibrate the AC current readings for channel 6. Adjust this constant to fine-tune the sensor's accuracy against a known, verified baseline measurement.</p>
+					<div>
+						<label for="node-input-ct_constant_ch6_51_active">Active:</label>
+						<input type="checkbox" id="node-input-ct_constant_ch6_51_active" class="ncd-config-toggle" data-target-id="node-input-ct_constant_ch6_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-ct_constant_ch6_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-ct_constant_ch6_51">
+					</div>
+					<p class="caption">
+						Default value: 950.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-51 data-sensor-86 data-sensor-87>
 				<div class="form-row ncd-active-check">
 					<strong>Set Dead Band</strong>
 					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
@@ -6744,7 +6804,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-86>
+			<div class="ncd-dependent" data-sensor-51 data-sensor-86>
 				<div class="form-row ncd-active-check">
 					<strong>Set Dead Band Channel 2</strong>
 					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
@@ -6782,7 +6842,63 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-86 data-sensor-87>
+			<div class="ncd-dependent" data-sensor-51>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band Channel 4</strong>
+					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
+						Establishes a baseline noise filter. Any AC current reading below this threshold (in mA) is ignored and reported as 0<br><br>
+						Example: A value of 10 would mean that current below 10 mA would be considered as 0.
+					</p>
+					<div>
+						<label for="node-input-deadband_ch4_51_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_ch4_51_active" class="ncd-config-toggle" data-target-id="node-input-deadband_ch4_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-deadband_ch4_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_ch4_51">
+					</div>
+					<p class="caption">
+						Default value: 1.5% of CT Probe range.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band Channel 5</strong>
+					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
+						Establishes a baseline noise filter. Any AC current reading below this threshold (in mA) is ignored and reported as 0<br><br>
+						Example: A value of 10 would mean that current below 10 mA would be considered as 0.
+					</p>
+					<div>
+						<label for="node-input-deadband_ch5_51_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_ch5_51_active" class="ncd-config-toggle" data-target-id="node-input-deadband_ch5_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-deadband_ch5_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_ch5_51">
+					</div>
+					<p class="caption">
+						Default value: 1.5% of CT Probe range.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band Channel 6</strong>
+					<p class="caption">Filters out current values below the dead band threshold, treating them as noise. Generally 1.5% of the CT full scale<br>
+						Establishes a baseline noise filter. Any AC current reading below this threshold (in mA) is ignored and reported as 0<br><br>
+						Example: A value of 10 would mean that current below 10 mA would be considered as 0.
+					</p>
+					<div>
+						<label for="node-input-deadband_ch6_51_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_ch6_51_active" class="ncd-config-toggle" data-target-id="node-input-deadband_ch6_51" value="1">
+					</div>
+					<div>
+						<label for="node-input-deadband_ch6_51"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_ch6_51">
+					</div>
+					<p class="caption">
+						Default value: 1.5% of CT Probe range.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-51 data-sensor-86 data-sensor-87>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sync Interval</strong>
 					<p class="caption">
