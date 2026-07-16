@@ -3581,7 +3581,7 @@ module.exports = function(RED) {
 								}
 								break;
 							case 123:
-								if(config.clear_timers_123){
+								if(config.clear_timers_123_active){
 									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
 								if(config.debounce_time_123_active){
