@@ -1113,7 +1113,12 @@
 			deadband_ch5_51_active: {value:""},
 			deadband_ch5_51: {value:0, validate: NCD_validators.number_range(0, 65535)},
 			deadband_ch6_51_active: {value:""},
-			deadband_ch6_51: {value:0, validate: NCD_validators.number_range(0, 65535)}
+			deadband_ch6_51: {value:0, validate: NCD_validators.number_range(0, 65535)},
+
+			azimuth_130_active: {value:""},
+			azimuth_130: {value:0, validate: NCD_validators.number_range(0, 35999)},
+			yaw_reference_130_active: {value:""},
+			yaw_reference_130: {value:254},
 
 		},
 		inputs: 0,
@@ -3134,7 +3139,7 @@
 				</div>
 			</div>
 
-			<div class="ncd-dependent" data-sensor-47>
+			<div class="ncd-dependent" data-sensor-47 data-sensor-130>
 				<div class="form-row ncd-active-check">
 					<strong>Set Tilt Angle Threshold</strong>
 					<p class="caption">
@@ -3168,7 +3173,7 @@
 					<div>
 						<label for="node-input-tilt_mode_47"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-tilt_mode_47">
-							<option value="0" Absolute>Disable</option>
+							<option value="0">Absolute</option>
 							<option value="1">Incremental</option>
 							<option value="2">Normal</option>
 						</select>
@@ -3195,6 +3200,39 @@
 					<p class="caption">
 						Default value: 30 seconds.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-130>
+				<div class="form-row ncd-active-check">
+					<strong>Set Azimuth</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-azimuth_130_active">Active:</label>
+						<input type="checkbox" id="node-input-azimuth_130_active" class="ncd-config-toggle" data-target-id="node-input-azimuth_130" value="1">
+					</div>
+					<div>
+						<label for="node-input-azimuth_130"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-azimuth_130" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Yaw Reference Axis</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-yaw_reference_130_active">Active:</label>
+						<input type="checkbox" id="node-input-yaw_reference_130_active" class="ncd-config-toggle" data-target-id="node-input-yaw_reference_130" value="1">
+					</div>
+					<div>
+						<label for="node-input-yaw_reference_130"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-yaw_reference_130">
+							<option value="0">X axis</option>
+							<option value="1">Y axis</option>
+							<option value="2">Z axis</option>
+							<option value="255">Auto (Recommended)</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="ncd-dependent" data-sensor-108>
