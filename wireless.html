@@ -1126,9 +1126,7 @@
 			sampling_duration_518: {value:0, validate: NCD_validators.number_range(0, 65535)},
 
 			max_lube_attempts_105_active: {value:""},
-			max_lube_attempts_105: {value: 3, validate: NCD_validators.number_range(1, 10)},
-			lube_cycle_count_1_105_active: {value:""},
-			lube_cycle_count_1_105: {value: 0, validate: NCD_validators.number_range(0, 65535)}
+			max_lube_attempts_105: {value: 3, validate: NCD_validators.number_range(1, 10)}
 
 		},
 		inputs: 0,
@@ -3113,23 +3111,6 @@
 					</div>
 					<p class="caption">
 						Default value: 3.
-					</p>
-				</div>
-				<div class="form-row ncd-active-check">
-					<strong>Set Lube Total Cycles 1</strong>
-					<p class="caption">
-						Lifetime total of lubrication cycles run by dispenser 1 since the counter was last reset. Compare against the impulses-per-LC figures in the dispenser manual to predict a cartridge running empty.
-					</p>
-					<div>
-						<label for="node-input-lube_cycle_count_1_105_active">Active:</label>
-						<input type="checkbox" id="node-input-lube_cycle_count_1_105_active" class="ncd-config-toggle" data-target-id="node-input-lube_cycle_count_1_105" value="1">
-					</div>
-					<div>
-						<label for="node-input-lube_cycle_count_1_105"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-lube_cycle_count_1_105" placeholder="0" value="0">
-					</div>
-					<p class="caption">
-						Default value: 0.
 					</p>
 				</div>
 			</div>
