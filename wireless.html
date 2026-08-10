@@ -1051,13 +1051,13 @@
 			operation_mode_4:{value:0},
 
 			lube_on_time_1_105_active:{value:""},
-			lube_on_time_1_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			lube_on_time_1_105:{value: 10, validate: NCD_validators.number_range(1, 255)},
 			lube_on_time_2_105_active:{value:""},
 			lube_on_time_2_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
 			faulty_level_105_active:{value:""},
-			faulty_level_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			faulty_level_105:{value: 45, validate: NCD_validators.number_range(2, 255)},
 			friction_level_105_active:{value:""},
-			friction_level_105:{value: 0, validate: NCD_validators.number_range(0, 255)},
+			friction_level_105:{value: 35, validate: NCD_validators.number_range(1, 254)},
 
 			vibration_mode_115_active:{value:""},
 			vibration_mode_115:{value:0},
@@ -1123,7 +1123,12 @@
 			sampling_rate_518_active: {value:""},
 			sampling_rate_518: {value:1800, validate: NCD_validators.number_range(2, 65535)},
 			sampling_duration_518_active: {value:""},
-			sampling_duration_518: {value:0, validate: NCD_validators.number_range(0, 65535)}
+			sampling_duration_518: {value:0, validate: NCD_validators.number_range(0, 65535)},
+
+			max_lube_attempts_105_active: {value:""},
+			max_lube_attempts_105: {value: 3, validate: NCD_validators.number_range(1, 10)},
+			lube_cycle_count_1_105_active: {value:""},
+			lube_cycle_count_1_105: {value: 0, validate: NCD_validators.number_range(0, 65535)}
 
 		},
 		inputs: 0,
@@ -2998,6 +3003,8 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-3 data-sensor-14 data-sensor-15 data-sensor-45 data-sensor-48 data-sensor-52 data-sensor-56 data-sensor-75 data-sensor-85 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-95 data-sensor-96 data-sensor-107 data-sensor-122 data-sensor-200 data-sensor-540 data-sensor-541>
 				<div class="form-row ncd-active-check">
 					<strong>Set Sensor Always On</strong>
 					<p>This command will keep the external power to the sensor always enabled.</p>
@@ -3089,6 +3096,40 @@
 					</div>
 					<p class="caption">
 						Default value: 35 dB.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Lube Attempts</strong>
+					<p class="caption">
+						How many times in a row the dispenser will run before the machine is treated as faulty, if the noise level is not coming down.
+					</p>
+					<div>
+						<label for="node-input-max_lube_attempts_105_active">Active:</label>
+						<input type="checkbox" id="node-input-max_lube_attempts_105_active" class="ncd-config-toggle" data-target-id="node-input-max_lube_attempts_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-max_lube_attempts_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_lube_attempts_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 3.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Lube Total Cycles 1</strong>
+					<p class="caption">
+						Lifetime total of lubrication cycles run by dispenser 1 since the counter was last reset. Compare against the impulses-per-LC figures in the dispenser manual to predict a cartridge running empty.
+					</p>
+					<div>
+						<label for="node-input-lube_cycle_count_1_105_active">Active:</label>
+						<input type="checkbox" id="node-input-lube_cycle_count_1_105_active" class="ncd-config-toggle" data-target-id="node-input-lube_cycle_count_1_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-lube_cycle_count_1_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-lube_cycle_count_1_105" placeholder="0" value="0">
+					</div>
+					<p class="caption">
+						Default value: 0.
 					</p>
 				</div>
 			</div>
