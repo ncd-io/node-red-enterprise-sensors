@@ -1007,6 +1007,7 @@ module.exports = function(RED) {
 			this.gateway._emitter.removeAllListeners('converter_response');
 			this.gateway._emitter.removeAllListeners('manifest_received');
 			this.gateway._emitter.removeAllListeners('sync');
+			this.gateway._emitter.removeAllListeners('assert_rsn');
 			// console.log(this.gateway._emitter.eventNames());
 		});
 
@@ -1412,6 +1413,10 @@ module.exports = function(RED) {
 			node.set_status();
 			msg1 = {topic:'somethingTopic',payload:"something"};
 			node.send([null,{topic: 'unknown_data', payload:d, time: Date.now()}]);
+		});
+		node.gateway.on('assertion_reason',(d)=>{
+			node.set_status();
+			node.send({topic: 'assert_rsn', payload:d, time: Date.now()});
 		});
 		node.gateway.on("route_info",(d)=>{
 			msg1 = {topic:"route_info",payload:d};
@@ -3576,7 +3581,7 @@ module.exports = function(RED) {
 								}
 								break;
 							case 123:
-								if(config.clear_timers_123){
+								if(config.clear_timers_123_active){
 									promises.clear_timers_123 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
 								if(config.debounce_time_123_active){
@@ -4237,8 +4242,8 @@ module.exports = function(RED) {
 								if(config.baudrate_539_active){
 									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
 								}
-								if(config.stop_bit_1011_active){
-									promises.stop_bit_1011 = node.config_gateway.config_set_stop_bit_1011(mac, parseInt(config.stop_bit_1011));
+								if(config.stop_bit_539_active){
+									promises.stop_bit_539 = node.config_gateway.config_set_stop_bit_539(mac, parseInt(config.stop_bit_539));
 								}
 								if(config.set_parity_1011_active){
 									promises.set_parity_1011 = node.config_gateway.config_set_parity_1011(mac, parseInt(config.set_parity_1011));
@@ -4426,8 +4431,8 @@ module.exports = function(RED) {
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_1010 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
-								if(config.baudrate_539_active){
-									promises.baudrate_1010 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								if(config.baudrate_1010_active){
+									promises.baudrate_1010 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_1010));
 								}
 								if(config.rx485_timeout_1011_active){
 									promises.rx485_timeout_1010 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
@@ -4452,8 +4457,8 @@ module.exports = function(RED) {
 								if(config.stay_on_mode_539_active){
 									promises.stay_on_mode_539 = node.config_gateway.config_set_stay_on_mode_539(mac, parseInt(config.stay_on_mode_539));
 								}
-								if(config.baudrate_539_active){
-									promises.baudrate_539 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_539));
+								if(config.baudrate_1010_active){
+									promises.baudrate_1011 = node.config_gateway.config_set_baudrate_539(mac, parseInt(config.baudrate_1010));
 								}
 								if(config.rx485_timeout_1011_active){
 									promises.rx485_timeout_1011 = node.config_gateway.config_set_rx485_timeout_1011(mac, parseInt(config.rx485_timeout_1011));
@@ -5773,6 +5778,7 @@ module.exports = function(RED) {
 			node._gateway_node.removeAllListeners('config_node_msg');
 			node._gateway_node.removeAllListeners('config_node_error');
 			node._gateway_node.removeAllListeners('sensor_mode');
+			node._gateway_node.removeAllListeners('assert_rsn');
 			node._gateway_node.removeAllListeners('sync');
 			done();
 		});
