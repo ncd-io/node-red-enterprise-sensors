@@ -757,8 +757,6 @@
 
 			pressure_limit_26_active: {value: ""},
 			pressure_limit_26: {value: 5, validate: NCD_validators.number_range(5, 5000)},
-			auto_pressure_check_26_active: {value: ""},
-			auto_pressure_check_26: {value: 0},
 
 			fsr_420ma_active: {value: ""},
 			fsr_420ma: {value: 0},
@@ -1129,7 +1127,20 @@
 			max_lube_attempts_105: {value: 3, validate: NCD_validators.number_range(1, 10)},
 
 			h2_sensor_boot_time_547_active: {value:""},
-			h2_sensor_boot_time_547: {value: 15, validate: NCD_validators.number_range(15, 255)}
+			h2_sensor_boot_time_547: {value: 15, validate: NCD_validators.number_range(15, 255)},
+
+			sensor_fs_26_active: {value:""},
+			sensor_fs_26: {value: 0},
+			auto_check_interval_26_active: {value:""},
+			auto_check_interval_26: {value: 0, validate: NCD_validators.number_range(0, 65535)},
+			press_auto_check_percent_26_active: {value:""},
+			press_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 255)},
+			temp_auto_check_percent_26_active: {value:""},
+			temp_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 255)},
+			always_on_26_active: {value:""},
+			always_on_26: {value: 0},
+			pressure_check_mode_26_active: {value:""},
+			pressure_check_mode_26: {value: 1}
 
 		},
 		inputs: 0,
@@ -6323,7 +6334,7 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Set Pressure Limit</strong>
-						<p>
+						<p class="caption">
 							If the pressure goes above the threshold, the sensor will start sending data every second, which will quickly drain the battery.<br><br>
 							Valid range: 5 - 5000.
 						</p>
@@ -6338,19 +6349,110 @@
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Auto Pressure Check</strong>
-					<p>
-						Enable or disable the auto pressure check, keep in mind it will drain the battery if enabled.
-					</p>
 					<div>
-						<label for="node-input-auto_pressure_check_26_active">Active:</label>
-						<input type="checkbox" id="node-input-auto_pressure_check_26_active" class="ncd-config-toggle" data-target-id="node-input-auto_pressure_check_26" value="1">
+						<strong>Set Sensor Full Scale</strong>
+						<p class="caption">
+							Set the Max Pressure Range.
+						</p>
 					</div>
 					<div>
-						<label for="node-input-auto_pressure_check_26"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-auto_pressure_check_26">
-							<option value="0" selected>Disabled</option>
-							<option value="1">Enabled</option>
+						<label for="node-input-sensor_fs_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-sensor_fs_26_active" class="ncd-config-toggle" data-target-id="node-input-sensor_fs_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-sensor_fs_26"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-sensor_fs_26">
+							<option value="0" selected>10 PSI</option>
+							<option value="1">20 PSI</option>
+							<option value="2">100 PSI</option>
+							<option value="3">500 PSI</option>
+							<option value="4">1000 PSI</option>
+							<option value="5">5000 PSI</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Pressure Auto Check Percentage</strong>
+						<p class="caption">
+							Sets the sensitivity for event-based reporting. The sensor will trigger an immediate push transmission if the difference between the live Pressure reading and the last transmitted reading meets or exceeds this percentage threshold.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-press_auto_check_percent_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-press_auto_check_percent_26_active" class="ncd-config-toggle" data-target-id="node-input-press_auto_check_percent_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-press_auto_check_percent_26"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-press_auto_check_percent_26" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Temperature Auto Check Percentage</strong>
+						<p class="caption">
+							Sets the sensitivity for event-based reporting. The sensor will trigger an immediate push transmission if the difference between the live Temperature reading and the last transmitted reading meets or exceeds this percentage threshold.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-temp_auto_check_percent_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-temp_auto_check_percent_26_active" class="ncd-config-toggle" data-target-id="node-input-temp_auto_check_percent_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-temp_auto_check_percent_26"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-temp_auto_check_percent_26" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Auto Check Interval</strong>
+						<p class="caption">
+							Defines how frequently (in seconds) the sensor wakes up specifically to compare the live Pressure or Temperature against your configured Auto Check Percentage (Pressure or Temperature). If the Pressure or Temperature meets the percentage change criteria, it triggers an immediate data transmission, overriding the standard reporting schedule.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-auto_check_interval_26_active" class="ncd-config-toggle" data-target-id="node-input-auto_check_interval_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-auto_check_interval_26"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-auto_check_interval_26" placeholder="0" value="0">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Always On</strong>
+					<p class="caption">
+						This setting strictly controls whether the sensor is allowed to go to sleep. Forces the sensor to remain constantly active, bypassing its standard sleep-and-wake cycles.<br><br>
+						Note: Always on mode only keeps the sensor turn on with any pressure mode selected. Because the hardware never sleeps, this will significantly increase current consumption and reduce your overall battery life.
+					</p>
+					<div>
+						<label for="node-input-always_on_26_active">Active:</label>
+						<input type="checkbox" id="node-input-always_on_26_active" class="ncd-config-toggle" data-target-id="node-input-always_on_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-always_on_26"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-always_on_26">
+							<option value="0" selected>Disable</option>
+							<option value="1">Enable</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Check Mode</strong>
+					<p class="caption">
+						Sets the operational logic the sensor uses to evaluate and trigger alerts. You can select between two primary modes:<br><br>
+						• <strong>Normal:</strong> Triggers an alert only when the specified percentage change occurs in either pressure or temperature since the last reading. This is the recommended setting for optimizing battery life.<br>
+						• <strong>Absolute:</strong> Triggers an alert the moment the pressure exceeds your defined Pressure Limit. Because it requires continuous measurement, this mode keeps the sensor constantly powered, which will increase overall power consumption.
+					</p>
+					<div>
+						<label for="node-input-pressure_check_mode_26_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_check_mode_26_active" class="ncd-config-toggle" data-target-id="node-input-pressure_check_mode_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_check_mode_26"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_check_mode_26">
+							<option value="0" selected>Absolute</option>
+							<option value="1">Normal</option>
 						</select>
 					</div>
 				</div>
