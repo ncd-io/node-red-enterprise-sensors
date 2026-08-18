@@ -653,9 +653,9 @@
 			auto_check_interval_118_active:{value: ""},
 			auto_check_interval_118:{value: 0, validate: NCD_validators.number_range(0, 65000)},
 			press_auto_check_percent_118_active:{value: ""},
-			press_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+			press_auto_check_percent_118:{value: 10, validate: NCD_validators.number_range(0, 100)},
 			temp_auto_check_percent_118_active:{value: ""},
-			temp_auto_check_percent_118:{value: 0, validate: NCD_validators.number_range(0, 100)},
+			temp_auto_check_percent_118:{value: 10, validate: NCD_validators.number_range(0, 100)},
 
 			raw_length_97_active:{value: ""},
 			raw_length_97:{value:3, validate: NCD_validators.number_range(0, 3)},
@@ -756,7 +756,7 @@
 			sample_rate_108: {value: 0},
 
 			pressure_limit_26_active: {value: ""},
-			pressure_limit_26: {value: 5, validate: NCD_validators.number_range(5, 5000)},
+			pressure_limit_26: {value: 10000, validate: NCD_validators.number_range(5, 65535)},
 
 			fsr_420ma_active: {value: ""},
 			fsr_420ma: {value: 0},
@@ -1134,13 +1134,15 @@
 			auto_check_interval_26_active: {value:""},
 			auto_check_interval_26: {value: 0, validate: NCD_validators.number_range(0, 65535)},
 			press_auto_check_percent_26_active: {value:""},
-			press_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 255)},
+			press_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 100)},
 			temp_auto_check_percent_26_active: {value:""},
-			temp_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 255)},
+			temp_auto_check_percent_26: {value: 10, validate: NCD_validators.number_range(0, 100)},
 			always_on_26_active: {value:""},
 			always_on_26: {value: 0},
 			pressure_check_mode_26_active: {value:""},
-			pressure_check_mode_26: {value: 1}
+			pressure_check_mode_26: {value: 1},
+			pressure_limit_2_118_active: {value:""},
+			pressure_limit_2_118: {value: 10000, validate: NCD_validators.number_range(5, 65535)}
 
 		},
 		inputs: 0,
@@ -5836,7 +5838,10 @@
 			</div>
 			<div class="ncd-dependent" data-sensor-118>
 				<div class="form-row ncd-active-check">
-					<strong>Set Pressure Sensor FS - Channel 1</strong>
+					<strong>Set Pressure Sensor Full Scale Channel 1</strong>
+					<p class="caption">
+						Set the Max Pressure Range for Channel 1.
+					</p>
 					<div>
 						<label for="node-input-pressure_sensor_fs_ch1_118_active">Active:</label>
 						<input type="checkbox" id="node-input-pressure_sensor_fs_ch1_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch1_118" value="1">
@@ -5844,17 +5849,20 @@
 					<div>
 						<label for="node-input-pressure_sensor_fs_ch1_118"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-pressure_sensor_fs_ch1_118">
-							<option selected="selected" value="0">10</option>
-							<option value="1">20</option>
-							<option value="2">100</option>
-							<option value="3">500</option>
-							<option value="4">1000</option>
-							<option value="5">5000</option>
+							<option selected="selected" value="0">10 PSI</option>
+							<option value="1">20 PSI</option>
+							<option value="2">100 PSI</option>
+							<option value="3">500 PSI</option>
+							<option value="4">1000 PSI</option>
+							<option value="5">5000 PSI</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Pressure Sensor FS - Channel 2</strong>
+					<strong>Set Pressure Sensor Full Scale Channel 1</strong>
+					<p class="caption">
+						Set the Max Pressure Range for Channel 2.
+					</p>
 					<div>
 						<label for="node-input-pressure_sensor_fs_ch2_118_active">Active:</label>
 						<input type="checkbox" id="node-input-pressure_sensor_fs_ch2_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_fs_ch2_118" value="1">
@@ -5862,18 +5870,20 @@
 					<div>
 						<label for="node-input-pressure_sensor_fs_ch2_118"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-pressure_sensor_fs_ch2_118">
-							<option selected="selected" value="0">10</option>
-							<option value="1">20</option>
-							<option value="2">100</option>
-							<option value="3">500</option>
-							<option value="4">1000</option>
-							<option value="5">5000</option>
+							<option selected="selected" value="0">10 PSI</option>
+							<option value="1">20 PSI</option>
+							<option value="2">100 PSI</option>
+							<option value="3">500 PSI</option>
+							<option value="4">1000 PSI</option>
+							<option value="5">5000 PSI</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Check Interval</strong>
-					<p>
+					<p class="caption">
+						Defines how frequently (in seconds) the sensor wakes up specifically to compare the live Pressure or Temperature against your configured Auto Check Percentage (Pressure or Temperature). 
+						If the Pressure or Temperature meets the percentage change criteria, it triggers an immediate data transmission, overriding the standard reporting schedule.<br>
 						Valid Range: 0 - 65000 (Seconds).
 					</p>
 					<div>
@@ -5887,7 +5897,8 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Pressure Auto Check Percentage</strong>
-					<p>
+					<p class="caption">
+						Sets the sensitivity for event-based reporting. The sensor will trigger an immediate push transmission if the difference between the live Pressure reading and the last transmitted reading meets or exceeds this percentage threshold.<br>
 						Valid Range: 0 - 100%
 					</p>
 					<div>
@@ -5901,7 +5912,8 @@
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Temperature Auto Check Percentage</strong>
-					<p>
+					<p class="caption">
+						Sets the sensitivity for event-based reporting. The sensor will trigger an immediate push transmission if the difference between the live Temperature reading and the last transmitted reading meets or exceeds this percentage threshold.<br>
 						Valid Range: 0 - 100%
 					</p>
 					<div>
@@ -6335,23 +6347,6 @@
 			<div class="ncd-dependent" data-sensor-26>
 				<div class="form-row ncd-active-check">
 					<div>
-						<strong>Set Pressure Limit</strong>
-						<p class="caption">
-							If the pressure goes above the threshold, the sensor will start sending data every second, which will quickly drain the battery.<br><br>
-							Valid range: 5 - 5000.
-						</p>
-					</div>
-					<div>
-						<label for="node-input-pressure_limit_26_active"><i class="icon-tag"></i>Active:</label>
-						<input type="checkbox" id="node-input-pressure_limit_26_active" class="ncd-config-toggle" data-target-id="node-input-pressure_limit_26" value="1">
-					</div>
-					<div>
-						<label for="node-input-pressure_limit_26"><i class="icon-tag"></i>  Value</label>
-						<input type="text" id="node-input-pressure_limit_26" placeholder="0" value="0">
-					</div>
-				</div>
-				<div class="form-row ncd-active-check">
-					<div>
 						<strong>Set Sensor Full Scale</strong>
 						<p class="caption">
 							Set the Max Pressure Range.
@@ -6421,6 +6416,46 @@
 						<input type="text" id="node-input-auto_check_interval_26" placeholder="0" value="0">
 					</div>
 				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-26 data-sensor-118>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Pressure Limit</strong>
+						<p class="caption">
+							If the pressure goes above the threshold, the sensor will start sending data every second, which will quickly drain the battery.<br><br>
+							Valid range: 5 - 10000 PSI.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_26_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-pressure_limit_26_active" class="ncd-config-toggle" data-target-id="node-input-pressure_limit_26" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_26"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-pressure_limit_26" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-118>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Pressure Limit Channel 2</strong>
+						<p class="caption">
+							Defines the absolute pressure (Channel 2) threshold that will trigger an alert event when exceeded.<br><br>
+							Valid range: 5 - 10000 PSI.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_2_118_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-pressure_limit_2_118_active" class="ncd-config-toggle" data-target-id="node-input-pressure_limit_2_118" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_limit_2_118"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-pressure_limit_2_118" placeholder="0" value="0">
+					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-26 data-sensor-118>
 				<div class="form-row ncd-active-check">
 					<strong>Set Always On</strong>
 					<p class="caption">
