@@ -1142,7 +1142,10 @@
 			pressure_check_mode_26_active: {value:""},
 			pressure_check_mode_26: {value: 1},
 			pressure_limit_2_118_active: {value:""},
-			pressure_limit_2_118: {value: 10000, validate: NCD_validators.number_range(5, 65535)}
+			pressure_limit_2_118: {value: 10000, validate: NCD_validators.number_range(5, 65535)},
+
+			pressure_sensor_type_131_active: {value:""},
+			pressure_sensor_type_131: {value: 0}
 
 		},
 		inputs: 0,
@@ -1269,6 +1272,7 @@
 					"128": "128 - Wireless Water Detect Sensor",
 					"129": "129 - Two Channel Wireless Water Detect Sensor",
 					"130": "130 - Wireless Inclinometer Sensor",
+					"131": "131 - Wireless Differential Pressure Sensor Gen4",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -1610,6 +1614,7 @@
 			<option value="128">128 - Wireless Water Detect Sensor</option>
 			<option value="129">129 - Two Channel Wireless Water Detect Sensor</option>
 			<option value="130">130 - Wireless Inclinometer Sensor</option>
+			<option value="131">131 - Wireless Differential Pressure Sensor Gen4</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1656,7 +1661,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -8611,6 +8616,45 @@
 					<p class="caption">
 						Default value: 15 seconds.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-131>
+				<div class="form-row ncd-active-check">
+					<strong>Set Pressure Sensor Type</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-pressure_sensor_type_131_active">Active:</label>
+						<input type="checkbox" id="node-input-pressure_sensor_type_131_active" class="ncd-config-toggle" data-target-id="node-input-pressure_sensor_type_131" value="1">
+					</div>
+					<div>
+						<label for="node-input-pressure_sensor_type_131"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-pressure_sensor_type_131">
+							<option value="0" selected>2.5MD (Range: -2.5mbar to 2.5mbar)</option>
+							<option value="1">006MD (Range: -6mbar to 6mbar)</option>
+							<option value="2">010MD (Range: -10mbar to 10mbar)</option>
+							<option value="3">016MD (Range: -16mbar to 16mbar)</option>
+							<option value="4">025MD (Range: -25mbar to 25mbar)</option>
+							<option value="5">040MD (Range: -40mbar to 40mbar)</option>
+							<option value="6">060MD (Range: -60mbar to 60mbar)</option>
+							<option value="7">100MD (Range: -100mbar to 100mbar)</option>
+							<option value="8">160MD (Range: -160mbar to 160mbar)</option>
+							<option value="9">250MD (Range: -250mbar to 250mbar)</option>
+							<option value="10">400MD (Range: -400mbar to 400mbar)</option>
+							<option value="11">600MD (Range: -600mbar to 600mbar)</option>
+							<option value="12">001BD (Range: -1000mbar to 1000mbar)</option>
+							<option value="13">1.6BD (Range: -1600mbar to 1600mbar)</option>
+							<option value="14">2.5BD (Range: -2500mbar to 2500mbar)</option>
+							<option value="15">004BD (Range: -4000mbar to 4000mbar)</option>
+							<option value="16">0001ND (Range: -2.49mbar to 2.49mbar)</option>
+							<option value="17">0002ND (Range: -4.98mbar to 4.98mbar)</option>
+							<option value="18">0004ND (Range: -9.96mbar to 9.96mbar)</option>
+							<option value="19">0005ND (Range: -12.45mbar to 12.45mbar)</option>
+							<option value="20">0010ND (Range: -24.91mbar to 24.91mbar)</option>
+							<option value="21">0020ND (Range: -49.82mbar to 49.82mbar)</option>
+							<option value="22">0030ND (Range: -74.73mbar to 74.73mbar)</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
