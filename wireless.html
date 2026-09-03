@@ -1145,7 +1145,20 @@
 			pressure_limit_2_118: {value: 10000, validate: NCD_validators.number_range(5, 65535)},
 
 			pressure_sensor_type_131_active: {value:""},
-			pressure_sensor_type_131: {value: 0}
+			pressure_sensor_type_131: {value: 0},
+
+			input_idle_time_132_active: {value:""},
+			input_idle_time_132: {value: 60, validate: NCD_validators.number_range(0, 65535)},
+			input_idle_state_132_active: {value:""},
+			input_idle_state_132: {value: 1},
+			input_2_idle_time_133_active: {value:""},
+			input_2_idle_time_133: {value: 60, validate: NCD_validators.number_range(0, 65535)},
+			input_2_idle_state_133_active: {value:""},
+			input_2_idle_state_133: {value: 1},
+			push_notification_132_active: {value:""},
+			push_notification_132: {value: 0},
+			push_notification_133_active: {value:""},
+			push_notification_133: {value: 0}
 
 		},
 		inputs: 0,
@@ -1273,6 +1286,8 @@
 					"129": "129 - Two Channel Wireless Water Detect Sensor",
 					"130": "130 - Wireless Inclinometer Sensor",
 					"131": "131 - Wireless Differential Pressure Sensor Gen4",
+					"132": "132 - One Channel Production Counter",
+					"133": "133 - Two Channel Production Counter",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -1615,6 +1630,8 @@
 			<option value="129">129 - Two Channel Wireless Water Detect Sensor</option>
 			<option value="130">130 - Wireless Inclinometer Sensor</option>
 			<option value="131">131 - Wireless Differential Pressure Sensor Gen4</option>
+			<option value="132">132 - One Channel Production Counter</option>
+			<option value="133">133 - Two Channel Production Counter</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1661,7 +1678,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-132 data-sensor-133 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -3610,7 +3627,7 @@
 					**The following settings are compatible only with sensors running firmware version 10 or higher (Gen 2).
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-123 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -3631,10 +3648,10 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-35 data-sensor-123 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input 1 Detection</strong>
-					<p>
+					<p class="caption">
 						Configures how the counter increments and how uptime is calculated for Input 1:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
@@ -3652,10 +3669,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-123 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-123 data-sensor-133 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input 2 Detection</strong>
-					<p>
+					<p class="caption">
 						Configures how the counter increments and how uptime is calculated for Input 2:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
@@ -3676,7 +3693,7 @@
 			<div class="ncd-dependent" data-sensor-123 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input 3 Detection</strong>
-					<p>
+					<p class="caption">
 						Configures how the counter increments and how uptime is calculated for Input 3:<br><br>
 						Rising Edge: The counter increments, and uptime is calculated, when the input transitions from LOW to HIGH (active HIGH).<br>
 						Falling Edge: The counter increments, and uptime is calculated, when the input transitions from HIGH to LOW (active LOW).
@@ -3694,15 +3711,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-119 data-sensor-123 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-119 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Counter Threshold</strong>
 					<p class="caption">
 						The sensor will transmit data when any connected counter reaches a multiple of this threshold value.<br>
-						**Report type will be 'Threshold'.
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Threshold'..
 						<br>
 						<br>
-						Note: The range for this value is from 0 to 65534 and must be multiple of 100.
+						*The range for this value is from 0 to 65534 and must be multiple of 100.
 					</p>
 					<div>
 						<label for="node-input-counter_threshold_108_active">Active:</label>
@@ -3720,7 +3737,7 @@
 			<div class="ncd-dependent" data-sensor-108>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
-					<p>
+					<p class="caption">
 						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
 						**Report type will be 'Interrupt'.<br><br>
 						IO1 - Digital input<br>
@@ -3775,7 +3792,7 @@
 			<div class="ncd-dependent" data-sensor-123 data-sensor-126>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
-					<p>
+					<p class="caption">
 						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
 						**Report type will be 'Interrupt'.<br><br>
 						IO1 - Input 1<br>
@@ -3805,7 +3822,7 @@
 			<div class="ncd-dependent" data-sensor-125>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
-					<p>
+					<p class="caption">
 						Enables the sensor to immediately transmit data upon detecting a signal change on the specified input(s).<br>
 						**Report type will be 'Interrupt'.<br><br>
 						IO1 - Input 1<br>
@@ -3850,11 +3867,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-125 data-sensor-126 data-sensor-119>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-108 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Data Transmission Interval</strong>
 					<p class="caption">
-						Sets the regular interval at which the sensor wakes up and transmits its data. This interval operates independently of any interrupt-driven (Push Notifications or Resets).<br>
+						Sets the regular interval at which the sensor wakes up and transmits its data. This interval operates independently of any interrupt-driven (Push Notifications or Resets).<br><br>
 						**Report type will be 'Regular'.
 					</p>
 					<div>
@@ -3883,7 +3900,7 @@
 				<div class="form-row ncd-active-check">
 					<strong> Set Reset Mode</strong>
 					<p class="caption">
-						This setting specifies which automatic reset option the sensor will utilize.<br>
+						This setting specifies which automatic reset option the sensor will utilize.<br><br>
 						Note: Works in conjunction with the "Reset Timeout" and "Set Shift Time" commands.
 					</p>
 					<div>
@@ -3906,7 +3923,7 @@
 					<strong>Reset Timeout</strong>
 					<p class="caption">
 						Defines the duration (in seconds) after which the sensor will automatically reset. Before resetting, it will transmit its current data values.<br>
-						**Report type will be 'Shift end'.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Shift end'.<br><br>
 						Valid range: 60 - 65535
 					</p>
 					<div>
@@ -3921,8 +3938,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 1</strong>
 					<p class="caption">
-						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
-						**Report type will be 'Shift end'.<br><br>
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Shift end'.<br><br>
 						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
@@ -3941,8 +3958,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 2</strong>
 					<p class="caption">
-						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
-						**Report type will be 'Shift end'.<br><br>
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Shift end'.<br><br>
 						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
@@ -3961,8 +3978,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 3</strong>
 					<p class="caption">
-						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
-						**Report type will be 'Shift end'.<br><br>
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Shift end'.<br><br>
 						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
@@ -3981,8 +3998,8 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Shift Time 4</strong>
 					<p class="caption">
-						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br>
-						**Report type will be 'Shift end'.<br><br>
+						Based on the Real-Time Clock (RTC), configures one of four specific daily times (24-hour format) for the sensor to perform an automatic reset. Before resetting, it will transmit its current data values.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Shift end'.<br><br>
 						Format: 24-hour time (e.g., 14:00 for 2 PM).
 					</p>
 					<div>
@@ -4080,7 +4097,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-119>
+			<div class="ncd-dependent" data-sensor-108 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-119>
 				<div class="form-row ncd-active-check">
 					<strong>Set Interrupt Timeout</strong>
 					<p class="caption">
@@ -8240,7 +8257,7 @@
 			<div class="ncd-dependent" data-sensor-33 data-sensor-35>
 				<div class="form-row ncd-active-check">
 					<strong>Enable Push Notification</strong>
-					<p>
+					<p class="caption">
 						Enables the sensor to immediately transmit data upon detecting a signal change on the input.
 						**Report type will be 'Interrupt'.<br><br>
 					</p>
@@ -8655,6 +8672,134 @@
 							<option value="22">0030ND (Range: -74.73mbar to 74.73mbar)</option>
 						</select>
 					</div>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-132>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p class="caption">
+						If enabled, the sensor will actively monitor the corresponding input(s). As soon as the sensor detects a change in the input state, it will transmit an immediate message.<br><br>
+						Note: When the sensor transmits this immediate push notification, the report_type property will be displayed as 'Interrupt'.
+					</p>
+					<div>
+						<label for="node-input-push_notification_132_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_132_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_132" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_132"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_132">
+							<option value="0" selected>Disable</option>
+							<option value="3">Enable</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Enabled.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-133>
+				<div class="form-row ncd-active-check">
+					<strong>Enable Push Notification</strong>
+					<p class="caption">
+						If enabled, the sensor will actively monitor the corresponding input(s). As soon as the sensor detects a change in the input state, it will transmit an immediate message.<br><br>
+						Note: When the sensor transmits this immediate push notification, the report_type property will be displayed as 'Interrupt'.
+					</p>
+					<div>
+						<label for="node-input-push_notification_133_active">Active:</label>
+						<input type="checkbox" id="node-input-push_notification_133_active" class="ncd-config-toggle" data-target-id="node-input-push_notification_133" value="1">
+					</div>
+					<div>
+						<label for="node-input-push_notification_133"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-push_notification_133">
+							<option value="0" selected>Disable</option>
+							<option value="1">Enable on Input 1</option>
+							<option value="2">Enable on Input 2</option>
+							<option value="3">Enable Both</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: Both Enabled.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-132 data-sensor-133>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input 1 Idle State</strong>
+					<p class="caption">
+						If the input remains in this configured state for more than the Input 1 idle time, a report message is sent.
+					</p>
+					<div>
+						<label for="node-input-input_idle_state_132_active">Active:</label>
+						<input type="checkbox" id="node-input-input_idle_state_132_active" class="ncd-config-toggle" data-target-id="node-input-input_idle_state_132" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_idle_state_132"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_idle_state_132">
+							<option value="1" selected>High</option>
+							<option value="0">Low</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: High state.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input 1 Idle Time</strong>
+					<p class="caption">
+						This setting defines a maximum idle duration. If the Input 1 remains in an idle state for longer than this configured time, the sensor will automatically send a report message.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Time Limit'.
+					</p>
+					<div>
+						<label for="node-input-input_idle_time_132_active">Active:</label>
+						<input type="checkbox" id="node-input-input_idle_time_132_active" class="ncd-config-toggle" data-target-id="node-input-input_idle_time_132" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_idle_time_132"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-input_idle_time_132" placeholder="60" value="60">
+					</div>
+					<p class="caption">
+						Default value: 60 seconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-133>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input 2 Idle State</strong>
+					<p class="caption">
+						If the input 2 remains in this configured state for more than the Input 2 idle time, a report message is sent.
+					</p>
+					<div>
+						<label for="node-input-input_2_idle_state_133_active">Active:</label>
+						<input type="checkbox" id="node-input-input_2_idle_state_133_active" class="ncd-config-toggle" data-target-id="node-input-input_2_idle_state_133" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_2_idle_state_133"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-input_2_idle_state_133">
+							<option value="1" selected>High</option>
+							<option value="0">Low</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: High state.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input 2 Idle Time</strong>
+					<p class="caption">
+						This setting defines a maximum idle duration. If the Input 2 remains in an idle state for longer than this configured time, the sensor will automatically send a report message.<br><br>
+						Note: When the sensor transmits this message, the report_type property will be displayed as 'Time Limit'.
+					</p>
+					<div>
+						<label for="node-input-input_2_idle_time_133_active">Active:</label>
+						<input type="checkbox" id="node-input-input_2_idle_time_133_active" class="ncd-config-toggle" data-target-id="node-input-input_2_idle_time_133" value="1">
+					</div>
+					<div>
+						<label for="node-input-input_2_idle_time_133"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-input_2_idle_time_133" placeholder="60" value="60">
+					</div>
+					<p class="caption">
+						Default value: 60 seconds.
+					</p>
 				</div>
 			</div>
 		</div>
