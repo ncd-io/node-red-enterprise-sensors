@@ -319,7 +319,7 @@
 			force_calibration_co2_535_active: {value: ""},
 
 			temperature_offset_44_active: {value: ""},
-			temperature_offset_44: {value: 4, validate: NCD_validators.number_range(0, 25)},
+			temperature_offset_44: {value: 4, validate: NCD_validators.number_range(0, 20000)},
 
 			filtering: {value: 0, validate: RED.validators.number()},
 			data_rate: {value: 5, validate: RED.validators.number()},
@@ -612,10 +612,10 @@
 			fly_interval_110:{value: 60},
 
 			scd_skip_samples_44_active:{value: ""},
-			scd_skip_samples_44:{value: 1, validate: NCD_validators.number_range(1, 10)},
+			scd_skip_samples_44:{value: 2, validate: NCD_validators.number_range(0, 255)},
 
 			sps_skip_samples_32_active:{value: ""},
-			sps_skip_samples_32:{value: 1, validate: NCD_validators.number_range(1, 10)},
+			sps_skip_samples_32:{value: 7, validate: NCD_validators.number_range(0, 255)},
 
 			sampling_interval_110_active:{value: ""},
 			sampling_interval_110: {value: 1, validate: NCD_validators.number_range(0, 8)},
@@ -1158,7 +1158,10 @@
 			push_notification_132_active: {value:""},
 			push_notification_132: {value: 0},
 			push_notification_133_active: {value:""},
-			push_notification_133: {value: 0}
+			push_notification_133: {value: 0},
+
+			sps_cleaning_rate_32_active: {value:""},
+			sps_cleaning_rate_32: {value: 10, validate: NCD_validators.number_range(10, 65535)}
 
 		},
 		inputs: 0,
@@ -2300,6 +2303,9 @@
 				<div class="form-row ncd-active-check">
 					<div>
 						<strong>Temperature Offset</strong>
+						<p class="caption">
+							Applies a temperature correction value in Celsius to offset internal self-heating and enclosure confinement, ensuring accurate ambient readings.
+						</p>
 					</div>
 					<div>
 						<label for="node-input-temperature_offset_44_active"><i class="icon-tag"></i>Active:</label>
@@ -5750,7 +5756,9 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Set Skip Samples (CO2)</strong>
-					<p>Valid Range: 1 - 10 </p>
+					<p class="caption">
+						Sets the number of initial unstable CO2 samples the sensor discards before transmitting, so each reading reflects a settled measurement.<br> 
+					</p>
 					<div>
 						<label for="node-input-scd_skip_samples_44_active">Active:</label>
 						<input type="checkbox" id="node-input-scd_skip_samples_44_active" class="ncd-config-toggle" data-target-id="node-input-scd_skip_samples_44" value="1">
@@ -5766,8 +5774,7 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Skip Samples (Particulate)</strong>
 					<p class="caption">
-						Number of initial unstable particulate samples the sensor discards before transmitting, so each reading reflects a settled measurement.<br><br>
-						Valid Range: 1 - 10 
+						Number of initial unstable particulate samples the sensor discards before transmitting, so each reading reflects a settled measurement.<br><br> 
 					</p>
 					<div>
 						<label for="node-input-sps_skip_samples_32_active">Active:</label>
@@ -5776,6 +5783,20 @@
 					<div>
 						<label for="node-sps_skip_samples_32"><i class="icon-tag"></i> Value:</label>
 						<input type="text" id="node-input-sps_skip_samples_32">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Cleaning Rate (Particulate)</strong>
+					<p class="caption">
+						Sets the number of transmitted reports before the sensor runs a high-speed fan self-cleaning cycle. Lower values will increase average power consumption.
+					</p>
+					<div>
+						<label for="node-input-sps_cleaning_rate_32_active">Active:</label>
+						<input type="checkbox" id="node-input-sps_cleaning_rate_32_active" class="ncd-config-toggle" data-target-id="node-input-sps_cleaning_rate_32" value="1">
+					</div>
+					<div>
+						<label for="node-sps_cleaning_rate_32"><i class="icon-tag"></i> Value:</label>
+						<input type="text" id="node-input-sps_cleaning_rate_32">
 					</div>
 				</div>
 			</div>
