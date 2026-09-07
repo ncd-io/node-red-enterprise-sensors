@@ -857,9 +857,9 @@
 			raw_length_87_active: {value:""},
 			raw_length_87: {value:0},
 			sync_interval_87_active: {value:""},
-			sync_interval_87:{value:3600, validate: NCD_validators.number_range(0, 65535)},
+			sync_interval_87:{value:3600, validate: NCD_validators.number_range(1, 65535)},
 			sync_timeout_87_active: {value:""},
-			sync_timeout_87:{value:2, validate: NCD_validators.number_range(0, 255)},
+			sync_timeout_87:{value:2, validate: NCD_validators.number_range(1, 255)},
 			auto_check_percent_87_active: {value:""},
 			auto_check_percent_87:{value:10, validate: NCD_validators.number_range(0, 100)},
 			auto_check_interval_87_active: {value:""},
@@ -5765,7 +5765,10 @@
 				<hr>
 				<div class="form-row ncd-active-check">
 					<strong>Set Skip Samples (Particulate)</strong>
-					<p>Valid Range: 1 - 10 </p>
+					<p class="caption">
+						Number of initial unstable particulate samples the sensor discards before transmitting, so each reading reflects a settled measurement.<br><br>
+						Valid Range: 1 - 10 
+					</p>
 					<div>
 						<label for="node-input-sps_skip_samples_32_active">Active:</label>
 						<input type="checkbox" id="node-input-sps_skip_samples_32_active" class="ncd-config-toggle" data-target-id="node-input-sps_skip_samples_32" value="1">
