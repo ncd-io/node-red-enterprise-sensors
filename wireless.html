@@ -1058,7 +1058,7 @@
 			friction_level_105:{value: 35, validate: NCD_validators.number_range(1, 254)},
 
 			vibration_mode_115_active:{value:""},
-			vibration_mode_115:{value:0},
+			vibration_mode_115:{value:1},
 			offset_mode_115_active:{value:""},
 			offset_mode_115:{value:0},
 
@@ -1161,7 +1161,10 @@
 			push_notification_133: {value: 0},
 
 			sps_cleaning_rate_32_active: {value:""},
-			sps_cleaning_rate_32: {value: 10, validate: NCD_validators.number_range(10, 65535)}
+			sps_cleaning_rate_32: {value: 10, validate: NCD_validators.number_range(10, 65535)},
+
+			band_pass_filter_115_active:{value:""},
+			band_pass_filter_115: {value: 1}
 
 		},
 		inputs: 0,
@@ -8576,17 +8579,18 @@
 					<div>
 						<label for="node-input-vibration_mode_115"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-vibration_mode_115">
-							<option value="0" selected>Basic</option>
-							<option value="1">Detailed</option>
+							<option value="0">Basic</option>
+							<option value="1" selected>Detailed</option>
 						</select>
 					</div>
 					<p class="caption">
-						Default value: Basic Mode.
+						Default value: Detailed Mode.
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Offset Mode</strong>
 					<p class="caption">
+						When enabled, this removes the baseline noise floor exclusively from the ultrasound_dbuv, peak_ultrasound_dbuv, and pp_ultrasound_dbuv values.
 					</p>
 					<div>
 						<label for="node-input-offset_mode_115_active">Active:</label>
@@ -8601,6 +8605,28 @@
 					</div>
 					<p class="caption">
 						Default value: Disabled.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Band Pass Mode</strong>
+					<p class="caption">
+						Sets the band-pass filter range to isolate specific frequencies within the acquired vibration measurements.
+					</p>
+					<div>
+						<label for="node-input-band_pass_filter_115_active">Active:</label>
+						<input type="checkbox" id="node-input-band_pass_filter_115_active" class="ncd-config-toggle" data-target-id="node-input-band_pass_filter_115" value="1">
+					</div>
+					<div>
+						<label for="node-input-band_pass_filter_115"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-band_pass_filter_115">
+							<option value="0">6KHz-32KHz</option>
+							<option value="1" selected>8KHz-32KHz</option>
+							<option value="2">10KHz-32KHz</option>
+							<option value="3">12KHz-32KHz</option>
+						</select>
+					</div>
+					<p class="caption">
+						Default value: 8KHz-32KHz.
 					</p>
 				</div>
 			</div>
