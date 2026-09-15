@@ -1932,8 +1932,8 @@ module.exports = function(RED) {
 								if(config.pressure_limit_26_active){
 									promises.pressure_limit_26 = node.config_gateway.config_set_pressure_limit_26(mac, parseInt(config.pressure_limit_26));
 								}
-								if(config.auto_pressure_check_26_active){
-									promises.auto_pressure_check_26 = node.config_gateway.config_set_auto_pressure_check_26(mac, parseInt(config.auto_pressure_check_26));
+								if(config.always_on_26_active){
+									promises.always_on_26 = node.config_gateway.config_set_always_on_26(mac, parseInt(config.always_on_26));
 								}
 								break;
 							case 28:
