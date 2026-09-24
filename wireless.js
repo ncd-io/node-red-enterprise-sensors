@@ -5235,8 +5235,8 @@ module.exports = function(RED) {
 						if(Object.hasOwn(info.descriptions, 'main_caption')){
 							response[key].description = info.descriptions.main_caption;
 						}
-						if(Object.hasOwn(info.descriptions, 'sub_caption')){
-							response[key].description = info.descriptions.main_caption;
+						if(Object.hasOwn(info.descriptions, 'note')){
+							response[key].note = info.descriptions.note;
 						}
 						if(Object.hasOwn(info, 'validator')){
 							if(Object.hasOwn(info.validator, 'generated')){
