@@ -4579,8 +4579,6 @@ module.exports = function(RED) {
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
 							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
 
-							console.log(html_map);
-
 							let update_flag = false;
 							let reboot = false;
 							for(let key in html_map){
@@ -4591,7 +4589,7 @@ module.exports = function(RED) {
 										reboot = true;
 									}
 									update_flag = true;
-									break;
+									// break;
 								}
 							}
 							if(update_flag){
