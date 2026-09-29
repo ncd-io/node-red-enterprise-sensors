@@ -1163,8 +1163,18 @@
 			sps_cleaning_rate_32_active: {value:""},
 			sps_cleaning_rate_32: {value: 10, validate: NCD_validators.number_range(10, 65535)},
 
-			filter_cutoff_115_active:{value:""},
-			filter_cutoff_115: {value: 1}
+			filter_cutoff_115_active: {value:""},
+			filter_cutoff_115: {value: 1},
+
+			full_scale_range_136_active: {value:""},
+			full_scale_range_136: {value: 1},
+			max_num_motion_tx_delay_136_active: {value:""},
+			max_num_motion_tx_delay_136: {value: 1, validate: NCD_validators.number_range(1, 255)},
+			motion_detect_threshold_136_active: {value:""},
+			motion_detect_threshold_136: {value: 1000, validate: NCD_validators.number_range(0, 4294967295)},
+			deadband_136_active: {value:""},
+			deadband_136: {value: 0, validate: NCD_validators.number_range(0, 4294967295)}
+
 
 		},
 		inputs: 0,
@@ -1294,6 +1304,7 @@
 					"131": "131 - Wireless Differential Pressure Sensor Gen4",
 					"132": "132 - One Channel Production Counter",
 					"133": "133 - Two Channel Production Counter",
+					"136": "136 - Wireless Seismic Sensor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -1638,6 +1649,7 @@
 			<option value="131">131 - Wireless Differential Pressure Sensor Gen4</option>
 			<option value="132">132 - One Channel Production Counter</option>
 			<option value="133">133 - Two Channel Production Counter</option>
+			<option value="136">136 - Wireless Seismic Sensor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1684,7 +1696,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-132 data-sensor-133 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-132 data-sensor-133 data-sensor-136 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -8846,6 +8858,80 @@
 					</div>
 					<p class="caption">
 						Default value: 60 seconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-136>
+				<div class="form-row ncd-active-check">
+					<div>
+						<strong>Set Motion Threshold</strong>
+						<p class="caption">
+							Set a Motion Detection Threshold for the sensor to trigger a data transmission.<br>
+							The transmitted message will have a report_type property of 'Motion'.<br>
+							A value of 0 will disable this feature.
+						</p>
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_136_active"><i class="icon-tag"></i>Active:</label>
+						<input type="checkbox" id="node-input-motion_detect_threshold_136_active" class="ncd-config-toggle" data-target-id="node-input-motion_detect_threshold_136" value="1">
+					</div>
+					<div>
+						<label for="node-input-motion_detect_threshold_136"><i class="icon-tag"></i>  Value</label>
+						<input type="text" id="node-input-motion_detect_threshold_136" placeholder="10" value="10">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Max Motion Transmissions Per Interval</strong>
+					<p class="caption">
+						Set the number of times the sensor will send data due to motion triggers per Transmission Interval (Delay).<br>
+					</p>
+					<div>
+						<label for="node-input-max_num_motion_tx_delay_136_active">Active:</label>
+						<input type="checkbox" id="node-input-max_num_motion_tx_delay_136_active" class="ncd-config-toggle" data-target-id="node-input-max_num_motion_tx_delay_136" value="35">
+					</div>
+					<div>
+						<label for="node-input-max_num_motion_tx_delay_136"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-max_num_motion_tx_delay_136">
+					</div>
+					<p class="caption">
+						Default value: 1<br>
+						<i>Note: Setting this to a higher value will drain the battery.</i>
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Full Scale Range</strong>
+					<p class="caption">
+						Set how large of a range the device can measure acceleration in.<br><br>
+						Example: +/- 8g would mean that it would measure at most up to 8g and down to -8g.
+					</p>
+					<div>
+						<label for="node-input-full_scale_range_136_active">Active:</label>
+						<input type="checkbox" id="node-input-full_scale_range_136_active" class="ncd-config-toggle" data-target-id="node-input-full_scale_range_136" value="1">
+					</div>
+					<div>
+						<label for="node-input-full_scale_range_136"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-full_scale_range_136">
+							<option value="0">+/- 2g</option>
+							<option value="1">+/- 4g</option>
+							<option value="2">+/- 8g</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Dead Band</strong>
+					<p class="caption">
+						Filters out acceleration values below the Dead Band Threshold, treating them as noise. This value determines the minimum acceleration value to be registered as a part of the measurement. Values below the threshold would be perceived as 0.
+					</p>
+					<div>
+						<label for="node-input-deadband_136_active">Active:</label>
+						<input type="checkbox" id="node-input-deadband_136_active" class="ncd-config-toggle" data-target-id="node-input-deadband_136" value="1">
+					</div>
+					<div>
+						<label for="node-input-deadband_136"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-deadband_136">
+					</div>
+					<p class="caption">
+						Default value: 0 ug.
 					</p>
 				</div>
 			</div>
