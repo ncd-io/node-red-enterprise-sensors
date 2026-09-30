@@ -103,6 +103,7 @@ module.exports = function(RED) {
 
 				this.gateway = gateway_pool[this.key];
 				this.gateway.digi.report_rssi = config.rssi;
+				this.firmware = new wireless.FirmwareUpdate(this.gateway, {panId: parseInt(config.pan_id, 16)});
 
 				if(config.comm_type == 'serial'){
 					if(config.port !== ''){
@@ -316,79 +317,10 @@ module.exports = function(RED) {
 								// }
 							}
 						});
+						// Report every manifest (get_manifest troubleshooting included). The
+						// update itself is driven by FirmwareUpdate, not this listener.
 						node.gateway.on('manifest_received', (manifest_data) => {
-							// read manifest length is 37. Could use the same event for both
-							if(Object.hasOwn(node.sensor_list, manifest_data.addr) && Object.hasOwn(node.sensor_list[manifest_data.addr], 'update_request')){
-								// TODO check manifest data and start update process
-							}
-							manifest_data.data = node._parse_manifest_read(manifest_data.data);
-							node._emitter.emit('send_manifest', manifest_data);
-							let firmware_data = node._compare_manifest(manifest_data);
-							if(!firmware_data){
-								delete node.sensor_list[manifest_data.addr].update_request;
-								return;
-							}
-
-							// TODO Right now assume everything is good
-							// node.gateway.firmware_set_to_ota_mode(manifest_data.addr);
-
-							setTimeout(() => {
-								var tout = setTimeout(() => {
-									console.log('Start OTA Timed Out');
-								}, 10000);
-
-								var promises = {};
-								promises.firmware_set_to_ota_mode = node.gateway.firmware_set_to_ota_mode(manifest_data.addr);
-								promises.finish = new Promise((fulfill, reject) => {
-									node.gateway.queue.add(() => {
-										return new Promise((f, r) => {
-											clearTimeout(tout);
-											// node.status(modes.FLY);
-											fulfill();
-											f();
-										});
-									});
-								});
-								for(var i in promises){
-									(function(name){
-										promises[name].then((res) => {
-											if(name != 'finish'){
-												// IF we receive an FON message with success
-												if(Object.hasOwn(res, 'data') && res.data[0] == 70 && res.data[1] == 79 && res.data[2] == 78 && res.result == 255){
-													manifest_data.enter_ota_fota_version = res.original.data[5];
-													manifest_data.enter_ota_success = true;
-													console.log(res);
-												}else{
-													manifest_data.enter_ota_success = false;
-												}
-											} else{
-												if(manifest_data.enter_ota_success){
-													// enter ota mode
-													node.gateway.digi.send.at_command("ID", [0x7a, 0xaa]).then().catch().then(() => {
-														console.log(manifest_data);
-														if(manifest_data.enter_ota_fota_version > 16){
-															console.log('V17 PROCESS');
-															console.log(manifest_data);
-															node.start_firmware_update_v17(manifest_data, firmware_data);
-														}else if(manifest_data.enter_ota_fota_version > 12){
-															console.log('V13 PROCESS');
-															console.log(manifest_data);
-															node.start_firmware_update_v13(manifest_data, firmware_data);
-														}else{
-															console.log('OLD PROCESSS');
-															console.log(manifest_data);
-															node.start_firmware_update(manifest_data, firmware_data);
-														}
-													});
-												}
-											}
-										}).catch((err) => {
-											console.log(err);
-											// msg[name] = err;
-										});
-									})(i);
-								};
-							});
+							node._emitter.emit('send_manifest', Object.assign({}, manifest_data, {data: wireless.FirmwareUpdate.parseManifestBytes(manifest_data.data)}));
 						});
 					}));
 				});
@@ -631,282 +563,31 @@ module.exports = function(RED) {
 				node._emitter.emit('mode_change', mode);
 			});
 		};
-		node.start_firmware_update = function(manifest_data, firmware_data){
-			return new Promise((top_fulfill, top_reject) => {
-				var success = {};
 
-				setTimeout(() => {
-					let chunk_size = 128;
-					let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-
-					var promises = {};
-					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-					firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
-
-					var index = 0;
-					if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-						index = node.sensor_list[manifest_data.addr].last_chunk_success;
-					}
-					var temp_count = 0;
-					while(index*chunk_size < firmware_data.manifest.image_size){
-						let offset = index*chunk_size;
-						// console.log(index);
-						// let packet = [254, 59, 0, 0, 0];
-						let offset_bytes = int2Bytes(offset, 4);
-						let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
-						temp_count += 1;
-						// packet = packet.concat(offset_bytes, firmware_chunk);
-						promises[index] = node.gateway.firmware_send_chunk(manifest_data.addr, offset_bytes, firmware_chunk);
-						index++;
-					}
-
-					promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
-
-					for(var i in promises){
-						(function(name){
-							promises[name].then((f) => {
-								if(name == 'manifest'){
-									// delete node.sensor_list[manifest_data.addr].promises[name];
-									node.sensor_list[manifest_data.addr].test_check = {name: true};
-									node.sensor_list[manifest_data.addr].update_in_progress = true;
-								}else {
-									success[name] = true;
-									node.sensor_list[manifest_data.addr].test_check[name] = true;
-									node.sensor_list[manifest_data.addr].last_chunk_success = name;
-									// delete node.sensor_list[manifest_data.addr].promises[name];
-								}
-							}).catch((err) => {
-								if(name != 'reboot'){
-									node.gateway.clear_queue();
-									success[name] = err;
-								}else{
-									delete node.sensor_list[manifest_data.addr].last_chunk_success;
-									delete node.sensor_list[manifest_data.addr].update_request;
-									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									// #OTF
-									// node.send({topic: 'Config Results', payload: success, time: Date.now(), addr: manifest_data.addr});
-									top_fulfill(success);
-								}
-								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-								node.resume_normal_operation();
-							});
-						})(i);
-					}
-				}, 1000);
-			});
-		};
-		node.start_firmware_update_v13 = function(manifest_data, firmware_data){
-			console.log('V13');
-			return new Promise((top_fulfill, top_reject) => {
-				var success = {successes:{}, failures:{}};
-
-				let chunk_size = 128;
-				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-
-				var promises = {
-					manifest: node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1))
-				};
-				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
-
-				var index = 0;
-				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-					index = node.sensor_list[manifest_data.addr].last_chunk_success;
-				}
-				while(index*chunk_size < firmware_data.manifest.image_size){
-					let offset = index*chunk_size;
-					let offset_bytes = int2Bytes(offset, 4);
-					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
-					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
-					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
-						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
-					};
-					index++;
-				}
-				console.log('Update Started');
-				console.log(Object.keys(promises).length);
-				console.log(Date.now());
-				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
-				var firmware_continue = true;
-				for(var i in promises){
-					(function(name){
-						let retryCount = 0;
-						const maxRetries = 3; // Set the maximum number of retries
-
-						function attemptPromise() {
-							console.log(name);
-							promises[name].then((status_frame) => {
-								if(name == 'manifest'){
-									console.log('MANIFEST SUCCESFULLY SENT');
-									node.sensor_list[manifest_data.addr].test_check = {name: true};
-									node.sensor_list[manifest_data.addr].update_in_progress = true;
-								}
-								else if(name.includes('_check')){
-									console.log(name);
-									console.log(parseInt(name.split('_')[0]) * chunk_size);
-									let last_chunk = status_frame.data.reduce(msbLsb);
-									console.log(last_chunk);
-									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
-										console.log('ERROR DETECTED IN OTA UPDATE');
-										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
-										// node.gateway.clear_queue_except_last();
-										node.gateway.clear_queue();
-										node.resume_normal_operation();
-									} else {
-										success.successes[name] = {chunk: last_chunk};
-									}
-								}
-								else {
-									success[name] = true;
-									node.sensor_list[manifest_data.addr].test_check[name] = true;
-									node.sensor_list[manifest_data.addr].last_chunk_success = name;
-								}
-							}).catch((err) => {
-								console.log(name);
-								console.log(err);
-								if(name != 'reboot'){
-									node.gateway.clear_queue();
-									success[name] = err;
-								} else {
-									delete node.sensor_list[manifest_data.addr].last_chunk_success;
-									delete node.sensor_list[manifest_data.addr].update_request;
-									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									top_fulfill(success);
-								}
-								console.log('Update Finished')
-								console.log(Date.now());
-								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-								node.resume_normal_operation();
-							});
-						}
-						attemptPromise(); // Start the initial attempt
-					})(i);
-				}
-			});
-		};
-		node.start_firmware_update_v17 = function(manifest_data, firmware_data){
-			console.log('V17 Update Start');
-			var start_offset = 0;
-			setTimeout(() => {
-				if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-					node.gateway.firmware_read_last_chunk_segment(manifest_data.addr).then((status_frame) => {
-						console.log('Last Chunk Segment Read');
-						console.log(status_frame);
-						start_offset = status_frame.data.slice(4,8).reduce(msbLsb);
-						node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
-					}).catch((err) => {
-						// TODO FOTA EMIT ERROR FOTA
-						console.log('Error reading last chunk segment');
-						node.resume_normal_operation();
-					});
-				}else{
-					node.queue_firmware_update_v17(manifest_data, firmware_data, start_offset);
-				};
-			}, 1000);
-		};
-		node.queue_firmware_update_v17 = function(manifest_data, firmware_data, start_offset){
-			console.log('V17 Queue Update Start');
-			console.log('Start Offset: '+start_offset);
-			return new Promise((top_fulfill, top_reject) => {
-				var success = {successes:{}, failures:{}};
-
-				let chunk_size = 128;
-				let image_start = firmware_data.firmware.slice(1, 5).reduce(msbLsb)+6;
-				var promises = {};
-				if(start_offset == 0){
-					promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-				};
-				// promises.manifest = node.gateway.firmware_send_manifest(manifest_data.addr, firmware_data.firmware.slice(5, image_start-1));
-				firmware_data.firmware = firmware_data.firmware.slice(image_start+4);
-
-				// if(Object.hasOwn(node.sensor_list[manifest_data.addr], 'last_chunk_success')){
-				// 	index = node.sensor_list[manifest_data.addr].last_chunk_success;
-				// }
-
-				// reverse calculate index based on start_offset.
-				var index = parseInt(start_offset / chunk_size);
-				console.log('Index: '+index);
-				while(index*chunk_size < firmware_data.manifest.image_size){
-					let offset = index*chunk_size;
-					let offset_bytes = int2Bytes(offset, 4);
-					let firmware_chunk = firmware_data.firmware.slice(index*chunk_size, index*chunk_size+chunk_size);
-					promises[index] = node.gateway.firmware_send_chunk_v13(manifest_data.addr, offset_bytes, firmware_chunk);
-					if(((index + 1) % 50) == 0 || (index+1)*chunk_size >= firmware_data.manifest.image_size){
-						promises[index+'_check'] = node.gateway.firmware_read_last_chunk_segment(manifest_data.addr);
-					};
-					index++;
-				}
-				console.log('Update Started');
-				console.log(Object.keys(promises).length);
-				console.log(Date.now());
-				promises.reboot = node.gateway.config_reboot_sensor(manifest_data.addr);
-				var firmware_continue = true;
-				for(var i in promises){
-					(function(name){
-						let retryCount = 0;
-						const maxRetries = 3; // Set the maximum number of retries
-
-						function attemptPromise() {
-							console.log(name);
-							promises[name].then((status_frame) => {
-								if(name == 'manifest'){
-									console.log('MANIFEST SUCCESFULLY SENT');
-									node.sensor_list[manifest_data.addr].test_check = {name: true};
-									node.sensor_list[manifest_data.addr].update_in_progress = true;
-								}
-								else if(name.includes('_check')){
-									console.log(name);
-									console.log(parseInt(name.split('_')[0]) * chunk_size);
-									let last_chunk = status_frame.data.slice(0,4).reduce(msbLsb);
-									console.log(last_chunk);
-									if(last_chunk != (parseInt(name.split('_')[0]) * chunk_size)){
-										console.log('ERROR DETECTED IN OTA UPDATE');
-										success.failures[name] = {chunk: last_chunk, last_transmit: (parseInt(name.split('_')[0]) * chunk_size), last_report: last_chunk};
-										// node.gateway.clear_queue_except_last();
-										node.gateway.clear_queue();
-										node.resume_normal_operation();
-									} else {
-										success.successes[name] = {chunk: last_chunk};
-									}
-								}
-								else {
-									success[name] = true;
-									node.sensor_list[manifest_data.addr].test_check[name] = true;
-									node.sensor_list[manifest_data.addr].last_chunk_success = name;
-								}
-							}).catch((err) => {
-								console.log(name);
-								console.log(err);
-								if(name != 'reboot'){
-									node.gateway.clear_queue();
-									success[name] = err;
-								} else {
-									delete node.sensor_list[manifest_data.addr].last_chunk_success;
-									delete node.sensor_list[manifest_data.addr].update_request;
-									node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-									top_fulfill(success);
-								}
-								console.log('Update Finished')
-								console.log(Date.now());
-								node._emitter.emit('send_firmware_stats', {state: success, addr: manifest_data.addr});
-								node.resume_normal_operation();
-							});
-						}
-						attemptPromise(); // Start the initial attempt
-					})(i);
-				}
-			});
-		}
-		node.resume_normal_operation = function(){
-			let pan_id = parseInt(config.pan_id, 16);
-			node.gateway.digi.send.at_command("ID", [pan_id >> 8, pan_id & 255]).then().catch().then(() => {
-				console.log('Set Pan ID to: '+pan_id);
-			});
-		}
-
+		// Called when a sensor armed with update_request wakes (FLY or sync check-in).
+		// A failed transfer keeps update_request so the next wake retries from the
+		// last verified offset; an incompatible or missing file does not retry.
 		node.request_manifest = function(sensor_addr){
-			// Request Manifest
-			node.gateway.firmware_request_manifest(sensor_addr);
+			const entry = node.sensor_list[sensor_addr];
+			if(!entry || entry.update_in_progress || node.firmware.busy) return;
+			entry.update_in_progress = true;
+			node.firmware.requestManifest(sensor_addr).then((manifest) => {
+				const file = node._load_firmware_file(manifest);
+				return node.firmware.start(sensor_addr, file, {sensorManifest: manifest, resumeOffset: entry.resume_offset});
+			}).then((result) => {
+				if(result.ok || result.code){
+					delete entry.update_request;
+					delete entry.resume_offset;
+				}else{
+					entry.resume_offset = result.verified_offset;
+				}
+				node._emitter.emit('send_firmware_stats', {state: result, addr: sensor_addr});
+			}).catch((err) => {
+				delete entry.update_request;
+				node._emitter.emit('send_firmware_stats', {state: {ok: false, addr: sensor_addr, stage: 'manifest', error: err.message}, addr: sensor_addr});
+			}).then(() => {
+				entry.update_in_progress = false;
+			});
 		};
 
 		node.close_comms = function(){
@@ -927,27 +608,15 @@ module.exports = function(RED) {
 				}
 			}
 		}
-		node._compare_manifest = function(sensor_manifest){
+		// Firmware files are stored by the sensor type and hardware id they are
+		// built for, which is exactly what the sensor's manifest reports.
+		node._load_firmware_file = function(sensor_manifest){
 			let firmware_dir = home_dir()+'/.node-red/node_modules/@ncd-io/node-red-enterprise-sensors/firmware_files';
-			let filename = '/' + sensor_manifest.data.device_type + '-' + sensor_manifest.data.hardware_id[0] + '_' + sensor_manifest.data.hardware_id[1] + '_' + sensor_manifest.data.hardware_id[2] + '.ncd';
-
-			try {
-				let firmware_file = fs.readFileSync(firmware_dir+filename,)
-				let stored_manifest = node._parse_manifest(firmware_file);
-				if(stored_manifest.firmware_version === sensor_manifest.data.firmware_version){
-					console.log('firmware versions SAME');
-					return false;
-				}
-
-				if(stored_manifest.max_image_size < sensor_manifest.data.image_size){
-					console.log('firmware image too large');
-					return false;
-				}
-				return {manifest: stored_manifest, firmware: firmware_file};
-			} catch(err){
-				console.log(err);
-				return err;
+			let filename = '/' + sensor_manifest.device_type + '-' + sensor_manifest.hardware_id[0] + '_' + sensor_manifest.hardware_id[1] + '_' + sensor_manifest.hardware_id[2] + '.ncd';
+			if(!fs.existsSync(firmware_dir+filename)){
+				throw new Error('No firmware file stored for sensor type '+sensor_manifest.device_type+', hardware '+sensor_manifest.hardware_id.join('_'));
 			}
+			return wireless.FirmwareUpdate.parseFirmwareFile(fs.readFileSync(firmware_dir+filename));
 		}
 		node._parse_manifest = function(bin_data){
 			return {
