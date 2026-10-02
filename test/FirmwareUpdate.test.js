@@ -224,6 +224,65 @@ test('a second start while busy is refused', async () => {
 	assert.strictEqual((await p).ok, true);
 });
 
+test('updateOnWake: a missed manifest keeps the sensor armed (retry)', async () => {
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 1000}});
+	gw.firmware_request_manifest = () => Promise.resolve(); // sensor went back to sleep
+	let loaded = false;
+	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, () => { loaded = true; return buildFile({version: 18, size: 300}); });
+	assert.strictEqual(r.ok, false);
+	assert.strictEqual(r.stage, 'manifest');
+	assert.strictEqual(r.retry, true);
+	assert.strictEqual(loaded, false, 'no file lookup without a manifest');
+	assert.deepStrictEqual(gw.pans, []);
+});
+
+test('updateOnWake: a missing firmware file is not retried', async () => {
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 1000}});
+	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, () => { throw new Error('No firmware file stored for sensor type 114'); });
+	assert.strictEqual(r.stage, 'file');
+	assert.strictEqual(r.retry, false);
+	assert.match(r.error, /No firmware file/);
+	assert.deepStrictEqual(gw.pans, [], 'never entered OTA mode');
+});
+
+test('updateOnWake: an invalid firmware file is not retried', async () => {
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 1000}});
+	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, () => Buffer.from('<html>404</html>'.repeat(4)));
+	assert.strictEqual(r.stage, 'file');
+	assert.strictEqual(r.retry, false);
+});
+
+test('updateOnWake: an incompatible sensor is not retried', async () => {
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 1000, hw: [0x55, 0x95, 0x0d]}});
+	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, () => buildFile({version: 18, size: 300}));
+	assert.strictEqual(r.code, 'hardware_id_mismatch');
+	assert.strictEqual(r.retry, false);
+});
+
+test('updateOnWake: an interrupted transfer is retried, then resumes', async () => {
+	const size = 128 * 120;
+	const sensor = {fota: 13, silentLoss: 128 * 70, manifest: {version: 11, size: 190000}};
+	const gw = makeGateway(sensor);
+	const fu = new FirmwareUpdate(gw, fast);
+	const r1 = await fu.updateOnWake(MAC, () => buildFile({version: 18, size}));
+	assert.strictEqual(r1.ok, false);
+	assert.strictEqual(r1.retry, true);
+	assert.strictEqual(r1.verified_offset, 128 * 50);
+	const r2 = await fu.updateOnWake(MAC, () => buildFile({version: 18, size}), {resumeOffset: r1.verified_offset});
+	assert.strictEqual(r2.ok, true, r2.error);
+	assert.strictEqual(r2.retry, false);
+});
+
+test('updateOnWake: success clears the request', async () => {
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 190000}});
+	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, (m) => {
+		assert.strictEqual(m.hardware_id_hex, '633d00', 'loader gets the sensor manifest');
+		return FirmwareUpdate.parseFirmwareFile(buildFile({version: 18, size: 1000}));
+	});
+	assert.strictEqual(r.ok, true, r.error);
+	assert.strictEqual(r.retry, false);
+});
+
 (async () => {
 	let failed = 0;
 	for(const t of tests){
