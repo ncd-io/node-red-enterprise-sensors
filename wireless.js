@@ -565,26 +565,23 @@ module.exports = function(RED) {
 		};
 
 		// Called when a sensor armed with update_request wakes (FLY or sync check-in).
-		// A failed transfer keeps update_request so the next wake retries from the
-		// last verified offset; an incompatible or missing file does not retry.
+		// A missed manifest or an interrupted transfer keeps update_request, so the
+		// next wake retries (resuming from the last verified offset); success, an
+		// incompatible sensor or a missing firmware file clears it.
 		node.request_manifest = function(sensor_addr){
 			const entry = node.sensor_list[sensor_addr];
 			if(!entry || entry.update_in_progress || node.firmware.busy) return;
 			entry.update_in_progress = true;
-			node.firmware.requestManifest(sensor_addr).then((manifest) => {
-				const file = node._load_firmware_file(manifest);
-				return node.firmware.start(sensor_addr, file, {sensorManifest: manifest, resumeOffset: entry.resume_offset});
-			}).then((result) => {
-				if(result.ok || result.code){
+			node.firmware.updateOnWake(sensor_addr, (manifest) => node._load_firmware_file(manifest), {resumeOffset: entry.resume_offset}).then((result) => {
+				if(result.retry){
+					if(result.verified_offset) entry.resume_offset = result.verified_offset;
+				}else{
 					delete entry.update_request;
 					delete entry.resume_offset;
-				}else{
-					entry.resume_offset = result.verified_offset;
 				}
 				node._emitter.emit('send_firmware_stats', {state: result, addr: sensor_addr});
 			}).catch((err) => {
-				delete entry.update_request;
-				node._emitter.emit('send_firmware_stats', {state: {ok: false, addr: sensor_addr, stage: 'manifest', error: err.message}, addr: sensor_addr});
+				console.log('FirmwareUpdate stats handler error', err);
 			}).then(() => {
 				entry.update_in_progress = false;
 			});
