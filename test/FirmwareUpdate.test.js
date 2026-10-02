@@ -273,6 +273,25 @@ test('updateOnWake: an interrupted transfer is retried, then resumes', async () 
 	assert.strictEqual(r2.retry, false);
 });
 
+test('updateOnWake: a sensor that wakes while another update is starting stays armed (busy)', async () => {
+	// Two armed sensors wake together (time-synced types do this). Both pass the
+	// caller's busy check because neither update has started yet; the second
+	// to get its manifest reaches start() while the first is active.
+	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 190000}});
+	const fu = new FirmwareUpdate(gw, fast);
+	const B = '00:13:a2:00:00:00:00:02';
+	const pA = fu.updateOnWake(MAC, () => buildFile({version: 18, size: 1000}));
+	const pB = fu.updateOnWake(B, () => buildFile({version: 18, size: 1000}));
+	const [rA, rB] = await Promise.all([pA, pB]);
+	const busy = rA.stage === 'busy' ? rA : rB, won = busy === rA ? rB : rA;
+	assert.strictEqual(busy.stage, 'busy');
+	assert.strictEqual(busy.retry, true, 'the sensor that lost the race must stay armed');
+	assert.strictEqual(won.ok, true, won.error);
+	assert.strictEqual(won.retry, false);
+	assert.strictEqual(fu.busy, false);
+	assert.deepStrictEqual(gw.pans, [0x7AAA, HOME_PAN], 'exactly one PAN round trip');
+});
+
 test('updateOnWake: success clears the request', async () => {
 	const gw = makeGateway({fota: 18, manifest: {version: 11, size: 190000}});
 	const r = await new FirmwareUpdate(gw, fast).updateOnWake(MAC, (m) => {
