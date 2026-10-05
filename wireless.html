@@ -1185,10 +1185,10 @@
 			baseline_kurtosis_105: {value: 3, validate: NCD_validators.number_range(1, 255)},
 			kurtosis_margin_105_active: {value:""},
 			kurtosis_margin_105: {value: 2, validate: NCD_validators.number_range(1, 255)},
-			threshold_105_active: {value:""},
-			threshold_105: {value: 3, validate: NCD_validators.number_range(1, 255)},
-			auto_lube_enable_105_active: {value:""},
-			auto_lube_enable_105: {value: 1},
+			delta_105_active: {value:""},
+			delta_105: {value: 3, validate: NCD_validators.number_range(1, 255)},
+			lubrication_mode_105_active: {value:""},
+			lubrication_mode_105: {value: 1},
 			auto_lube_deadband_105_active: {value:""},
 			auto_lube_deadband_105: {value: 20, validate: NCD_validators.number_range(0, 255)}
 		},
@@ -3045,34 +3045,34 @@
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Threshold</strong>
+					<strong>Set Delta</strong>
 					<p class="caption">
 						The reading has to sit above the baseline before lubrication is considered<br>
 						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
-						<label for="node-input-threshold_105_active">Active:</label>
-						<input type="checkbox" id="node-input-threshold_105_active" class="ncd-config-toggle" data-target-id="node-input-threshold_105" value="1">
+						<label for="node-input-delta_105_active">Active:</label>
+						<input type="checkbox" id="node-input-delta_105_active" class="ncd-config-toggle" data-target-id="node-input-delta_105" value="1">
 					</div>
 					<div>
-						<label for="node-input-threshold_105"><i class="icon-tag"></i>Value:</label>
-						<input type="text" id="node-input-threshold_105">
+						<label for="node-input-delta_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-delta_105">
 					</div>
 					<p class="caption">
 						Default value: 3 dBuV<br>
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
-					<strong>Set Lube</strong>
+					<strong>Set Lubrication Mode</strong>
 					<p class="caption">
 						*Only applies to sensor with firmware version 3 and above.
 					<div>
-						<label for="node-input-auto_lube_enable_105_active">Active:</label>
-						<input type="checkbox" id="node-input-auto_lube_enable_105_active" class="ncd-config-toggle" data-target-id="node-input-auto_lube_enable_105" value="1">
+						<label for="node-input-lubrication_mode_105_active">Active:</label>
+						<input type="checkbox" id="node-input-lubrication_mode_105_active" class="ncd-config-toggle" data-target-id="node-input-lubrication_mode_105" value="1">
 					</div>
 					<div>
-						<label for="node-input-auto_lube_enable_105"><i class="icon-tag"></i>Value:</label>
-						<select id="node-input-auto_lube_enable_105">
+						<label for="node-input-lubrication_mode_105"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-lubrication_mode_105">
 							<option value="0">Disable</option>
 							<option value="1" selected>Enable</option>
 						</select>
