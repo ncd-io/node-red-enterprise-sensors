@@ -1190,7 +1190,9 @@
 			lubrication_mode_105_active: {value:""},
 			lubrication_mode_105: {value: 1},
 			auto_lube_deadband_105_active: {value:""},
-			auto_lube_deadband_105: {value: 20, validate: NCD_validators.number_range(0, 255)}
+			auto_lube_deadband_105: {value: 20, validate: NCD_validators.number_range(0, 255)},
+			fly_timeout_105_active: {value:""},
+			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -2959,7 +2961,6 @@
 					<strong>Set Baseline</strong>
 					<p class="caption">
 						Baseline in dBuV for lube dispensing decision<br>
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-baseline_105_active">Active:</label>
@@ -2977,7 +2978,6 @@
 					<strong>Set Max Consecutive Auto Lube</strong>
 					<p class="caption">
 						Consecutive auto lubrication cycles allowed before the machine is treated as faulty<br>
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-max_consecutive_auto_lube_105_active">Active:</label>
@@ -2995,7 +2995,6 @@
 					<strong>Set Lube On Time</strong>
 					<p class="caption">
 						Lube on time in seconds<br>
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-lube_on_time_105_active">Active:</label>
@@ -3012,7 +3011,6 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Baseline Kurtosis</strong>
 					<p class="caption">
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-baseline_kurtosis_105_active">Active:</label>
@@ -3030,7 +3028,6 @@
 					<strong>Set Kurtosis Margin</strong>
 					<p class="caption">
 						Kurtosis units above the baseline before a rise counts as impulsive<br>
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-kurtosis_margin_105_active">Active:</label>
@@ -3048,7 +3045,6 @@
 					<strong>Set Delta</strong>
 					<p class="caption">
 						The reading has to sit above the baseline before lubrication is considered<br>
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-delta_105_active">Active:</label>
@@ -3065,7 +3061,6 @@
 				<div class="form-row ncd-active-check">
 					<strong>Set Lubrication Mode</strong>
 					<p class="caption">
-						*Only applies to sensor with firmware version 3 and above.
 					<div>
 						<label for="node-input-lubrication_mode_105_active">Active:</label>
 						<input type="checkbox" id="node-input-lubrication_mode_105_active" class="ncd-config-toggle" data-target-id="node-input-lubrication_mode_105" value="1">
@@ -3073,15 +3068,15 @@
 					<div>
 						<label for="node-input-lubrication_mode_105"><i class="icon-tag"></i>Value:</label>
 						<select id="node-input-lubrication_mode_105">
-							<option value="0">Disable</option>
-							<option value="1" selected>Enable</option>
+							<option value="0">Manual</option>
+							<option value="1" selected>Auto</option>
+							<option value="2">Time</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set Auto Lube Deadband</strong>
 					<p class="caption">
-						*Only applies to sensor with firmware version 3 and above.
 					</p>
 					<div>
 						<label for="node-input-auto_lube_deadband_105_active">Active:</label>
@@ -3093,6 +3088,23 @@
 					</div>
 					<p class="caption">
 						Default value: 20 mg<br>
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set FLY Timeout</strong>
+					<p class="caption">
+						Seconds the sensor stays in fly mode
+					</p>
+					<div>
+						<label for="node-input-fly_timeout_105_active">Active:</label>
+						<input type="checkbox" id="node-input-fly_timeout_105_active" class="ncd-config-toggle" data-target-id="node-input-fly_timeout_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-fly_timeout_105"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-fly_timeout_105">
+					</div>
+					<p class="caption">
+						Default value: 5 seconds<br>
 					</p>
 				</div>
 			</div>
