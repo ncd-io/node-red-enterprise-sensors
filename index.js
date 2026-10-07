@@ -5,5 +5,6 @@ process.on('unhandledRejection', (reason, p) => {
 
 module.exports = {
 	Modem: require("./lib/DigiParser.js"),
-	Gateway: require("./lib/WirelessGateway.js")
+	Gateway: require("./lib/WirelessGateway.js"),
+	FirmwareUpdate: require("./lib/FirmwareUpdate.js")
 }
