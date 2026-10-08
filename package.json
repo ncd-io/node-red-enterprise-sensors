@@ -40,7 +40,11 @@
 			"ncd-wireless": "wireless.js"
 		}
 	},
+	"engines": {
+		"node": ">=16.9.0"
+	},
 	"dependencies": {
-		"ncd-red-comm": "2.0.3"
+		"promise-queue": "^2.2.5",
+		"serialport": "12.0.0"
 	}
 }

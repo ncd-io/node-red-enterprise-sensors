@@ -1,5 +1,5 @@
 const NCD = require('./index.js');
-const comm = require('ncd-red-comm');
+const comm = { NcdSerial: require('./lib/NcdSerial.js') };
 
 const Queue = require('promise-queue');
 

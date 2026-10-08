@@ -1,6 +1,8 @@
 const wireless = require("./index.js");
-const comms = require('ncd-red-comm');
-const sp = require('serialport');
+const comms = {
+	NcdSerial: require('./lib/NcdSerial.js'),
+	NcdTCP: require('./lib/NcdTCP.js')
+};
 const Queue = require("promise-queue");
 const events = require("events");
 const fs = require('fs');
@@ -5506,7 +5508,7 @@ module.exports = function(RED) {
 };
 function getSerialDevices(ftdi, res){
 	var busses = [];
-	sp.list().then((ports) => {
+	comms.NcdSerial.list().then((ports) => {
 		ports.forEach((p) => {
 			busses.push(p.path);
 		});
