@@ -1192,7 +1192,9 @@
 			auto_lube_deadband_105_active: {value:""},
 			auto_lube_deadband_105: {value: 20, validate: NCD_validators.number_range(0, 255)},
 			fly_timeout_105_active: {value:""},
-			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)}
+			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)},
+			filter_mode_105_active: {value:""},
+			filter_mode_105: {value: 1}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3089,6 +3091,22 @@
 					<p class="caption">
 						Default value: 20 mg<br>
 					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Filter Mode</strong>
+					<p class="caption">
+					<div>
+						<label for="node-input-filter_mode_105_active">Active:</label>
+						<input type="checkbox" id="node-input-filter_mode_105_active" class="ncd-config-toggle" data-target-id="node-input-filter_mode_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-filter_mode_105"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-filter_mode_105">
+							<option value="0" selected>8-32 kHz</option>
+							<option value="1">10-32 kHz</option>
+							<option value="2">12-32 kHz</option>
+						</select>
+					</div>
 				</div>
 				<div class="form-row ncd-active-check">
 					<strong>Set FLY Timeout</strong>
