@@ -44,7 +44,7 @@
 		"node": ">=16.9.0"
 	},
 	"dependencies": {
-		"promise-queue": "^2.2.5",
+		"promise-queue": "2.2.5",
 		"serialport": "12.0.0"
 	}
 }
