@@ -4262,6 +4262,16 @@ module.exports = function(RED) {
 					let configs_written = false;
 					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+							// Type 137 baseline is an action (0x4E), not part of the SYNC write. Only sent while the reported
+							// baseline state differs from the request, so it is not repeated on every check-in.
+							// Queued now, so it goes out before the SYNC write or the exit command below.
+							if(config.sensor_type == 137 && config.steam_trap_baseline_137_active && parseInt(config.steam_trap_baseline_137) != data.payload.machine_values.baseline_valid){
+								node.config_gateway.config_set_steam_trap_baseline_137(data.payload.address, parseInt(config.steam_trap_baseline_137)).then((res) => {
+									node.send({topic: 'sync', type: 'steam_trap_baseline_response', address: data.payload.address, sensor_type: 137, payload: {address: data.payload.address, sensor_type: 137, baseline: parseInt(config.steam_trap_baseline_137) ? 'learn' : 'clear', success: res.result == 255}, time: Date.now()});
+								}).catch((err) => {
+									node.send({topic: 'sync', type: 'steam_trap_baseline_response', address: data.payload.address, sensor_type: 137, payload: {address: data.payload.address, sensor_type: 137, success: false, error: err}, time: Date.now()});
+								});
+							}
 							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
 
 							let update_flag = false;

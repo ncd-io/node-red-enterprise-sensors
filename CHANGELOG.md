@@ -4,6 +4,14 @@ Notable changes to `@ncd-io/node-red-enterprise-sensors`. Newest first.
 
 ## Unreleased
 
+### Added
+- **Type 137 - Wireless Steam Trap Monitor.** Reports inlet and outlet RTD temperatures, ultrasound levels
+  (RMS, average, peak, modulation, floor), discharge duty and cycles, the on-device trap state (raw and
+  confirmed), shock / vibration, and the per-capture ultrasound profile. RTD settings and the steam trap
+  thresholds are configured through SYNC (Wireless Device Node or API Configuration Node). The Wireless Device
+  Node can also learn or clear the acoustic baseline. Gateway helpers are available for the app commands
+  (`config_set_steam_trap_cfg_137`, `config_set_steam_trap_baseline_137` and the matching getters).
+
 ### Changed
 - **Sensors go back to sleep after a check-in that needs no configuration changes.** Before this change, a
   sensor stayed awake after a regular SYNC check-in until its awake window ran out, even when there was
