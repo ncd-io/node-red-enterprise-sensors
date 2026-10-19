@@ -1689,8 +1689,8 @@ module.exports = function(RED) {
 								if(config.input_two_33_active){
 									promises.input_detection_33 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_33));
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.counter_threshold_108_active){
 									promises.counter_threshold_33 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
@@ -3355,8 +3355,8 @@ module.exports = function(RED) {
 								if(config.clear_timers_123){
 									promises.clear_timers_125 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_125 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.input_one_123_active){
 									promises.input_one_125 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
@@ -3417,8 +3417,8 @@ module.exports = function(RED) {
 								if(config.clear_timers_123){
 									promises.clear_timers_126 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_126 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.input_one_123_active){
 									promises.input_one_126 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));

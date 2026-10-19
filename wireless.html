@@ -1215,7 +1215,10 @@
 			fly_timeout_105_active: {value:""},
 			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)},
 			filter_mode_105_active: {value:""},
-			filter_mode_105: {value: 1}
+			filter_mode_105: {value: 1},
+
+			debounce_time_33_active: {value:""},
+			debounce_time_33: {value: 10, validate: NCD_validators.number_range(10, 1000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -3859,7 +3862,7 @@
 					**The following settings are compatible only with sensors running firmware version 10 or higher (Gen 2).
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -3874,6 +3877,27 @@
 					<div>
 						<label for="node-input-debounce_time_123"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-debounce_time_123" placeholder="10" value="10">
+					</div>
+					<p class="caption">
+						Default value: 10 milliseconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-125 data-sensor-126>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Configures the debounce time in milliseconds for all inputs. State changes occurring within this debounce period will be ignored.<br>
+						Note: This setting is recommended for mechanically triggered inputs like buttons or relay/contactor outputs.<br><br>
+						Range: 10 - 1000msec.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_33_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_33_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_33" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_33"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_33" placeholder="10" value="10">
 					</div>
 					<p class="caption">
 						Default value: 10 milliseconds.
