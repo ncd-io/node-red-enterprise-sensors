@@ -19,6 +19,14 @@
 		padding-left: 1em;
 		margin-top: .25em;
 	}
+	.ncd-section-title{
+		background: #eee;
+		border-radius: 8px;
+		padding: 8px 12px;
+		margin: 30px 0 6px;
+		font-size: 1.05em;
+		font-weight: 600;
+	}
 	#register_list_539 > div{
 		display: none;
 	}
@@ -1175,6 +1183,27 @@
 			deadband_136_active: {value:""},
 			deadband_136: {value: 0, validate: NCD_validators.number_range(0, 4294967295)},
 
+			hot_inlet_temp_137_active: {value:""},
+			hot_inlet_temp_137: {value: 900, validate: NCD_validators.number_range(-2000, 5000)},
+			quiet_level_137_active: {value:""},
+			quiet_level_137: {value: 3500, validate: NCD_validators.number_range(1, 65535)},
+			loud_level_137_active: {value:""},
+			loud_level_137: {value: 6000, validate: NCD_validators.number_range(1, 65535)},
+			loud_delta_137_active: {value:""},
+			loud_delta_137: {value: 1000, validate: NCD_validators.number_range(1, 65535)},
+			cycling_level_137_active: {value:""},
+			cycling_level_137: {value: 600, validate: NCD_validators.number_range(1, 65535)},
+			leak_level_137_active: {value:""},
+			leak_level_137: {value: 300, validate: NCD_validators.number_range(1, 65535)},
+			shock_threshold_137_active: {value:""},
+			shock_threshold_137: {value: 2000, validate: NCD_validators.number_range(100, 65535)},
+			listen_window_137_active: {value:""},
+			listen_window_137: {value: 60, validate: NCD_validators.number_range(10, 120)},
+			confirm_count_137_active: {value:""},
+			confirm_count_137: {value: 3, validate: NCD_validators.number_range(1, 10)},
+			steam_trap_baseline_137_active: {value:""},
+			steam_trap_baseline_137: {value: 1},
+
 			baseline_105_active: {value:""},
 			baseline_105: {value: 60, validate: NCD_validators.number_range(0, 255)},
 			max_consecutive_auto_lube_105_active: {value:""},
@@ -1192,7 +1221,12 @@
 			auto_lube_deadband_105_active: {value:""},
 			auto_lube_deadband_105: {value: 20, validate: NCD_validators.number_range(0, 255)},
 			fly_timeout_105_active: {value:""},
-			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)}
+			fly_timeout_105: {value: 5, validate: NCD_validators.number_range(1, 10)},
+			filter_mode_105_active: {value:""},
+			filter_mode_105: {value: 0},
+
+			debounce_time_33_active: {value:""},
+			debounce_time_33: {value: 10, validate: NCD_validators.number_range(10, 1000)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -1322,6 +1356,7 @@
 					"132": "132 - One Channel Production Counter",
 					"133": "133 - Two Channel Production Counter",
 					"136": "136 - Wireless Seismic Sensor",
+					"137": "137 - Wireless Steam Trap Monitor",
 					"180": "180 - C1D2 One Channel Vibration Plus",
 					"181": "181 - C1D2 Two Channel Vibration Plus",
 					"200": "200 - 4-20mA Pass Through",
@@ -1667,6 +1702,7 @@
 			<option value="132">132 - One Channel Production Counter</option>
 			<option value="133">133 - Two Channel Production Counter</option>
 			<option value="136">136 - Wireless Seismic Sensor</option>
+			<option value="137">137 - Wireless Steam Trap Monitor</option>
 			<option value="180">180 - C1D2 One Channel Vibration Plus</option>
 			<option value="181">181 - C1D2 Two Channel Vibration Plus</option>
 			<option value="200">200 - 4-20mA Pass Through</option>
@@ -1713,7 +1749,7 @@
 				<label for="node-input-auto_config"><i class="icon-tag"></i> Auto Config</label>
 				<input class="section-control" type="checkbox" id="node-input-auto_config" value="1">
 			</div>
-			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-132 data-sensor-133 data-sensor-136 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
+			<div class="form-row ncd-dependent" data-sensor-1 data-sensor-4 data-sensor-12 data-sensor-15 data-sensor-20 data-sensor-21 data-sensor-24 data-sensor-29 data-sensor-23 data-sensor-26 data-sensor-30 data-sensor-32 data-sensor-33 data-sensor-35 data-sensor-39 data-sensor-44 data-sensor-45 data-sensor-47 data-sensor-48 data-sensor-51 data-sensor-52 data-sensor-53 data-sensor-54 data-sensor-55 data-sensor-56 data-sensor-58 data-sensor-60 data-sensor-74 data-sensor-75 data-sensor-76 data-sensor-78 data-sensor-79 data-sensor-80 data-sensor-81 data-sensor-82 data-sensor-84 data-sensor-86 data-sensor-87 data-sensor-88 data-sensor-89 data-sensor-90 data-sensor-91 data-sensor-93 data-sensor-95 data-sensor-96 data-sensor-97 data-sensor-98 data-sensor-99 data-sensor-101 data-sensor-102 data-sensor-103 data-sensor-105 data-sensor-106 data-sensor-107 data-sensor-108 data-sensor-109 data-sensor-110 data-sensor-111 data-sensor-112 data-sensor-114 data-sensor-115 data-sensor-117 data-sensor-118 data-sensor-119 data-sensor-120 data-sensor-121 data-sensor-122 data-sensor-123 data-sensor-124 data-sensor-125 data-sensor-126 data-sensor-127 data-sensor-128 data-sensor-129 data-sensor-130 data-sensor-131 data-sensor-132 data-sensor-133 data-sensor-136 data-sensor-137 data-sensor-180 data-sensor-181 data-sensor-202 data-sensor-211 data-sensor-217 data-sensor-270 data-sensor-518 data-sensor-519 data-sensor-520 data-sensor-521 data-sensor-531 data-sensor-535 data-sensor-536 data-sensor-537 data-sensor-538 data-sensor-539 data-sensor-540 data-sensor-541 data-sensor-542 data-sensor-543 data-sensor-545 data-sensor-547 data-sensor-554 data-sensor-1010 data-sensor-1011>
 				<hr>
 				<label for="node-input-on_the_fly_enable"><i class="icon-tag"></i> OTF Config*</label>
 				<input type="checkbox" id="node-input-on_the_fly_enable" value="1">
@@ -3091,6 +3127,22 @@
 					</p>
 				</div>
 				<div class="form-row ncd-active-check">
+					<strong>Set Filter Mode</strong>
+					<p class="caption">
+					<div>
+						<label for="node-input-filter_mode_105_active">Active:</label>
+						<input type="checkbox" id="node-input-filter_mode_105_active" class="ncd-config-toggle" data-target-id="node-input-filter_mode_105" value="1">
+					</div>
+					<div>
+						<label for="node-input-filter_mode_105"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-filter_mode_105">
+							<option value="0" selected>1</option>
+							<option value="1">2</option>
+							<option value="2">3</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
 					<strong>Set FLY Timeout</strong>
 					<p class="caption">
 						Seconds the sensor stays in fly mode
@@ -3818,7 +3870,7 @@
 					**The following settings are compatible only with sensors running firmware version 10 or higher (Gen 2).
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-33 data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133 data-sensor-125 data-sensor-126>
+			<div class="ncd-dependent" data-sensor-35 data-sensor-123 data-sensor-132 data-sensor-133>
 				<div class="form-row ncd-active-check">
 					<strong>Set Input Debounce Time</strong>
 					<p class="caption">
@@ -3833,6 +3885,27 @@
 					<div>
 						<label for="node-input-debounce_time_123"><i class="icon-tag"></i>Value:</label>
 						<input type="text" id="node-input-debounce_time_123" placeholder="10" value="10">
+					</div>
+					<p class="caption">
+						Default value: 10 milliseconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-33 data-sensor-125 data-sensor-126>
+				<div class="form-row ncd-active-check">
+					<strong>Set Input Debounce Time</strong>
+					<p class="caption">
+						Configures the debounce time in milliseconds for all inputs. State changes occurring within this debounce period will be ignored.<br>
+						Note: This setting is recommended for mechanically triggered inputs like buttons or relay/contactor outputs.<br><br>
+						Range: 10 - 1000msec.
+					</p>
+					<div>
+						<label for="node-input-debounce_time_33_active">Active:</label>
+						<input type="checkbox" id="node-input-debounce_time_33_active" class="ncd-config-toggle" data-target-id="node-input-debounce_time_33" value="1">
+					</div>
+					<div>
+						<label for="node-input-debounce_time_33"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-debounce_time_33" placeholder="10" value="10">
 					</div>
 					<p class="caption">
 						Default value: 10 milliseconds.
@@ -6032,7 +6105,7 @@
 					</div>
 				-->
 			</div>
-			<div class="ncd-dependent" data-sensor-39 data-sensor-54 data-sensor-55>
+			<div class="ncd-dependent" data-sensor-39 data-sensor-54 data-sensor-55 data-sensor-137>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTD Wire Type</strong>
 					<p>The wire type of RTD Sensor Probe to be connected.</p>
@@ -8079,7 +8152,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="ncd-dependent" data-sensor-54 data-sensor-55>
+			<div class="ncd-dependent" data-sensor-54 data-sensor-55 data-sensor-137>
 				<div class="form-row ncd-active-check">
 					<strong>Set RTD Wire Type - Channel 2</strong>
 					<p>The wire type of RTD Sensor Probe to be connected in Channel 2.</p>
@@ -9103,6 +9176,171 @@
 					<p class="caption">
 						Default value: 0 ug.
 					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-137>
+				<div class="form-row">
+					<h4 class="ncd-section-title">Steam Trap Thresholds</h4>
+					<p class="caption">
+						The sensor checks all of them together: if any is out of range, or the Quiet Level is not below the
+						Loud Level, the sensor keeps its stored thresholds. The acoustic defaults are placeholders, set them
+						from field readings of known good and failed traps.
+					</p>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Hot Inlet Temperature</strong>
+					<p class="caption">
+						Inlet temperature below which the trap is reported Failed Closed (blocked / cold).<br>Value is °C x 10, e.g. 900 = 90.0 °C.<br>
+						Default value: 900.
+					</p>
+					<div>
+						<label for="node-input-hot_inlet_temp_137_active">Active:</label>
+						<input type="checkbox" id="node-input-hot_inlet_temp_137_active" class="ncd-config-toggle" data-target-id="node-input-hot_inlet_temp_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-hot_inlet_temp_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-hot_inlet_temp_137" placeholder="900" value="900">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Quiet Level</strong>
+					<p class="caption">
+						Quiet reference used until a baseline is learned.<br>Value is dBuV x 100, e.g. 3500 = 35.00 dBuV. Must be below the Loud Level.<br>
+						Default value: 3500.
+					</p>
+					<div>
+						<label for="node-input-quiet_level_137_active">Active:</label>
+						<input type="checkbox" id="node-input-quiet_level_137_active" class="ncd-config-toggle" data-target-id="node-input-quiet_level_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-quiet_level_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-quiet_level_137" placeholder="3500" value="3500">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Loud Level</strong>
+					<p class="caption">
+						Loud level used until a baseline is learned.<br>Value is dBuV x 100, e.g. 6000 = 60.00 dBuV.<br>
+						Default value: 6000.
+					</p>
+					<div>
+						<label for="node-input-loud_level_137_active">Active:</label>
+						<input type="checkbox" id="node-input-loud_level_137_active" class="ncd-config-toggle" data-target-id="node-input-loud_level_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-loud_level_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-loud_level_137" placeholder="6000" value="6000">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Loud Delta</strong>
+					<p class="caption">
+						Level above the learned baseline RMS that counts as loud.<br>Value is dB x 100, e.g. 1000 = 10.00 dB.<br>
+						Default value: 1000.
+					</p>
+					<div>
+						<label for="node-input-loud_delta_137_active">Active:</label>
+						<input type="checkbox" id="node-input-loud_delta_137_active" class="ncd-config-toggle" data-target-id="node-input-loud_delta_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-loud_delta_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-loud_delta_137" placeholder="1000" value="1000">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Cycling Level</strong>
+					<p class="caption">
+						Level above the quiet reference that counts as a discharge.<br>Value is dB x 100, e.g. 600 = 6.00 dB.<br>
+						Default value: 600.
+					</p>
+					<div>
+						<label for="node-input-cycling_level_137_active">Active:</label>
+						<input type="checkbox" id="node-input-cycling_level_137_active" class="ncd-config-toggle" data-target-id="node-input-cycling_level_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-cycling_level_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-cycling_level_137" placeholder="600" value="600">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Leak Level</strong>
+					<p class="caption">
+						Floor above the quiet reference that counts as leaking.<br>Value is dB x 100, e.g. 300 = 3.00 dB.<br>
+						Default value: 300.
+					</p>
+					<div>
+						<label for="node-input-leak_level_137_active">Active:</label>
+						<input type="checkbox" id="node-input-leak_level_137_active" class="ncd-config-toggle" data-target-id="node-input-leak_level_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-leak_level_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-leak_level_137" placeholder="300" value="300">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Shock Threshold</strong>
+					<p class="caption">
+						Dynamic acceleration that counts as a shock / water hammer, in mg.<br>Valid range: 100 - 65535.<br>
+						Default value: 2000.
+					</p>
+					<div>
+						<label for="node-input-shock_threshold_137_active">Active:</label>
+						<input type="checkbox" id="node-input-shock_threshold_137_active" class="ncd-config-toggle" data-target-id="node-input-shock_threshold_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-shock_threshold_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-shock_threshold_137" placeholder="2000" value="2000">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Listen Window</strong>
+					<p class="caption">
+						Ultrasound listen window per report, in seconds. One capture every 2 seconds.<br>The sensor rail stays on for the whole window, so longer windows use more battery.<br>Valid range: 10 - 120.<br>
+						Default value: 60.
+					</p>
+					<div>
+						<label for="node-input-listen_window_137_active">Active:</label>
+						<input type="checkbox" id="node-input-listen_window_137_active" class="ncd-config-toggle" data-target-id="node-input-listen_window_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-listen_window_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-listen_window_137" placeholder="60" value="60">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Set Confirm Count</strong>
+					<p class="caption">
+						Number of matching results in a row needed to change the confirmed trap state.<br>Valid range: 1 - 10.<br>
+						Default value: 3.
+					</p>
+					<div>
+						<label for="node-input-confirm_count_137_active">Active:</label>
+						<input type="checkbox" id="node-input-confirm_count_137_active" class="ncd-config-toggle" data-target-id="node-input-confirm_count_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-confirm_count_137"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-confirm_count_137" placeholder="3" value="3">
+					</div>
+				</div>
+				<div class="form-row ncd-active-check">
+					<strong>Steam Trap Baseline</strong>
+					<p class="caption">
+						Learn the acoustic baseline while the trap is known to be working, so site noise is not read as Leaking.<br>
+						Learn: sent on check-in while the sensor reports no baseline. The baseline is taken from the next report's listen window.<br>
+						Clear: sent on check-in while the sensor reports a learned baseline.<br>
+						To learn again on a trap that already has a baseline, clear it first.
+					</p>
+					<div>
+						<label for="node-input-steam_trap_baseline_137_active">Active:</label>
+						<input type="checkbox" id="node-input-steam_trap_baseline_137_active" class="ncd-config-toggle" data-target-id="node-input-steam_trap_baseline_137" value="1">
+					</div>
+					<div>
+						<label for="node-input-steam_trap_baseline_137"><i class="icon-tag"></i>Value:</label>
+						<select id="node-input-steam_trap_baseline_137">
+							<option selected="selected" value="1">Learn</option>
+							<option value="0">Clear</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>

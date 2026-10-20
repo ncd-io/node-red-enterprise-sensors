@@ -15,6 +15,7 @@ module.exports = function(RED) {
 	var gateway_pool = {};
 	function NcdGatewayConfig(config){
 		RED.nodes.createNode(this,config);
+		this.config = config;
 
 		this.port = config.comm_type == 'serial' ? config.port : config.tcp_port;
 		this.baudRate = parseInt(config.baudRate);
@@ -291,6 +292,22 @@ module.exports = function(RED) {
 											var tout = setTimeout(() => {
 												node.configure(d.address, d.payload.sensor_type);
 												// this.sync_init(addr, sensor_type);
+											}, 100);
+										}else if(Object.hasOwn(node.sensor_configs[addr], 'api_config_override') && !config.enable_fly_compatibility && ![101, 102, 103, 202].includes(sensor_type)){
+											// API Configuration Node controls this sensor and no configs need to be written, put the sensor back to sleep.
+											// Not done in FLY compatibility mode so legacy flows can still configure the sensor in this window.
+											// Types 101, 102, 103 and 202 stay awake for the RTC broadcast.
+											let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+											setTimeout(() => {
+												let exit_otn;
+												if(original_otf_devices.includes(sensor_type)){
+													exit_otn = node.gateway.config_exit_otn_mode(addr);
+												}else{
+													exit_otn = node.gateway.config_exit_otn_mode_common(addr);
+												}
+												exit_otn.catch((err) => {
+													console.log('Exit OTN after check-in with no config changes failed for sensor '+addr);
+												});
 											}, 100);
 										}
 									}else if(type == 'manual_sync_check_in'){
@@ -1672,8 +1689,8 @@ module.exports = function(RED) {
 								if(config.input_two_33_active){
 									promises.input_detection_33 = node.config_gateway.config_set_input_two_108(mac, parseInt(config.input_two_33));
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.counter_threshold_108_active){
 									promises.counter_threshold_33 = node.config_gateway.config_set_counter_threshold_108(mac, parseInt(config.counter_threshold_108));
@@ -3338,8 +3355,8 @@ module.exports = function(RED) {
 								if(config.clear_timers_123){
 									promises.clear_timers_125 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_125 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.input_one_123_active){
 									promises.input_one_125 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
@@ -3400,8 +3417,8 @@ module.exports = function(RED) {
 								if(config.clear_timers_123){
 									promises.clear_timers_126 = node.config_gateway.config_set_clear_timers_108(mac, 7);
 								}
-								if(config.debounce_time_123_active){
-									promises.debounce_time_126 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_123));
+								if(config.debounce_time_33_active){
+									promises.debounce_time_2byte_33 = node.config_gateway.config_set_debounce_time_v10_108(mac, parseInt(config.debounce_time_33));
 								}
 								if(config.input_one_123_active){
 									promises.input_one_126 = node.config_gateway.config_set_input_one_108(mac, parseInt(config.input_one_123));
@@ -4241,8 +4258,20 @@ module.exports = function(RED) {
 				// 		console.log(data.type);
 				// }
 				if(data.type == 'sync_check_in' || data.type == 'manual_sync_check_in'){
+					// Set when this check-in writes configs, so the sensor is not sent back to sleep below.
+					let configs_written = false;
 					if(config.auto_config && config.on_the_fly_enable || data.type == 'manual_sync_check_in' && config.auto_config){
 						if(Object.hasOwn(this.gateway_node.sensor_configs, data.payload.address) && !Object.hasOwn(this.gateway_node.sensor_configs[data.payload.address], 'api_config_override')){
+							// Type 137 baseline is an action (0x4E), not part of the SYNC write. Only sent while the reported
+							// baseline state differs from the request, so it is not repeated on every check-in.
+							// Queued now, so it goes out before the SYNC write or the exit command below.
+							if(config.sensor_type == 137 && config.steam_trap_baseline_137_active && parseInt(config.steam_trap_baseline_137) != data.payload.machine_values.baseline_valid){
+								node.config_gateway.config_set_steam_trap_baseline_137(data.payload.address, parseInt(config.steam_trap_baseline_137)).then((res) => {
+									node.send({topic: 'sync', type: 'steam_trap_baseline_response', address: data.payload.address, sensor_type: 137, payload: {address: data.payload.address, sensor_type: 137, baseline: parseInt(config.steam_trap_baseline_137) ? 'learn' : 'clear', success: res.result == 255}, time: Date.now()});
+								}).catch((err) => {
+									node.send({topic: 'sync', type: 'steam_trap_baseline_response', address: data.payload.address, sensor_type: 137, payload: {address: data.payload.address, sensor_type: 137, success: false, error: err}, time: Date.now()});
+								});
+							}
 							const html_map = this.config_gateway.get_intended_wireless_node_configs(data, config);
 
 							let update_flag = false;
@@ -4259,6 +4288,7 @@ module.exports = function(RED) {
 								}
 							}
 							if(update_flag){
+								configs_written = true;
 								promises = {};
 								setTimeout(() => {
 									let msg = {
@@ -4273,12 +4303,12 @@ module.exports = function(RED) {
 
 									let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
 									if(reboot){
-										promises.reboot_sensor = node.gateway.config_reboot_sensor(data.payload.address);
+										promises.reboot_sensor = node.config_gateway.config_reboot_sensor(data.payload.address);
 									} else {
 										if(original_otf_devices.includes(data.payload.sensor_type)){
-											promises.exit_otn_mode = node.gateway.config_exit_otn_mode(data.payload.address);
+											promises.exit_otn_mode = node.config_gateway.config_exit_otn_mode(data.payload.address);
 										}else{
-											promises.config_exit_otn_mode_common = node.gateway.config_exit_otn_mode_common(data.payload.address);
+											promises.config_exit_otn_mode_common = node.config_gateway.config_exit_otn_mode_common(data.payload.address);
 										}
 									}
 									promises.finish = new Promise((fulfill, reject) => {
@@ -4361,6 +4391,31 @@ module.exports = function(RED) {
 									time: Date.now()
 								});
 							}
+						}
+					}
+					// No configs written on this check-in, put the sensor back to sleep. Sent whether or not Auto Config / OTF are enabled.
+					// Skipped for manual check-ins (kept awake on purpose), for types 101, 102, 103 and 202 (RTC broadcast),
+					// for sensors controlled by the API Configuration Node (handled in the config node), for sensors armed for a firmware update,
+					// and in FLY compatibility mode so legacy flows can still configure the sensor in this window.
+					// The check-in arrived on config_gateway (pgm_on), so check that config node and send through that gateway.
+					if(data.type == 'sync_check_in' && !configs_written && ![101, 102, 103, 202].includes(data.payload.sensor_type)){
+						const addr = data.payload.address;
+						const sync_gateway_node = dedicated_config ? node.config_gateway_node : node.gateway_node;
+						const api_controlled = Object.hasOwn(sync_gateway_node.sensor_configs, addr) && Object.hasOwn(sync_gateway_node.sensor_configs[addr], 'api_config_override');
+						const update_pending = [node.gateway_node, sync_gateway_node].some((gw_node) => Object.hasOwn(gw_node.sensor_list, addr) && Object.hasOwn(gw_node.sensor_list[addr], 'update_request'));
+						if(!api_controlled && !update_pending && !sync_gateway_node.config.enable_fly_compatibility){
+							let original_otf_devices = [53, 80, 81, 82, 83, 84, 87, 101, 102, 103, 110, 111, 112, 114, 117, 180, 181, 518, 519, 520, 538];
+							setTimeout(() => {
+								let exit_otn;
+								if(original_otf_devices.includes(data.payload.sensor_type)){
+									exit_otn = node.config_gateway.config_exit_otn_mode(addr);
+								}else{
+									exit_otn = node.config_gateway.config_exit_otn_mode_common(addr);
+								}
+								exit_otn.catch((err) => {
+									console.log('Exit OTN after check-in with no config changes failed for sensor '+addr);
+								});
+							}, 100);
 						}
 					}
 				}
