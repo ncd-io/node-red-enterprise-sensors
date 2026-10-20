@@ -2,7 +2,7 @@
 
 Notable changes to `@ncd-io/node-red-enterprise-sensors`. Newest first.
 
-## Unreleased
+## v2.2.0
 
 ### Added
 - **Type 137 - Wireless Steam Trap Monitor.** Reports inlet and outlet RTD temperatures, ultrasound levels
