@@ -11,8 +11,17 @@ Notable changes to `@ncd-io/node-red-enterprise-sensors`. Newest first.
   thresholds are configured through SYNC (Wireless Device Node or API Configuration Node). The Wireless Device
   Node can also learn or clear the acoustic baseline. Gateway helpers are available for the app commands
   (`config_set_steam_trap_cfg_137`, `config_set_steam_trap_baseline_137` and the matching getters).
+- **Type 105 (Automatic Luber with Ultrasound, pre-release):** Filter Mode setting (`filter_mode`, options 1, 2, 3)
+  and `kurtosis` in ultrasound reports.
 
 ### Changed
+- **Type 105 (pre-release): report and SYNC layout track the current development firmware.** `dispenser_status`
+  now reports `powered_off`, `healthy`, `error_undefined` or `lube_empty`.
+- **Input Debounce Time for types 33, 125 and 126 is now limited to 10 - 1000 ms** (default 10 ms) and has its
+  own row in the Wireless Device Node editor. Before, these types shared the row used by types 35, 123, 132
+  and 133, which allows up to 65000 ms. Those four types are unchanged.
+- **Wireless Device Node editor: section headings.** Large configuration groups can now carry a highlighted
+  heading; the first is "Steam Trap Thresholds" on type 137. No functional change.
 - **Sensors go back to sleep after a check-in that needs no configuration changes.** Before this change, a
   sensor stayed awake after a regular SYNC check-in until its awake window ran out, even when there was
   nothing to write. Now the gateway sends the sensor's exit command 100 ms after the check-in. This applies when either:
