@@ -2,6 +2,16 @@
 
 Notable changes to `@ncd-io/node-red-enterprise-sensors`. Newest first.
 
+## v2.2.1
+
+### Changed
+- **Type 103 (Custom Wireless Accelerometer Sensor): gyro reports now use the same value types as accelerometer
+  reports.** In `sensor_data` for a gyro capture, `probe_type` is `Gyro` (was `gyro`), `odr` is a number in Hz
+  (125, 250, 500 or 1000; was `'125Hz'` etc.) and `fsr` is a number in degrees per second (250, 500, 1000 or
+  2000; was `'250dps'` etc.). Accelerometer captures already reported `Accel` and numeric `odr` / `fsr`, so the
+  two probe types now match. Flows that compare the gyro `probe_type`, `odr` or `fsr` against the old string
+  values need updating.
+
 ## v2.2.0
 
 ### Added
