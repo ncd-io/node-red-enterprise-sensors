@@ -4015,6 +4015,11 @@ module.exports = function(RED) {
 									promises.min_flow_541 = node.config_gateway.config_set_min_flow_541(mac, parseInt(config.min_flow_541));
 								}
 								break;
+							case 542:
+								if(config.coefficient_542_active){
+									promises.coefficient_542 = node.config_gateway.config_set_coefficient_542(mac, parseInt(config.coefficient_542));
+								}
+								break;
 							case 543:
 								if(config.odr_p1_543_active){
 									promises.odr_p1_543 = node.config_gateway.config_set_odr_p1_110(mac, parseInt(config.odr_p1_543));

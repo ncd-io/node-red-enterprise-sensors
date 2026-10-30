@@ -1230,6 +1230,9 @@
 
 			sensor_boot_time_138_active: {value: ""},
 			sensor_boot_time_138: {value: 15, validate: NCD_validators.number_range(0, 255)},
+
+			coefficient_542_active: {value: ""},
+			coefficient_542: {value: 889448, validate: NCD_validators.number_range(0, 4294967295)}
 		},
 		inputs: 0,
 		outputs: 1,
@@ -9200,6 +9203,24 @@
 					</div>
 					<p class="caption">
 						Default value: 15 Seconds.
+					</p>
+				</div>
+			</div>
+			<div class="ncd-dependent" data-sensor-542>
+				<div class="form-row ncd-active-check">
+					<strong>Set Coefficient</strong>
+					<p class="caption">
+					</p>
+					<div>
+						<label for="node-input-coefficient_542_active">Active:</label>
+						<input type="checkbox" id="node-input-coefficient_542_active" class="ncd-config-toggle" data-target-id="node-input-coefficient_542" value="1">
+					</div>
+					<div>
+						<label for="node-input-coefficient_542"><i class="icon-tag"></i>Value:</label>
+						<input type="text" id="node-input-coefficient_542">
+					</div>
+					<p class="caption">
+						Default value: 889448.
 					</p>
 				</div>
 			</div>
